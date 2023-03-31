@@ -16,12 +16,19 @@ int sgettimeofday(struct pt_regs *ctx) {
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
+int sread(struct pt_regs *ctx) {
+    struct data_t data = {};
+    data.syscallnumber = 1;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
 """
 b = BPF(text=prog)
 
 
 def attachkretprobe():
     b.attach_kretprobe(event=b.get_syscall_fnname("gettimeofday"), fn_name="sgettimeofday")
+    b.attach_kretprobe(event=b.get_syscall_fnname("read"), fn_name="sread")
 
 
 def updateoccurences(cpu, data, size):
@@ -29,8 +36,8 @@ def updateoccurences(cpu, data, size):
     syscall = data.syscallnumber
     if syscall == 0:
         print("found gettimeofdate!")
-    else:
-        print("Error")
+    elif syscall == 1:
+        print("found read!")
 
 
 def getringbuffer():
