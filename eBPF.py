@@ -36,8 +36,8 @@ def updateoccurences(cpu, data, size):
     syscall = data.syscallnumber
     if syscall == 0:
         print("found gettimeofdate!")
-    elif syscall == 1:
-        print("found read!")
+    # elif syscall == 1:
+    #     print("found read!")
 
 
 def getringbuffer():
