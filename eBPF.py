@@ -24,8 +24,13 @@ def attachkretprobe():
     b.attach_kretprobe(event=b.get_syscall_fnname("gettimeofday"), fn_name="sgettimeofday")
 
 
-def updateoccurences():
-    print("found gettimeofdate!")
+def updateoccurences(cpu, data, size):
+    data = b["events"].event(data)
+    syscall = data.syscallnumber
+    if syscall == 0:
+        print("found gettimeofdate!")
+    else:
+        print("Error")
 
 
 def getringbuffer():
