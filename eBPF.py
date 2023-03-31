@@ -8,6 +8,8 @@ struct data_t {
     int syscallnumber;
 };
 
+BPF_PERF_OUTPUT(events);
+
 int sgettimeofday(struct pt_regs *ctx) {
     struct data_t data = {};
     data.syscallnumber = 0;
