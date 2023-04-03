@@ -6,18 +6,23 @@ from bcc import BPF
 prog = """ 
 struct data_t {
     int syscallnumber;
+    u32 pid;
 };
 
 BPF_PERF_OUTPUT(events);
 
 int sgettimeofday(struct pt_regs *ctx) {
     struct data_t data = {};
+    u64 id = bpf_get_current_pid_tgid();
+    data.pid = id >> 32;
     data.syscallnumber = 0;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
 int sread(struct pt_regs *ctx) {
     struct data_t data = {};
+    u64 id = bpf_get_current_pid_tgid();
+    data.pid = id >> 32;
     data.syscallnumber = 1;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -34,8 +39,9 @@ def attachkretprobe():
 def updateoccurences(cpu, data, size):
     data = b["events"].event(data)
     syscall = data.syscallnumber
+    pid = data.pid
     if syscall == 0:
-        print("found gettimeofdate!")
+        print("found gettimeofdate! with PID:" + str(pid))
     # elif syscall == 1:
     #     print("found read!")
 
