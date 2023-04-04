@@ -16,7 +16,7 @@ int sgettimeofday(struct pt_regs *ctx) {
     struct data_t data = {};
     u64 id = bpf_get_current_pid_tgid();
     u64 cgroup_id = bpf_get_current_cgroup_id();
-    data.cgroup = cgroup_id >> 32;
+    data.cgroup = cgroup_id;
     data.pid = id >> 32;
     data.syscallnumber = 0;
     events.perf_submit(ctx, &data, sizeof(data));
