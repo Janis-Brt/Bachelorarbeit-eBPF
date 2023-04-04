@@ -7,6 +7,7 @@ prog = """
 struct data_t {
     int syscallnumber;
     u32 pid;
+    u32 cgroup;
 };
 
 BPF_PERF_OUTPUT(events);
@@ -14,6 +15,8 @@ BPF_PERF_OUTPUT(events);
 int sgettimeofday(struct pt_regs *ctx) {
     struct data_t data = {};
     u64 id = bpf_get_current_pid_tgid();
+    u64 cgroup_id = bpf_get_current_cgroup_id();
+    data.cgroup = cgroup_id;
     data.pid = id >> 32;
     data.syscallnumber = 0;
     events.perf_submit(ctx, &data, sizeof(data));
@@ -40,8 +43,9 @@ def updateoccurences(cpu, data, size):
     data = b["events"].event(data)
     syscall = data.syscallnumber
     pid = data.pid
+    cgroup = data.cgroup
     if syscall == 0:
-        print("found gettimeofdate! with PID:" + str(pid))
+        print("found gettimeofdate! with PID: " + str(pid) + "and cgroup_id: " + str(cgroup))
     # elif syscall == 1:
     #     print("found read!")
 
