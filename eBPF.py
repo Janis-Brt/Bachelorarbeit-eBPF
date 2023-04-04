@@ -16,7 +16,7 @@ int sgettimeofday(struct pt_regs *ctx) {
     struct data_t data = {};
     u64 id = bpf_get_current_pid_tgid();
     u64 cgroup_id = bpf_get_current_cgroup_id();
-    data.cgroup = cgroup_id;
+    data.cgroup = cgroup_id >> 32;
     data.pid = id >> 32;
     data.syscallnumber = 0;
     events.perf_submit(ctx, &data, sizeof(data));
@@ -45,7 +45,7 @@ def updateoccurences(cpu, data, size):
     pid = data.pid
     cgroup = data.cgroup
     if syscall == 0:
-        print("found gettimeofdate! with PID: " + str(pid) + "and cgroup_id: " + str(cgroup))
+        print("found gettimeofdate! with PID: " + str(pid) + " and cgroup_id: " + str(cgroup))
     # elif syscall == 1:
     #     print("found read!")
 
