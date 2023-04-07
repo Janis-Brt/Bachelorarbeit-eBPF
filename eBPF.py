@@ -17,7 +17,7 @@ int sgettimeofday(struct pt_regs *ctx) {
     struct data_t data = {};
     u64 id = bpf_get_current_pid_tgid();
     u32 cgroup_id = bpf_get_current_cgroup_id();
-    u32 class_id = bpf_get_cgroup_classid();
+    u32 class_id = bpf_get_cgroup_classid(NULL);
     data.classid = class_id;
     data.cgroup = cgroup_id;
     data.pid = id >> 32;
