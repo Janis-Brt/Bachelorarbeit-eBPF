@@ -33,6 +33,16 @@ int sread(struct pt_regs *ctx) {
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
+int swrite(struct pt_regs *ctx) {
+    struct data_t data = {};
+    u64 id = bpf_get_current_pid_tgid();
+    u32 cgroup_id = bpf_get_current_cgroup_id();
+    data.cgroup = cgroup_id;
+    data.pid = id >> 32;
+    data.syscallnumber = 2;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
 """
 b = BPF(text=prog)
 
@@ -40,6 +50,7 @@ b = BPF(text=prog)
 def attachkretprobe():
     b.attach_kretprobe(event=b.get_syscall_fnname("gettimeofday"), fn_name="sgettimeofday")
     b.attach_kretprobe(event=b.get_syscall_fnname("read"), fn_name="sread")
+    b.attach_kretprobe(event=b.get_syscall_fnname("read"), fn_name="swrite")
 
 
 patterns = []
@@ -58,6 +69,10 @@ def detectpatterns(cpu, data, size):
         elif syscall == 1:
             print("found read! with PID: " + str(pid) + " and cgroup_id: " + str(cgroup))
             syscall = "read"
+            patterns.append(syscall)
+        elif syscall == 2:
+            print("found write! with PID: " + str(pid) + " and cgroup_id: " + str(cgroup))
+            syscall = "write"
             patterns.append(syscall)
 
         # elif syscall == 1:
