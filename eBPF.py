@@ -45,7 +45,7 @@ def attachkretprobe():
 patterns = []
 
 
-def detetpatterns(cpu, data, size):
+def detectpatterns(cpu, data, size):
     data = b["events"].event(data)
     syscall = data.syscallnumber
     pid = data.pid
@@ -55,24 +55,25 @@ def detetpatterns(cpu, data, size):
             print("found gettimeofdate! with PID: " + str(pid) + " and cgroup_id: " + str(cgroup))
             syscall = "gettimeofday"
             patterns.append(syscall)
-            print(patterns)
+
         if syscall == 1:
             print("found read! with PID: " + str(pid) + " and cgroup_id: " + str(cgroup))
             syscall = "read"
             patterns.append(syscall)
-            print(patterns)
+
         # elif syscall == 1:
         #     print("found read!")
 
 
 def getringbuffer():
     uptime = 0
-    b["events"].open_perf_buffer(detetpatterns, page_cnt=256)
+    b["events"].open_perf_buffer(detectpatterns, page_cnt=256)
     while True:
         try:
             b.perf_buffer_poll(timeout=10 * 1000)
         except KeyboardInterrupt:
             print("Abbruch")
+            print(patterns)
             signal_handler(signal.SIGINT, signal_handler)
 
 
