@@ -41,7 +41,10 @@ def attachkretprobe():
     b.attach_kretprobe(event=b.get_syscall_fnname("read"), fn_name="sread")
 
 
-def updateoccurences(cpu, data, size):
+patterns = []
+
+
+def detetpatterns(cpu, data, size):
     data = b["events"].event(data)
     syscall = data.syscallnumber
     pid = data.pid
@@ -50,13 +53,15 @@ def updateoccurences(cpu, data, size):
     if syscall == 0:
         print("found gettimeofdate! with PID: " + str(pid) + " and cgroup_id: " + str(cgroup) + " and class_id: " + str(
             classid))
+        patterns.append(syscall)
+        print(patterns)
     # elif syscall == 1:
     #     print("found read!")
 
 
 def getringbuffer():
     uptime = 0
-    b["events"].open_perf_buffer(updateoccurences, page_cnt=256)
+    b["events"].open_perf_buffer(detetpatterns, page_cnt=256)
     while True:
         try:
             b.perf_buffer_poll(timeout=10 * 1000)
