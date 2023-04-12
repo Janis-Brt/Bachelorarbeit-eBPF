@@ -50,16 +50,16 @@ def detectpatterns(cpu, data, size):
     syscall = data.syscallnumber
     pid = data.pid
     cgroup = data.cgroup
-    if localpids.__contains__(str(pid)):
-        if syscall == 0:
-            print("found gettimeofdate! with PID: " + str(pid) + " and cgroup_id: " + str(cgroup))
-            syscall = "gettimeofday"
-            patterns.append(syscall)
+    # if localpids.__contains__(str(pid)):
+    if syscall == 0:
+        print("found gettimeofdate! with PID: " + str(pid) + " and cgroup_id: " + str(cgroup))
+        syscall = "gettimeofday"
+        patterns.append(syscall)
 
-        if syscall == 1:
-            print("found read! with PID: " + str(pid) + " and cgroup_id: " + str(cgroup))
-            syscall = "read"
-            patterns.append(syscall)
+        # if syscall == 1:
+        #     print("found read! with PID: " + str(pid) + " and cgroup_id: " + str(cgroup))
+        #     syscall = "read"
+        #     patterns.append(syscall)
 
         # elif syscall == 1:
         #     print("found read!")
