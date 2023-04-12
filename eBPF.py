@@ -54,8 +54,8 @@ def detetpatterns(cpu, data, size):
         syscall = "gettimeofday"
         patterns.append(syscall)
         print(patterns)
-    if syscall == 0:
-        print("found gettimeofdate! with PID: " + str(pid) + " and cgroup_id: " + str(cgroup))
+    if syscall == 1:
+        print("found read! with PID: " + str(pid) + " and cgroup_id: " + str(cgroup))
         syscall = "read"
         patterns.append(syscall)
         print(patterns)
