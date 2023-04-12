@@ -50,16 +50,15 @@ def detectpatterns(cpu, data, size):
     syscall = data.syscallnumber
     pid = data.pid
     cgroup = data.cgroup
-    # if localpids.__contains__(str(pid)):
-    if syscall == 0:
-        print("found gettimeofdate! with PID: " + str(pid) + " and cgroup_id: " + str(cgroup))
-        syscall = "gettimeofday"
-        patterns.append(syscall)
-
-        # if syscall == 1:
-        #     print("found read! with PID: " + str(pid) + " and cgroup_id: " + str(cgroup))
-        #     syscall = "read"
-        #     patterns.append(syscall)
+    if localpids.__contains__(str(pid)):
+        if syscall == 0:
+            print("found gettimeofdate! with PID: " + str(pid) + " and cgroup_id: " + str(cgroup))
+            syscall = "gettimeofday"
+            patterns.append(syscall)
+        elif syscall == 1:
+            print("found read! with PID: " + str(pid) + " and cgroup_id: " + str(cgroup))
+            syscall = "read"
+            patterns.append(syscall)
 
         # elif syscall == 1:
         #     print("found read!")
@@ -74,6 +73,7 @@ def getringbuffer():
         except KeyboardInterrupt:
             print("Abbruch")
             print(patterns)
+            getprobability()
             signal_handler(signal.SIGINT, signal_handler)
 
 
@@ -88,6 +88,25 @@ def getpids(input):
     result = result[:-5]
     print("tracing PIDs: " "\n" + result)
     return result
+
+def getprobability():
+    anzahl_eintraege = len(patterns)
+    haeufigkeiten = {}
+    for eintrag in patterns:
+        if eintrag in haeufigkeiten:
+            haeufigkeiten[eintrag] += 1
+        else:
+            haeufigkeiten[eintrag] = 1
+
+    # Berechne die prozentuale Verteilung
+    prozent_verteilung = {}
+    for eintrag, haeufigkeit in haeufigkeiten.items():
+        prozent_verteilung[eintrag] = (haeufigkeit / anzahl_eintraege) * 100
+
+    # Ergebnis ausgeben
+    print("Prozentuale Verteilung der Einträge:")
+    for eintrag, prozent in prozent_verteilung.items():
+        print(f"{eintrag}: {prozent}%")
 
 
 # Eingabe des zu tracenden Binaries.
