@@ -1,3 +1,4 @@
+import os
 import signal
 import sys
 
@@ -49,18 +50,19 @@ def detetpatterns(cpu, data, size):
     syscall = data.syscallnumber
     pid = data.pid
     cgroup = data.cgroup
-    if syscall == 0:
-        print("found gettimeofdate! with PID: " + str(pid) + " and cgroup_id: " + str(cgroup))
-        syscall = "gettimeofday"
-        patterns.append(syscall)
-        print(patterns)
-    if syscall == 1:
-        print("found read! with PID: " + str(pid) + " and cgroup_id: " + str(cgroup))
-        syscall = "read"
-        patterns.append(syscall)
-        print(patterns)
-    # elif syscall == 1:
-    #     print("found read!")
+    if localpids.__contains__(str(pid)):
+        if syscall == 0:
+            print("found gettimeofdate! with PID: " + str(pid) + " and cgroup_id: " + str(cgroup))
+            syscall = "gettimeofday"
+            patterns.append(syscall)
+            print(patterns)
+        if syscall == 1:
+            print("found read! with PID: " + str(pid) + " and cgroup_id: " + str(cgroup))
+            syscall = "read"
+            patterns.append(syscall)
+            print(patterns)
+        # elif syscall == 1:
+        #     print("found read!")
 
 
 def getringbuffer():
@@ -78,7 +80,19 @@ def signal_handler(sig, frame):
     print('Exited with Keyboard Interrupt')
     sys.exit(0)
 
+# Die Funktion führt einen Shell Befehl aus, welcher sich alle PIDs des übergebenen Binaries holt und in ein Array
+# schreibt.
+def getpids(input):
+    result = os.popen("pgrep -f " + input).read()
+    result = result[:-5]
+    print("tracing PIDs: " "\n" + result)
+    return result
 
+
+# Eingabe des zu tracenden Binaries.
+ibinary = input("Input Binary: ")
+localpids = getpids(ibinary)
+print("attaching to kretprobes")
 attachkretprobe()
 print("attachment ready" + "\n" + "now tracing! \npress CTRL + C to stop tracing.")
 getringbuffer()
