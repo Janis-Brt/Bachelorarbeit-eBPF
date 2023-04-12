@@ -25,6 +25,8 @@ int sgettimeofday(struct pt_regs *ctx) {
 int sread(struct pt_regs *ctx) {
     struct data_t data = {};
     u64 id = bpf_get_current_pid_tgid();
+    u32 cgroup_id = bpf_get_current_cgroup_id();
+    data.cgroup = cgroup_id;
     data.pid = id >> 32;
     data.syscallnumber = 1;
     events.perf_submit(ctx, &data, sizeof(data));
@@ -49,7 +51,12 @@ def detetpatterns(cpu, data, size):
     cgroup = data.cgroup
     if syscall == 0:
         print("found gettimeofdate! with PID: " + str(pid) + " and cgroup_id: " + str(cgroup))
-        syscall = "gettimeofay"
+        syscall = "gettimeofday"
+        patterns.append(syscall)
+        print(patterns)
+    if syscall == 0:
+        print("found gettimeofdate! with PID: " + str(pid) + " and cgroup_id: " + str(cgroup))
+        syscall = "read"
         patterns.append(syscall)
         print(patterns)
     # elif syscall == 1:
