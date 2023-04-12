@@ -8,7 +8,6 @@ struct data_t {
     int syscallnumber;
     u32 pid;
     u32 cgroup;
-    u32 classid;
 };
 
 BPF_PERF_OUTPUT(events);
@@ -17,7 +16,6 @@ int sgettimeofday(struct pt_regs *ctx) {
     struct data_t data = {};
     u64 id = bpf_get_current_pid_tgid();
     u32 cgroup_id = bpf_get_current_cgroup_id();
-    data.classid = class_id;
     data.cgroup = cgroup_id;
     data.pid = id >> 32;
     data.syscallnumber = 0;
