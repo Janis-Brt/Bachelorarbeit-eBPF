@@ -47,7 +47,6 @@ def detetpatterns(cpu, data, size):
     syscall = data.syscallnumber
     pid = data.pid
     cgroup = data.cgroup
-    classid = data.classid
     if syscall == 0:
         print("found gettimeofdate! with PID: " + str(pid) + " and cgroup_id: " + str(cgroup) + " and class_id: " + str(
             classid))
