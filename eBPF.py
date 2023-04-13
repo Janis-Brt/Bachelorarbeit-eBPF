@@ -22,7 +22,7 @@ int sgettimeofday(struct pt_regs *ctx) {
     u32 cgroup_id = bpf_get_current_cgroup_id();
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     u32 upid = t->nsproxy->pid_namespace->ns_common->inum;
-    bpf_trace_printk("pid=%d; upid=%d!\\n", pid, upid);
+    bpf_trace_printk(upid=%d!\\n", upid);
     data.cgroup = cgroup_id;
     data.pid = id >> 32;
     data.syscallnumber = 0;
