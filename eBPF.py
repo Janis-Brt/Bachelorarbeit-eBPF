@@ -17,17 +17,12 @@ struct data_t {
 BPF_PERF_OUTPUT(events);
 
 int sgettimeofday(struct pt_regs *ctx) {
-    struct data_t data = {};
-    u64 id = bpf_get_current_pid_tgid();
-    u32 cgroup_id = bpf_get_current_cgroup_id();
+    u32 pid = bpf_get_current_pid_tgid();
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     u32 upid = t->nsproxy->pid_namespace->ns_common->inum;
-    bpf_trace_printk(upid=%d!\\n", upid);
-    data.cgroup = cgroup_id;
-    data.pid = id >> 32;
-    data.syscallnumber = 0;
-    events.perf_submit(ctx, &data, sizeof(data));
+    bpf_trace_printk("pid=%d; upid=%d!\\n", pid, upid);
     return 0;
+
 }
 int sread(struct pt_regs *ctx) {
     struct data_t data = {};
