@@ -5,6 +5,9 @@ import sys
 from bcc import BPF
 
 prog = """ 
+
+#include <linux/pid_namespace.h>
+
 struct data_t {
     int syscallnumber;
     u32 pid;
@@ -17,6 +20,9 @@ int sgettimeofday(struct pt_regs *ctx) {
     struct data_t data = {};
     u64 id = bpf_get_current_pid_tgid();
     u32 cgroup_id = bpf_get_current_cgroup_id();
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    u32 upid = t->nsproxy->pid_namespace->ns_common->inum
+    bpf_trace_printk("pid=%d; upid=%d!\\n", pid, upid);
     data.cgroup = cgroup_id;
     data.pid = id >> 32;
     data.syscallnumber = 0;
