@@ -124,6 +124,7 @@ def getpids(input):
 
 
 def getinum():
+    print("Host-Namespaces:")
     result = os.popen("ls -la /proc/self/ns").read()
     print(result)
 
