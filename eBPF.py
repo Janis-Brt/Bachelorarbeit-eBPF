@@ -12,14 +12,21 @@ struct data_t {
     int syscallnumber;
     u32 pid;
     u32 cgroup;
+    unsigned int inum;
 };
 
 BPF_PERF_OUTPUT(events);
 
 int sgettimeofday(struct pt_regs *ctx) {
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum = t->nsproxy->pid_ns_for_children->ns.inum;
-    bpf_trace_printk("inum=%d!\\n", inum);
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    u64 id = bpf_get_current_pid_tgid();
+    u32 cgroup_id = bpf_get_current_cgroup_id();
+    data.cgroup = cgroup_id;
+    data.pid = id >> 32;
+    data.syscallnumber = 0;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 
 }
@@ -60,20 +67,21 @@ def detectpatterns(cpu, data, size):
     data = b["events"].event(data)
     syscall = data.syscallnumber
     pid = data.pid
+    inum_ring = data.inum
     cgroup = data.cgroup
-    if localpids.__contains__(str(pid)):
-        if syscall == 0:
-            print("found gettimeofdate! with PID: " + str(pid) + " and cgroup_id: " + str(cgroup))
-            syscall = "gettimeofday"
-            patterns.append(syscall)
-        elif syscall == 1:
-            print("found read! with PID: " + str(pid) + " and cgroup_id: " + str(cgroup))
-            syscall = "read"
-            patterns.append(syscall)
-        elif syscall == 2:
-            print("found write! with PID: " + str(pid) + " and cgroup_id: " + str(cgroup))
-            syscall = "write"
-            patterns.append(syscall)
+    # if localpids.__contains__(str(pid)):
+    if syscall == 0:
+        print("found gettimeofdate! with PID: " + str(pid) + " and cgroup_id: " + str(cgroup) + " and inum: " + str(inum_ring))
+        syscall = "gettimeofday"
+        patterns.append(syscall)
+    # elif syscall == 1:
+    #     print("found read! with PID: " + str(pid) + " and cgroup_id: " + str(cgroup))
+    #     syscall = "read"
+    #     patterns.append(syscall)
+    # elif syscall == 2:
+    #     print("found write! with PID: " + str(pid) + " and cgroup_id: " + str(cgroup))
+    #     syscall = "write"
+    #     patterns.append(syscall)
 
         # elif syscall == 1:
         #     print("found read!")
