@@ -18,7 +18,7 @@ BPF_PERF_OUTPUT(events);
 
 int sgettimeofday(struct pt_regs *ctx) {
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    u32 inum= t->nsproxy->pid_namespace->ns_common->inum;
+    unsigned int inum = t->nsproxy->pid_ns_for_children->ns.inum;
     bpf_trace_printk("inum=%d!\\n", inum);
     return 0;
 
