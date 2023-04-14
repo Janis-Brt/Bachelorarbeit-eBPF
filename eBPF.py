@@ -72,7 +72,8 @@ def detectpatterns(cpu, data, size):
     cgroup = data.cgroup
     # if localpids.__contains__(str(pid)):
     if syscall == 0:
-        print("found gettimeofdate! with PID: " + str(pid) + " and cgroup_id: " + str(cgroup) + " and inum: " + str(inum_ring))
+        print("found gettimeofdate! with PID: " + str(pid) + " and cgroup_id: " + str(cgroup) + " and inum: " + str(
+            inum_ring))
         syscall = "gettimeofday"
         patterns.append(syscall)
     # elif syscall == 1:
@@ -84,8 +85,8 @@ def detectpatterns(cpu, data, size):
     #     syscall = "write"
     #     patterns.append(syscall)
 
-        # elif syscall == 1:
-        #     print("found read!")
+    # elif syscall == 1:
+    #     print("found read!")
 
 
 def getringbuffer():
@@ -105,6 +106,7 @@ def signal_handler(sig, frame):
     print('Exited with Keyboard Interrupt')
     sys.exit(0)
 
+
 # Die Funktion führt einen Shell Befehl aus, welcher sich alle PIDs des übergebenen Binaries holt und in ein Array
 # schreibt.
 def getpids(input):
@@ -112,6 +114,12 @@ def getpids(input):
     result = result[:-5]
     print("tracing PIDs: " "\n" + result)
     return result
+
+
+def getinum():
+    result = os.popen("ls -la /etc/1/ns").read()
+    print(result)
+
 
 def getprobability():
     anzahl_eintraege = len(patterns)
