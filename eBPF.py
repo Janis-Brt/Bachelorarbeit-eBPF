@@ -72,10 +72,17 @@ def detectpatterns(cpu, data, size):
     cgroup = data.cgroup
     # if localpids.__contains__(str(pid)):
     if syscall == 0:
-        print("found gettimeofdate! with PID: " + str(pid) + " and cgroup_id: " + str(cgroup) + " and inum: " + str(
-            inum_ring))
-        syscall = "gettimeofday"
-        patterns.append(syscall)
+        if inum_ring == 4026531836:
+            print("found gettimeofdate outside the Container! with PID: " + str(pid) + " and cgroup_id: " + str(cgroup) + " and inum: " + str(
+                inum_ring))
+            syscall = "gettimeofday"
+            patterns.append(syscall)
+        else:
+            print("found gettimeofdate inside the Container! with PID: " + str(pid) + " and cgroup_id: " + str(
+                cgroup) + " and inum: " + str(
+                inum_ring))
+            syscall = "gettimeofday"
+            patterns.append(syscall)
     # elif syscall == 1:
     #     print("found read! with PID: " + str(pid) + " and cgroup_id: " + str(cgroup))
     #     syscall = "read"
