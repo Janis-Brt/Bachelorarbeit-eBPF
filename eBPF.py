@@ -18,10 +18,10 @@ BPF_PERF_OUTPUT(events);
 
 int sgettimeofday(struct pt_regs *ctx) {
     u32 pid = bpf_get_current_pid_tgid();
+    pid = pid >> 32;
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    struct nsproxy = t->nsproxy; 
-    //->pid_namespaces->ns_common->inum;
-    //bpf_trace_printk("pid=%d; upid=%d!\\n", pid, upid);
+    u32 inum= t->nsproxy->pid_namespaces->ns_common->inum;
+    bpf_trace_printk("pid=%d; upid=%d!\\n", pid, inum);
     return 0;
 
 }
