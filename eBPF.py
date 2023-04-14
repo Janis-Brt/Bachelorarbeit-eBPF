@@ -117,7 +117,7 @@ def getpids(input):
 
 
 def getinum():
-    result = os.popen("ls -la /etc/1/ns").read()
+    result = os.popen("ls -la /proc/self/ns").read()
     print(result)
 
 
