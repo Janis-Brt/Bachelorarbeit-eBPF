@@ -161,6 +161,19 @@ int smmap(struct pt_regs *ctx) {
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
+int sgettimeofday(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    u64 id = bpf_get_current_pid_tgid();
+    u32 cgroup_id = bpf_get_current_cgroup_id();
+    data.cgroup = cgroup_id;
+    data.pid = id >> 32;
+    data.syscallnumber = 11;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
 """
 b = BPF(text=prog)
 
@@ -264,7 +277,7 @@ def attachkretprobe():
     # b.attach_kretprobe(event=b.get_syscall_fnname("fchown"), fn_name="sfchown")
     # b.attach_kretprobe(event=b.get_syscall_fnname("lchown"), fn_name="slchown")
     # b.attach_kretprobe(event=b.get_syscall_fnname("umask"), fn_name="sumask")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("gettimeofday"), fn_name="sgettimeofday")
+    b.attach_kretprobe(event=b.get_syscall_fnname("gettimeofday"), fn_name="sgettimeofday")
     # b.attach_kretprobe(event=b.get_syscall_fnname("getrlimit"), fn_name="sgetrlimit")
     # b.attach_kretprobe(event=b.get_syscall_fnname("getrusage"), fn_name="sgetrusage")
     # b.attach_kretprobe(event=b.get_syscall_fnname("sysinfo"), fn_name="ssysinfo")
@@ -505,6 +518,7 @@ def detectpatterns(cpu, data, size):
     # if localpids.__contains__(str(pid)):
     if syscall == 0:
         if inum_ring != 4026531836:
+            print(syscall)
             if syscall == 0:
                 print("found clone inside the Container! with inum: " + str(inum_ring))
                 syscall = "clone"
@@ -548,6 +562,10 @@ def detectpatterns(cpu, data, size):
             elif syscall == 10:
                 print("found mmap inside the Container! with inum: " + str(inum_ring))
                 syscall = "mmap"
+                patterns.append(syscall)
+            elif syscall == 11:
+                print("found gettimeofday inside the Container! with inum: " + str(inum_ring))
+                syscall = "gettimeofday"
                 patterns.append(syscall)
             # elif syscall == 11:
             #     occurences['mprotect'] = occurences['mprotect'] + 1
