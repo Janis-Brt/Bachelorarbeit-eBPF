@@ -517,8 +517,9 @@ def detectpatterns(cpu, data, size):
     cgroup = data.cgroup
     # if localpids.__contains__(str(pid)):
     if syscall == 0:
-        if inum_ring != 4026531836:
-            print(syscall)
+        if inum_ring == 4026531836:
+            print("Outside Container")
+        else:
             if syscall == 0:
                 print("found clone inside the Container! with inum: " + str(inum_ring))
                 syscall = "clone"
