@@ -165,10 +165,6 @@ int sgettimeofday(struct pt_regs *ctx) {
     struct data_t data = {};
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    u64 id = bpf_get_current_pid_tgid();
-    u32 cgroup_id = bpf_get_current_cgroup_id();
-    data.cgroup = cgroup_id;
-    data.pid = id >> 32;
     data.syscallnumber = 11;
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
@@ -520,6 +516,7 @@ def detectpatterns(cpu, data, size):
         if inum_ring == 4026531836:
             print("Outside Container")
         else:
+            print(syscall)
             if syscall == 0:
                 print("found clone inside the Container! with inum: " + str(inum_ring))
                 syscall = "clone"
