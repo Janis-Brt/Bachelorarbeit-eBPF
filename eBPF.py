@@ -148,6 +148,19 @@ int slseek(struct pt_regs *ctx) {
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
+int smmap(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    u64 id = bpf_get_current_pid_tgid();
+    u32 cgroup_id = bpf_get_current_cgroup_id();
+    data.cgroup = cgroup_id;
+    data.pid = id >> 32;
+    data.syscallnumber = 10;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
 """
 b = BPF(text=prog)
 
