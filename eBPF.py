@@ -354,7 +354,7 @@ def attachkretprobe():
     # b.attach_kretprobe(event=b.get_syscall_fnname("fchown"), fn_name="sfchown")
     # b.attach_kretprobe(event=b.get_syscall_fnname("lchown"), fn_name="slchown")
     # b.attach_kretprobe(event=b.get_syscall_fnname("umask"), fn_name="sumask")
-    b.attach_kretprobe(event=b.get_syscall_fnname("gettimeofday"), fn_name="sgettimeofday")
+    # b.attach_kretprobe(event=b.get_syscall_fnname("gettimeofday"), fn_name="sgettimeofday")
     # b.attach_kretprobe(event=b.get_syscall_fnname("getrlimit"), fn_name="sgetrlimit")
     # b.attach_kretprobe(event=b.get_syscall_fnname("getrusage"), fn_name="sgetrusage")
     # b.attach_kretprobe(event=b.get_syscall_fnname("sysinfo"), fn_name="ssysinfo")
