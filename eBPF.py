@@ -161,11 +161,92 @@ int smmap(struct pt_regs *ctx) {
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
-int sgettimeofday(struct pt_regs *ctx) {
+int smprotect(struct pt_regs *ctx) {
     struct data_t data = {};
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.syscallnumber = 11;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int smunmap(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 12;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sbrk(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 13;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int srt_sigaction(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 14;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int srt_sigprocmask(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 15;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int srt_sigreturn(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 16;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sioctl(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 17;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int spread64(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 18;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int spwrite64(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 19;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sreadv(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 20;
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -188,16 +269,16 @@ def attachkretprobe():
     b.attach_kretprobe(event=b.get_syscall_fnname("poll"), fn_name="spoll")
     b.attach_kretprobe(event=b.get_syscall_fnname("lseek"), fn_name="slseek")
     b.attach_kretprobe(event=b.get_syscall_fnname("mmap"), fn_name="smmap")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("mprotect"), fn_name="smprotect")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("munmap"), fn_name="smunmap")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("brk"), fn_name="sbrk")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("rt_sigaction"), fn_name="srt_sigaction")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("rt_sigprocmask"), fn_name="srt_sigprocmask")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("rt_sigreturn"), fn_name="srt_sigreturn")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("ioctl"), fn_name="sioctl")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("pread64"), fn_name="spread64")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("pwrite64"), fn_name="spwrite64")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("readv"), fn_name="sreadv")
+    b.attach_kretprobe(event=b.get_syscall_fnname("mprotect"), fn_name="smprotect")
+    b.attach_kretprobe(event=b.get_syscall_fnname("munmap"), fn_name="smunmap")
+    b.attach_kretprobe(event=b.get_syscall_fnname("brk"), fn_name="sbrk")
+    b.attach_kretprobe(event=b.get_syscall_fnname("rt_sigaction"), fn_name="srt_sigaction")
+    b.attach_kretprobe(event=b.get_syscall_fnname("rt_sigprocmask"), fn_name="srt_sigprocmask")
+    b.attach_kretprobe(event=b.get_syscall_fnname("rt_sigreturn"), fn_name="srt_sigreturn")
+    b.attach_kretprobe(event=b.get_syscall_fnname("ioctl"), fn_name="sioctl")
+    b.attach_kretprobe(event=b.get_syscall_fnname("pread64"), fn_name="spread64")
+    b.attach_kretprobe(event=b.get_syscall_fnname("pwrite64"), fn_name="spwrite64")
+    b.attach_kretprobe(event=b.get_syscall_fnname("readv"), fn_name="sreadv")
     # b.attach_kretprobe(event=b.get_syscall_fnname("writev"), fn_name="swritev")
     # b.attach_kretprobe(event=b.get_syscall_fnname("access"), fn_name="saccess")
     # b.attach_kretprobe(event=b.get_syscall_fnname("pipe"), fn_name="spipe")
@@ -559,42 +640,49 @@ def detectpatterns(cpu, data, size):
             syscall = "mmap"
             patterns.append(syscall)
         elif syscall == 11:
-            print("found gettimeofday inside the Container! with inum: " + str(inum_ring))
-            syscall = "gettimeofday"
+            print("found mprotect inside the Container! with inum: " + str(inum_ring))
+            syscall = "mprotect"
             patterns.append(syscall)
-        # elif syscall == 11:
-        #     occurences['mprotect'] = occurences['mprotect'] + 1
-        #     # print("Update für folgenden System Call mprotect. Neue Häufigkeit: " + str(occurences['mprotect']))
-        # elif syscall == 12:
-        #     occurences['munmap'] = occurences['munmap'] + 1
-        #     # print("Update für folgenden System Call munmap. Neue Häufigkeit: " + str(occurences['munmap']))
-        # elif syscall == 13:
-        #     occurences['brk'] = occurences['brk'] + 1
-        #     # print("Update für folgenden System Call brk. Neue Häufigkeit: " + str(occurences['brk']))
-        # elif syscall == 14:
-        #     occurences['rt_sigaction'] = occurences['rt_sigaction'] + 1
-        #     # print("Update für folgenden System Call rt_sigaction. Neue Häufigkeit: " + str(
-        #     #    occurences['rt_sigaction']))
-        # elif syscall == 15:
-        #     occurences['rt_sigprocmask'] = occurences['rt_sigprocmask'] + 1
-        #     # print("Update für folgenden System Call rt_sigprocmask. Neue Häufigkeit: " + str(
-        #     #    occurences['rt_sigprocmask']))
-        # elif syscall == 16:
-        #     occurences['rt_sigreturn'] = occurences['rt_sigreturn'] + 1
-        #     # print("Update für folgenden System Call rt_sigreturn. Neue Häufigkeit: " + str(
-        #     # occurences['rt_sigreturn']))
-        # elif syscall == 17:
-        #     occurences['ioctl'] = occurences['ioctl'] + 1
-        #     # print("Update für folgenden System Call ioctl. Neue Häufigkeit: " + str(occurences['ioctl']))
-        # elif syscall == 18:
-        #     occurences['pread64'] = occurences['pread64'] + 1
-        #     # print("Update für folgenden System Call pread64. Neue Häufigkeit: " + str(occurences['pread64']))
-        # elif syscall == 19:
-        #     occurences['pwrite64'] = occurences['pwrite64'] + 1
-        #     # print("Update für folgenden System Call pwrite64. Neue Häufigkeit: " + str(occurences['pwrite64']))
-        # elif syscall == 20:
-        #     occurences['readv'] = occurences['readv'] + 1
-        #     # print("Update für folgenden System Call readv. Neue Häufigkeit: " + str(occurences['readv']))
+        elif syscall == 12:
+            print("found munmap inside the Container! with inum: " + str(inum_ring))
+            syscall = "munmap"
+            patterns.append(syscall)
+        elif syscall == 13:
+            print("found brk inside the Container! with inum: " + str(inum_ring))
+            syscall = "brk"
+            patterns.append(syscall)
+        elif syscall == 14:
+            print("found rt_sigaction inside the Container! with inum: " + str(inum_ring))
+            syscall = "rt_sigaction"
+            patterns.append(syscall)
+        elif syscall == 14:
+            print("found rt_sigprocmask inside the Container! with inum: " + str(inum_ring))
+            syscall = "rt_sigprocmask"
+            patterns.append(syscall)
+        elif syscall == 15:
+            print("found rt_sigreturn inside the Container! with inum: " + str(inum_ring))
+            syscall = "rt_sigreturn"
+            patterns.append(syscall)
+        elif syscall == 16:
+            print("found rt_sigreturn inside the Container! with inum: " + str(inum_ring))
+            syscall = "rt_sigreturn"
+            patterns.append(syscall)
+        elif syscall == 17:
+            print("found ioctl inside the Container! with inum: " + str(inum_ring))
+            syscall = "ioctl"
+            patterns.append(syscall)
+        elif syscall == 18:
+            print("found pread64 inside the Container! with inum: " + str(inum_ring))
+            syscall = "pread64"
+            patterns.append(syscall)
+        elif syscall == 19:
+            print("found pwrite64 inside the Container! with inum: " + str(inum_ring))
+            syscall = "pwrite64"
+            patterns.append(syscall)
+        elif syscall == 20:
+            print("found readv inside the Container! with inum: " + str(inum_ring))
+            syscall = "readv"
+            patterns.append(syscall)
         # elif syscall == 21:
         #     occurences['writev'] = occurences['writev'] + 1
         #     # print("Update für folgenden System Call writev. Neue Häufigkeit: " + str(occurences['writev']))
