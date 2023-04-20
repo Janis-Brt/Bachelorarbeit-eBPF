@@ -885,6 +885,7 @@ int schmod(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
+    int x = 0;
 }
 """
 b = BPF(text=prog)
