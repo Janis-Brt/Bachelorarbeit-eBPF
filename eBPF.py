@@ -1541,7 +1541,7 @@ def detectpatterns(cpu, data, size):
     host_pid_ns = 4026531836
     #print("Host inum:  " + host_pid_ns)
     #print("Ring Buffer inum: " + str(inum_ring))
-    if str(inum_ring) is not str(host_pid_ns):
+    if str(inum_ring) != str(host_pid_ns):
         print()
         print(str(inum_ring))
         print(str(host_pid_ns))
