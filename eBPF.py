@@ -795,7 +795,6 @@ int schdir(struct pt_regs *ctx) {
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
-
 int sfchdir(struct pt_regs *ctx) {
     struct data_t data = {};
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
@@ -882,6 +881,107 @@ int schmod(struct pt_regs *ctx) {
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.syscallnumber = 90;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+
+int sfchmod(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 91;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int schown(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 92;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int sfchown(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 93;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int slchown(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 94;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int sumask(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 95;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int sgettimeofday(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 96;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int sgetrlimit(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 97;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int sgetrusage(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 98;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int ssysinfo(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 99;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int stimes(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 100;
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -985,16 +1085,16 @@ def attachkretprobe():
     b.attach_kretprobe(event=b.get_syscall_fnname("symlink"), fn_name="ssymlink")
     b.attach_kretprobe(event=b.get_syscall_fnname("readlink"), fn_name="sreadlink")
     b.attach_kretprobe(event=b.get_syscall_fnname("chmod"), fn_name="schmod")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("fchmod"), fn_name="sfchmod")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("chown"), fn_name="schown")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("fchown"), fn_name="sfchown")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("lchown"), fn_name="slchown")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("umask"), fn_name="sumask")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("gettimeofday"), fn_name="sgettimeofday")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("getrlimit"), fn_name="sgetrlimit")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("getrusage"), fn_name="sgetrusage")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("sysinfo"), fn_name="ssysinfo")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("times"), fn_name="stimes")
+    b.attach_kretprobe(event=b.get_syscall_fnname("fchmod"), fn_name="sfchmod")
+    b.attach_kretprobe(event=b.get_syscall_fnname("chown"), fn_name="schown")
+    b.attach_kretprobe(event=b.get_syscall_fnname("fchown"), fn_name="sfchown")
+    b.attach_kretprobe(event=b.get_syscall_fnname("lchown"), fn_name="slchown")
+    b.attach_kretprobe(event=b.get_syscall_fnname("umask"), fn_name="sumask")
+    b.attach_kretprobe(event=b.get_syscall_fnname("gettimeofday"), fn_name="sgettimeofday")
+    b.attach_kretprobe(event=b.get_syscall_fnname("getrlimit"), fn_name="sgetrlimit")
+    b.attach_kretprobe(event=b.get_syscall_fnname("getrusage"), fn_name="sgetrusage")
+    b.attach_kretprobe(event=b.get_syscall_fnname("sysinfo"), fn_name="ssysinfo")
+    b.attach_kretprobe(event=b.get_syscall_fnname("times"), fn_name="stimes")
     # b.attach_kretprobe(event=b.get_syscall_fnname("ptrace"), fn_name="sptrace")
     # b.attach_kretprobe(event=b.get_syscall_fnname("getuid"), fn_name="sgetuid")
     # b.attach_kretprobe(event=b.get_syscall_fnname("syslog"), fn_name="ssyslog")
@@ -1599,37 +1699,46 @@ def detectpatterns(cpu, data, size):
             print("found chmod inside the Container! with inum: " + str(inum_ring))
             syscall = "chmod"
             patterns.append(syscall)
-        # elif syscall == 91:
-        #     occurences['fchmod'] = occurences['fchmod'] + 1
-        #     # print("Update für folgenden System Call fchmod. Neue Häufigkeit: " + str(occurences['fchmod']))
-        # elif syscall == 92:
-        #     occurences['chown'] = occurences['chown'] + 1
-        #     # print("Update für folgenden System Call chown. Neue Häufigkeit: " + str(occurences['chown']))
-        # elif syscall == 93:
-        #     occurences['fchown'] = occurences['fchown'] + 1
-        #     # print("Update für folgenden System Call fchown. Neue Häufigkeit: " + str(occurences['fchown']))
-        # elif syscall == 94:
-        #     occurences['lchown'] = occurences['lchown'] + 1
-        #     # print("Update für folgenden System Call lchown. Neue Häufigkeit: " + str(occurences['lchown']))
-        # elif syscall == 95:
-        #     occurences['umask'] = occurences['umask'] + 1
-        #     # print("Update für folgenden System Call umask. Neue Häufigkeit: " + str(occurences['umask']))
-        # elif syscall == 96:
-        #     occurences['gettimeofday'] = occurences['gettimeofday'] + 1
-        #     # print("Update für folgenden System Call gettimeofday. Neue Häufigkeit: " + str(
-        #     #    occurences['gettimeofday']))
-        # elif syscall == 97:
-        #     occurences['getrlimit'] = occurences['getrlimit'] + 1
-        #     # print("Update für folgenden System Call getrlimit. Neue Häufigkeit: " + str(occurences['getrlimit']))
-        # elif syscall == 98:
-        #     occurences['getrusage'] = occurences['getrusage'] + 1
-        #     # print("Update für folgenden System Call getrusage. Neue Häufigkeit: " + str(occurences['getrusage']))
-        # elif syscall == 99:
-        #     occurences['sysinfo'] = occurences['sysinfo'] + 1
-        #     # print("Update für folgenden System Call sysinfo. Neue Häufigkeit: " + str(occurences['sysinfo']))
-        # elif syscall == 100:
-        #     occurences['times'] = occurences['times'] + 1
-        #     # print("Update für folgenden System Call times. Neue Häufigkeit: " + str(occurences['times']))
+        elif syscall == 91:
+            print("found fchmod inside the Container! with inum: " + str(inum_ring))
+            syscall = "fchmod"
+            patterns.append(syscall)
+        elif syscall == 92:
+            print("found chown inside the Container! with inum: " + str(inum_ring))
+            syscall = "chown"
+            patterns.append(syscall)
+        elif syscall == 93:
+            print("found fchown inside the Container! with inum: " + str(inum_ring))
+            syscall = "fchown"
+            patterns.append(syscall)
+        elif syscall == 94:
+            print("found lchown inside the Container! with inum: " + str(inum_ring))
+            syscall = "lchown"
+            patterns.append(syscall)
+        elif syscall == 95:
+            print("found umask inside the Container! with inum: " + str(inum_ring))
+            syscall = "umask"
+            patterns.append(syscall)
+        elif syscall == 96:
+            print("found gettimeofday inside the Container! with inum: " + str(inum_ring))
+            syscall = "gettimeofday"
+            patterns.append(syscall)
+        elif syscall == 97:
+            print("found getrlimit inside the Container! with inum: " + str(inum_ring))
+            syscall = "getrlimit"
+            patterns.append(syscall)
+        elif syscall == 98:
+            print("found getrusage inside the Container! with inum: " + str(inum_ring))
+            syscall = "getrusage"
+            patterns.append(syscall)
+        elif syscall == 99:
+            print("found sysinfo inside the Container! with inum: " + str(inum_ring))
+            syscall = "chown"
+            patterns.append(syscall)
+        elif syscall == 100:
+            print("found times inside the Container! with inum: " + str(inum_ring))
+            syscall = "times"
+            patterns.append(syscall)
         # elif syscall == 102:
         #     occurences['ptrace'] = occurences['ptrace'] + 1
         #     # print("Update für folgenden System Call ptrace. Neue Häufigkeit: " + str(occurences['ptrace']))
