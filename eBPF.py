@@ -432,6 +432,97 @@ int sgetpid(struct pt_regs *ctx) {
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
+
+int ssendfile(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 41;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int ssocket(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 42;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sconnect(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 43;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int saccept(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 44;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int ssendto(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 45;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int srecvfrom(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 46;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int ssendmsg(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 47;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int srecvmsg(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 48;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sshutdown(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 49;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sbind(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 50;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
 """
 b = BPF(text=prog)
 
@@ -480,16 +571,16 @@ def attachkretprobe():
     b.attach_kretprobe(event=b.get_syscall_fnname("alarm"), fn_name="salarm")
     b.attach_kretprobe(event=b.get_syscall_fnname("setitimer"), fn_name="ssetitimer")
     b.attach_kretprobe(event=b.get_syscall_fnname("getpid"), fn_name="sgetpid")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("sendfile"), fn_name="ssendfile")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("socket"), fn_name="ssocket")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("connect"), fn_name="sconnect")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("accept"), fn_name="saccept")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("sendto"), fn_name="ssendto")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("recvfrom"), fn_name="srecvfrom")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("sendmsg"), fn_name="ssendmsg")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("recvmsg"), fn_name="srecvmsg")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("shutdown"), fn_name="sshutdown")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("bind"), fn_name="sbind")
+    b.attach_kretprobe(event=b.get_syscall_fnname("sendfile"), fn_name="ssendfile")
+    b.attach_kretprobe(event=b.get_syscall_fnname("socket"), fn_name="ssocket")
+    b.attach_kretprobe(event=b.get_syscall_fnname("connect"), fn_name="sconnect")
+    b.attach_kretprobe(event=b.get_syscall_fnname("accept"), fn_name="saccept")
+    b.attach_kretprobe(event=b.get_syscall_fnname("sendto"), fn_name="ssendto")
+    b.attach_kretprobe(event=b.get_syscall_fnname("recvfrom"), fn_name="srecvfrom")
+    b.attach_kretprobe(event=b.get_syscall_fnname("sendmsg"), fn_name="ssendmsg")
+    b.attach_kretprobe(event=b.get_syscall_fnname("recvmsg"), fn_name="srecvmsg")
+    b.attach_kretprobe(event=b.get_syscall_fnname("shutdown"), fn_name="sshutdown")
+    b.attach_kretprobe(event=b.get_syscall_fnname("bind"), fn_name="sbind")
     # b.attach_kretprobe(event=b.get_syscall_fnname("listen"), fn_name="slisten")
     # b.attach_kretprobe(event=b.get_syscall_fnname("getsockname"), fn_name="sgetsockname")
     # b.attach_kretprobe(event=b.get_syscall_fnname("getpeername"), fn_name="sgetpeername")
@@ -775,7 +866,7 @@ def detectpatterns(cpu, data, size):
     cgroup = data.cgroup
     # if localpids.__contains__(str(pid)):
     if inum_ring == 4026532483:
-        print("Inside Container")
+        # print("Inside Container")
         if syscall == 0:
             print("found clone inside the Container! with inum: " + str(inum_ring))
             syscall = "clone"
@@ -944,36 +1035,46 @@ def detectpatterns(cpu, data, size):
             print("found getpid inside the Container! with inum: " + str(inum_ring))
             syscall = "getpid"
             patterns.append(syscall)
-        # elif syscall == 41:
-        #     occurences['sendfile'] = occurences['sendfile'] + 1
-        #     # print("Update für folgenden System Call sendfile. Neue Häufigkeit: " + str(occurences['sendfile']))
-        # elif syscall == 42:
-        #     occurences['socket'] = occurences['socket'] + 1
-        #     # print("Update für folgenden System Call socket. Neue Häufigkeit: " + str(occurences['socket']))
-        # elif syscall == 43:
-        #     occurences['connect'] = occurences['connect'] + 1
-        #     # print("Update für folgenden System Call connect. Neue Häufigkeit: " + str(occurences['connect']))
-        # elif syscall == 44:
-        #     occurences['accept'] = occurences['accept'] + 1
-        #     # print("Update für folgenden System Call accept. Neue Häufigkeit: " + str(occurences['accept']))
-        # elif syscall == 45:
-        #     occurences['sendto'] = occurences['sendto'] + 1
-        #     # print("Update für folgenden System Call sendto. Neue Häufigkeit: " + str(occurences['sendto']))
-        # elif syscall == 46:
-        #     occurences['recvfrom'] = occurences['recvfrom'] + 1
-        #     # print("Update für folgenden System Call recvfrom. Neue Häufigkeit: " + str(occurences['recvfrom']))
-        # elif syscall == 47:
-        #     occurences['sendmsg'] = occurences['sendmsg'] + 1
-        #     # print("Update für folgenden System Call sendmsg. Neue Häufigkeit: " + str(occurences['sendmsg']))
-        # elif syscall == 48:
-        #     occurences['recvmsg'] = occurences['recvmsg'] + 1
-        #     # print("Update für folgenden System Call recvmsg. Neue Häufigkeit: " + str(occurences['recvmsg']))
-        # elif syscall == 49:
-        #     occurences['shutdown'] = occurences['shutdown'] + 1
-        #     # print("Update für folgenden System Call shutdown. Neue Häufigkeit: " + str(occurences['shutdown']))
-        # elif syscall == 50:
-        #     occurences['bind'] = occurences['bind'] + 1
-        #     # print("Update für folgenden System Call bind. Neue Häufigkeit: " + str(occurences['bind']))
+        elif syscall == 41:
+            print("found senfile inside the Container! with inum: " + str(inum_ring))
+            syscall = "sendfile"
+            patterns.append(syscall)
+        elif syscall == 42:
+            print("found socket inside the Container! with inum: " + str(inum_ring))
+            syscall = "socket"
+            patterns.append(syscall)
+        elif syscall == 43:
+            print("found connect inside the Container! with inum: " + str(inum_ring))
+            syscall = "connect"
+            patterns.append(syscall)
+        elif syscall == 44:
+            print("found accept inside the Container! with inum: " + str(inum_ring))
+            syscall = "accept"
+            patterns.append(syscall)
+        elif syscall == 45:
+            print("found sendto inside the Container! with inum: " + str(inum_ring))
+            syscall = "sendto"
+            patterns.append(syscall)
+        elif syscall == 46:
+            print("found recvfrom inside the Container! with inum: " + str(inum_ring))
+            syscall = "recvfrom"
+            patterns.append(syscall)
+        elif syscall == 47:
+            print("found sendmsg inside the Container! with inum: " + str(inum_ring))
+            syscall = "sendmsg"
+            patterns.append(syscall)
+        elif syscall == 48:
+            print("found recvmsg inside the Container! with inum: " + str(inum_ring))
+            syscall = "recvmsg"
+            patterns.append(syscall)
+        elif syscall == 49:
+            print("found shutdown inside the Container! with inum: " + str(inum_ring))
+            syscall = "shutdown"
+            patterns.append(syscall)
+        elif syscall == 50:
+            print("found bind inside the Container! with inum: " + str(inum_ring))
+            syscall = "bind"
+            patterns.append(syscall)
         # elif syscall == 51:
         #     occurences['listen'] = occurences['listen'] + 1
         #     # print("Update für folgenden System Call listen. Neue Häufigkeit: " + str(occurences['listen']))
@@ -1897,7 +1998,7 @@ def getringbuffer():
         try:
             b.perf_buffer_poll(timeout=10 * 1000)
         except KeyboardInterrupt:
-            print("Abbruch")
+            print("Abbruch. Patterns:")
             print(patterns)
             getprobability()
             signal_handler(signal.SIGINT, signal_handler)
