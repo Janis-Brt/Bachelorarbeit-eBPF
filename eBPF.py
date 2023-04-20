@@ -1539,6 +1539,7 @@ def detectpatterns(cpu, data, size):
     cgroup = data.cgroup
     # if localpids.__contains__(str(pid)):
     host_pid_ns = getinum()
+    print("Test 1" + host_pid_ns)
     if inum_ring != host_pid_ns:
         # print("Inside Container")
         if syscall == 0:
