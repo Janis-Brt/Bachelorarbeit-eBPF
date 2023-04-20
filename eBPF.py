@@ -251,6 +251,97 @@ int sreadv(struct pt_regs *ctx) {
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
+
+int swritev(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 21;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int saccess(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 22;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int spipe(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 23;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sselect(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 24;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int ssched_yield(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 25;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int smremap(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 26;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int smsync(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 27;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int smincore(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 28;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int smadvise(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 29;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sshmget(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 30;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
 """
 b = BPF(text=prog)
 
@@ -279,16 +370,16 @@ def attachkretprobe():
     b.attach_kretprobe(event=b.get_syscall_fnname("pread64"), fn_name="spread64")
     b.attach_kretprobe(event=b.get_syscall_fnname("pwrite64"), fn_name="spwrite64")
     b.attach_kretprobe(event=b.get_syscall_fnname("readv"), fn_name="sreadv")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("writev"), fn_name="swritev")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("access"), fn_name="saccess")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("pipe"), fn_name="spipe")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("select"), fn_name="sselect")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("sched_yield"), fn_name="ssched_yield")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("mremap"), fn_name="smremap")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("msync"), fn_name="smsync")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("mincore"), fn_name="smincore")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("madvise"), fn_name="smadvise")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("shmget"), fn_name="sshmget")
+    b.attach_kretprobe(event=b.get_syscall_fnname("writev"), fn_name="swritev")
+    b.attach_kretprobe(event=b.get_syscall_fnname("access"), fn_name="saccess")
+    b.attach_kretprobe(event=b.get_syscall_fnname("pipe"), fn_name="spipe")
+    b.attach_kretprobe(event=b.get_syscall_fnname("select"), fn_name="sselect")
+    b.attach_kretprobe(event=b.get_syscall_fnname("sched_yield"), fn_name="ssched_yield")
+    b.attach_kretprobe(event=b.get_syscall_fnname("mremap"), fn_name="smremap")
+    b.attach_kretprobe(event=b.get_syscall_fnname("msync"), fn_name="smsync")
+    b.attach_kretprobe(event=b.get_syscall_fnname("mincore"), fn_name="smincore")
+    b.attach_kretprobe(event=b.get_syscall_fnname("madvise"), fn_name="smadvise")
+    b.attach_kretprobe(event=b.get_syscall_fnname("shmget"), fn_name="sshmget")
     # b.attach_kretprobe(event=b.get_syscall_fnname("shmat"), fn_name="sshmat")
     # b.attach_kretprobe(event=b.get_syscall_fnname("shmctl"), fn_name="sshmctl")
     # b.attach_kretprobe(event=b.get_syscall_fnname("dup"), fn_name="sdup")
@@ -683,37 +774,46 @@ def detectpatterns(cpu, data, size):
             print("found readv inside the Container! with inum: " + str(inum_ring))
             syscall = "readv"
             patterns.append(syscall)
-        # elif syscall == 21:
-        #     occurences['writev'] = occurences['writev'] + 1
-        #     # print("Update für folgenden System Call writev. Neue Häufigkeit: " + str(occurences['writev']))
-        # elif syscall == 22:
-        #     occurences['access'] = occurences['access'] + 1
-        #     # print("Update für folgenden System Call access. Neue Häufigkeit: " + str(occurences['access']))
-        # elif syscall == 23:
-        #     occurences['pipe'] = occurences['pipe'] + 1
-        #     # print("Update für folgenden System Call pipe. Neue Häufigkeit: " + str(occurences['pipe']))
-        # elif syscall == 24:
-        #     occurences['select'] = occurences['select'] + 1
-        #     # print("Update für folgenden System Call select. Neue Häufigkeit: " + str(occurences['select']))
-        # elif syscall == 25:
-        #     occurences['mremap'] = occurences['mremap'] + 1
-        #     # print("Update für folgenden System Call mremap. Neue Häufigkeit: " + str(occurences['mremap']))
-        # elif syscall == 26:
-        #     occurences['sched_yield'] = occurences['sched_yield'] + 1
-        #     # print(
-        #     #    "Update für folgenden System Call: sched_yield. Neue Häufigkeit: " + str(occurences['sched_yield']))
-        # elif syscall == 27:
-        #     occurences['msync'] = occurences['msync'] + 1
-        #     # print("Update für folgenden System Call msync. Neue Häufigkeit: " + str(occurences['msync']))
-        # elif syscall == 28:
-        #     occurences['mincore'] = occurences['mincore'] + 1
-        #     # print("Update für folgenden System Call mincore. Neue Häufigkeit: " + str(occurences['mincore']))
-        # elif syscall == 29:
-        #     occurences['madvise'] = occurences['madvise'] + 1
-        #     # print("Update für folgenden System Call madvise. Neue Häufigkeit: " + str(occurences['madvise']))
-        # elif syscall == 30:
-        #     occurences['shmget'] = occurences['shmget'] + 1
-        #     # print("Update für folgenden System Call shmget. Neue Häufigkeit: " + str(occurences['shmget']))
+        elif syscall == 21:
+            print("found writev inside the Container! with inum: " + str(inum_ring))
+            syscall = "writev"
+            patterns.append(syscall)
+        elif syscall == 22:
+            print("found access inside the Container! with inum: " + str(inum_ring))
+            syscall = "access"
+            patterns.append(syscall)
+        elif syscall == 23:
+            print("found pipe inside the Container! with inum: " + str(inum_ring))
+            syscall = "pipe"
+            patterns.append(syscall)
+        elif syscall == 24:
+            print("found select inside the Container! with inum: " + str(inum_ring))
+            syscall = "select"
+            patterns.append(syscall)
+        elif syscall == 25:
+            print("found mremap inside the Container! with inum: " + str(inum_ring))
+            syscall = "mremap"
+            patterns.append(syscall)
+        elif syscall == 26:
+            print("found sched_yield inside the Container! with inum: " + str(inum_ring))
+            syscall = "sched_yield"
+            patterns.append(syscall)
+        elif syscall == 27:
+            print("found msync inside the Container! with inum: " + str(inum_ring))
+            syscall = "msync"
+            patterns.append(syscall)
+        elif syscall == 28:
+            print("found mincore inside the Container! with inum: " + str(inum_ring))
+            syscall = "mincore"
+            patterns.append(syscall)
+        elif syscall == 29:
+            print("found madvise inside the Container! with inum: " + str(inum_ring))
+            syscall = "madvise"
+            patterns.append(syscall)
+        elif syscall == 30:
+            print("found shmget inside the Container! with inum: " + str(inum_ring))
+            syscall = "shmget"
+            patterns.append(syscall)
         # elif syscall == 31:
         #     occurences['shmat'] = occurences['shmat'] + 1
         #     # print("Update für folgenden System Call shmat. Neue Häufigkeit: " + str(occurences['shmat']))
