@@ -2765,7 +2765,7 @@ def getinum():
     for part in parts:
         if part.__contains__("pid:["): # and part.endswith("]'\n"):
             # Extrahiere die ID aus der Zeichenkette
-            pid_ns_id = part[5:-4]
+            pid_ns_id = part[5:-3].strip()
             break
 
     if pid_ns_id:
