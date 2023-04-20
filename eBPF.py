@@ -1542,9 +1542,9 @@ def detectpatterns(cpu, data, size):
     print("Host inum:  " + host_pid_ns)
     print("Ring Buffer inum: " + str(inum_ring))
 
-    # if host_pid_ns != str(inum_ring):
-    #     print("Ungleich")
-    # else: print("Gleich")
+    if host_pid_ns != str(inum_ring):
+        print("Ungleich")
+    else: print("Gleich")
 
     if host_pid_ns != str(inum_ring):
         # print("Inside Container")
