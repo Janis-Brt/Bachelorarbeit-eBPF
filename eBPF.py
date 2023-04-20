@@ -1541,7 +1541,12 @@ def detectpatterns(cpu, data, size):
     host_pid_ns = getinum()
     print("Host inum:  " + host_pid_ns)
     print("Ring Buffer inum: " + str(inum_ring))
-    if host_pid_ns != inum_ring:
+
+    # if host_pid_ns != str(inum_ring):
+    #     print("Ungleich")
+    # else: print("Gleich")
+
+    if host_pid_ns != str(inum_ring):
         # print("Inside Container")
         if syscall == 0:
             print("found clone inside the Container! with inum: " + str(inum_ring))
