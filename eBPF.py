@@ -2773,7 +2773,6 @@ def getinum():
     for part in parts:
         if part.__contains__("pid:["):  # and part.endswith("]'\n"):
             # Extrahiere die ID aus der Zeichenkette
-            print(part)
             pid_ns_id = part[5:-12]
             break
     print("PID-Namespace ID des Host Systems:", pid_ns_id)
@@ -2806,6 +2805,5 @@ ibinary = input("Input Binary: ")
 localpids = getpids(ibinary)
 print("attaching to kretprobes")
 attachkretprobe()
-getinum()
 print("attachment ready" + "\n" + "now tracing! \npress CTRL + C to stop tracing.")
 getringbuffer()
