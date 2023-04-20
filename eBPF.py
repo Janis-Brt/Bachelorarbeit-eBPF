@@ -705,7 +705,6 @@ int smsgrcv(struct pt_regs *ctx) {
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
-
 int smsgctl(struct pt_regs *ctx) {
     struct data_t data = {};
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
@@ -792,6 +791,97 @@ int schdir(struct pt_regs *ctx) {
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.syscallnumber = 80;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+
+int sfchdir(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 81;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int srename(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 82;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int smkdir(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 83;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int srmdir(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 84;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int screat(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 85;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int slink(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 86;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sunlikn(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 87;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int ssymlink(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 88;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sreadlink(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 89;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int schmod(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 90;
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -884,16 +974,16 @@ def attachkretprobe():
     b.attach_kretprobe(event=b.get_syscall_fnname("getdents"), fn_name="sgetdents")
     b.attach_kretprobe(event=b.get_syscall_fnname("getcwd"), fn_name="sgetcwd")
     b.attach_kretprobe(event=b.get_syscall_fnname("chdir"), fn_name="schdir")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("fchdir"), fn_name="sfchdir")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("rename"), fn_name="srename")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("mkdir"), fn_name="smkdir")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("rmdir"), fn_name="srmdir")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("creat"), fn_name="screat")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("link"), fn_name="slink")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("unlink"), fn_name="sunlink")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("symlink"), fn_name="ssymlink")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("readlink"), fn_name="sreadlink")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("chmod"), fn_name="schmod")
+    b.attach_kretprobe(event=b.get_syscall_fnname("fchdir"), fn_name="sfchdir")
+    b.attach_kretprobe(event=b.get_syscall_fnname("rename"), fn_name="srename")
+    b.attach_kretprobe(event=b.get_syscall_fnname("mkdir"), fn_name="smkdir")
+    b.attach_kretprobe(event=b.get_syscall_fnname("rmdir"), fn_name="srmdir")
+    b.attach_kretprobe(event=b.get_syscall_fnname("creat"), fn_name="screat")
+    b.attach_kretprobe(event=b.get_syscall_fnname("link"), fn_name="slink")
+    b.attach_kretprobe(event=b.get_syscall_fnname("unlink"), fn_name="sunlink")
+    b.attach_kretprobe(event=b.get_syscall_fnname("symlink"), fn_name="ssymlink")
+    b.attach_kretprobe(event=b.get_syscall_fnname("readlink"), fn_name="sreadlink")
+    b.attach_kretprobe(event=b.get_syscall_fnname("chmod"), fn_name="schmod")
     # b.attach_kretprobe(event=b.get_syscall_fnname("fchmod"), fn_name="sfchmod")
     # b.attach_kretprobe(event=b.get_syscall_fnname("chown"), fn_name="schown")
     # b.attach_kretprobe(event=b.get_syscall_fnname("fchown"), fn_name="sfchown")
@@ -1468,36 +1558,46 @@ def detectpatterns(cpu, data, size):
             print("found chdir inside the Container! with inum: " + str(inum_ring))
             syscall = "chdir"
             patterns.append(syscall)
-        # elif syscall == 81:
-        #     occurences['fchdir'] = occurences['fchdir'] + 1
-        #     # print("Update für folgenden System Call fchdir. Neue Häufigkeit: " + str(occurences['fchdir']))
-        # elif syscall == 82:
-        #     occurences['rename'] = occurences['rename'] + 1
-        #     # print("Update für folgenden System Call rename. Neue Häufigkeit: " + str(occurences['rename']))
-        # elif syscall == 83:
-        #     occurences['mkdir'] = occurences['mkdir'] + 1
-        #     # print("Update für folgenden System Call mkdir. Neue Häufigkeit: " + str(occurences['mkdir']))
-        # elif syscall == 84:
-        #     occurences['rmdir'] = occurences['rmdir'] + 1
-        #     # print("Update für folgenden System Call rmdir. Neue Häufigkeit: " + str(occurences['rmdir']))
-        # elif syscall == 85:
-        #     occurences['creat'] = occurences['creat'] + 1
-        #     # print("Update für folgenden System Call creat. Neue Häufigkeit: " + str(occurences['creat']))
-        # elif syscall == 86:
-        #     occurences['link'] = occurences['link'] + 1
-        #     # print("Update für folgenden System Call link. Neue Häufigkeit: " + str(occurences['link']))
-        # elif syscall == 87:
-        #     occurences['unlink'] = occurences['unlink'] + 1
-        #     # print("Update für folgenden System Call unlink. Neue Häufigkeit: " + str(occurences['unlink']))
-        # elif syscall == 88:
-        #     occurences['symlink'] = occurences['symlink'] + 1
-        #     # print("Update für folgenden System Call symlink. Neue Häufigkeit: " + str(occurences['symlink']))
-        # elif syscall == 89:
-        #     occurences['readlink'] = occurences['readlink'] + 1
-        #     # print("Update für folgenden System Call readlink. Neue Häufigkeit: " + str(occurences['readlink']))
-        # elif syscall == 90:
-        #     occurences['chmod'] = occurences['chmod'] + 1
-        #     # print("Update für folgenden System Call chmod. Neue Häufigkeit: " + str(occurences['chmod']))
+        elif syscall == 81:
+            print("found fchdir inside the Container! with inum: " + str(inum_ring))
+            syscall = "fchdir"
+            patterns.append(syscall)
+        elif syscall == 82:
+            print("found rename inside the Container! with inum: " + str(inum_ring))
+            syscall = "rename"
+            patterns.append(syscall)
+        elif syscall == 83:
+            print("found mkdir inside the Container! with inum: " + str(inum_ring))
+            syscall = "mkdir"
+            patterns.append(syscall)
+        elif syscall == 84:
+            print("found rmdir inside the Container! with inum: " + str(inum_ring))
+            syscall = "rmdir"
+            patterns.append(syscall)
+        elif syscall == 85:
+            print("found creat inside the Container! with inum: " + str(inum_ring))
+            syscall = "creat"
+            patterns.append(syscall)
+        elif syscall == 86:
+            print("found link inside the Container! with inum: " + str(inum_ring))
+            syscall = "link"
+            patterns.append(syscall)
+        elif syscall == 87:
+            print("found unlink inside the Container! with inum: " + str(inum_ring))
+            syscall = "unlink"
+            patterns.append(syscall)
+        elif syscall == 88:
+            print("found symlink inside the Container! with inum: " + str(inum_ring))
+            syscall = "symlink"
+            patterns.append(syscall)
+        elif syscall == 89:
+            print("found readlink inside the Container! with inum: " + str(inum_ring))
+            syscall = "readlink"
+            patterns.append(syscall)
+        elif syscall == 90:
+            print("found chmod inside the Container! with inum: " + str(inum_ring))
+            syscall = "chmod"
+            patterns.append(syscall)
         # elif syscall == 91:
         #     occurences['fchmod'] = occurences['fchmod'] + 1
         #     # print("Update für folgenden System Call fchmod. Neue Häufigkeit: " + str(occurences['fchmod']))
