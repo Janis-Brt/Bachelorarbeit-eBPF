@@ -523,6 +523,97 @@ int sbind(struct pt_regs *ctx) {
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
+
+int slisten(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 51;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sgetsockname(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 52;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sgetpeername(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 53;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int ssocketpair(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 54;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int ssetsockopt(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 55;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sgetsockopt(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 56;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sfork(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 57;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int svfork(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 58;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sexecve(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 59;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sexit(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 60;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
 """
 b = BPF(text=prog)
 
@@ -581,16 +672,16 @@ def attachkretprobe():
     b.attach_kretprobe(event=b.get_syscall_fnname("recvmsg"), fn_name="srecvmsg")
     b.attach_kretprobe(event=b.get_syscall_fnname("shutdown"), fn_name="sshutdown")
     b.attach_kretprobe(event=b.get_syscall_fnname("bind"), fn_name="sbind")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("listen"), fn_name="slisten")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("getsockname"), fn_name="sgetsockname")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("getpeername"), fn_name="sgetpeername")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("socketpair"), fn_name="ssocketpair")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("setsockopt"), fn_name="ssetsockopt")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("getsockopt"), fn_name="sgetsockopt")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("fork"), fn_name="sfork")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("vfork"), fn_name="svfork")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("execve"), fn_name="sexecve")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("exit"), fn_name="sexit")
+    b.attach_kretprobe(event=b.get_syscall_fnname("listen"), fn_name="slisten")
+    b.attach_kretprobe(event=b.get_syscall_fnname("getsockname"), fn_name="sgetsockname")
+    b.attach_kretprobe(event=b.get_syscall_fnname("getpeername"), fn_name="sgetpeername")
+    b.attach_kretprobe(event=b.get_syscall_fnname("socketpair"), fn_name="ssocketpair")
+    b.attach_kretprobe(event=b.get_syscall_fnname("setsockopt"), fn_name="ssetsockopt")
+    b.attach_kretprobe(event=b.get_syscall_fnname("getsockopt"), fn_name="sgetsockopt")
+    b.attach_kretprobe(event=b.get_syscall_fnname("fork"), fn_name="sfork")
+    b.attach_kretprobe(event=b.get_syscall_fnname("vfork"), fn_name="svfork")
+    b.attach_kretprobe(event=b.get_syscall_fnname("execve"), fn_name="sexecve")
+    b.attach_kretprobe(event=b.get_syscall_fnname("exit"), fn_name="sexit")
     # b.attach_kretprobe(event=b.get_syscall_fnname("wait4"), fn_name="swait4")
     # b.attach_kretprobe(event=b.get_syscall_fnname("kill"), fn_name="skill")
     # b.attach_kretprobe(event=b.get_syscall_fnname("uname"), fn_name="suname")
@@ -1075,38 +1166,46 @@ def detectpatterns(cpu, data, size):
             print("found bind inside the Container! with inum: " + str(inum_ring))
             syscall = "bind"
             patterns.append(syscall)
-        # elif syscall == 51:
-        #     occurences['listen'] = occurences['listen'] + 1
-        #     # print("Update für folgenden System Call listen. Neue Häufigkeit: " + str(occurences['listen']))
-        # elif syscall == 52:
-        #     occurences['getsockname'] = occurences['getsockname'] + 1
-        #     # print(
-        #     #     "Update für folgenden System Call: getsockname. Neue Häufigkeit: " + str(occurences['getsockname']))
-        # elif syscall == 53:
-        #     occurences['getpeername'] = occurences['getpeername'] + 1
-        #     # print(
-        #     #     "Update für folgenden System Call: getpeername. Neue Häufigkeit: " + str(occurences['getpeername']))
-        # elif syscall == 54:
-        #     occurences['socketpair'] = occurences['socketpair'] + 1
-        #     # print("Update für folgenden System Call socketpair. Neue Häufigkeit: " + str(occurences['socketpair']))
-        # elif syscall == 55:
-        #     occurences['setsockopt'] = occurences['setsockopt'] + 1
-        #     # print("Update für folgenden System Call setsockopt. Neue Häufigkeit: " + str(occurences['setsockopt']))
-        # elif syscall == 56:
-        #     occurences['getsockopt'] = occurences['getsockopt'] + 1
-        #     # print("Update für folgenden System Call getsockopt. Neue Häufigkeit: " + str(occurences['getsockopt']))
-        # elif syscall == 57:
-        #     occurences['fork'] = occurences['fork'] + 1
-        #     # print("Update für folgenden System Call fork. Neue Häufigkeit: " + str(occurences['fork']))
-        # elif syscall == 58:
-        #     occurences['vfork'] = occurences['vfork'] + 1
-        #     # print("Update für folgenden System Call vfork. Neue Häufigkeit: " + str(occurences['vfork']))
-        # elif syscall == 59:
-        #     occurences['execve'] = occurences['execve'] + 1
-        #     # print("Update für folgenden System Call execve. Neue Häufigkeit: " + str(occurences['execve']))
-        # elif syscall == 60:
-        #     occurences['exit'] = occurences['exit'] + 1
-        #     # print("Update für folgenden System Call exit. Neue Häufigkeit: " + str(occurences['exit']))
+        elif syscall == 51:
+            print("found listen inside the Container! with inum: " + str(inum_ring))
+            syscall = "listen"
+            patterns.append(syscall)
+        elif syscall == 52:
+            print("found getsockname inside the Container! with inum: " + str(inum_ring))
+            syscall = "getsockname"
+            patterns.append(syscall)
+        elif syscall == 53:
+            print("found getpeername inside the Container! with inum: " + str(inum_ring))
+            syscall = "getpername"
+            patterns.append(syscall)
+        elif syscall == 54:
+            print("found socketpair inside the Container! with inum: " + str(inum_ring))
+            syscall = "socketpair"
+            patterns.append(syscall)
+        elif syscall == 55:
+            print("found setsockopt inside the Container! with inum: " + str(inum_ring))
+            syscall = "setsockopt"
+            patterns.append(syscall)
+        elif syscall == 56:
+            print("found getsockopt inside the Container! with inum: " + str(inum_ring))
+            syscall = "getsockopt"
+            patterns.append(syscall)
+        elif syscall == 57:
+            print("found fork inside the Container! with inum: " + str(inum_ring))
+            syscall = "fork"
+            patterns.append(syscall)
+        elif syscall == 58:
+            print("found vfork inside the Container! with inum: " + str(inum_ring))
+            syscall = "vfork"
+            patterns.append(syscall)
+        elif syscall == 59:
+            print("found execve inside the Container! with inum: " + str(inum_ring))
+            syscall = "execve"
+            patterns.append(syscall)
+        elif syscall == 60:
+            print("found exit inside the Container! with inum: " + str(inum_ring))
+            syscall = "exit"
+            patterns.append(syscall)
         # elif syscall == 61:
         #     occurences['wait4'] = occurences['wait4'] + 1
         #     # print("Update für folgenden System Call wait4. Neue Häufigkeit: " + str(occurences['wait4']))
