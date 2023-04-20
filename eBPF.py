@@ -1087,16 +1087,6 @@ int sgetppid(struct pt_regs *ctx) {
     return 0;
     int x = 0;
 }
-int sgetppid(struct pt_regs *ctx) {
-    struct data_t data = {};
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    data.syscallnumber = 110;
-    data.inum = inum_ring;
-    events.perf_submit(ctx, &data, sizeof(data));
-    return 0;
-    int x = 0;
-}
 int sgetpgrp(struct pt_regs *ctx) {
     struct data_t data = {};
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
