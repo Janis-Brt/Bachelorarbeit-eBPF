@@ -705,6 +705,97 @@ int smsgrcv(struct pt_regs *ctx) {
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
+
+int smsgctl(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 71;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sfcntl(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 72;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sflock(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 73;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sfsync(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 74;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sfdatasync(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 75;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int struncate(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 76;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sftruncate(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 77;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sgetdents(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 78;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sgetcwd(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 79;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int schdir(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 80;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
 """
 b = BPF(text=prog)
 
@@ -783,16 +874,16 @@ def attachkretprobe():
     b.attach_kretprobe(event=b.get_syscall_fnname("msgget"), fn_name="smsgget")
     b.attach_kretprobe(event=b.get_syscall_fnname("msgsnd"), fn_name="smsgsnd")
     b.attach_kretprobe(event=b.get_syscall_fnname("msgrcv"), fn_name="smsgrcv")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("msgctl"), fn_name="smsgctl")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("fcntl"), fn_name="sfcntl")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("flock"), fn_name="sflock")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("fsync"), fn_name="sfsync")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("fdatasync"), fn_name="sfdatasync")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("truncate"), fn_name="struncate")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("ftruncate"), fn_name="sftruncate")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("getdents"), fn_name="sgetdents")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("getcwd"), fn_name="sgetcwd")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("chdir"), fn_name="schdir")
+    b.attach_kretprobe(event=b.get_syscall_fnname("msgctl"), fn_name="smsgctl")
+    b.attach_kretprobe(event=b.get_syscall_fnname("fcntl"), fn_name="sfcntl")
+    b.attach_kretprobe(event=b.get_syscall_fnname("flock"), fn_name="sflock")
+    b.attach_kretprobe(event=b.get_syscall_fnname("fsync"), fn_name="sfsync")
+    b.attach_kretprobe(event=b.get_syscall_fnname("fdatasync"), fn_name="sfdatasync")
+    b.attach_kretprobe(event=b.get_syscall_fnname("truncate"), fn_name="struncate")
+    b.attach_kretprobe(event=b.get_syscall_fnname("ftruncate"), fn_name="sftruncate")
+    b.attach_kretprobe(event=b.get_syscall_fnname("getdents"), fn_name="sgetdents")
+    b.attach_kretprobe(event=b.get_syscall_fnname("getcwd"), fn_name="sgetcwd")
+    b.attach_kretprobe(event=b.get_syscall_fnname("chdir"), fn_name="schdir")
     # b.attach_kretprobe(event=b.get_syscall_fnname("fchdir"), fn_name="sfchdir")
     # b.attach_kretprobe(event=b.get_syscall_fnname("rename"), fn_name="srename")
     # b.attach_kretprobe(event=b.get_syscall_fnname("mkdir"), fn_name="smkdir")
@@ -1337,36 +1428,46 @@ def detectpatterns(cpu, data, size):
             print("found msgrcv inside the Container! with inum: " + str(inum_ring))
             syscall = "msgrcv"
             patterns.append(syscall)
-        # elif syscall == 71:
-        #     occurences['msgctl'] = occurences['msgctl'] + 1
-        #     # print("Update für folgenden System Call msgctl. Neue Häufigkeit: " + str(occurences['msgctl']))
-        # elif syscall == 72:
-        #     occurences['fcntl'] = occurences['fcntl'] + 1
-        #     # print("Update für folgenden System Call fcntl. Neue Häufigkeit: " + str(occurences['fcntl']))
-        # elif syscall == 73:
-        #     occurences['flock'] = occurences['flock'] + 1
-        #     # print("Update für folgenden System Call flock. Neue Häufigkeit: " + str(occurences['flock']))
-        # elif syscall == 74:
-        #     occurences['fsync'] = occurences['fsync'] + 1
-        #     # print("Update für folgenden System Call fsync. Neue Häufigkeit: " + str(occurences['fsync']))
-        # elif syscall == 75:
-        #     occurences['fdatasync'] = occurences['fdatasync'] + 1
-        #     # print("Update für folgenden System Call fdatasync. Neue Häufigkeit: " + str(occurences['fdatasync']))
-        # elif syscall == 76:
-        #     occurences['truncate'] = occurences['truncate'] + 1
-        #     # print("Update für folgenden System Call truncate. Neue Häufigkeit: " + str(occurences['truncate']))
-        # elif syscall == 77:
-        #     occurences['ftruncate'] = occurences['ftruncate'] + 1
-        #     # print("Update für folgenden System Call ftruncate. Neue Häufigkeit: " + str(occurences['ftruncate']))
-        # elif syscall == 78:
-        #     occurences['getdents'] = occurences['getdents'] + 1
-        #     # print("Update für folgenden System Call getdents. Neue Häufigkeit: " + str(occurences['getdents']))
-        # elif syscall == 79:
-        #     occurences['getcwd'] = occurences['getcwd'] + 1
-        #     # print("Update für folgenden System Call getcwd. Neue Häufigkeit: " + str(occurences['getcwd']))
-        # elif syscall == 80:
-        #     occurences['chdir'] = occurences['chdir'] + 1
-        #     # print("Update für folgenden System Call chdir. Neue Häufigkeit: " + str(occurences['chdir']))
+        elif syscall == 71:
+            print("found msgctl inside the Container! with inum: " + str(inum_ring))
+            syscall = "msgctl"
+            patterns.append(syscall)
+        elif syscall == 72:
+            print("found fcntl inside the Container! with inum: " + str(inum_ring))
+            syscall = "fcntl"
+            patterns.append(syscall)
+        elif syscall == 73:
+            print("found flock inside the Container! with inum: " + str(inum_ring))
+            syscall = "flock"
+            patterns.append(syscall)
+        elif syscall == 74:
+            print("found fsync inside the Container! with inum: " + str(inum_ring))
+            syscall = "fsync"
+            patterns.append(syscall)
+        elif syscall == 75:
+            print("found fdatasync inside the Container! with inum: " + str(inum_ring))
+            syscall = "fdatasync"
+            patterns.append(syscall)
+        elif syscall == 76:
+            print("found truncate inside the Container! with inum: " + str(inum_ring))
+            syscall = "truncate"
+            patterns.append(syscall)
+        elif syscall == 77:
+            print("found ftruncate inside the Container! with inum: " + str(inum_ring))
+            syscall = "ftruncate"
+            patterns.append(syscall)
+        elif syscall == 78:
+            print("found getdents inside the Container! with inum: " + str(inum_ring))
+            syscall = "getdents"
+            patterns.append(syscall)
+        elif syscall == 79:
+            print("found getcwd inside the Container! with inum: " + str(inum_ring))
+            syscall = "getcwd"
+            patterns.append(syscall)
+        elif syscall == 80:
+            print("found chdir inside the Container! with inum: " + str(inum_ring))
+            syscall = "chdir"
+            patterns.append(syscall)
         # elif syscall == 81:
         #     occurences['fchdir'] = occurences['fchdir'] + 1
         #     # print("Update für folgenden System Call fchdir. Neue Häufigkeit: " + str(occurences['fchdir']))
