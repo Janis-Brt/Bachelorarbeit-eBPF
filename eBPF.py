@@ -251,7 +251,6 @@ int sreadv(struct pt_regs *ctx) {
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
-
 int swritev(struct pt_regs *ctx) {
     struct data_t data = {};
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
@@ -342,6 +341,97 @@ int sshmget(struct pt_regs *ctx) {
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
+
+int sshmat(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 31;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sshmctl(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 32;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sdup(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 33;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sdup2(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 34;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int spause(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 35;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int snanosleep(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 36;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sgetitimer(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 37;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int salarm(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 38;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int ssetitimer(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 39;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sgetpid(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 40;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
 """
 b = BPF(text=prog)
 
@@ -380,16 +470,16 @@ def attachkretprobe():
     b.attach_kretprobe(event=b.get_syscall_fnname("mincore"), fn_name="smincore")
     b.attach_kretprobe(event=b.get_syscall_fnname("madvise"), fn_name="smadvise")
     b.attach_kretprobe(event=b.get_syscall_fnname("shmget"), fn_name="sshmget")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("shmat"), fn_name="sshmat")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("shmctl"), fn_name="sshmctl")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("dup"), fn_name="sdup")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("dup2"), fn_name="sdup2")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("pause"), fn_name="spause")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("nanosleep"), fn_name="snanosleep")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("getitimer"), fn_name="sgetitimer")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("alarm"), fn_name="salarm")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("setitimer"), fn_name="ssetitimer")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("getpid"), fn_name="sgetpid")
+    b.attach_kretprobe(event=b.get_syscall_fnname("shmat"), fn_name="sshmat")
+    b.attach_kretprobe(event=b.get_syscall_fnname("shmctl"), fn_name="sshmctl")
+    b.attach_kretprobe(event=b.get_syscall_fnname("dup"), fn_name="sdup")
+    b.attach_kretprobe(event=b.get_syscall_fnname("dup2"), fn_name="sdup2")
+    b.attach_kretprobe(event=b.get_syscall_fnname("pause"), fn_name="spause")
+    b.attach_kretprobe(event=b.get_syscall_fnname("nanosleep"), fn_name="snanosleep")
+    b.attach_kretprobe(event=b.get_syscall_fnname("getitimer"), fn_name="sgetitimer")
+    b.attach_kretprobe(event=b.get_syscall_fnname("alarm"), fn_name="salarm")
+    b.attach_kretprobe(event=b.get_syscall_fnname("setitimer"), fn_name="ssetitimer")
+    b.attach_kretprobe(event=b.get_syscall_fnname("getpid"), fn_name="sgetpid")
     # b.attach_kretprobe(event=b.get_syscall_fnname("sendfile"), fn_name="ssendfile")
     # b.attach_kretprobe(event=b.get_syscall_fnname("socket"), fn_name="ssocket")
     # b.attach_kretprobe(event=b.get_syscall_fnname("connect"), fn_name="sconnect")
@@ -814,36 +904,46 @@ def detectpatterns(cpu, data, size):
             print("found shmget inside the Container! with inum: " + str(inum_ring))
             syscall = "shmget"
             patterns.append(syscall)
-        # elif syscall == 31:
-        #     occurences['shmat'] = occurences['shmat'] + 1
-        #     # print("Update für folgenden System Call shmat. Neue Häufigkeit: " + str(occurences['shmat']))
-        # elif syscall == 32:
-        #     occurences['shmctl'] = occurences['shmctl'] + 1
-        #     # print("Update für folgenden System Call shmctl. Neue Häufigkeit: " + str(occurences['shmctl']))
-        # elif syscall == 33:
-        #     occurences['dup'] = occurences['dup'] + 1
-        #     # print("Update für folgenden System Call dup. Neue Häufigkeit: " + str(occurences['dup']))
-        # elif syscall == 34:
-        #     occurences['dup2'] = occurences['dup2'] + 1
-        #     # print("Update für folgenden System Call dup2. Neue Häufigkeit: " + str(occurences['dup2']))
-        # elif syscall == 35:
-        #     occurences['pause'] = occurences['pause'] + 1
-        #     # print("Update für folgenden System Call pause. Neue Häufigkeit: " + str(occurences['pause']))
-        # elif syscall == 36:
-        #     occurences['nanosleep'] = occurences['nanosleep'] + 1
-        #     # print("Update für folgenden System Call nanosleep. Neue Häufigkeit: " + str(occurences['nanosleep']))
-        # elif syscall == 37:
-        #     occurences['getitimer'] = occurences['getitimer'] + 1
-        #     # print("Update für folgenden System Call getitimer. Neue Häufigkeit: " + str(occurences['getitimer']))
-        # elif syscall == 38:
-        #     occurences['alarm'] = occurences['alarm'] + 1
-        #     # print("Update für folgenden System Call alarm. Neue Häufigkeit: " + str(occurences['alarm']))
-        # elif syscall == 39:
-        #     occurences['setitimer'] = occurences['setitimer'] + 1
-        #     # print("Update für folgenden System Call setitimer. Neue Häufigkeit: " + str(occurences['setitimer']))
-        # elif syscall == 40:
-        #     occurences['getpid'] = occurences['getpid'] + 1
-        #     # print("Update für folgenden System Call getpid. Neue Häufigkeit: " + str(occurences['getpid']))
+        elif syscall == 31:
+            print("found shmat inside the Container! with inum: " + str(inum_ring))
+            syscall = "shmat"
+            patterns.append(syscall)
+        elif syscall == 32:
+            print("found shmctl inside the Container! with inum: " + str(inum_ring))
+            syscall = "shmctl"
+            patterns.append(syscall)
+        elif syscall == 33:
+            print("found dup inside the Container! with inum: " + str(inum_ring))
+            syscall = "dup"
+            patterns.append(syscall)
+        elif syscall == 34:
+            print("found dup2 inside the Container! with inum: " + str(inum_ring))
+            syscall = "dup2"
+            patterns.append(syscall)
+        elif syscall == 35:
+            print("found pause inside the Container! with inum: " + str(inum_ring))
+            syscall = "pause"
+            patterns.append(syscall)
+        elif syscall == 36:
+            print("found nanosleep inside the Container! with inum: " + str(inum_ring))
+            syscall = "nanosleep"
+            patterns.append(syscall)
+        elif syscall == 37:
+            print("found getitimer inside the Container! with inum: " + str(inum_ring))
+            syscall = "getitimer"
+            patterns.append(syscall)
+        elif syscall == 38:
+            print("found alarm inside the Container! with inum: " + str(inum_ring))
+            syscall = "alarm"
+            patterns.append(syscall)
+        elif syscall == 39:
+            print("found setitimer inside the Container! with inum: " + str(inum_ring))
+            syscall = "setitimer"
+            patterns.append(syscall)
+        elif syscall == 40:
+            print("found getpid inside the Container! with inum: " + str(inum_ring))
+            syscall = "getpid"
+            patterns.append(syscall)
         # elif syscall == 41:
         #     occurences['sendfile'] = occurences['sendfile'] + 1
         #     # print("Update für folgenden System Call sendfile. Neue Häufigkeit: " + str(occurences['sendfile']))
