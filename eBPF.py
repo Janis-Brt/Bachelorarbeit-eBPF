@@ -1540,7 +1540,7 @@ def detectpatterns(cpu, data, size):
     # if localpids.__contains__(str(pid)):
     host_pid_ns = getinum()
     print("Host inum:  " + host_pid_ns)
-    print("Ring Buffer inum: " + inum_ring)
+    print("Ring Buffer inum: " + str(inum_ring))
     if host_pid_ns != inum_ring:
         # print("Inside Container")
         if syscall == 0:
