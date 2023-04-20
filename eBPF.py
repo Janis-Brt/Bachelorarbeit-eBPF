@@ -987,6 +987,119 @@ int stimes(struct pt_regs *ctx) {
     return 0;
     int x = 0;
 }
+int sptrace(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 101;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int sgetuid(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 102;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int ssyslog(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 103;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int sgetgid(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 104;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int ssetuid(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 105;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int ssetgid(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 106;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int sgeteuid(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 107;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int sgetegid(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 108;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int ssetpgid(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 109;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int sgetppid(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 110;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int sgetppid(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 110;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+
+
+
 """
 b = BPF(text=prog)
 
@@ -1095,26 +1208,26 @@ def attachkretprobe():
     b.attach_kretprobe(event=b.get_syscall_fnname("getrusage"), fn_name="sgetrusage")
     b.attach_kretprobe(event=b.get_syscall_fnname("sysinfo"), fn_name="ssysinfo")
     b.attach_kretprobe(event=b.get_syscall_fnname("times"), fn_name="stimes")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("ptrace"), fn_name="sptrace")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("getuid"), fn_name="sgetuid")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("syslog"), fn_name="ssyslog")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("getgid"), fn_name="sgetgid")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("setuid"), fn_name="ssetuid")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("setgid"), fn_name="ssetgid")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("geteuid"), fn_name="sgeteuid")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("getegid"), fn_name="sgetegid")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("setpgid"), fn_name="ssetpgid")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("getppid"), fn_name="sgetppid")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("getpgrp"), fn_name="sgetpgrp")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("setsid"), fn_name="ssetsid")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("setreuid"), fn_name="ssetreuid")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("setregid"), fn_name="ssetregid")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("getgroups"), fn_name="sgetgroups")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("setgroups"), fn_name="ssetgroups")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("setresuid"), fn_name="ssetresuid")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("getresuid"), fn_name="sgetresuid")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("setresgid"), fn_name="ssetresgid")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("getresgid"), fn_name="sgetresgid")
+    b.attach_kretprobe(event=b.get_syscall_fnname("ptrace"), fn_name="sptrace")
+    b.attach_kretprobe(event=b.get_syscall_fnname("getuid"), fn_name="sgetuid")
+    b.attach_kretprobe(event=b.get_syscall_fnname("syslog"), fn_name="ssyslog")
+    b.attach_kretprobe(event=b.get_syscall_fnname("getgid"), fn_name="sgetgid")
+    b.attach_kretprobe(event=b.get_syscall_fnname("setuid"), fn_name="ssetuid")
+    b.attach_kretprobe(event=b.get_syscall_fnname("setgid"), fn_name="ssetgid")
+    b.attach_kretprobe(event=b.get_syscall_fnname("geteuid"), fn_name="sgeteuid")
+    b.attach_kretprobe(event=b.get_syscall_fnname("getegid"), fn_name="sgetegid")
+    b.attach_kretprobe(event=b.get_syscall_fnname("setpgid"), fn_name="ssetpgid")
+    b.attach_kretprobe(event=b.get_syscall_fnname("getppid"), fn_name="sgetppid")
+    b.attach_kretprobe(event=b.get_syscall_fnname("getpgrp"), fn_name="sgetpgrp")
+    b.attach_kretprobe(event=b.get_syscall_fnname("setsid"), fn_name="ssetsid")
+    b.attach_kretprobe(event=b.get_syscall_fnname("setreuid"), fn_name="ssetreuid")
+    b.attach_kretprobe(event=b.get_syscall_fnname("setregid"), fn_name="ssetregid")
+    b.attach_kretprobe(event=b.get_syscall_fnname("getgroups"), fn_name="sgetgroups")
+    b.attach_kretprobe(event=b.get_syscall_fnname("setgroups"), fn_name="ssetgroups")
+    b.attach_kretprobe(event=b.get_syscall_fnname("setresuid"), fn_name="ssetresuid")
+    b.attach_kretprobe(event=b.get_syscall_fnname("getresuid"), fn_name="sgetresuid")
+    b.attach_kretprobe(event=b.get_syscall_fnname("setresgid"), fn_name="ssetresgid")
+    b.attach_kretprobe(event=b.get_syscall_fnname("getresgid"), fn_name="sgetresgid")
     # b.attach_kretprobe(event=b.get_syscall_fnname("getpgid"), fn_name="sgetpgid")
     # b.attach_kretprobe(event=b.get_syscall_fnname("setfsuid"), fn_name="ssetfsuid")
     # b.attach_kretprobe(event=b.get_syscall_fnname("setfsgid"), fn_name="ssetfsgid")
@@ -1739,66 +1852,86 @@ def detectpatterns(cpu, data, size):
             print("found times inside the Container! with inum: " + str(inum_ring))
             syscall = "times"
             patterns.append(syscall)
-        # elif syscall == 102:
-        #     occurences['ptrace'] = occurences['ptrace'] + 1
-        #     # print("Update für folgenden System Call ptrace. Neue Häufigkeit: " + str(occurences['ptrace']))
-        # elif syscall == 103:
-        #     occurences['getuid'] = occurences['getuid'] + 1
-        #     # print("Update für folgenden System Call getuid. Neue Häufigkeit: " + str(occurences['getuid']))
-        # elif syscall == 104:
-        #     occurences['syslog'] = occurences['syslog'] + 1
-        #     # print("Update für folgenden System Call syslog. Neue Häufigkeit: " + str(occurences['syslog']))
-        # elif syscall == 105:
-        #     occurences['getgid'] = occurences['getgid'] + 1
-        #     # print("Update für folgenden System Call getgid. Neue Häufigkeit: " + str(occurences['getgid']))
-        # elif syscall == 106:
-        #     occurences['setuid'] = occurences['setuid'] + 1
-        #     # print("Update für folgenden System Call setuid. Neue Häufigkeit: " + str(occurences['setuid']))
-        # elif syscall == 107:
-        #     occurences['setgid'] = occurences['setgid'] + 1
-        #     # print("Update für folgenden System Call setgid. Neue Häufigkeit: " + str(occurences['setgid']))
-        # elif syscall == 108:
-        #     occurences['geteuid'] = occurences['geteuid'] + 1
-        #     # print("Update für folgenden System Call geteuid. Neue Häufigkeit: " + str(occurences['geteuid']))
-        # elif syscall == 109:
-        #     occurences['getegid'] = occurences['getegid'] + 1
-        #     # print("Update für folgenden System Call getegid. Neue Häufigkeit: " + str(occurences['getegid']))
-        # elif syscall == 110:
-        #     occurences['setpgid'] = occurences['setpgid'] + 1
-        #     # print("Update für folgenden System Call setpgid. Neue Häufigkeit: " + str(occurences['setpgid']))
-        # elif syscall == 111:
-        #     occurences['getppid'] = occurences['getppid'] + 1
-        #     # print("Update für folgenden System Call getppid. Neue Häufigkeit: " + str(occurences['getppid']))
-        # elif syscall == 112:
-        #     occurences['getpgrp'] = occurences['getpgrp'] + 1
-        #     # print("Update für folgenden System Call getpgrp. Neue Häufigkeit: " + str(occurences['getpgrp']))
-        # elif syscall == 113:
-        #     occurences['setsid'] = occurences['setsid'] + 1
-        #     # print("Update für folgenden System Call setsid. Neue Häufigkeit: " + str(occurences['setsid']))
-        # elif syscall == 114:
-        #     occurences['setreuid'] = occurences['setreuid'] + 1
-        #     # print("Update für folgenden System Call setreuid. Neue Häufigkeit: " + str(occurences['setreuid']))
-        # elif syscall == 115:
-        #     occurences['setregid'] = occurences['setregid'] + 1
-        #     # print("Update für folgenden System Call setregid. Neue Häufigkeit: " + str(occurences['setregid']))
-        # elif syscall == 116:
-        #     occurences['getgroups'] = occurences['getgroups'] + 1
-        #     # print("Update für folgenden System Call getgroups. Neue Häufigkeit: " + str(occurences['getgroups']))
-        # elif syscall == 117:
-        #     occurences['setgroups'] = occurences['setgroups'] + 1
-        #     # print("Update für folgenden System Call setgroups. Neue Häufigkeit: " + str(occurences['setgroups']))
-        # elif syscall == 118:
-        #     occurences['setresuid'] = occurences['setresuid'] + 1
-        #     # print("Update für folgenden System Call setresuid. Neue Häufigkeit: " + str(occurences['setresuid']))
-        # elif syscall == 119:
-        #     occurences['getresuid'] = occurences['getresuid'] + 1
-        #     # print("Update für folgenden System Call getresuid. Neue Häufigkeit: " + str(occurences['getresuid']))
-        # elif syscall == 120:
-        #     occurences['setresgid'] = occurences['setresgid'] + 1
-        #     # print("Update für folgenden System Call setresgid. Neue Häufigkeit: " + str(occurences['setresgid']))
-        # elif syscall == 121:
-        #     occurences['getresgid'] = occurences['getresgid'] + 1
-        #     # print("Update für folgenden System Call getresgid. Neue Häufigkeit: " + str(occurences['getresgid']))
+        elif syscall == 101:
+            print("found ptrace inside the Container! with inum: " + str(inum_ring))
+            syscall = "ptrace"
+            patterns.append(syscall)
+        elif syscall == 102:
+            print("found getuid inside the Container! with inum: " + str(inum_ring))
+            syscall = "getuid"
+            patterns.append(syscall)
+        elif syscall == 103:
+            print("found syslog inside the Container! with inum: " + str(inum_ring))
+            syscall = "syslog"
+            patterns.append(syscall)
+        elif syscall == 104:
+            print("found getgid inside the Container! with inum: " + str(inum_ring))
+            syscall = "getgid"
+            patterns.append(syscall)
+        elif syscall == 105:
+            print("found setuid inside the Container! with inum: " + str(inum_ring))
+            syscall = "setuid"
+            patterns.append(syscall)
+        elif syscall == 106:
+            print("found setgid inside the Container! with inum: " + str(inum_ring))
+            syscall = "setgid"
+            patterns.append(syscall)
+        elif syscall == 107:
+            print("found geteuid inside the Container! with inum: " + str(inum_ring))
+            syscall = "geteuid"
+            patterns.append(syscall)
+        elif syscall == 108:
+            print("found getegid inside the Container! with inum: " + str(inum_ring))
+            syscall = "getegid"
+            patterns.append(syscall)
+        elif syscall == 109:
+            print("found setpgid inside the Container! with inum: " + str(inum_ring))
+            syscall = "setpgid"
+            patterns.append(syscall)
+        elif syscall == 110:
+            print("found getppid inside the Container! with inum: " + str(inum_ring))
+            syscall = "getppid"
+            patterns.append(syscall)
+        elif syscall == 111:
+            print("found getpgrp inside the Container! with inum: " + str(inum_ring))
+            syscall = "getpgrp"
+            patterns.append(syscall)
+        elif syscall == 112:
+            print("found setsid inside the Container! with inum: " + str(inum_ring))
+            syscall = "setsid"
+            patterns.append(syscall)
+        elif syscall == 113:
+            print("found setreuid inside the Container! with inum: " + str(inum_ring))
+            syscall = "setreuid"
+            patterns.append(syscall)
+        elif syscall == 114:
+            print("found setregid inside the Container! with inum: " + str(inum_ring))
+            syscall = "setregid"
+            patterns.append(syscall)
+        elif syscall == 115:
+            print("found getgroups inside the Container! with inum: " + str(inum_ring))
+            syscall = "getgroups"
+            patterns.append(syscall)
+        elif syscall == 116:
+            print("found setgroups inside the Container! with inum: " + str(inum_ring))
+            syscall = "setgroups"
+            patterns.append(syscall)
+        elif syscall == 117:
+            print("found setresuid inside the Container! with inum: " + str(inum_ring))
+            syscall = "setresuid"
+            patterns.append(syscall)
+        elif syscall == 118:
+            print("found getresuid inside the Container! with inum: " + str(inum_ring))
+            syscall = "getresuid"
+            patterns.append(syscall)
+        elif syscall == 119:
+            print("found setresgid inside the Container! with inum: " + str(inum_ring))
+            syscall = "setresgid"
+            patterns.append(syscall)
+        elif syscall == 120:
+            print("found getresgid inside the Container! with inum: " + str(inum_ring))
+            syscall = "getresgid"
+            patterns.append(syscall)
         # elif syscall == 122:
         #     occurences['getpgid'] = occurences['getpgid'] + 1
         #     # print("Update für folgenden System Call getpgid. Neue Häufigkeit: " + str(occurences['getpgid']))
