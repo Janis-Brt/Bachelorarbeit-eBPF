@@ -1538,7 +1538,7 @@ def detectpatterns(cpu, data, size):
     inum_ring = data.inum
     cgroup = data.cgroup
     # if localpids.__contains__(str(pid)):
-    host_pid_ns = 4026531836
+    host_pid_ns = getinum()
     if str(inum_ring) != str(host_pid_ns):
 
         # print("Inside Container")
@@ -2762,23 +2762,23 @@ def getpids(input):
     return result
 
 
-# def getinum():
-#     # Führe den Befehl aus und lese die Ausgabe
-#     result = os.popen("ls -la /proc/self/ns").read()
-#
-#     # Splitten der Ausgabe an den Leerzeichen
-#     # Beispiel-Ausgabe: "total 0\nlrwxrwxrwx 1 user user 0 Apr 20 10:00 pid -> 'pid:[4026531836]'\n"
-#     parts = result.split(" ")
-#
-#     # Suche nach der Zeichenkette "'pid:[...]'"
-#     pid_ns_id = None
-#     for part in parts:
-#         if part.__contains__("pid:["):  # and part.endswith("]'\n"):
-#             # Extrahiere die ID aus der Zeichenkette
-#             pid_ns_id = part[5:-12]
-#             break
-#     # print("PID-Namespace ID des Host Systems:", pid_ns_id)
-#     return pid_ns_id
+def getinum():
+    # Führe den Befehl aus und lese die Ausgabe
+    result = os.popen("ls -la /proc/self/ns").read()
+
+    # Splitten der Ausgabe an den Leerzeichen
+    # Beispiel-Ausgabe: "total 0\nlrwxrwxrwx 1 user user 0 Apr 20 10:00 pid -> 'pid:[4026531836]'\n"
+    parts = result.split(" ")
+
+    # Suche nach der Zeichenkette "'pid:[...]'"
+    pid_ns_id = None
+    for part in parts:
+        if part.__contains__("pid:["):  # and part.endswith("]'\n"):
+            # Extrahiere die ID aus der Zeichenkette
+            pid_ns_id = part[5:-12]
+            break
+    # print("PID-Namespace ID des Host Systems:", pid_ns_id)
+    return pid_ns_id
 
 
 
