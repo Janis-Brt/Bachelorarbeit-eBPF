@@ -1542,497 +1542,500 @@ def detectpatterns(cpu, data, size):
     #print("Host inum:  " + host_pid_ns)
     #print("Ring Buffer inum: " + str(inum_ring))
     if str(inum_ring) is not str(host_pid_ns):
+        print()
         print(str(inum_ring))
         print(str(host_pid_ns))
         # print("Inside Container")
-        if syscall == 0:
-            print("found clone inside the Container! with inum: " + str(inum_ring))
-            syscall = "clone"
-            patterns.append(syscall)
-        elif syscall == 1:
-            print("found open inside the Container! with inum: " + str(inum_ring))
-            syscall = "open"
-            patterns.append(syscall)
-        elif syscall == 2:
-            print("found read inside the Container! with inum: " + str(inum_ring))
-            syscall = "read"
-            patterns.append(syscall)
-        elif syscall == 3:
-            print("found write inside the Container! with inum: " + str(inum_ring))
-            syscall = "write"
-            patterns.append(syscall)
-        elif syscall == 4:
-            print("found close inside the Container! with inum: " + str(inum_ring))
-            syscall = "close"
-            patterns.append(syscall)
-        elif syscall == 5:
-            print("found stat inside the Container! with inum: " + str(inum_ring))
-            syscall = "stat"
-            patterns.append(syscall)
-        elif syscall == 6:
-            print("found fstat inside the Container! with inum: " + str(inum_ring))
-            syscall = "fstat"
-            patterns.append(syscall)
-        elif syscall == 7:
-            print("found lstat inside the Container! with inum: " + str(inum_ring))
-            syscall = "lstat"
-            patterns.append(syscall)
-        elif syscall == 8:
-            print("found poll inside the Container! with inum: " + str(inum_ring))
-            syscall = "poll"
-            patterns.append(syscall)
-        elif syscall == 9:
-            print("found lseek inside the Container! with inum: " + str(inum_ring))
-            syscall = "lseek"
-            patterns.append(syscall)
-        elif syscall == 10:
-            print("found mmap inside the Container! with inum: " + str(inum_ring))
-            syscall = "mmap"
-            patterns.append(syscall)
-        elif syscall == 11:
-            print("found mprotect inside the Container! with inum: " + str(inum_ring))
-            syscall = "mprotect"
-            patterns.append(syscall)
-        elif syscall == 12:
-            print("found munmap inside the Container! with inum: " + str(inum_ring))
-            syscall = "munmap"
-            patterns.append(syscall)
-        elif syscall == 13:
-            print("found brk inside the Container! with inum: " + str(inum_ring))
-            syscall = "brk"
-            patterns.append(syscall)
-        elif syscall == 14:
-            print("found rt_sigaction inside the Container! with inum: " + str(inum_ring))
-            syscall = "rt_sigaction"
-            patterns.append(syscall)
-        elif syscall == 14:
-            print("found rt_sigprocmask inside the Container! with inum: " + str(inum_ring))
-            syscall = "rt_sigprocmask"
-            patterns.append(syscall)
-        elif syscall == 15:
-            print("found rt_sigreturn inside the Container! with inum: " + str(inum_ring))
-            syscall = "rt_sigreturn"
-            patterns.append(syscall)
-        elif syscall == 16:
-            print("found rt_sigreturn inside the Container! with inum: " + str(inum_ring))
-            syscall = "rt_sigreturn"
-            patterns.append(syscall)
-        elif syscall == 17:
-            print("found ioctl inside the Container! with inum: " + str(inum_ring))
-            syscall = "ioctl"
-            patterns.append(syscall)
-        elif syscall == 18:
-            print("found pread64 inside the Container! with inum: " + str(inum_ring))
-            syscall = "pread64"
-            patterns.append(syscall)
-        elif syscall == 19:
-            print("found pwrite64 inside the Container! with inum: " + str(inum_ring))
-            syscall = "pwrite64"
-            patterns.append(syscall)
-        elif syscall == 20:
-            print("found readv inside the Container! with inum: " + str(inum_ring))
-            syscall = "readv"
-            patterns.append(syscall)
-        elif syscall == 21:
-            print("found writev inside the Container! with inum: " + str(inum_ring))
-            syscall = "writev"
-            patterns.append(syscall)
-        elif syscall == 22:
-            print("found access inside the Container! with inum: " + str(inum_ring))
-            syscall = "access"
-            patterns.append(syscall)
-        elif syscall == 23:
-            print("found pipe inside the Container! with inum: " + str(inum_ring))
-            syscall = "pipe"
-            patterns.append(syscall)
-        elif syscall == 24:
-            print("found select inside the Container! with inum: " + str(inum_ring))
-            syscall = "select"
-            patterns.append(syscall)
-        elif syscall == 25:
-            print("found mremap inside the Container! with inum: " + str(inum_ring))
-            syscall = "mremap"
-            patterns.append(syscall)
-        elif syscall == 26:
-            print("found sched_yield inside the Container! with inum: " + str(inum_ring))
-            syscall = "sched_yield"
-            patterns.append(syscall)
-        elif syscall == 27:
-            print("found msync inside the Container! with inum: " + str(inum_ring))
-            syscall = "msync"
-            patterns.append(syscall)
-        elif syscall == 28:
-            print("found mincore inside the Container! with inum: " + str(inum_ring))
-            syscall = "mincore"
-            patterns.append(syscall)
-        elif syscall == 29:
-            print("found madvise inside the Container! with inum: " + str(inum_ring))
-            syscall = "madvise"
-            patterns.append(syscall)
-        elif syscall == 30:
-            print("found shmget inside the Container! with inum: " + str(inum_ring))
-            syscall = "shmget"
-            patterns.append(syscall)
-        elif syscall == 31:
-            print("found shmat inside the Container! with inum: " + str(inum_ring))
-            syscall = "shmat"
-            patterns.append(syscall)
-        elif syscall == 32:
-            print("found shmctl inside the Container! with inum: " + str(inum_ring))
-            syscall = "shmctl"
-            patterns.append(syscall)
-        elif syscall == 33:
-            print("found dup inside the Container! with inum: " + str(inum_ring))
-            syscall = "dup"
-            patterns.append(syscall)
-        elif syscall == 34:
-            print("found dup2 inside the Container! with inum: " + str(inum_ring))
-            syscall = "dup2"
-            patterns.append(syscall)
-        elif syscall == 35:
-            print("found pause inside the Container! with inum: " + str(inum_ring))
-            syscall = "pause"
-            patterns.append(syscall)
-        elif syscall == 36:
-            print("found nanosleep inside the Container! with inum: " + str(inum_ring))
-            syscall = "nanosleep"
-            patterns.append(syscall)
-        elif syscall == 37:
-            print("found getitimer inside the Container! with inum: " + str(inum_ring))
-            syscall = "getitimer"
-            patterns.append(syscall)
-        elif syscall == 38:
-            print("found alarm inside the Container! with inum: " + str(inum_ring))
-            syscall = "alarm"
-            patterns.append(syscall)
-        elif syscall == 39:
-            print("found setitimer inside the Container! with inum: " + str(inum_ring))
-            syscall = "setitimer"
-            patterns.append(syscall)
-        elif syscall == 40:
-            print("found getpid inside the Container! with inum: " + str(inum_ring))
-            syscall = "getpid"
-            patterns.append(syscall)
-        elif syscall == 41:
-            print("found senfile inside the Container! with inum: " + str(inum_ring))
-            syscall = "sendfile"
-            patterns.append(syscall)
-        elif syscall == 42:
-            print("found socket inside the Container! with inum: " + str(inum_ring))
-            syscall = "socket"
-            patterns.append(syscall)
-        elif syscall == 43:
-            print("found connect inside the Container! with inum: " + str(inum_ring))
-            syscall = "connect"
-            patterns.append(syscall)
-        elif syscall == 44:
-            print("found accept inside the Container! with inum: " + str(inum_ring))
-            syscall = "accept"
-            patterns.append(syscall)
-        elif syscall == 45:
-            print("found sendto inside the Container! with inum: " + str(inum_ring))
-            syscall = "sendto"
-            patterns.append(syscall)
-        elif syscall == 46:
-            print("found recvfrom inside the Container! with inum: " + str(inum_ring))
-            syscall = "recvfrom"
-            patterns.append(syscall)
-        elif syscall == 47:
-            print("found sendmsg inside the Container! with inum: " + str(inum_ring))
-            syscall = "sendmsg"
-            patterns.append(syscall)
-        elif syscall == 48:
-            print("found recvmsg inside the Container! with inum: " + str(inum_ring))
-            syscall = "recvmsg"
-            patterns.append(syscall)
-        elif syscall == 49:
-            print("found shutdown inside the Container! with inum: " + str(inum_ring))
-            syscall = "shutdown"
-            patterns.append(syscall)
-        elif syscall == 50:
-            print("found bind inside the Container! with inum: " + str(inum_ring))
-            syscall = "bind"
-            patterns.append(syscall)
-        elif syscall == 51:
-            print("found listen inside the Container! with inum: " + str(inum_ring))
-            syscall = "listen"
-            patterns.append(syscall)
-        elif syscall == 52:
-            print("found getsockname inside the Container! with inum: " + str(inum_ring))
-            syscall = "getsockname"
-            patterns.append(syscall)
-        elif syscall == 53:
-            print("found getpeername inside the Container! with inum: " + str(inum_ring))
-            syscall = "getpername"
-            patterns.append(syscall)
-        elif syscall == 54:
-            print("found socketpair inside the Container! with inum: " + str(inum_ring))
-            syscall = "socketpair"
-            patterns.append(syscall)
-        elif syscall == 55:
-            print("found setsockopt inside the Container! with inum: " + str(inum_ring))
-            syscall = "setsockopt"
-            patterns.append(syscall)
-        elif syscall == 56:
-            print("found getsockopt inside the Container! with inum: " + str(inum_ring))
-            syscall = "getsockopt"
-            patterns.append(syscall)
-        elif syscall == 57:
-            print("found fork inside the Container! with inum: " + str(inum_ring))
-            syscall = "fork"
-            patterns.append(syscall)
-        elif syscall == 58:
-            print("found vfork inside the Container! with inum: " + str(inum_ring))
-            syscall = "vfork"
-            patterns.append(syscall)
-        elif syscall == 59:
-            print("found execve inside the Container! with inum: " + str(inum_ring))
-            syscall = "execve"
-            patterns.append(syscall)
-        elif syscall == 60:
-            print("found exit inside the Container! with inum: " + str(inum_ring))
-            syscall = "exit"
-            patterns.append(syscall)
-        elif syscall == 61:
-            print("found wait4 inside the Container! with inum: " + str(inum_ring))
-            syscall = "wait4"
-            patterns.append(syscall)
-        elif syscall == 62:
-            print("found kill inside the Container! with inum: " + str(inum_ring))
-            syscall = "kill"
-            patterns.append(syscall)
-        elif syscall == 63:
-            print("found uname inside the Container! with inum: " + str(inum_ring))
-            syscall = "uname"
-            patterns.append(syscall)
-        elif syscall == 64:
-            print("found semget inside the Container! with inum: " + str(inum_ring))
-            syscall = "semget"
-            patterns.append(syscall)
-        elif syscall == 65:
-            print("found semop inside the Container! with inum: " + str(inum_ring))
-            syscall = "semop"
-            patterns.append(syscall)
-        elif syscall == 66:
-            print("found semctl inside the Container! with inum: " + str(inum_ring))
-            syscall = "semctl"
-            patterns.append(syscall)
-        elif syscall == 67:
-            print("found shmdt inside the Container! with inum: " + str(inum_ring))
-            syscall = "shmdt"
-            patterns.append(syscall)
-        elif syscall == 68:
-            print("found msgget inside the Container! with inum: " + str(inum_ring))
-            syscall = "msgget"
-            patterns.append(syscall)
-        elif syscall == 69:
-            print("found msgsnd inside the Container! with inum: " + str(inum_ring))
-            syscall = "exit"
-            patterns.append(syscall)
-        elif syscall == 70:
-            print("found msgrcv inside the Container! with inum: " + str(inum_ring))
-            syscall = "msgrcv"
-            patterns.append(syscall)
-        elif syscall == 71:
-            print("found msgctl inside the Container! with inum: " + str(inum_ring))
-            syscall = "msgctl"
-            patterns.append(syscall)
-        elif syscall == 72:
-            print("found fcntl inside the Container! with inum: " + str(inum_ring))
-            syscall = "fcntl"
-            patterns.append(syscall)
-        elif syscall == 73:
-            print("found flock inside the Container! with inum: " + str(inum_ring))
-            syscall = "flock"
-            patterns.append(syscall)
-        elif syscall == 74:
-            print("found fsync inside the Container! with inum: " + str(inum_ring))
-            syscall = "fsync"
-            patterns.append(syscall)
-        elif syscall == 75:
-            print("found fdatasync inside the Container! with inum: " + str(inum_ring))
-            syscall = "fdatasync"
-            patterns.append(syscall)
-        elif syscall == 76:
-            print("found truncate inside the Container! with inum: " + str(inum_ring))
-            syscall = "truncate"
-            patterns.append(syscall)
-        elif syscall == 77:
-            print("found ftruncate inside the Container! with inum: " + str(inum_ring))
-            syscall = "ftruncate"
-            patterns.append(syscall)
-        elif syscall == 78:
-            print("found getdents inside the Container! with inum: " + str(inum_ring))
-            syscall = "getdents"
-            patterns.append(syscall)
-        elif syscall == 79:
-            print("found getcwd inside the Container! with inum: " + str(inum_ring))
-            syscall = "getcwd"
-            patterns.append(syscall)
-        elif syscall == 80:
-            print("found chdir inside the Container! with inum: " + str(inum_ring))
-            syscall = "chdir"
-            patterns.append(syscall)
-        elif syscall == 81:
-            print("found fchdir inside the Container! with inum: " + str(inum_ring))
-            syscall = "fchdir"
-            patterns.append(syscall)
-        elif syscall == 82:
-            print("found rename inside the Container! with inum: " + str(inum_ring))
-            syscall = "rename"
-            patterns.append(syscall)
-        elif syscall == 83:
-            print("found mkdir inside the Container! with inum: " + str(inum_ring))
-            syscall = "mkdir"
-            patterns.append(syscall)
-        elif syscall == 84:
-            print("found rmdir inside the Container! with inum: " + str(inum_ring))
-            syscall = "rmdir"
-            patterns.append(syscall)
-        elif syscall == 85:
-            print("found creat inside the Container! with inum: " + str(inum_ring))
-            syscall = "creat"
-            patterns.append(syscall)
-        elif syscall == 86:
-            print("found link inside the Container! with inum: " + str(inum_ring))
-            syscall = "link"
-            patterns.append(syscall)
-        elif syscall == 87:
-            print("found unlink inside the Container! with inum: " + str(inum_ring))
-            syscall = "unlink"
-            patterns.append(syscall)
-        elif syscall == 88:
-            print("found symlink inside the Container! with inum: " + str(inum_ring))
-            syscall = "symlink"
-            patterns.append(syscall)
-        elif syscall == 89:
-            print("found readlink inside the Container! with inum: " + str(inum_ring))
-            syscall = "readlink"
-            patterns.append(syscall)
-        elif syscall == 90:
-            print("found chmod inside the Container! with inum: " + str(inum_ring))
-            syscall = "chmod"
-            patterns.append(syscall)
-        elif syscall == 91:
-            print("found fchmod inside the Container! with inum: " + str(inum_ring))
-            syscall = "fchmod"
-            patterns.append(syscall)
-        elif syscall == 92:
-            print("found chown inside the Container! with inum: " + str(inum_ring))
-            syscall = "chown"
-            patterns.append(syscall)
-        elif syscall == 93:
-            print("found fchown inside the Container! with inum: " + str(inum_ring))
-            syscall = "fchown"
-            patterns.append(syscall)
-        elif syscall == 94:
-            print("found lchown inside the Container! with inum: " + str(inum_ring))
-            syscall = "lchown"
-            patterns.append(syscall)
-        elif syscall == 95:
-            print("found umask inside the Container! with inum: " + str(inum_ring))
-            syscall = "umask"
-            patterns.append(syscall)
-        elif syscall == 96:
-            print("found gettimeofday inside the Container! with inum: " + str(inum_ring))
-            syscall = "gettimeofday"
-            patterns.append(syscall)
-        elif syscall == 97:
-            print("found getrlimit inside the Container! with inum: " + str(inum_ring))
-            syscall = "getrlimit"
-            patterns.append(syscall)
-        elif syscall == 98:
-            print("found getrusage inside the Container! with inum: " + str(inum_ring))
-            syscall = "getrusage"
-            patterns.append(syscall)
-        elif syscall == 99:
-            print("found sysinfo inside the Container! with inum: " + str(inum_ring))
-            syscall = "chown"
-            patterns.append(syscall)
-        elif syscall == 100:
-            print("found times inside the Container! with inum: " + str(inum_ring))
-            syscall = "times"
-            patterns.append(syscall)
-        elif syscall == 101:
-            print("found ptrace inside the Container! with inum: " + str(inum_ring))
-            syscall = "ptrace"
-            patterns.append(syscall)
-        elif syscall == 102:
-            print("found getuid inside the Container! with inum: " + str(inum_ring))
-            syscall = "getuid"
-            patterns.append(syscall)
-        elif syscall == 103:
-            print("found syslog inside the Container! with inum: " + str(inum_ring))
-            syscall = "syslog"
-            patterns.append(syscall)
-        elif syscall == 104:
-            print("found getgid inside the Container! with inum: " + str(inum_ring))
-            syscall = "getgid"
-            patterns.append(syscall)
-        elif syscall == 105:
-            print("found setuid inside the Container! with inum: " + str(inum_ring))
-            syscall = "setuid"
-            patterns.append(syscall)
-        elif syscall == 106:
-            print("found setgid inside the Container! with inum: " + str(inum_ring))
-            syscall = "setgid"
-            patterns.append(syscall)
-        elif syscall == 107:
-            print("found geteuid inside the Container! with inum: " + str(inum_ring))
-            syscall = "geteuid"
-            patterns.append(syscall)
-        elif syscall == 108:
-            print("found getegid inside the Container! with inum: " + str(inum_ring))
-            syscall = "getegid"
-            patterns.append(syscall)
-        elif syscall == 109:
-            print("found setpgid inside the Container! with inum: " + str(inum_ring))
-            syscall = "setpgid"
-            patterns.append(syscall)
-        elif syscall == 110:
-            print("found getppid inside the Container! with inum: " + str(inum_ring))
-            syscall = "getppid"
-            patterns.append(syscall)
-        elif syscall == 111:
-            print("found getpgrp inside the Container! with inum: " + str(inum_ring))
-            syscall = "getpgrp"
-            patterns.append(syscall)
-        elif syscall == 112:
-            print("found setsid inside the Container! with inum: " + str(inum_ring))
-            syscall = "setsid"
-            patterns.append(syscall)
-        elif syscall == 113:
-            print("found setreuid inside the Container! with inum: " + str(inum_ring))
-            syscall = "setreuid"
-            patterns.append(syscall)
-        elif syscall == 114:
-            print("found setregid inside the Container! with inum: " + str(inum_ring))
-            syscall = "setregid"
-            patterns.append(syscall)
-        elif syscall == 115:
-            print("found getgroups inside the Container! with inum: " + str(inum_ring))
-            syscall = "getgroups"
-            patterns.append(syscall)
-        elif syscall == 116:
-            print("found setgroups inside the Container! with inum: " + str(inum_ring))
-            syscall = "setgroups"
-            patterns.append(syscall)
-        elif syscall == 117:
-            print("found setresuid inside the Container! with inum: " + str(inum_ring))
-            syscall = "setresuid"
-            patterns.append(syscall)
-        elif syscall == 118:
-            print("found getresuid inside the Container! with inum: " + str(inum_ring))
-            syscall = "getresuid"
-            patterns.append(syscall)
-        elif syscall == 119:
-            print("found setresgid inside the Container! with inum: " + str(inum_ring))
-            syscall = "setresgid"
-            patterns.append(syscall)
-        elif syscall == 120:
-            print("found getresgid inside the Container! with inum: " + str(inum_ring))
-            syscall = "getresgid"
-            patterns.append(syscall)
+        # if syscall == 0:
+        #     print("found clone inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "clone"
+        #     patterns.append(syscall)
+        # elif syscall == 1:
+        #     print("found open inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "open"
+        #     patterns.append(syscall)
+        # elif syscall == 2:
+        #     print("found read inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "read"
+        #     patterns.append(syscall)
+        # elif syscall == 3:
+        #     print("found write inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "write"
+        #     patterns.append(syscall)
+        # elif syscall == 4:
+        #     print("found close inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "close"
+        #     patterns.append(syscall)
+        # elif syscall == 5:
+        #     print("found stat inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "stat"
+        #     patterns.append(syscall)
+        # elif syscall == 6:
+        #     print("found fstat inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "fstat"
+        #     patterns.append(syscall)
+        # elif syscall == 7:
+        #     print("found lstat inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "lstat"
+        #     patterns.append(syscall)
+        # elif syscall == 8:
+        #     print("found poll inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "poll"
+        #     patterns.append(syscall)
+        # elif syscall == 9:
+        #     print("found lseek inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "lseek"
+        #     patterns.append(syscall)
+        # elif syscall == 10:
+        #     print("found mmap inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "mmap"
+        #     patterns.append(syscall)
+        # elif syscall == 11:
+        #     print("found mprotect inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "mprotect"
+        #     patterns.append(syscall)
+        # elif syscall == 12:
+        #     print("found munmap inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "munmap"
+        #     patterns.append(syscall)
+        # elif syscall == 13:
+        #     print("found brk inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "brk"
+        #     patterns.append(syscall)
+        # elif syscall == 14:
+        #     print("found rt_sigaction inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "rt_sigaction"
+        #     patterns.append(syscall)
+        # elif syscall == 14:
+        #     print("found rt_sigprocmask inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "rt_sigprocmask"
+        #     patterns.append(syscall)
+        # elif syscall == 15:
+        #     print("found rt_sigreturn inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "rt_sigreturn"
+        #     patterns.append(syscall)
+        # elif syscall == 16:
+        #     print("found rt_sigreturn inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "rt_sigreturn"
+        #     patterns.append(syscall)
+        # elif syscall == 17:
+        #     print("found ioctl inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "ioctl"
+        #     patterns.append(syscall)
+        # elif syscall == 18:
+        #     print("found pread64 inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "pread64"
+        #     patterns.append(syscall)
+        # elif syscall == 19:
+        #     print("found pwrite64 inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "pwrite64"
+        #     patterns.append(syscall)
+        # elif syscall == 20:
+        #     print("found readv inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "readv"
+        #     patterns.append(syscall)
+        # elif syscall == 21:
+        #     print("found writev inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "writev"
+        #     patterns.append(syscall)
+        # elif syscall == 22:
+        #     print("found access inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "access"
+        #     patterns.append(syscall)
+        # elif syscall == 23:
+        #     print("found pipe inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "pipe"
+        #     patterns.append(syscall)
+        # elif syscall == 24:
+        #     print("found select inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "select"
+        #     patterns.append(syscall)
+        # elif syscall == 25:
+        #     print("found mremap inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "mremap"
+        #     patterns.append(syscall)
+        # elif syscall == 26:
+        #     print("found sched_yield inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "sched_yield"
+        #     patterns.append(syscall)
+        # elif syscall == 27:
+        #     print("found msync inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "msync"
+        #     patterns.append(syscall)
+        # elif syscall == 28:
+        #     print("found mincore inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "mincore"
+        #     patterns.append(syscall)
+        # elif syscall == 29:
+        #     print("found madvise inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "madvise"
+        #     patterns.append(syscall)
+        # elif syscall == 30:
+        #     print("found shmget inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "shmget"
+        #     patterns.append(syscall)
+        # elif syscall == 31:
+        #     print("found shmat inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "shmat"
+        #     patterns.append(syscall)
+        # elif syscall == 32:
+        #     print("found shmctl inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "shmctl"
+        #     patterns.append(syscall)
+        # elif syscall == 33:
+        #     print("found dup inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "dup"
+        #     patterns.append(syscall)
+        # elif syscall == 34:
+        #     print("found dup2 inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "dup2"
+        #     patterns.append(syscall)
+        # elif syscall == 35:
+        #     print("found pause inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "pause"
+        #     patterns.append(syscall)
+        # elif syscall == 36:
+        #     print("found nanosleep inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "nanosleep"
+        #     patterns.append(syscall)
+        # elif syscall == 37:
+        #     print("found getitimer inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "getitimer"
+        #     patterns.append(syscall)
+        # elif syscall == 38:
+        #     print("found alarm inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "alarm"
+        #     patterns.append(syscall)
+        # elif syscall == 39:
+        #     print("found setitimer inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "setitimer"
+        #     patterns.append(syscall)
+        # elif syscall == 40:
+        #     print("found getpid inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "getpid"
+        #     patterns.append(syscall)
+        # elif syscall == 41:
+        #     print("found senfile inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "sendfile"
+        #     patterns.append(syscall)
+        # elif syscall == 42:
+        #     print("found socket inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "socket"
+        #     patterns.append(syscall)
+        # elif syscall == 43:
+        #     print("found connect inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "connect"
+        #     patterns.append(syscall)
+        # elif syscall == 44:
+        #     print("found accept inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "accept"
+        #     patterns.append(syscall)
+        # elif syscall == 45:
+        #     print("found sendto inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "sendto"
+        #     patterns.append(syscall)
+        # elif syscall == 46:
+        #     print("found recvfrom inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "recvfrom"
+        #     patterns.append(syscall)
+        # elif syscall == 47:
+        #     print("found sendmsg inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "sendmsg"
+        #     patterns.append(syscall)
+        # elif syscall == 48:
+        #     print("found recvmsg inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "recvmsg"
+        #     patterns.append(syscall)
+        # elif syscall == 49:
+        #     print("found shutdown inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "shutdown"
+        #     patterns.append(syscall)
+        # elif syscall == 50:
+        #     print("found bind inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "bind"
+        #     patterns.append(syscall)
+        # elif syscall == 51:
+        #     print("found listen inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "listen"
+        #     patterns.append(syscall)
+        # elif syscall == 52:
+        #     print("found getsockname inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "getsockname"
+        #     patterns.append(syscall)
+        # elif syscall == 53:
+        #     print("found getpeername inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "getpername"
+        #     patterns.append(syscall)
+        # elif syscall == 54:
+        #     print("found socketpair inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "socketpair"
+        #     patterns.append(syscall)
+        # elif syscall == 55:
+        #     print("found setsockopt inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "setsockopt"
+        #     patterns.append(syscall)
+        # elif syscall == 56:
+        #     print("found getsockopt inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "getsockopt"
+        #     patterns.append(syscall)
+        # elif syscall == 57:
+        #     print("found fork inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "fork"
+        #     patterns.append(syscall)
+        # elif syscall == 58:
+        #     print("found vfork inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "vfork"
+        #     patterns.append(syscall)
+        # elif syscall == 59:
+        #     print("found execve inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "execve"
+        #     patterns.append(syscall)
+        # elif syscall == 60:
+        #     print("found exit inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "exit"
+        #     patterns.append(syscall)
+        # elif syscall == 61:
+        #     print("found wait4 inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "wait4"
+        #     patterns.append(syscall)
+        # elif syscall == 62:
+        #     print("found kill inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "kill"
+        #     patterns.append(syscall)
+        # elif syscall == 63:
+        #     print("found uname inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "uname"
+        #     patterns.append(syscall)
+        # elif syscall == 64:
+        #     print("found semget inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "semget"
+        #     patterns.append(syscall)
+        # elif syscall == 65:
+        #     print("found semop inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "semop"
+        #     patterns.append(syscall)
+        # elif syscall == 66:
+        #     print("found semctl inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "semctl"
+        #     patterns.append(syscall)
+        # elif syscall == 67:
+        #     print("found shmdt inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "shmdt"
+        #     patterns.append(syscall)
+        # elif syscall == 68:
+        #     print("found msgget inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "msgget"
+        #     patterns.append(syscall)
+        # elif syscall == 69:
+        #     print("found msgsnd inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "exit"
+        #     patterns.append(syscall)
+        # elif syscall == 70:
+        #     print("found msgrcv inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "msgrcv"
+        #     patterns.append(syscall)
+        # elif syscall == 71:
+        #     print("found msgctl inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "msgctl"
+        #     patterns.append(syscall)
+        # elif syscall == 72:
+        #     print("found fcntl inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "fcntl"
+        #     patterns.append(syscall)
+        # elif syscall == 73:
+        #     print("found flock inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "flock"
+        #     patterns.append(syscall)
+        # elif syscall == 74:
+        #     print("found fsync inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "fsync"
+        #     patterns.append(syscall)
+        # elif syscall == 75:
+        #     print("found fdatasync inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "fdatasync"
+        #     patterns.append(syscall)
+        # elif syscall == 76:
+        #     print("found truncate inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "truncate"
+        #     patterns.append(syscall)
+        # elif syscall == 77:
+        #     print("found ftruncate inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "ftruncate"
+        #     patterns.append(syscall)
+        # elif syscall == 78:
+        #     print("found getdents inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "getdents"
+        #     patterns.append(syscall)
+        # elif syscall == 79:
+        #     print("found getcwd inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "getcwd"
+        #     patterns.append(syscall)
+        # elif syscall == 80:
+        #     print("found chdir inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "chdir"
+        #     patterns.append(syscall)
+        # elif syscall == 81:
+        #     print("found fchdir inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "fchdir"
+        #     patterns.append(syscall)
+        # elif syscall == 82:
+        #     print("found rename inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "rename"
+        #     patterns.append(syscall)
+        # elif syscall == 83:
+        #     print("found mkdir inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "mkdir"
+        #     patterns.append(syscall)
+        # elif syscall == 84:
+        #     print("found rmdir inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "rmdir"
+        #     patterns.append(syscall)
+        # elif syscall == 85:
+        #     print("found creat inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "creat"
+        #     patterns.append(syscall)
+        # elif syscall == 86:
+        #     print("found link inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "link"
+        #     patterns.append(syscall)
+        # elif syscall == 87:
+        #     print("found unlink inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "unlink"
+        #     patterns.append(syscall)
+        # elif syscall == 88:
+        #     print("found symlink inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "symlink"
+        #     patterns.append(syscall)
+        # elif syscall == 89:
+        #     print("found readlink inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "readlink"
+        #     patterns.append(syscall)
+        # elif syscall == 90:
+        #     print("found chmod inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "chmod"
+        #     patterns.append(syscall)
+        # elif syscall == 91:
+        #     print("found fchmod inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "fchmod"
+        #     patterns.append(syscall)
+        # elif syscall == 92:
+        #     print("found chown inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "chown"
+        #     patterns.append(syscall)
+        # elif syscall == 93:
+        #     print("found fchown inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "fchown"
+        #     patterns.append(syscall)
+        # elif syscall == 94:
+        #     print("found lchown inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "lchown"
+        #     patterns.append(syscall)
+        # elif syscall == 95:
+        #     print("found umask inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "umask"
+        #     patterns.append(syscall)
+        # elif syscall == 96:
+        #     print("found gettimeofday inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "gettimeofday"
+        #     patterns.append(syscall)
+        # elif syscall == 97:
+        #     print("found getrlimit inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "getrlimit"
+        #     patterns.append(syscall)
+        # elif syscall == 98:
+        #     print("found getrusage inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "getrusage"
+        #     patterns.append(syscall)
+        # elif syscall == 99:
+        #     print("found sysinfo inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "chown"
+        #     patterns.append(syscall)
+        # elif syscall == 100:
+        #     print("found times inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "times"
+        #     patterns.append(syscall)
+        # elif syscall == 101:
+        #     print("found ptrace inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "ptrace"
+        #     patterns.append(syscall)
+        # elif syscall == 102:
+        #     print("found getuid inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "getuid"
+        #     patterns.append(syscall)
+        # elif syscall == 103:
+        #     print("found syslog inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "syslog"
+        #     patterns.append(syscall)
+        # elif syscall == 104:
+        #     print("found getgid inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "getgid"
+        #     patterns.append(syscall)
+        # elif syscall == 105:
+        #     print("found setuid inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "setuid"
+        #     patterns.append(syscall)
+        # elif syscall == 106:
+        #     print("found setgid inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "setgid"
+        #     patterns.append(syscall)
+        # elif syscall == 107:
+        #     print("found geteuid inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "geteuid"
+        #     patterns.append(syscall)
+        # elif syscall == 108:
+        #     print("found getegid inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "getegid"
+        #     patterns.append(syscall)
+        # elif syscall == 109:
+        #     print("found setpgid inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "setpgid"
+        #     patterns.append(syscall)
+        # elif syscall == 110:
+        #     print("found getppid inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "getppid"
+        #     patterns.append(syscall)
+        # elif syscall == 111:
+        #     print("found getpgrp inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "getpgrp"
+        #     patterns.append(syscall)
+        # elif syscall == 112:
+        #     print("found setsid inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "setsid"
+        #     patterns.append(syscall)
+        # elif syscall == 113:
+        #     print("found setreuid inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "setreuid"
+        #     patterns.append(syscall)
+        # elif syscall == 114:
+        #     print("found setregid inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "setregid"
+        #     patterns.append(syscall)
+        # elif syscall == 115:
+        #     print("found getgroups inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "getgroups"
+        #     patterns.append(syscall)
+        # elif syscall == 116:
+        #     print("found setgroups inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "setgroups"
+        #     patterns.append(syscall)
+        # elif syscall == 117:
+        #     print("found setresuid inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "setresuid"
+        #     patterns.append(syscall)
+        # elif syscall == 118:
+        #     print("found getresuid inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "getresuid"
+        #     patterns.append(syscall)
+        # elif syscall == 119:
+        #     print("found setresgid inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "setresgid"
+        #     patterns.append(syscall)
+        # elif syscall == 120:
+        #     print("found getresgid inside the Container! with inum: " + str(inum_ring))
+        #     syscall = "getresgid"
+        #     patterns.append(syscall)
+
+        # bis hier wieder einkommentieren!
         # elif syscall == 122:
         #     occurences['getpgid'] = occurences['getpgid'] + 1
         #     # print("Update für folgenden System Call getpgid. Neue Häufigkeit: " + str(occurences['getpgid']))
