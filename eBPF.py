@@ -614,6 +614,97 @@ int sexit(struct pt_regs *ctx) {
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
+
+int swait4(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 61;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int skill(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 62;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int suname(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 63;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int ssemget(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 64;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int ssemop(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 65;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int ssemctl(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 66;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sshmdt(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 67;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int smsgget(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 68;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int smsgsnd(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 69;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int smsgrcv(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 70;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
 """
 b = BPF(text=prog)
 
@@ -682,16 +773,16 @@ def attachkretprobe():
     b.attach_kretprobe(event=b.get_syscall_fnname("vfork"), fn_name="svfork")
     b.attach_kretprobe(event=b.get_syscall_fnname("execve"), fn_name="sexecve")
     b.attach_kretprobe(event=b.get_syscall_fnname("exit"), fn_name="sexit")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("wait4"), fn_name="swait4")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("kill"), fn_name="skill")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("uname"), fn_name="suname")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("semget"), fn_name="ssemget")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("semop"), fn_name="ssemop")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("semctl"), fn_name="ssemctl")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("shmdt"), fn_name="sshmdt")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("msgget"), fn_name="smsgget")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("msgsnd"), fn_name="smsgsnd")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("msgrcv"), fn_name="smsgrcv")
+    b.attach_kretprobe(event=b.get_syscall_fnname("wait4"), fn_name="swait4")
+    b.attach_kretprobe(event=b.get_syscall_fnname("kill"), fn_name="skill")
+    b.attach_kretprobe(event=b.get_syscall_fnname("uname"), fn_name="suname")
+    b.attach_kretprobe(event=b.get_syscall_fnname("semget"), fn_name="ssemget")
+    b.attach_kretprobe(event=b.get_syscall_fnname("semop"), fn_name="ssemop")
+    b.attach_kretprobe(event=b.get_syscall_fnname("semctl"), fn_name="ssemctl")
+    b.attach_kretprobe(event=b.get_syscall_fnname("shmdt"), fn_name="sshmdt")
+    b.attach_kretprobe(event=b.get_syscall_fnname("msgget"), fn_name="smsgget")
+    b.attach_kretprobe(event=b.get_syscall_fnname("msgsnd"), fn_name="smsgsnd")
+    b.attach_kretprobe(event=b.get_syscall_fnname("msgrcv"), fn_name="smsgrcv")
     # b.attach_kretprobe(event=b.get_syscall_fnname("msgctl"), fn_name="smsgctl")
     # b.attach_kretprobe(event=b.get_syscall_fnname("fcntl"), fn_name="sfcntl")
     # b.attach_kretprobe(event=b.get_syscall_fnname("flock"), fn_name="sflock")
@@ -1206,36 +1297,46 @@ def detectpatterns(cpu, data, size):
             print("found exit inside the Container! with inum: " + str(inum_ring))
             syscall = "exit"
             patterns.append(syscall)
-        # elif syscall == 61:
-        #     occurences['wait4'] = occurences['wait4'] + 1
-        #     # print("Update für folgenden System Call wait4. Neue Häufigkeit: " + str(occurences['wait4']))
-        # elif syscall == 62:
-        #     occurences['kill'] = occurences['kill'] + 1
-        #     # print("Update für folgenden System Call kill. Neue Häufigkeit: " + str(occurences['kill']))
-        # elif syscall == 63:
-        #     occurences['uname'] = occurences['uname'] + 1
-        #     # print("Update für folgenden System Call uname. Neue Häufigkeit: " + str(occurences['uname']))
-        # elif syscall == 64:
-        #     occurences['semget'] = occurences['semget'] + 1
-        #     # print("Update für folgenden System Call semget. Neue Häufigkeit: " + str(occurences['semget']))
-        # elif syscall == 65:
-        #     occurences['semop'] = occurences['semop'] + 1
-        #     # print("Update für folgenden System Call semop. Neue Häufigkeit: " + str(occurences['semop']))
-        # elif syscall == 66:
-        #     occurences['semctl'] = occurences['semctl'] + 1
-        #     # print("Update für folgenden System Call semctl. Neue Häufigkeit: " + str(occurences['semctl']))
-        # elif syscall == 67:
-        #     occurences['shmdt'] = occurences['shmdt'] + 1
-        #     # print("Update für folgenden System Call shmdt. Neue Häufigkeit: " + str(occurences['shmdt']))
-        # elif syscall == 68:
-        #     occurences['msgget'] = occurences['msgget'] + 1
-        #     # print("Update für folgenden System Call msgget. Neue Häufigkeit: " + str(occurences['msgget']))
-        # elif syscall == 69:
-        #     occurences['msgsnd'] = occurences['msgsnd'] + 1
-        #     # print("Update für folgenden System Call msgsnd. Neue Häufigkeit: " + str(occurences['msgsnd']))
-        # elif syscall == 70:
-        #     occurences['msgrcv'] = occurences['msgrcv'] + 1
-        #     # print("Update für folgenden System Call msgrcv. Neue Häufigkeit: " + str(occurences['msgrcv']))
+        elif syscall == 61:
+            print("found wait4 inside the Container! with inum: " + str(inum_ring))
+            syscall = "wait4"
+            patterns.append(syscall)
+        elif syscall == 62:
+            print("found kill inside the Container! with inum: " + str(inum_ring))
+            syscall = "kill"
+            patterns.append(syscall)
+        elif syscall == 63:
+            print("found uname inside the Container! with inum: " + str(inum_ring))
+            syscall = "uname"
+            patterns.append(syscall)
+        elif syscall == 64:
+            print("found semget inside the Container! with inum: " + str(inum_ring))
+            syscall = "semget"
+            patterns.append(syscall)
+        elif syscall == 65:
+            print("found semop inside the Container! with inum: " + str(inum_ring))
+            syscall = "semop"
+            patterns.append(syscall)
+        elif syscall == 66:
+            print("found semctl inside the Container! with inum: " + str(inum_ring))
+            syscall = "semctl"
+            patterns.append(syscall)
+        elif syscall == 67:
+            print("found shmdt inside the Container! with inum: " + str(inum_ring))
+            syscall = "shmdt"
+            patterns.append(syscall)
+        elif syscall == 68:
+            print("found msgget inside the Container! with inum: " + str(inum_ring))
+            syscall = "msgget"
+            patterns.append(syscall)
+        elif syscall == 69:
+            print("found msgsnd inside the Container! with inum: " + str(inum_ring))
+            syscall = "exit"
+            patterns.append(syscall)
+        elif syscall == 70:
+            print("found msgrcv inside the Container! with inum: " + str(inum_ring))
+            syscall = "msgrcv"
+            patterns.append(syscall)
         # elif syscall == 71:
         #     occurences['msgctl'] = occurences['msgctl'] + 1
         #     # print("Update für folgenden System Call msgctl. Neue Häufigkeit: " + str(occurences['msgctl']))
