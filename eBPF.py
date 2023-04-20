@@ -1532,7 +1532,8 @@ def detectpatterns(cpu, data, size):
     inum_ring = data.inum
     cgroup = data.cgroup
     # if localpids.__contains__(str(pid)):
-    if inum_ring == 4026532483:
+    host_pid_ns = getinum()
+    if inum_ring != host_pid_ns:
         # print("Inside Container")
         if syscall == 0:
             print("found clone inside the Container! with inum: " + str(inum_ring))
@@ -2768,11 +2769,9 @@ def getinum():
             print(part)
             pid_ns_id = part[5:-12]
             break
+    print("PID-Namespace ID des Host Systems:", pid_ns_id)
+    return pid_ns_id
 
-    if pid_ns_id:
-        print("PID-Namespace ID:", pid_ns_id)
-    else:
-        print("PID-Namespace ID nicht gefunden")
 
 
 def getprobability():
