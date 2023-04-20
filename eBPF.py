@@ -2755,7 +2755,18 @@ def getpids(input):
 def getinum():
     # print("Host-Namespaces:")
     result = os.popen("ls -la /proc/self/ns").read()
-    print(result)
+        # Splitten der Ausgabe an den Leerzeichen
+    # Beispiel-Ausgabe: "total 0\nlrwxrwxrwx 1 user user 0 Apr 20 10:00 pid -> 'pid:[4026531836]'\n"
+    parts = result.split(" ")
+
+    # Suche nach der Zeichenkette "'pid:[...]'"
+    pid_ns_id = None
+    for part in parts:
+        if part.startswith("pid:[") and part.endswith("]'\n"):
+            # Extrahiere die ID aus der Zeichenkette
+            pid_ns_id = part[5:-3]
+            break
+    print(pid_ns_id)
 
 
 def getprobability():
