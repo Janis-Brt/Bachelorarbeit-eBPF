@@ -1187,6 +1187,106 @@ int sgetresgid(struct pt_regs *ctx) {
     return 0;
     int x = 0;
 }
+int sgetpgid(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 121;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int ssetfsuid(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 122;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int ssetfsgid(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 123;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int sgetsid(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 124;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int scapget(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 125;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int scapset(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 126;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int srt_sigpending(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 127;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int srt_sigtimedwait(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 128;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int srt_sigqueueinfo(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 129;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int srt_sigsuspend(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 130;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
 
 
 
@@ -1318,16 +1418,16 @@ def attachkretprobe():
     b.attach_kretprobe(event=b.get_syscall_fnname("getresuid"), fn_name="sgetresuid")
     b.attach_kretprobe(event=b.get_syscall_fnname("setresgid"), fn_name="ssetresgid")
     b.attach_kretprobe(event=b.get_syscall_fnname("getresgid"), fn_name="sgetresgid")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("getpgid"), fn_name="sgetpgid")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("setfsuid"), fn_name="ssetfsuid")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("setfsgid"), fn_name="ssetfsgid")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("getsid"), fn_name="sgetsid")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("capget"), fn_name="scapget")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("capset"), fn_name="scapset")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("rt_sigpending"), fn_name="srt_sigpending")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("rt_sigtimedwait"), fn_name="srt_sigtimedwait")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("rt_sigqueueinfo"), fn_name="srt_sigqueueinfo")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("rt_sigsuspend"), fn_name="srt_sigsuspend")
+    b.attach_kretprobe(event=b.get_syscall_fnname("getpgid"), fn_name="sgetpgid")
+    b.attach_kretprobe(event=b.get_syscall_fnname("setfsuid"), fn_name="ssetfsuid")
+    b.attach_kretprobe(event=b.get_syscall_fnname("setfsgid"), fn_name="ssetfsgid")
+    b.attach_kretprobe(event=b.get_syscall_fnname("getsid"), fn_name="sgetsid")
+    b.attach_kretprobe(event=b.get_syscall_fnname("capget"), fn_name="scapget")
+    b.attach_kretprobe(event=b.get_syscall_fnname("capset"), fn_name="scapset")
+    b.attach_kretprobe(event=b.get_syscall_fnname("rt_sigpending"), fn_name="srt_sigpending")
+    b.attach_kretprobe(event=b.get_syscall_fnname("rt_sigtimedwait"), fn_name="srt_sigtimedwait")
+    b.attach_kretprobe(event=b.get_syscall_fnname("rt_sigqueueinfo"), fn_name="srt_sigqueueinfo")
+    b.attach_kretprobe(event=b.get_syscall_fnname("rt_sigsuspend"), fn_name="srt_sigsuspend")
     # b.attach_kretprobe(event=b.get_syscall_fnname("sigaltstack"), fn_name="ssigaltstack")
     # b.attach_kretprobe(event=b.get_syscall_fnname("utime"), fn_name="sutime")
     # b.attach_kretprobe(event=b.get_syscall_fnname("mknod"), fn_name="smknod")
@@ -2023,42 +2123,47 @@ def detectpatterns(cpu, data, size):
             print("found getresgid inside the Container! with inum: " + str(inum_ring))
             syscall = "getresgid"
             patterns.append(syscall)
-
-        # bis hier wieder einkommentieren!
-        # elif syscall == 122:
-        #     occurences['getpgid'] = occurences['getpgid'] + 1
-        #     # print("Update für folgenden System Call getpgid. Neue Häufigkeit: " + str(occurences['getpgid']))
-        # elif syscall == 123:
-        #     occurences['setfsuid'] = occurences['setfsuid'] + 1
-        #     # print("Update für folgenden System Call setfsuid. Neue Häufigkeit: " + str(occurences['setfsuid']))
-        # elif syscall == 124:
-        #     occurences['setfsgid'] = occurences['setfsgid'] + 1
-        #     # print("Update für folgenden System Call setfsgid. Neue Häufigkeit: " + str(occurences['setfsgid']))
-        # elif syscall == 125:
-        #     occurences['getsid'] = occurences['getsid'] + 1
-        #     # print("Update für folgenden System Call getsid. Neue Häufigkeit: " + str(occurences['getsid']))
-        # elif syscall == 126:
-        #     occurences['capget'] = occurences['capget'] + 1
-        #     # print("Update für folgenden System Call capget. Neue Häufigkeit: " + str(occurences['capget']))
-        # elif syscall == 127:
-        #     occurences['capset'] = occurences['capset'] + 1
-        #     # print("Update für folgenden System Call capset. Neue Häufigkeit: " + str(occurences['capset']))
-        # elif syscall == 128:
-        #     occurences['rt_sigpending'] = occurences['rt_sigpending'] + 1
-        #     # print("Update für folgenden System Call rt_sigpending. Neue Häufigkeit: " + str(
-        #     #    occurences['rt_sigpending']))
-        # elif syscall == 129:
-        #     occurences['rt_sigtimedwait'] = occurences['rt_sigtimedwait'] + 1
-        #     # print("Update für folgenden System Call rt_sigtimedwait. Neue Häufigkeit: " + str(
-        #     #    occurences['rt_sigtimedwait']))
-        # elif syscall == 130:
-        #     occurences['rt_sigqueueinfo'] = occurences['rt_sigqueueinfo'] + 1
-        #     # print("Update für folgenden System Call rt_sigqueueinfo. Neue Häufigkeit: " + str(
-        #     #    occurences['rt_sigqueueinfo']))
-        # elif syscall == 131:
-        #     occurences['rt_sigsuspend'] = occurences['rt_sigsuspend'] + 1
-        #     # print("Update für folgenden System Call rt_sigsuspend. Neue Häufigkeit: " + str(
-        #     #    occurences['rt_sigsuspend']))
+        elif syscall == 121:
+            print("found getpgid inside the Container! with inum: " + str(inum_ring))
+            syscall = "getpgid"
+            patterns.append(syscall)
+        elif syscall == 122:
+            print("found setfsuid inside the Container! with inum: " + str(inum_ring))
+            syscall = "setfsuid"
+            patterns.append(syscall)
+        elif syscall == 123:
+            print("found setfsgid inside the Container! with inum: " + str(inum_ring))
+            syscall = "setfsgid"
+            patterns.append(syscall)
+        elif syscall == 124:
+            print("found getsid inside the Container! with inum: " + str(inum_ring))
+            syscall = "getsid"
+            patterns.append(syscall)
+        elif syscall == 125:
+            print("found capget inside the Container! with inum: " + str(inum_ring))
+            syscall = "capget"
+            patterns.append(syscall)
+        elif syscall == 126:
+            print("found capset inside the Container! with inum: " + str(inum_ring))
+            syscall = "capset"
+            patterns.append(syscall)
+        elif syscall == 127:
+            print("found rt_sigpending inside the Container! with inum: " + str(inum_ring))
+            syscall = "rt_sigpending"
+            patterns.append(syscall)
+            #    occurences['rt_sigpending']))
+        elif syscall == 128:
+            print("found rt_sigtimedwait inside the Container! with inum: " + str(inum_ring))
+            syscall = "rt_sigtimedwait"
+            patterns.append(syscall)
+        elif syscall == 129:
+            print("found rt_sigqueueinfo inside the Container! with inum: " + str(inum_ring))
+            syscall = "rt_sigqueueinfo"
+            patterns.append(syscall)
+        elif syscall == 130:
+            print("found rt_sigsuspend inside the Container! with inum: " + str(inum_ring))
+            syscall = "rt_sigsuspend"
+            patterns.append(syscall)
         # elif syscall == 132:
         #     occurences['sigaltstack'] = occurences['sigaltstack'] + 1
         #     # print(
