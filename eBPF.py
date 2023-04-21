@@ -1487,6 +1487,106 @@ int smunlock(struct pt_regs *ctx) {
     return 0;
     int x = 0;
 }
+int smlockall(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 151;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int smunlockall(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 152;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int svhangup(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 153;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int smodify_ldt(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 154;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int spivot_root(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 155;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int ssysctl(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 156;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int sprctl(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 157;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int sarch_prctl(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 158;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int sadjtimex(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 159;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int ssetrlimit(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 160;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
 
 """
 b = BPF(text=prog)
@@ -1646,16 +1746,16 @@ def attachkretprobe():
     b.attach_kretprobe(event=b.get_syscall_fnname("sched_rr_get_interval"), fn_name="ssched_rr_get_interval")
     b.attach_kretprobe(event=b.get_syscall_fnname("mlock"), fn_name="smlock")
     b.attach_kretprobe(event=b.get_syscall_fnname("munlock"), fn_name="smunlock")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("mlockall"), fn_name="smlockall")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("munlockall"), fn_name="smunlockall")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("vhangup"), fn_name="svhangup")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("modify_ldt"), fn_name="smodify_ldt")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("pivot_root"), fn_name="spivot_root")
+    b.attach_kretprobe(event=b.get_syscall_fnname("mlockall"), fn_name="smlockall")
+    b.attach_kretprobe(event=b.get_syscall_fnname("munlockall"), fn_name="smunlockall")
+    b.attach_kretprobe(event=b.get_syscall_fnname("vhangup"), fn_name="svhangup")
+    b.attach_kretprobe(event=b.get_syscall_fnname("modify_ldt"), fn_name="smodify_ldt")
+    b.attach_kretprobe(event=b.get_syscall_fnname("pivot_root"), fn_name="spivot_root")
     # b.attach_kretprobe(event=b.get_syscall_fnname("sysctl"), fn_name="ssysctl") not traceable
     # b.attach_kretprobe(event=b.get_syscall_fnname("prctl"), fn_name="sprctl") not traceable
-    # b.attach_kretprobe(event=b.get_syscall_fnname("arch_prctl"), fn_name="sarch_prctl")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("adjtimex"), fn_name="sadjtimex")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("setrlimit"), fn_name="ssetrlimit")
+    b.attach_kretprobe(event=b.get_syscall_fnname("arch_prctl"), fn_name="sarch_prctl")
+    b.attach_kretprobe(event=b.get_syscall_fnname("adjtimex"), fn_name="sadjtimex")
+    b.attach_kretprobe(event=b.get_syscall_fnname("setrlimit"), fn_name="ssetrlimit")
     # b.attach_kretprobe(event=b.get_syscall_fnname("chroot"), fn_name="schroot")
     # b.attach_kretprobe(event=b.get_syscall_fnname("sync"), fn_name="ssync")
     # b.attach_kretprobe(event=b.get_syscall_fnname("acct"), fn_name="sacct")
@@ -2442,36 +2542,46 @@ def detectpatterns(cpu, data, size):
             print("found munlock inside the Container! with inum: " + str(inum_ring))
             syscall = "munlock"
             patterns.append(syscall)
-        # elif syscall == 152:
-        #     occurences['mlockall'] = occurences['mlockall'] + 1
-            # print("Update für folgenden System Call mlockall. Neue Häufigkeit: " + str(occurences['mlockall']))
-        # elif syscall == 153:
-        #     occurences['munlockall'] = occurences['munlockall'] + 1
-        #     # print("Update für folgenden System Call munlockall. Neue Häufigkeit: " + str(occurences['munlockall']))
-        # elif syscall == 154:
-        #     occurences['vhangup'] = occurences['vhangup'] + 1
-        #     # print("Update für folgenden System Call vhangup. Neue Häufigkeit: " + str(occurences['vhangup']))
-        # elif syscall == 155:
-        #     occurences['modify_ldt'] = occurences['modify_ldt'] + 1
-        #     # print("Update für folgenden System Call modify_ldt. Neue Häufigkeit: " + str(occurences['modify_ldt']))
-        # elif syscall == 156:
-        #     occurences['pivot_root'] = occurences['pivot_root'] + 1
-        #     # print("Update für folgenden System Call pivot_root. Neue Häufigkeit: " + str(occurences['pivot_root']))
-        # elif syscall == 157:
-        #     occurences['sysctl'] = occurences['sysctl'] + 1
-        #     # print("Update für folgenden System Call sysctl. Neue Häufigkeit: " + str(occurences['sysctl']))
-        # elif syscall == 158:
-        #     occurences['prctl'] = occurences['prctl'] + 1
-        #     # print("Update für folgenden System Call prctl. Neue Häufigkeit: " + str(occurences['prctl']))
-        # elif syscall == 159:
-        #     occurences['arch_prctl'] = occurences['arch_prctl'] + 1
-        #     # print("Update für folgenden System Call arch_prctl. Neue Häufigkeit: " + str(occurences['arch_prctl']))
-        # elif syscall == 160:
-        #     occurences['adjtimex'] = occurences['adjtimex'] + 1
-        #     # print("Update für folgenden System Call adjtimex. Neue Häufigkeit: " + str(occurences['adjtimex']))
-        # elif syscall == 161:
-        #     occurences['setrlimit'] = occurences['setrlimit'] + 1
-        #     # print("Update für folgenden System Call setrlimit. Neue Häufigkeit: " + str(occurences['setrlimit']))
+        elif syscall == 151:
+            print("found mlockall inside the Container! with inum: " + str(inum_ring))
+            syscall = "mlockall"
+            patterns.append(syscall)
+        elif syscall == 152:
+            print("found munlockall inside the Container! with inum: " + str(inum_ring))
+            syscall = "munlockall"
+            patterns.append(syscall)
+        elif syscall == 153:
+            print("found vhangup inside the Container! with inum: " + str(inum_ring))
+            syscall = "vhangup"
+            patterns.append(syscall)
+        elif syscall == 154:
+            print("found modify_ldt inside the Container! with inum: " + str(inum_ring))
+            syscall = "modify_ldt"
+            patterns.append(syscall)
+        elif syscall == 155:
+            print("found pivot_root inside the Container! with inum: " + str(inum_ring))
+            syscall = "pivot_root"
+            patterns.append(syscall)
+        elif syscall == 156:
+            print("found sysctl inside the Container! with inum: " + str(inum_ring))
+            syscall = "sysctl"
+            patterns.append(syscall)
+        elif syscall == 157:
+            print("found prctl inside the Container! with inum: " + str(inum_ring))
+            syscall = "prctl"
+            patterns.append(syscall)
+        elif syscall == 158:
+            print("found arch_prctl inside the Container! with inum: " + str(inum_ring))
+            syscall = "arch_prctl"
+            patterns.append(syscall)
+        elif syscall == 159:
+            print("found adjtimex inside the Container! with inum: " + str(inum_ring))
+            syscall = "adjtimex"
+            patterns.append(syscall)
+        elif syscall == 160:
+            print("found setrlimit inside the Container! with inum: " + str(inum_ring))
+            syscall = "setrlimit"
+            patterns.append(syscall)
         # elif syscall == 162:
         #     occurences['chroot'] = occurences['chroot'] + 1
         #     # print("Update für folgenden System Call chroot. Neue Häufigkeit: " + str(occurences['chroot']))
