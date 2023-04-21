@@ -884,7 +884,6 @@ int schmod(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
 }
 
 int sfchmod(struct pt_regs *ctx) {
@@ -895,7 +894,6 @@ int sfchmod(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
 }
 int schown(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -905,7 +903,6 @@ int schown(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
 }
 int sfchown(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -915,7 +912,7 @@ int sfchown(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int slchown(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -925,7 +922,7 @@ int slchown(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int sumask(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -935,7 +932,7 @@ int sumask(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int sgettimeofday(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -945,7 +942,7 @@ int sgettimeofday(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int sgetrlimit(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -955,7 +952,7 @@ int sgetrlimit(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int sgetrusage(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -965,7 +962,7 @@ int sgetrusage(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int ssysinfo(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -975,7 +972,7 @@ int ssysinfo(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int stimes(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -985,7 +982,7 @@ int stimes(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int sptrace(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -995,7 +992,7 @@ int sptrace(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int sgetuid(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1005,7 +1002,7 @@ int sgetuid(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int ssyslog(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1015,7 +1012,7 @@ int ssyslog(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int sgetgid(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1025,7 +1022,7 @@ int sgetgid(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int ssetuid(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1035,7 +1032,7 @@ int ssetuid(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int ssetgid(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1045,7 +1042,7 @@ int ssetgid(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int sgeteuid(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1055,7 +1052,7 @@ int sgeteuid(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int sgetegid(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1065,7 +1062,7 @@ int sgetegid(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int ssetpgid(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1075,7 +1072,7 @@ int ssetpgid(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int sgetppid(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1085,7 +1082,7 @@ int sgetppid(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int sgetpgrp(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1095,7 +1092,7 @@ int sgetpgrp(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int ssetsid(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1105,7 +1102,7 @@ int ssetsid(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int ssetreuid(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1115,7 +1112,7 @@ int ssetreuid(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int ssetregid(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1125,7 +1122,7 @@ int ssetregid(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int sgetgroups(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1135,7 +1132,7 @@ int sgetgroups(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int ssetgroups(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1145,7 +1142,7 @@ int ssetgroups(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int ssetresuid(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1155,7 +1152,7 @@ int ssetresuid(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int sgetresuid(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1165,7 +1162,7 @@ int sgetresuid(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int ssetresgid(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1175,7 +1172,7 @@ int ssetresgid(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int sgetresgid(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1185,7 +1182,7 @@ int sgetresgid(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int sgetpgid(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1195,7 +1192,7 @@ int sgetpgid(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int ssetfsuid(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1205,7 +1202,7 @@ int ssetfsuid(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int ssetfsgid(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1215,7 +1212,7 @@ int ssetfsgid(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int sgetsid(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1225,7 +1222,7 @@ int sgetsid(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int scapget(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1235,7 +1232,7 @@ int scapget(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int scapset(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1245,7 +1242,7 @@ int scapset(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int srt_sigpending(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1255,7 +1252,7 @@ int srt_sigpending(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int srt_sigtimedwait(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1265,7 +1262,7 @@ int srt_sigtimedwait(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int srt_sigqueueinfo(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1275,7 +1272,7 @@ int srt_sigqueueinfo(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int srt_sigsuspend(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1285,7 +1282,7 @@ int srt_sigsuspend(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int ssigaltstack(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1295,7 +1292,7 @@ int ssigaltstack(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int sutime(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1305,7 +1302,7 @@ int sutime(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int smknod(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1315,7 +1312,7 @@ int smknod(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int suselib(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1325,7 +1322,7 @@ int suselib(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int spersonality(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1335,7 +1332,7 @@ int spersonality(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int sustat(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1345,7 +1342,7 @@ int sustat(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int sstatfs(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1355,7 +1352,7 @@ int sstatfs(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int sfstatfs(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1365,7 +1362,7 @@ int sfstatfs(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int ssysfs(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1375,7 +1372,7 @@ int ssysfs(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int sgetpriority(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1385,7 +1382,7 @@ int sgetpriority(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int ssetpriority(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1395,7 +1392,7 @@ int ssetpriority(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int ssched_setparam(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1405,7 +1402,7 @@ int ssched_setparam(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int ssched_getparam(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1415,7 +1412,7 @@ int ssched_getparam(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int ssched_setscheduler(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1425,7 +1422,7 @@ int ssched_setscheduler(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int ssched_getscheduler(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1435,7 +1432,7 @@ int ssched_getscheduler(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int ssched_get_priority_max(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1445,7 +1442,7 @@ int ssched_get_priority_max(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int ssched_get_priority_min(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1455,7 +1452,7 @@ int ssched_get_priority_min(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int ssched_rr_get_interval(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1465,7 +1462,7 @@ int ssched_rr_get_interval(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int smlock(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1475,7 +1472,7 @@ int smlock(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int smunlock(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1485,7 +1482,7 @@ int smunlock(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int smlockall(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1495,7 +1492,7 @@ int smlockall(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int smunlockall(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1505,7 +1502,7 @@ int smunlockall(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int svhangup(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1515,7 +1512,7 @@ int svhangup(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int smodify_ldt(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1525,7 +1522,7 @@ int smodify_ldt(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int spivot_root(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1535,7 +1532,7 @@ int spivot_root(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int ssysctl(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1545,7 +1542,7 @@ int ssysctl(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int sprctl(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1555,7 +1552,7 @@ int sprctl(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int sarch_prctl(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1565,7 +1562,7 @@ int sarch_prctl(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int sadjtimex(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1575,7 +1572,7 @@ int sadjtimex(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int ssetrlimit(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1585,7 +1582,7 @@ int ssetrlimit(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int schroot(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1595,7 +1592,7 @@ int schroot(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int ssync(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1605,7 +1602,7 @@ int ssync(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int sacct(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1615,7 +1612,7 @@ int sacct(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int ssettimeofday(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1625,7 +1622,7 @@ int ssettimeofday(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int smount(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1635,7 +1632,7 @@ int smount(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int sumount2(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1645,7 +1642,7 @@ int sumount2(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int sswapon(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1655,7 +1652,7 @@ int sswapon(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int sswapoff(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1665,7 +1662,7 @@ int sswapoff(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int sreboot(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1675,7 +1672,7 @@ int sreboot(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+    
 }
 int ssethostname(struct pt_regs *ctx) {
     struct data_t data = {};
@@ -1685,7 +1682,96 @@ int ssethostname(struct pt_regs *ctx) {
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
-    int x = 0;
+}
+int ssetdomainname(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 171;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int siopl(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 172;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sioperm(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 173;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int screate_module(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 174;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sinit_module(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 175;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sdelete_module(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 176;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sget_kernel_syms(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 177;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int squery_module(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 178;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int squotactl(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 179;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int snfsservctl(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 180;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
 }
 
 """
@@ -1866,17 +1952,16 @@ def attachkretprobe():
     b.attach_kretprobe(event=b.get_syscall_fnname("swapoff"), fn_name="sswapoff")
     b.attach_kretprobe(event=b.get_syscall_fnname("reboot"), fn_name="sreboot")
     b.attach_kretprobe(event=b.get_syscall_fnname("sethostname"), fn_name="ssethostname")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("setdomainname"), fn_name="ssetdomainname")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("iopl"), fn_name="siopl")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("ioperm"), fn_name="sioperm")
+    b.attach_kretprobe(event=b.get_syscall_fnname("setdomainname"), fn_name="ssetdomainname")
+    b.attach_kretprobe(event=b.get_syscall_fnname("iopl"), fn_name="siopl")
+    b.attach_kretprobe(event=b.get_syscall_fnname("ioperm"), fn_name="sioperm")
     # b.attach_kretprobe(event=b.get_syscall_fnname("create_module"), fn_name="screate_module") not traceable
-    # b.attach_kretprobe(event=b.get_syscall_fnname("init_module"), fn_name="sinit_module")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("delete_module"), fn_name="sdelete_module")
+    b.attach_kretprobe(event=b.get_syscall_fnname("init_module"), fn_name="sinit_module")
+    b.attach_kretprobe(event=b.get_syscall_fnname("delete_module"), fn_name="sdelete_module")
     # b.attach_kretprobe(event=b.get_syscall_fnname("get_kernel_syms"), fn_name="sget_kernel_syms") not traceable, removed from Linux Kernel
     # b.attach_kretprobe(event=b.get_syscall_fnname("query_module"), fn_name="squery_module") not traceable
-    # b.attach_kretprobe(event=b.get_syscall_fnname("quotactl"), fn_name="squotactl")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("quotactl"), fn_name="squotactl")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("nfsservctl"), fn_name="snfsservctl")
+    b.attach_kretprobe(event=b.get_syscall_fnname("quotactl"), fn_name="squotactl")
+    b.attach_kretprobe(event=b.get_syscall_fnname("nfsservctl"), fn_name="snfsservctl")
     # b.attach_kretprobe(event=b.get_syscall_fnname("getpmsg"), fn_name="sgetpmsg")
     # b.attach_kretprobe(event=b.get_syscall_fnname("putpmsg"), fn_name="sputpmsg")
     # b.attach_kretprobe(event=b.get_syscall_fnname("afs_syscall"), fn_name="safs_syscall")
@@ -2722,42 +2807,43 @@ def detectpatterns(cpu, data, size):
             print("found sethostname inside the Container! with inum: " + str(inum_ring))
             syscall = "setrlimit"
             patterns.append(syscall)
-        # elif syscall == 172:
-        #     occurences['setdomainname'] = occurences['setdomainname'] + 1
-        #     # print("Update für folgenden System Call setdomainname. Neue Häufigkeit: " + str(
-        #     #    occurences['setdomainname']))
-        # elif syscall == 173:
-        #     occurences['iopl'] = occurences['iopl'] + 1
-        #     # print("Update für folgenden System Call iopl. Neue Häufigkeit: " + str(occurences['iopl']))
-        # elif syscall == 174:
-        #     occurences['ioperm'] = occurences['ioperm'] + 1
-        #     # print("Update für folgenden System Call ioperm. Neue Häufigkeit: " + str(occurences['ioperm']))
-        # elif syscall == 175:
-        #     occurences['create_module'] = occurences['create_module'] + 1
-        #     # print("Update für folgenden System Call create_module. Neue Häufigkeit: " + str(
-        #     #    occurences['create_module']))
-        # elif syscall == 176:
-        #     occurences['init_module'] = occurences['init_module'] + 1
-        #     # print(
-        #     #     "Update für folgenden System Call: init_module. Neue Häufigkeit: " + str(occurences['init_module']))
-        # elif syscall == 177:
-        #     occurences['delete_module'] = occurences['delete_module'] + 1
-        #     # print("Update für folgenden System Call delete_module. Neue Häufigkeit: " + str(
-        #     #    occurences['delete_module']))
-        # elif syscall == 178:
-        #     occurences['get_kernel_syms'] = occurences['get_kernel_syms'] + 1
-        #     # print("Update für folgenden System Call get_kernel_syms. Neue Häufigkeit: " + str(
-        #     #    occurences['get_kernel_syms']))
-        # elif syscall == 179:
-        #     occurences['query_module'] = occurences['query_module'] + 1
-        #     # print("Update für folgenden System Call query_module. Neue Häufigkeit: " + str(
-        #     #    occurences['query_module']))
-        # elif syscall == 180:
-        #     occurences['quotactl'] = occurences['quotactl'] + 1
-        #     # print("Update für folgenden System Call quotactl. Neue Häufigkeit: " + str(occurences['quotactl']))
-        # elif syscall == 181:
-        #     occurences['nfsservctl'] = occurences['nfsservctl'] + 1
-        #     # print("Update für folgenden System Call nfsservctl. Neue Häufigkeit: " + str(occurences['nfsservctl']))
+        elif syscall == 171:
+            print("found setdoaminname inside the Container! with inum: " + str(inum_ring))
+            syscall = "setdomainname"
+            patterns.append(syscall)
+        elif syscall == 172:
+            print("found iopl inside the Container! with inum: " + str(inum_ring))
+            syscall = "iopl"
+            patterns.append(syscall)
+        elif syscall == 173:
+            print("found ioperm inside the Container! with inum: " + str(inum_ring))
+            syscall = "ioperm"
+            patterns.append(syscall)
+        elif syscall == 174:
+            print("found create_module inside the Container! with inum: " + str(inum_ring))
+            syscall = "create_module"
+            patterns.append(syscall)
+            #    occurences['create_module']))
+        elif syscall == 175:
+            print("found init_module inside the Container! with inum: " + str(inum_ring))
+            syscall = "init_module"
+            patterns.append(syscall)
+        elif syscall == 176:
+            print("found delete_module inside the Container! with inum: " + str(inum_ring))
+            syscall = "delete_module"
+        elif syscall == 177:
+            print("found get_kernel_syms inside the Container! with inum: " + str(inum_ring))
+            syscall = "get_kernel_syms"
+            patterns.append(syscall)
+        elif syscall == 178:
+            print("found query_module inside the Container! with inum: " + str(inum_ring))
+            syscall = "query_module"
+        elif syscall == 179:
+            print("found quotactl inside the Container! with inum: " + str(inum_ring))
+            syscall = "quotactl"
+        elif syscall == 180:
+            print("found nfsservctl inside the Container! with inum: " + str(inum_ring))
+            syscall = "nfsservctl"
         # elif syscall == 182:
         #     occurences['getpmsg'] = occurences['getpmsg'] + 1
         #     # print("Update für folgenden System Call getpmsg. Neue Häufigkeit: " + str(occurences['getpmsg']))
