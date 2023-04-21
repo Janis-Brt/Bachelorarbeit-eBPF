@@ -2055,7 +2055,7 @@ def attachkretprobe():
     # b.attach_kretprobe(event=b.get_syscall_fnname("putpmsg"), fn_name="sputpmsg") not traceable
     # b.attach_kretprobe(event=b.get_syscall_fnname("afs_syscall"), fn_name="safs_syscall") not traceable
     # b.attach_kretprobe(event=b.get_syscall_fnname("tuxcall"), fn_name="stuxcall") not traceable
-    b.attach_kretprobe(event=b.get_syscall_fnname("security"), fn_name="ssecurity")
+    # b.attach_kretprobe(event=b.get_syscall_fnname("security"), fn_name="ssecurity") not traceable
     b.attach_kretprobe(event=b.get_syscall_fnname("gettid"), fn_name="sgettid")
     b.attach_kretprobe(event=b.get_syscall_fnname("readahead"), fn_name="sreadahead")
     b.attach_kretprobe(event=b.get_syscall_fnname("setxattr"), fn_name="ssetxattr")
