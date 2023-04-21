@@ -1961,7 +1961,7 @@ def attachkretprobe():
     # b.attach_kretprobe(event=b.get_syscall_fnname("get_kernel_syms"), fn_name="sget_kernel_syms") not traceable, removed from Linux Kernel
     # b.attach_kretprobe(event=b.get_syscall_fnname("query_module"), fn_name="squery_module") not traceable
     b.attach_kretprobe(event=b.get_syscall_fnname("quotactl"), fn_name="squotactl")
-    b.attach_kretprobe(event=b.get_syscall_fnname("nfsservctl"), fn_name="snfsservctl")
+    # b.attach_kretprobe(event=b.get_syscall_fnname("nfsservctl"), fn_name="snfsservctl") not traceable
     # b.attach_kretprobe(event=b.get_syscall_fnname("getpmsg"), fn_name="sgetpmsg")
     # b.attach_kretprobe(event=b.get_syscall_fnname("putpmsg"), fn_name="sputpmsg")
     # b.attach_kretprobe(event=b.get_syscall_fnname("afs_syscall"), fn_name="safs_syscall")
@@ -3412,8 +3412,8 @@ def getprobability():
 
 
 # Eingabe des zu tracenden Binaries.
-ibinary = input("Input Binary: ")
-localpids = getpids(ibinary)
+# ibinary = input("Input Binary: ")
+# localpids = getpids(ibinary)
 print("attaching to kretprobes")
 attachkretprobe()
 print("attachment ready" + "\n" + "now tracing! \npress CTRL + C to stop tracing.")
