@@ -1773,7 +1773,96 @@ int snfsservctl(struct pt_regs *ctx) {
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
-
+int sgetpmsg(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 181;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sputmsg(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 182;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int safs_syscall(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 183;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int stuxcall(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 184;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int ssecurity(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 185;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sgettid(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 186;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sreadahead(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 187;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int ssetxattr(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 188;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int slsetxattr(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 189;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sfsetxattr(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 190;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
 """
 b = BPF(text=prog)
 
@@ -1962,16 +2051,16 @@ def attachkretprobe():
     # b.attach_kretprobe(event=b.get_syscall_fnname("query_module"), fn_name="squery_module") not traceable
     b.attach_kretprobe(event=b.get_syscall_fnname("quotactl"), fn_name="squotactl")
     # b.attach_kretprobe(event=b.get_syscall_fnname("nfsservctl"), fn_name="snfsservctl") not traceable
-    # b.attach_kretprobe(event=b.get_syscall_fnname("getpmsg"), fn_name="sgetpmsg")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("putpmsg"), fn_name="sputpmsg")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("afs_syscall"), fn_name="safs_syscall")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("tuxcall"), fn_name="stuxcall")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("security"), fn_name="ssecurity")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("gettid"), fn_name="sgettid")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("readahead"), fn_name="sreadahead")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("setxattr"), fn_name="ssetxattr")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("lsetxattr"), fn_name="slsetxattr")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("fsetxattr"), fn_name="sfsetxattr")
+    b.attach_kretprobe(event=b.get_syscall_fnname("getpmsg"), fn_name="sgetpmsg")
+    b.attach_kretprobe(event=b.get_syscall_fnname("putpmsg"), fn_name="sputpmsg")
+    b.attach_kretprobe(event=b.get_syscall_fnname("afs_syscall"), fn_name="safs_syscall")
+    b.attach_kretprobe(event=b.get_syscall_fnname("tuxcall"), fn_name="stuxcall")
+    b.attach_kretprobe(event=b.get_syscall_fnname("security"), fn_name="ssecurity")
+    b.attach_kretprobe(event=b.get_syscall_fnname("gettid"), fn_name="sgettid")
+    b.attach_kretprobe(event=b.get_syscall_fnname("readahead"), fn_name="sreadahead")
+    b.attach_kretprobe(event=b.get_syscall_fnname("setxattr"), fn_name="ssetxattr")
+    b.attach_kretprobe(event=b.get_syscall_fnname("lsetxattr"), fn_name="slsetxattr")
+    b.attach_kretprobe(event=b.get_syscall_fnname("fsetxattr"), fn_name="sfsetxattr")
     # b.attach_kretprobe(event=b.get_syscall_fnname("getxattr"), fn_name="sgetxattr")
 #    b.attach_kretprobe(event=b.get_syscall_fnname("lgetxattr"), fn_name="slgetxattr")
 #     b.attach_kretprobe(event=b.get_syscall_fnname("fgetxattr"), fn_name="sfgetxattr")
@@ -2844,37 +2933,36 @@ def detectpatterns(cpu, data, size):
         elif syscall == 180:
             print("found nfsservctl inside the Container! with inum: " + str(inum_ring))
             syscall = "nfsservctl"
-        # elif syscall == 182:
-        #     occurences['getpmsg'] = occurences['getpmsg'] + 1
-        #     # print("Update für folgenden System Call getpmsg. Neue Häufigkeit: " + str(occurences['getpmsg']))
-        # elif syscall == 183:
-        #     occurences['putpmsg'] = occurences['putpmsg'] + 1
-        #     # print("Update für folgenden System Call putpmsg. Neue Häufigkeit: " + str(occurences['putpmsg']))
-        # elif syscall == 184:
-        #     occurences['afs_syscall'] = occurences['afs_syscall'] + 1
-        #     # print(
-        #     #     "Update für folgenden System Call: afs_syscall. Neue Häufigkeit: " + str(occurences['afs_syscall']))
-        # elif syscall == 185:
-        #     occurences['tuxcall'] = occurences['tuxcall'] + 1
-        #     # print("Update für folgenden System Call tuxcall. Neue Häufigkeit: " + str(occurences['tuxcall']))
-        # elif syscall == 186:
-        #     occurences['security'] = occurences['security'] + 1
-        #     # print("Update für folgenden System Call security. Neue Häufigkeit: " + str(occurences['security']))
-        # elif syscall == 187:
-        #     occurences['gettid'] = occurences['gettid'] + 1
-        #     # print("Update für folgenden System Call gettid. Neue Häufigkeit: " + str(occurences['gettid']))
-        # elif syscall == 188:
-        #     occurences['readahead'] = occurences['readahead'] + 1
-        #     # print("Update für folgenden System Call readahead. Neue Häufigkeit: " + str(occurences['readahead']))
-        # elif syscall == 189:
-        #     occurences['setxattr'] = occurences['setxattr'] + 1
-        #     # print("Update für folgenden System Call setxattr. Neue Häufigkeit: " + str(occurences['setxattr']))
-        # elif syscall == 190:
-        #     occurences['lsetxattr'] = occurences['lsetxattr'] + 1
-        #     # print("Update für folgenden System Call lsetxattr. Neue Häufigkeit: " + str(occurences['lsetxattr']))
-        # elif syscall == 191:
-        #     occurences['fsetxattr'] = occurences['fsetxattr'] + 1
-        #     # print("Update für folgenden System Call fsetxattr. Neue Häufigkeit: " + str(occurences['fsetxattr']))
+        elif syscall == 181:
+            print("found getpmsg inside the Container! with inum: " + str(inum_ring))
+            syscall = "getpmsg"
+        elif syscall == 182:
+            print("found putpmsg inside the Container! with inum: " + str(inum_ring))
+            syscall = "putpmsg"
+        elif syscall == 183:
+            print("found afs_syscall inside the Container! with inum: " + str(inum_ring))
+            syscall = "afs_syscall"
+        elif syscall == 184:
+            print("found tuxcall inside the Container! with inum: " + str(inum_ring))
+            syscall = "tuxcall"
+        elif syscall == 185:
+            print("found security inside the Container! with inum: " + str(inum_ring))
+            syscall = "security"
+        elif syscall == 186:
+            print("found gettid inside the Container! with inum: " + str(inum_ring))
+            syscall = "gettid"
+        elif syscall == 187:
+            print("found readahead inside the Container! with inum: " + str(inum_ring))
+            syscall = "readahead"
+        elif syscall == 188:
+            print("found setxattr inside the Container! with inum: " + str(inum_ring))
+            syscall = "setxattr"
+        elif syscall == 189:
+            print("found lsetxattr inside the Container! with inum: " + str(inum_ring))
+            syscall = "lsetxattr"
+        elif syscall == 190:
+            print("found fsetxattr inside the Container! with inum: " + str(inum_ring))
+            syscall = "fsetxattr"
         # elif syscall == 192:
         #     occurences['getxattr'] = occurences['getxattr'] + 1
         #     # print("Update für folgenden System Call getxattr. Neue Häufigkeit: " + str(occurences['getxattr']))
