@@ -2052,7 +2052,7 @@ def attachkretprobe():
     b.attach_kretprobe(event=b.get_syscall_fnname("quotactl"), fn_name="squotactl")
     # b.attach_kretprobe(event=b.get_syscall_fnname("nfsservctl"), fn_name="snfsservctl") not traceable
     # b.attach_kretprobe(event=b.get_syscall_fnname("getpmsg"), fn_name="sgetpmsg") not traceable
-    b.attach_kretprobe(event=b.get_syscall_fnname("putpmsg"), fn_name="sputpmsg")
+    # b.attach_kretprobe(event=b.get_syscall_fnname("putpmsg"), fn_name="sputpmsg") not traceable
     b.attach_kretprobe(event=b.get_syscall_fnname("afs_syscall"), fn_name="safs_syscall")
     b.attach_kretprobe(event=b.get_syscall_fnname("tuxcall"), fn_name="stuxcall")
     b.attach_kretprobe(event=b.get_syscall_fnname("security"), fn_name="ssecurity")
