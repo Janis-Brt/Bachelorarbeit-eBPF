@@ -1387,6 +1387,106 @@ int sgetpriority(struct pt_regs *ctx) {
     return 0;
     int x = 0;
 }
+int ssetpriority(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 141;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int ssched_setparam(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 142;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int ssched_getparam(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 143;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int ssched_setscheduler(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 144;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int ssched_getscheduler(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 145;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int ssched_get_priority_max(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 146;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int ssched_get_priority_min(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 147;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int ssched_rr_get_interval(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 148;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int smlock(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 149;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int smunlock(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 150;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
 
 """
 b = BPF(text=prog)
@@ -1536,16 +1636,16 @@ def attachkretprobe():
     b.attach_kretprobe(event=b.get_syscall_fnname("fstatfs"), fn_name="sfstatfs")
     b.attach_kretprobe(event=b.get_syscall_fnname("sysfs"), fn_name="ssysfs")
     b.attach_kretprobe(event=b.get_syscall_fnname("getpriority"), fn_name="sgetpriority")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("setpriority"), fn_name="ssetpriority")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("sched_setparam"), fn_name="ssched_setparam")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("sched_getparam"), fn_name="ssched_getparam")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("sched_setscheduler"), fn_name="ssched_setscheduler")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("sched_getscheduler"), fn_name="ssched_getscheduler")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("sched_get_priority_max"), fn_name="ssched_get_priority_max")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("sched_get_priority_min"), fn_name="ssched_get_priority_min")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("sched_rr_get_interval"), fn_name="ssched_rr_get_interval")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("mlock"), fn_name="smlock")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("munlock"), fn_name="smunlock")
+    b.attach_kretprobe(event=b.get_syscall_fnname("setpriority"), fn_name="ssetpriority")
+    b.attach_kretprobe(event=b.get_syscall_fnname("sched_setparam"), fn_name="ssched_setparam")
+    b.attach_kretprobe(event=b.get_syscall_fnname("sched_getparam"), fn_name="ssched_getparam")
+    b.attach_kretprobe(event=b.get_syscall_fnname("sched_setscheduler"), fn_name="ssched_setscheduler")
+    b.attach_kretprobe(event=b.get_syscall_fnname("sched_getscheduler"), fn_name="ssched_getscheduler")
+    b.attach_kretprobe(event=b.get_syscall_fnname("sched_get_priority_max"), fn_name="ssched_get_priority_max")
+    b.attach_kretprobe(event=b.get_syscall_fnname("sched_get_priority_min"), fn_name="ssched_get_priority_min")
+    b.attach_kretprobe(event=b.get_syscall_fnname("sched_rr_get_interval"), fn_name="ssched_rr_get_interval")
+    b.attach_kretprobe(event=b.get_syscall_fnname("mlock"), fn_name="smlock")
+    b.attach_kretprobe(event=b.get_syscall_fnname("munlock"), fn_name="smunlock")
     # b.attach_kretprobe(event=b.get_syscall_fnname("mlockall"), fn_name="smlockall")
     # b.attach_kretprobe(event=b.get_syscall_fnname("munlockall"), fn_name="smunlockall")
     # b.attach_kretprobe(event=b.get_syscall_fnname("vhangup"), fn_name="svhangup")
@@ -2302,47 +2402,49 @@ def detectpatterns(cpu, data, size):
             print("found getpriority inside the Container! with inum: " + str(inum_ring))
             syscall = "getpriority"
             patterns.append(syscall)
-        # elif syscall == 142:
-        #     occurences['setpriority'] = occurences['setpriority'] + 1
-        #     # print(
-        #     #     "Update für folgenden System Call: setpriority. Neue Häufigkeit: " + str(occurences['setpriority']))
-        # elif syscall == 143:
-        #     occurences['sched_setparam'] = occurences['sched_setparam'] + 1
-        #     # print("Update für folgenden System Call sched_setparam. Neue Häufigkeit: " + str(
-        #     #    occurences['sched_setparam']))
-        # elif syscall == 144:
-        #     occurences['sched_getparam'] = occurences['sched_getparam'] + 1
-        #     # print("Update für folgenden System Call sched_getparam. Neue Häufigkeit: " + str(
-        #     #    occurences['sched_getparam']))
-        # elif syscall == 145:
-        #     occurences['sched_setscheduler'] = occurences['sched_setscheduler'] + 1
-        #     # print("Update für folgenden System Call sched_setscheduler. Neue Häufigkeit: " + str(
-        #     #    occurences['sched_setscheduler']))
-        # elif syscall == 146:
-        #     occurences['sched_getscheduler'] = occurences['sched_getscheduler'] + 1
-        #     # print("Update für folgenden System Call sched_getscheduler. Neue Häufigkeit: " + str(
-        #     #    occurences['sched_getscheduler']))
-        # elif syscall == 147:
-        #     occurences['sched_get_priority_max'] = occurences['sched_get_priority_max'] + 1
-        #     # print("Update für folgenden System Call sched_get_priority_max. Neue Häufigkeit: " + str(
-        #     #    occurences['sched_get_priority_max']))
-        # elif syscall == 148:
-        #     occurences['sched_get_priority_min'] = occurences['sched_get_priority_min'] + 1
-        #     # print("Update für folgenden System Call sched_get_priority_min. Neue Häufigkeit: " + str(
-        #     #    occurences['sched_get_priority_min']))
-        # elif syscall == 149:
-        #     occurences['sched_rr_get_interval'] = occurences['sched_rr_get_interval'] + 1
-        #     # print("Update für folgenden System Call sched_rr_get_interval. Neue Häufigkeit: " + str(
-        #     #    occurences['sched_rr_get_interval']))
-        # elif syscall == 150:
-        #     occurences['mlock'] = occurences['mlock'] + 1
-        #     # print("Update für folgenden System Call mlock. Neue Häufigkeit: " + str(occurences['mlock']))
-        # elif syscall == 151:
-        #     occurences['munlock'] = occurences['munlock'] + 1
-        #     # print("Update für folgenden System Call munlock. Neue Häufigkeit: " + str(occurences['munlock']))
+        elif syscall == 141:
+            print("found setpriority inside the Container! with inum: " + str(inum_ring))
+            syscall = "setpriority"
+            patterns.append(syscall)
+        elif syscall == 142:
+            print("found sched_setparam inside the Container! with inum: " + str(inum_ring))
+            syscall = "sched_setparam"
+            patterns.append(syscall)
+        elif syscall == 143:
+            print("found sched_getparam inside the Container! with inum: " + str(inum_ring))
+            syscall = "sched_getparam"
+            patterns.append(syscall)
+        elif syscall == 144:
+            print("found sched_setscheduler inside the Container! with inum: " + str(inum_ring))
+            syscall = "sched_setscheduler"
+            patterns.append(syscall)
+        elif syscall == 145:
+            print("found sched_getscheduler inside the Container! with inum: " + str(inum_ring))
+            syscall = "sched_getscheduler"
+            patterns.append(syscall)
+        elif syscall == 146:
+            print("found sched_get_priority_max inside the Container! with inum: " + str(inum_ring))
+            syscall = "sched_get_priority_max"
+            patterns.append(syscall)
+        elif syscall == 147:
+            print("found sched_get_priority_min inside the Container! with inum: " + str(inum_ring))
+            syscall = "sched_get_priority_min"
+            patterns.append(syscall)
+        elif syscall == 148:
+            print("found sched_rr_get_interval inside the Container! with inum: " + str(inum_ring))
+            syscall = "sched_rr_get_interval"
+            patterns.append(syscall)
+        elif syscall == 149:
+            print("found mlock inside the Container! with inum: " + str(inum_ring))
+            syscall = "mlock"
+            patterns.append(syscall)
+        elif syscall == 150:
+            print("found munlock inside the Container! with inum: " + str(inum_ring))
+            syscall = "munlock"
+            patterns.append(syscall)
         # elif syscall == 152:
         #     occurences['mlockall'] = occurences['mlockall'] + 1
-        #     # print("Update für folgenden System Call mlockall. Neue Häufigkeit: " + str(occurences['mlockall']))
+            # print("Update für folgenden System Call mlockall. Neue Häufigkeit: " + str(occurences['mlockall']))
         # elif syscall == 153:
         #     occurences['munlockall'] = occurences['munlockall'] + 1
         #     # print("Update für folgenden System Call munlockall. Neue Häufigkeit: " + str(occurences['munlockall']))
