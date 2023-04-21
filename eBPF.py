@@ -2133,6 +2133,96 @@ int ssemtimedop(struct pt_regs *ctx) {
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
+int sfadvise64(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 221;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int stimer_create(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 222;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int stimer_settime(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 223;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int stimer_gettime(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 224;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int stimer_getoverrun(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 225;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int stimer_delete(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 226;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sclock_settime(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 227;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sclock_gettime(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 228;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sclock_getres(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 229;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sclock_nanosleep(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 230;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
 """
 b = BPF(text=prog)
 
@@ -2361,16 +2451,16 @@ def attachkretprobe():
     b.attach_kretprobe(event=b.get_syscall_fnname("set_tid_address"), fn_name="sset_tid_address")
     b.attach_kretprobe(event=b.get_syscall_fnname("restart_syscall"), fn_name="srestart_syscall")
     b.attach_kretprobe(event=b.get_syscall_fnname("semtimedop"), fn_name="ssemtimedop")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("fadvise64"), fn_name="sfadvise64")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("timer_create"), fn_name="stimer_create")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("timer_settime"), fn_name="stimer_settime")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("timer_gettime"), fn_name="stimer_gettime")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("timer_getoverrun"), fn_name="stimer_getoverrun")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("timer_delete"), fn_name="stimer_delete")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("clock_settime"), fn_name="sclock_settime")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("clock_gettime"), fn_name="sclock_gettime")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("clock_getres"), fn_name="sclock_getres")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("clock_nanosleep"), fn_name="sclock_nanosleep")
+    b.attach_kretprobe(event=b.get_syscall_fnname("fadvise64"), fn_name="sfadvise64")
+    b.attach_kretprobe(event=b.get_syscall_fnname("timer_create"), fn_name="stimer_create")
+    b.attach_kretprobe(event=b.get_syscall_fnname("timer_settime"), fn_name="stimer_settime")
+    b.attach_kretprobe(event=b.get_syscall_fnname("timer_gettime"), fn_name="stimer_gettime")
+    b.attach_kretprobe(event=b.get_syscall_fnname("timer_getoverrun"), fn_name="stimer_getoverrun")
+    b.attach_kretprobe(event=b.get_syscall_fnname("timer_delete"), fn_name="stimer_delete")
+    b.attach_kretprobe(event=b.get_syscall_fnname("clock_settime"), fn_name="sclock_settime")
+    b.attach_kretprobe(event=b.get_syscall_fnname("clock_gettime"), fn_name="sclock_gettime")
+    b.attach_kretprobe(event=b.get_syscall_fnname("clock_getres"), fn_name="sclock_getres")
+    b.attach_kretprobe(event=b.get_syscall_fnname("clock_nanosleep"), fn_name="sclock_nanosleep")
     # b.attach_kretprobe(event=b.get_syscall_fnname("exit_group"), fn_name="sexit_group")
     # b.attach_kretprobe(event=b.get_syscall_fnname("epoll_wait"), fn_name="sepoll_wait")
     # b.attach_kretprobe(event=b.get_syscall_fnname("epoll_ctl"), fn_name="sepoll_ctl")
@@ -3323,45 +3413,36 @@ def detectpatterns(cpu, data, size):
         elif syscall == 220:
             print("found settimedop inside the Container! with inum: " + str(inum_ring))
             syscall = "settimedop"
-        # elif syscall == 221:
-        #     occurences['fadvise64'] = occurences['fadvise64'] + 1
-        #     # print("Update für folgenden System Call fadvise64. Neue Häufigkeit: " + str(occurences['fadvise64']))
-        # elif syscall == 222:
-        #     occurences['timer_create'] = occurences['timer_create'] + 1
-        #     # print("Update für folgenden System Call timer_create. Neue Häufigkeit: " + str(
-        #     #    occurences['timer_create']))
-        # elif syscall == 223:
-        #     occurences['timer_settime'] = occurences['timer_settime'] + 1
-        #     # print("Update für folgenden System Call timer_settime. Neue Häufigkeit: " + str(
-        #     #    occurences['timer_settime']))
-        # elif syscall == 224:
-        #     occurences['timer_gettime'] = occurences['timer_gettime'] + 1
-        #     # print("Update für folgenden System Call timer_gettime. Neue Häufigkeit: " + str(
-        #     #    occurences['timer_gettime']))
-        # elif syscall == 225:
-        #     occurences['timer_getoverrun'] = occurences['timer_getoverrun'] + 1
-        #     # print("Update für folgenden System Call timer_getoverrun. Neue Häufigkeit: " + str(
-        #     #    occurences['timer_getoverrun']))
-        # elif syscall == 226:
-        #     occurences['timer_delete'] = occurences['timer_delete'] + 1
-        #     # print("Update für folgenden System Call timer_delete. Neue Häufigkeit: " + str(
-        #     #    occurences['timer_delete']))
-        # elif syscall == 227:
-        #     occurences['clock_settime'] = occurences['clock_settime'] + 1
-        #     # print("Update für folgenden System Call clock_settime. Neue Häufigkeit: " + str(
-        #     #    occurences['clock_settime']))
-        # elif syscall == 228:
-        #     occurences['clock_gettime'] = occurences['clock_gettime'] + 1
-        #     # print("Update für folgenden System Call clock_gettime. Neue Häufigkeit: " + str(
-        #     #    occurences['clock_gettime']))
-        # elif syscall == 229:
-        #     occurences['clock_getres'] = occurences['clock_getres'] + 1
-        #     # print("Update für folgenden System Call clock_getres. Neue Häufigkeit: " + str(
-        #     #    occurences['clock_getres']))
-        # elif syscall == 230:
-        #     occurences['clock_nanosleep'] = occurences['clock_nanosleep'] + 1
-        #     # print("Update für folgenden System Call clock_nanosleep. Neue Häufigkeit: " + str(
-        #     #    occurences['clock_nanosleep']))
+        elif syscall == 221:
+            print("found fadvise64 inside the Container! with inum: " + str(inum_ring))
+            syscall = "fadvice64"
+        elif syscall == 222:
+            print("found timer_create inside the Container! with inum: " + str(inum_ring))
+            syscall = "timer_create"
+        elif syscall == 223:
+            print("found timer_settime inside the Container! with inum: " + str(inum_ring))
+            syscall = "timer_settime"
+        elif syscall == 224:
+            print("found timer_gettime inside the Container! with inum: " + str(inum_ring))
+            syscall = "timer_gettime"
+        elif syscall == 225:
+            print("found timer_getoverrun inside the Container! with inum: " + str(inum_ring))
+            syscall = "timer_getoverrun"
+        elif syscall == 226:
+            print("found timer_delete inside the Container! with inum: " + str(inum_ring))
+            syscall = "timer_delete"
+        elif syscall == 227:
+            print("found clock_settime inside the Container! with inum: " + str(inum_ring))
+            syscall = "clock_settime"
+        elif syscall == 228:
+            print("found clock_gettime inside the Container! with inum: " + str(inum_ring))
+            syscall = "clock_gettime"
+        elif syscall == 229:
+            print("found clock_getres inside the Container! with inum: " + str(inum_ring))
+            syscall = "clock_getres"
+        elif syscall == 230:
+            print("found clock_nanosleep inside the Container! with inum: " + str(inum_ring))
+            syscall = "clock_nanosleep"
         # elif syscall == 231:
         #     occurences['exit_group'] = occurences['exit_group'] + 1
         #     # print("Update für folgenden System Call exit_group. Neue Häufigkeit: " + str(occurences['exit_group']))
