@@ -1287,8 +1287,106 @@ int srt_sigsuspend(struct pt_regs *ctx) {
     return 0;
     int x = 0;
 }
-
-
+int ssigaltstack(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 131;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int sutime(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 132;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int smknod(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 133;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int suselib(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 134;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int spersonality(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 135;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int sustat(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 136;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int sstatfs(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 137;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int sfstatfs(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 138;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int ssysfs(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 139;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int sgetpriority(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 140;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
 
 """
 b = BPF(text=prog)
@@ -1428,16 +1526,16 @@ def attachkretprobe():
     b.attach_kretprobe(event=b.get_syscall_fnname("rt_sigtimedwait"), fn_name="srt_sigtimedwait")
     b.attach_kretprobe(event=b.get_syscall_fnname("rt_sigqueueinfo"), fn_name="srt_sigqueueinfo")
     b.attach_kretprobe(event=b.get_syscall_fnname("rt_sigsuspend"), fn_name="srt_sigsuspend")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("sigaltstack"), fn_name="ssigaltstack")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("utime"), fn_name="sutime")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("mknod"), fn_name="smknod")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("uselib"), fn_name="suselib")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("personality"), fn_name="spersonality")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("ustat"), fn_name="sustat")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("statfs"), fn_name="sstatfs")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("fstatfs"), fn_name="sfstatfs")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("sysfs"), fn_name="ssysfs")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("getpriority"), fn_name="sgetpriority")
+    b.attach_kretprobe(event=b.get_syscall_fnname("sigaltstack"), fn_name="ssigaltstack")
+    b.attach_kretprobe(event=b.get_syscall_fnname("utime"), fn_name="sutime")
+    b.attach_kretprobe(event=b.get_syscall_fnname("mknod"), fn_name="smknod")
+    b.attach_kretprobe(event=b.get_syscall_fnname("uselib"), fn_name="suselib")
+    b.attach_kretprobe(event=b.get_syscall_fnname("personality"), fn_name="spersonality")
+    b.attach_kretprobe(event=b.get_syscall_fnname("ustat"), fn_name="sustat")
+    b.attach_kretprobe(event=b.get_syscall_fnname("statfs"), fn_name="sstatfs")
+    b.attach_kretprobe(event=b.get_syscall_fnname("fstatfs"), fn_name="sfstatfs")
+    b.attach_kretprobe(event=b.get_syscall_fnname("sysfs"), fn_name="ssysfs")
+    b.attach_kretprobe(event=b.get_syscall_fnname("getpriority"), fn_name="sgetpriority")
     # b.attach_kretprobe(event=b.get_syscall_fnname("setpriority"), fn_name="ssetpriority")
     # b.attach_kretprobe(event=b.get_syscall_fnname("sched_setparam"), fn_name="ssched_setparam")
     # b.attach_kretprobe(event=b.get_syscall_fnname("sched_getparam"), fn_name="ssched_getparam")
@@ -2164,39 +2262,46 @@ def detectpatterns(cpu, data, size):
             print("found rt_sigsuspend inside the Container! with inum: " + str(inum_ring))
             syscall = "rt_sigsuspend"
             patterns.append(syscall)
-        # elif syscall == 132:
-        #     occurences['sigaltstack'] = occurences['sigaltstack'] + 1
-        #     # print(
-        #     #     "Update für folgenden System Call: sigaltstack. Neue Häufigkeit: " + str(occurences['sigaltstack']))
-        # elif syscall == 133:
-        #     occurences['utime'] = occurences['utime'] + 1
-        #     # print("Update für folgenden System Call utime. Neue Häufigkeit: " + str(occurences['utime']))
-        # elif syscall == 134:
-        #     occurences['mknod'] = occurences['mknod'] + 1
-        #     # print("Update für folgenden System Call mknod. Neue Häufigkeit: " + str(occurences['mknod']))
-        # elif syscall == 135:
-        #     occurences['uselib'] = occurences['uselib'] + 1
-        #     # print("Update für folgenden System Call uselib. Neue Häufigkeit: " + str(occurences['uselib']))
-        # elif syscall == 136:
-        #     occurences['personality'] = occurences['personality'] + 1
-        #     print(
-        #         "Update für folgenden System Call: personality. Neue Häufigkeit: " + str(occurences['personality']))
-        # elif syscall == 137:
-        #     occurences['ustat'] = occurences['ustat'] + 1
-        #     # print("Update für folgenden System Call ustat. Neue Häufigkeit: " + str(occurences['ustat']))
-        # elif syscall == 138:
-        #     occurences['statfs'] = occurences['statfs'] + 1
-        #     # print("Update für folgenden System Call statfs. Neue Häufigkeit: " + str(occurences['statfs']))
-        # elif syscall == 139:
-        #     occurences['fstatfs'] = occurences['fstatfs'] + 1
-        #     # print("Update für folgenden System Call fstatfs. Neue Häufigkeit: " + str(occurences['fstatfs']))
-        # elif syscall == 140:
-        #     occurences['sysfs'] = occurences['sysfs'] + 1
-        #     # print("Update für folgenden System Call sysfs. Neue Häufigkeit: " + str(occurences['sysfs']))
-        # elif syscall == 141:
-        #     occurences['getpriority'] = occurences['getpriority'] + 1
-        #     # print(
-        #     #     "Update für folgenden System Call: getpriority. Neue Häufigkeit: " + str(occurences['getpriority']))
+        elif syscall == 131:
+            print("found sigaltstack inside the Container! with inum: " + str(inum_ring))
+            syscall = "sigaltstack"
+            patterns.append(syscall)
+        elif syscall == 132:
+            print("found utime inside the Container! with inum: " + str(inum_ring))
+            syscall = "utime"
+            patterns.append(syscall)
+        elif syscall == 133:
+            print("found mknod inside the Container! with inum: " + str(inum_ring))
+            syscall = "mknod"
+            patterns.append(syscall)
+        elif syscall == 134:
+            print("found uselib inside the Container! with inum: " + str(inum_ring))
+            syscall = "uselib"
+            patterns.append(syscall)
+        elif syscall == 135:
+            print("found personality inside the Container! with inum: " + str(inum_ring))
+            syscall = "personality"
+            patterns.append(syscall)
+        elif syscall == 136:
+            print("found ustat inside the Container! with inum: " + str(inum_ring))
+            syscall = "ustat"
+            patterns.append(syscall)
+        elif syscall == 137:
+            print("found statfs inside the Container! with inum: " + str(inum_ring))
+            syscall = "statfs"
+            patterns.append(syscall)
+        elif syscall == 138:
+            print("found fstatfs inside the Container! with inum: " + str(inum_ring))
+            syscall = "fstatfs"
+            patterns.append(syscall)
+        elif syscall == 139:
+            print("found sysfs inside the Container! with inum: " + str(inum_ring))
+            syscall = "sysfs"
+            patterns.append(syscall)
+        elif syscall == 140:
+            print("found getpriority inside the Container! with inum: " + str(inum_ring))
+            syscall = "getpriority"
+            patterns.append(syscall)
         # elif syscall == 142:
         #     occurences['setpriority'] = occurences['setpriority'] + 1
         #     # print(
