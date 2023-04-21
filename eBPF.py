@@ -1953,6 +1953,96 @@ int stkill(struct pt_regs *ctx) {
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
+int stime(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 201;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sfutex(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 202;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int ssched_setaffinity(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 203;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int ssched_getaffinity(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 204;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sset_thread_area(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 205;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sio_setup(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 206;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sio_destroy(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 207;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sio_getevents(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 208;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sio_submit(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 209;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sio_cancel(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 210;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
 """
 b = BPF(text=prog)
 
@@ -2161,16 +2251,16 @@ def attachkretprobe():
     b.attach_kretprobe(event=b.get_syscall_fnname("lremovexattr"), fn_name="slremovexattr")
     b.attach_kretprobe(event=b.get_syscall_fnname("fremovexattr"), fn_name="sfremovexattr")
     b.attach_kretprobe(event=b.get_syscall_fnname("tkill"), fn_name="stkill")
-#     b.attach_kretprobe(event=b.get_syscall_fnname("time"), fn_name="stime")
-#     b.attach_kretprobe(event=b.get_syscall_fnname("futex"), fn_name="sfutex")
-#     b.attach_kretprobe(event=b.get_syscall_fnname("sched_setaffinity"), fn_name="ssched_setaffinity")
-#     b.attach_kretprobe(event=b.get_syscall_fnname("sched_getaffinity"), fn_name="ssched_getaffinity")
-#     b.attach_kretprobe(event=b.get_syscall_fnname("set_thread_area"), fn_name="sset_thread_area")
-#     b.attach_kretprobe(event=b.get_syscall_fnname("io_setup"), fn_name="sio_setup")
-#     b.attach_kretprobe(event=b.get_syscall_fnname("io_destroy"), fn_name="sio_destroy")
-#     b.attach_kretprobe(event=b.get_syscall_fnname("io_getevents"), fn_name="sio_getevents")
-#     b.attach_kretprobe(event=b.get_syscall_fnname("io_submit"), fn_name="sio_submit")
-#     b.attach_kretprobe(event=b.get_syscall_fnname("io_cancel"), fn_name="sio_cancel")
+    b.attach_kretprobe(event=b.get_syscall_fnname("time"), fn_name="stime")
+    b.attach_kretprobe(event=b.get_syscall_fnname("futex"), fn_name="sfutex")
+    b.attach_kretprobe(event=b.get_syscall_fnname("sched_setaffinity"), fn_name="ssched_setaffinity")
+    b.attach_kretprobe(event=b.get_syscall_fnname("sched_getaffinity"), fn_name="ssched_getaffinity")
+    b.attach_kretprobe(event=b.get_syscall_fnname("set_thread_area"), fn_name="sset_thread_area")
+    b.attach_kretprobe(event=b.get_syscall_fnname("io_setup"), fn_name="sio_setup")
+    b.attach_kretprobe(event=b.get_syscall_fnname("io_destroy"), fn_name="sio_destroy")
+    b.attach_kretprobe(event=b.get_syscall_fnname("io_getevents"), fn_name="sio_getevents")
+    b.attach_kretprobe(event=b.get_syscall_fnname("io_submit"), fn_name="sio_submit")
+    b.attach_kretprobe(event=b.get_syscall_fnname("io_cancel"), fn_name="sio_cancel")
 #     b.attach_kretprobe(event=b.get_syscall_fnname("get_thread_area"), fn_name="sget_thread_area")
 #     b.attach_kretprobe(event=b.get_syscall_fnname("lookup_dcookie"), fn_name="slookup_dcookie")
 #     b.attach_kretprobe(event=b.get_syscall_fnname("epoll_create"), fn_name="sepoll_create")
@@ -3083,40 +3173,36 @@ def detectpatterns(cpu, data, size):
         elif syscall == 200:
             print("found tkill inside the Container! with inum: " + str(inum_ring))
             syscall = "tkill"
-        # elif syscall == 201:
-        #     occurences['time'] = occurences['time'] + 1
-        #     # print("Update für folgenden System Call time. Neue Häufigkeit: " + str(occurences['time']))
-        # elif syscall == 202:
-        #     occurences['futex'] = occurences['futex'] + 1
-        #     # print("Update für folgenden System Call futex. Neue Häufigkeit: " + str(occurences['futex']))
-        # elif syscall == 203:
-        #     occurences['sched_setaffinity'] = occurences['sched_setaffinity'] + 1
-        #     # print("Update für folgenden System Call sched_setaffinity. Neue Häufigkeit: " + str(
-        #     #    occurences['sched_setaffinity']))
-        # elif syscall == 204:
-        #     occurences['sched_getaffinity'] = occurences['sched_getaffinity'] + 1
-        #     # print("Update für folgenden System Call sched_getaffinity. Neue Häufigkeit: " + str(
-        #     #    occurences['sched_getaffinity']))
-        # elif syscall == 205:
-        #     occurences['set_thread_area'] = occurences['set_thread_area'] + 1
-        #     # print("Update für folgenden System Call set_thread_area. Neue Häufigkeit: " + str(
-        #     #    occurences['set_thread_area']))
-        # elif syscall == 206:
-        #     occurences['io_setup'] = occurences['io_setup'] + 1
-        #     # print("Update für folgenden System Call io_setup. Neue Häufigkeit: " + str(occurences['io_setup']))
-        # elif syscall == 207:
-        #     occurences['io_destroy'] = occurences['io_destroy'] + 1
-        #     # print("Update für folgenden System Call io_destroy. Neue Häufigkeit: " + str(occurences['io_destroy']))
-        # elif syscall == 208:
-        #     occurences['io_getevents'] = occurences['io_getevents'] + 1
-        #     # print("Update für folgenden System Call io_getevents. Neue Häufigkeit: " + str(
-        #     #    occurences['io_getevents']))
-        # elif syscall == 209:
-        #     occurences['io_submit'] = occurences['io_submit'] + 1
-        #     # print("Update für folgenden System Call io_submit. Neue Häufigkeit: " + str(occurences['io_submit']))
-        # elif syscall == 210:
-        #     occurences['io_cancel'] = occurences['io_cancel'] + 1
-        #     # print("Update für folgenden System Call io_cancel. Neue Häufigkeit: " + str(occurences['io_cancel']))
+        elif syscall == 201:
+            print("found time inside the Container! with inum: " + str(inum_ring))
+            syscall = "time"
+        elif syscall == 202:
+            print("found futex inside the Container! with inum: " + str(inum_ring))
+            syscall = "futex"
+        elif syscall == 203:
+            print("found sched_setaffinity inside the Container! with inum: " + str(inum_ring))
+            syscall = "sched_setaffinity"
+        elif syscall == 204:
+            print("found sched_getaffinity inside the Container! with inum: " + str(inum_ring))
+            syscall = "sched_getaffinity"
+        elif syscall == 205:
+            print("found set_threat_area inside the Container! with inum: " + str(inum_ring))
+            syscall = "set_threat_area"
+        elif syscall == 206:
+            print("found io_setup inside the Container! with inum: " + str(inum_ring))
+            syscall = "io_setup"
+        elif syscall == 207:
+            print("found io_destroy inside the Container! with inum: " + str(inum_ring))
+            syscall = "io_destroy"
+        elif syscall == 208:
+            print("found io_getevents inside the Container! with inum: " + str(inum_ring))
+            syscall = "io_getevents"
+        elif syscall == 209:
+            print("found io_submit inside the Container! with inum: " + str(inum_ring))
+            syscall = "io_submit"
+        elif syscall == 210:
+            print("found io_cancel inside the Container! with inum: " + str(inum_ring))
+            syscall = "io_cancel"
         # elif syscall == 211:
         #     occurences['get_thread_area'] = occurences['get_thread_area'] + 1
         #     # print("Update für folgenden System Call get_thread_area. Neue Häufigkeit: " + str(
