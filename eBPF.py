@@ -1587,6 +1587,106 @@ int ssetrlimit(struct pt_regs *ctx) {
     return 0;
     int x = 0;
 }
+int schroot(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 161;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int ssync(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 162;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int sacct(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 163;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int ssettimeofday(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 164;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int smount(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 165;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int sumount2(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 166;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int sswapon(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 167;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int sswapoff(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 168;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int sreboot(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 169;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
+int ssethostname(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 170;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+    int x = 0;
+}
 
 """
 b = BPF(text=prog)
@@ -1756,16 +1856,16 @@ def attachkretprobe():
     b.attach_kretprobe(event=b.get_syscall_fnname("arch_prctl"), fn_name="sarch_prctl")
     b.attach_kretprobe(event=b.get_syscall_fnname("adjtimex"), fn_name="sadjtimex")
     b.attach_kretprobe(event=b.get_syscall_fnname("setrlimit"), fn_name="ssetrlimit")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("chroot"), fn_name="schroot")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("sync"), fn_name="ssync")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("acct"), fn_name="sacct")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("settimeofday"), fn_name="ssettimeofday")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("mount"), fn_name="smount")
+    b.attach_kretprobe(event=b.get_syscall_fnname("chroot"), fn_name="schroot")
+    b.attach_kretprobe(event=b.get_syscall_fnname("sync"), fn_name="ssync")
+    b.attach_kretprobe(event=b.get_syscall_fnname("acct"), fn_name="sacct")
+    b.attach_kretprobe(event=b.get_syscall_fnname("settimeofday"), fn_name="ssettimeofday")
+    b.attach_kretprobe(event=b.get_syscall_fnname("mount"), fn_name="smount")
     # b.attach_kretprobe(event=b.get_syscall_fnname("umount2"), fn_name="sumount2") not traceble
-    # b.attach_kretprobe(event=b.get_syscall_fnname("swapon"), fn_name="sswapon")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("swapoff"), fn_name="sswapoff")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("reboot"), fn_name="sreboot")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("sethostname"), fn_name="ssethostname")
+    b.attach_kretprobe(event=b.get_syscall_fnname("swapon"), fn_name="sswapon")
+    b.attach_kretprobe(event=b.get_syscall_fnname("swapoff"), fn_name="sswapoff")
+    b.attach_kretprobe(event=b.get_syscall_fnname("reboot"), fn_name="sreboot")
+    b.attach_kretprobe(event=b.get_syscall_fnname("sethostname"), fn_name="ssethostname")
     # b.attach_kretprobe(event=b.get_syscall_fnname("setdomainname"), fn_name="ssetdomainname")
     # b.attach_kretprobe(event=b.get_syscall_fnname("iopl"), fn_name="siopl")
     # b.attach_kretprobe(event=b.get_syscall_fnname("ioperm"), fn_name="sioperm")
@@ -2582,38 +2682,46 @@ def detectpatterns(cpu, data, size):
             print("found setrlimit inside the Container! with inum: " + str(inum_ring))
             syscall = "setrlimit"
             patterns.append(syscall)
-        # elif syscall == 162:
-        #     occurences['chroot'] = occurences['chroot'] + 1
-        #     # print("Update für folgenden System Call chroot. Neue Häufigkeit: " + str(occurences['chroot']))
-        # elif syscall == 163:
-        #     occurences['sync'] = occurences['sync'] + 1
-        #     # print("Update für folgenden System Call sync. Neue Häufigkeit: " + str(occurences['sync']))
-        # elif syscall == 164:
-        #     occurences['acct'] = occurences['acct'] + 1
-        #     # print("Update für folgenden System Call acct. Neue Häufigkeit: " + str(occurences['acct']))
-        # elif syscall == 165:
-        #     occurences['settimeofday'] = occurences['settimeofday'] + 1
-        #     # print("Update für folgenden System Call settimeofday. Neue Häufigkeit: " + str(
-        #     #    occurences['settimeofday']))
-        # elif syscall == 166:
-        #     occurences['mount'] = occurences['mount'] + 1
-        #     # print("Update für folgenden System Call mount. Neue Häufigkeit: " + str(occurences['mount']))
-        # elif syscall == 167:
-        #     occurences['umount2'] = occurences['umount2'] + 1
-        #     # print("Update für folgenden System Call umount2. Neue Häufigkeit: " + str(occurences['umount2']))
-        # elif syscall == 168:
-        #     occurences['swapon'] = occurences['swapon'] + 1
-        #     # print("Update für folgenden System Call swapon. Neue Häufigkeit: " + str(occurences['swapon']))
-        # elif syscall == 169:
-        #     occurences['swapoff'] = occurences['swapoff'] + 1
-        #     # print("Update für folgenden System Call swapoff. Neue Häufigkeit: " + str(occurences['swapoff']))
-        # elif syscall == 170:
-        #     occurences['reboot'] = occurences['reboot'] + 1
-        #     # print("Update für folgenden System Call reboot. Neue Häufigkeit: " + str(occurences['reboot']))
-        # elif syscall == 171:
-        #     occurences['sethostname'] = occurences['sethostname'] + 1
-        #     # print(
-        #     #     "Update für folgenden System Call: sethostname. Neue Häufigkeit: " + str(occurences['sethostname']))
+        elif syscall == 161:
+            print("found chroot inside the Container! with inum: " + str(inum_ring))
+            syscall = "chroot"
+            patterns.append(syscall)
+        elif syscall == 162:
+            print("found sync inside the Container! with inum: " + str(inum_ring))
+            syscall = "sync"
+            patterns.append(syscall)
+        elif syscall == 163:
+            print("found acct inside the Container! with inum: " + str(inum_ring))
+            syscall = "acct"
+            patterns.append(syscall)
+        elif syscall == 164:
+            print("found settimeofday inside the Container! with inum: " + str(inum_ring))
+            syscall = "settimeofday"
+            patterns.append(syscall)
+        elif syscall == 165:
+            print("found mount inside the Container! with inum: " + str(inum_ring))
+            syscall = "mount"
+            patterns.append(syscall)
+        elif syscall == 166:
+            print("found umount2 inside the Container! with inum: " + str(inum_ring))
+            syscall = "umount2"
+            patterns.append(syscall)
+        elif syscall == 167:
+            print("found swapon inside the Container! with inum: " + str(inum_ring))
+            syscall = "swapon"
+            patterns.append(syscall)
+        elif syscall == 168:
+            print("found swapoff inside the Container! with inum: " + str(inum_ring))
+            syscall = "swapoff"
+            patterns.append(syscall)
+        elif syscall == 169:
+            print("found reboot inside the Container! with inum: " + str(inum_ring))
+            syscall = "reboot"
+            patterns.append(syscall)
+        elif syscall == 170:
+            print("found sethostname inside the Container! with inum: " + str(inum_ring))
+            syscall = "setrlimit"
+            patterns.append(syscall)
         # elif syscall == 172:
         #     occurences['setdomainname'] = occurences['setdomainname'] + 1
         #     # print("Update für folgenden System Call setdomainname. Neue Häufigkeit: " + str(
