@@ -1863,6 +1863,96 @@ int sfsetxattr(struct pt_regs *ctx) {
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
+int sgetxattr(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 191;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int slgetxattr(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 192;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sfgetxattr(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 193;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int slistxattr(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 194;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sllistxattr(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 195;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sflistxattr(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 196;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sremovexattr(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 197;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int slremovexattr(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 198;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sfremovexattr(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 199;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int stkill(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 200;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
 """
 b = BPF(text=prog)
 
@@ -2061,16 +2151,16 @@ def attachkretprobe():
     b.attach_kretprobe(event=b.get_syscall_fnname("setxattr"), fn_name="ssetxattr")
     b.attach_kretprobe(event=b.get_syscall_fnname("lsetxattr"), fn_name="slsetxattr")
     b.attach_kretprobe(event=b.get_syscall_fnname("fsetxattr"), fn_name="sfsetxattr")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("getxattr"), fn_name="sgetxattr")
-#    b.attach_kretprobe(event=b.get_syscall_fnname("lgetxattr"), fn_name="slgetxattr")
-#     b.attach_kretprobe(event=b.get_syscall_fnname("fgetxattr"), fn_name="sfgetxattr")
-#     b.attach_kretprobe(event=b.get_syscall_fnname("listxattr"), fn_name="slistxattr")
-#     b.attach_kretprobe(event=b.get_syscall_fnname("llistxattr"), fn_name="sllistxattr")
-#     b.attach_kretprobe(event=b.get_syscall_fnname("flistxattr"), fn_name="sflistxattr")
-#     b.attach_kretprobe(event=b.get_syscall_fnname("removexattr"), fn_name="sremovexattr")
-#     b.attach_kretprobe(event=b.get_syscall_fnname("lremovexattr"), fn_name="slremovexattr")
-#     b.attach_kretprobe(event=b.get_syscall_fnname("fremovexattr"), fn_name="sfremovexattr")
-#     b.attach_kretprobe(event=b.get_syscall_fnname("tkill"), fn_name="stkill")
+    b.attach_kretprobe(event=b.get_syscall_fnname("getxattr"), fn_name="sgetxattr")
+    b.attach_kretprobe(event=b.get_syscall_fnname("lgetxattr"), fn_name="slgetxattr")
+    b.attach_kretprobe(event=b.get_syscall_fnname("fgetxattr"), fn_name="sfgetxattr")
+    b.attach_kretprobe(event=b.get_syscall_fnname("listxattr"), fn_name="slistxattr")
+    b.attach_kretprobe(event=b.get_syscall_fnname("llistxattr"), fn_name="sllistxattr")
+    b.attach_kretprobe(event=b.get_syscall_fnname("flistxattr"), fn_name="sflistxattr")
+    b.attach_kretprobe(event=b.get_syscall_fnname("removexattr"), fn_name="sremovexattr")
+    b.attach_kretprobe(event=b.get_syscall_fnname("lremovexattr"), fn_name="slremovexattr")
+    b.attach_kretprobe(event=b.get_syscall_fnname("fremovexattr"), fn_name="sfremovexattr")
+    b.attach_kretprobe(event=b.get_syscall_fnname("tkill"), fn_name="stkill")
 #     b.attach_kretprobe(event=b.get_syscall_fnname("time"), fn_name="stime")
 #     b.attach_kretprobe(event=b.get_syscall_fnname("futex"), fn_name="sfutex")
 #     b.attach_kretprobe(event=b.get_syscall_fnname("sched_setaffinity"), fn_name="ssched_setaffinity")
@@ -2963,39 +3053,36 @@ def detectpatterns(cpu, data, size):
         elif syscall == 190:
             print("found fsetxattr inside the Container! with inum: " + str(inum_ring))
             syscall = "fsetxattr"
-        # elif syscall == 192:
-        #     occurences['getxattr'] = occurences['getxattr'] + 1
-        #     # print("Update für folgenden System Call getxattr. Neue Häufigkeit: " + str(occurences['getxattr']))
-        # # elif syscall == 192:
-        # #     occurences['lgetxattr'] = occurences['lgetxattr'] + 1
-        # #     # print("Update für folgenden System Call lgetxattr. Neue Häufigkeit: " + str(occurences['lgetxattr']))
-        # elif syscall == 193:
-        #     occurences['fgetxattr'] = occurences['fgetxattr'] + 1
-        #     # print("Update für folgenden System Call fgetxattr. Neue Häufigkeit: " + str(occurences['fgetxattr']))
-        # elif syscall == 194:
-        #     occurences['listxattr'] = occurences['listxattr'] + 1
-        #     # print("Update für folgenden System Call listxattr. Neue Häufigkeit: " + str(occurences['listxattr']))
-        # elif syscall == 195:
-        #     occurences['llistxattr'] = occurences['llistxattr'] + 1
-        #     # print("Update für folgenden System Call llistxattr. Neue Häufigkeit: " + str(occurences['llistxattr']))
-        # elif syscall == 196:
-        #     occurences['flistxattr'] = occurences['flistxattr'] + 1
-        #     # print("Update für folgenden System Call flistxattr. Neue Häufigkeit: " + str(occurences['flistxattr']))
-        # elif syscall == 197:
-        #     occurences['removexattr'] = occurences['removexattr'] + 1
-        #     print(
-        #         "Update für folgenden System Call: removexattr. Neue Häufigkeit: " + str(occurences['removexattr']))
-        # elif syscall == 198:
-        #     occurences['lremovexattr'] = occurences['lremovexattr'] + 1
-        #     # print("Update für folgenden System Call lremovexattr. Neue Häufigkeit: " + str(
-        #     #    occurences['lremovexattr']))
-        # elif syscall == 199:
-        #     occurences['fremovexattr'] = occurences['fremovexattr'] + 1
-        #     # print("Update für folgenden System Call fremovexattr. Neue Häufigkeit: " + str(
-        #     #    occurences['fremovexattr']))
-        # elif syscall == 200:
-        #     occurences['tkill'] = occurences['tkill'] + 1
-        #     # print("Update für folgenden System Call tkill. Neue Häufigkeit: " + str(occurences['tkill']))
+        elif syscall == 191:
+            print("found getxattr inside the Container! with inum: " + str(inum_ring))
+            syscall = "getxattr"
+        elif syscall == 192:
+            print("found lgetxattr inside the Container! with inum: " + str(inum_ring))
+            syscall = "lgetxattr"
+        elif syscall == 193:
+            print("found fgetxattr inside the Container! with inum: " + str(inum_ring))
+            syscall = "fgetxattr"
+        elif syscall == 194:
+            print("found listxattr inside the Container! with inum: " + str(inum_ring))
+            syscall = "listxattr"
+        elif syscall == 195:
+            print("found llistxattr inside the Container! with inum: " + str(inum_ring))
+            syscall = "llistxattr"
+        elif syscall == 196:
+            print("found flistxattr inside the Container! with inum: " + str(inum_ring))
+            syscall = "flistxattr"
+        elif syscall == 197:
+            print("found removexattr inside the Container! with inum: " + str(inum_ring))
+            syscall = "removexattr"
+        elif syscall == 198:
+            print("found lremovexattr inside the Container! with inum: " + str(inum_ring))
+            syscall = "lremovexattr"
+        elif syscall == 199:
+            print("found fremovexattr inside the Container! with inum: " + str(inum_ring))
+            syscall = "fremovexattr"
+        elif syscall == 200:
+            print("found tkill inside the Container! with inum: " + str(inum_ring))
+            syscall = "tkill"
         # elif syscall == 201:
         #     occurences['time'] = occurences['time'] + 1
         #     # print("Update für folgenden System Call time. Neue Häufigkeit: " + str(occurences['time']))
