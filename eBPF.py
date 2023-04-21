@@ -2043,6 +2043,96 @@ int sio_cancel(struct pt_regs *ctx) {
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
+int sget_thread_area(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 211;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int slookup_dcookie(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 212;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sepoll_create(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 213;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sepoll_ctl_old(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 214;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sepoll_wait_old(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 215;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sremap_file_pages(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 216;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sgetdents64(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 217;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sset_tid_address(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 218;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int srestart_syscall(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 219;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int ssemtimedop(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 220;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
 """
 b = BPF(text=prog)
 
@@ -2261,16 +2351,16 @@ def attachkretprobe():
     b.attach_kretprobe(event=b.get_syscall_fnname("io_getevents"), fn_name="sio_getevents")
     b.attach_kretprobe(event=b.get_syscall_fnname("io_submit"), fn_name="sio_submit")
     b.attach_kretprobe(event=b.get_syscall_fnname("io_cancel"), fn_name="sio_cancel")
-#     b.attach_kretprobe(event=b.get_syscall_fnname("get_thread_area"), fn_name="sget_thread_area")
-#     b.attach_kretprobe(event=b.get_syscall_fnname("lookup_dcookie"), fn_name="slookup_dcookie")
-#     b.attach_kretprobe(event=b.get_syscall_fnname("epoll_create"), fn_name="sepoll_create")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("epoll_ctl_old"), fn_name="sepoll_ctl_old")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("epoll_wait_old"), fn_name="sepoll_wait_old")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("remap_file_pages"), fn_name="sremap_file_pages")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("getdents64"), fn_name="sgetdents64")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("set_tid_address"), fn_name="sset_tid_address")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("restart_syscall"), fn_name="srestart_syscall")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("semtimedop"), fn_name="ssemtimedop")
+    b.attach_kretprobe(event=b.get_syscall_fnname("get_thread_area"), fn_name="sget_thread_area")
+    b.attach_kretprobe(event=b.get_syscall_fnname("lookup_dcookie"), fn_name="slookup_dcookie")
+    b.attach_kretprobe(event=b.get_syscall_fnname("epoll_create"), fn_name="sepoll_create")
+    b.attach_kretprobe(event=b.get_syscall_fnname("epoll_ctl_old"), fn_name="sepoll_ctl_old")
+    b.attach_kretprobe(event=b.get_syscall_fnname("epoll_wait_old"), fn_name="sepoll_wait_old")
+    b.attach_kretprobe(event=b.get_syscall_fnname("remap_file_pages"), fn_name="sremap_file_pages")
+    b.attach_kretprobe(event=b.get_syscall_fnname("getdents64"), fn_name="sgetdents64")
+    b.attach_kretprobe(event=b.get_syscall_fnname("set_tid_address"), fn_name="sset_tid_address")
+    b.attach_kretprobe(event=b.get_syscall_fnname("restart_syscall"), fn_name="srestart_syscall")
+    b.attach_kretprobe(event=b.get_syscall_fnname("semtimedop"), fn_name="ssemtimedop")
     # b.attach_kretprobe(event=b.get_syscall_fnname("fadvise64"), fn_name="sfadvise64")
     # b.attach_kretprobe(event=b.get_syscall_fnname("timer_create"), fn_name="stimer_create")
     # b.attach_kretprobe(event=b.get_syscall_fnname("timer_settime"), fn_name="stimer_settime")
@@ -3203,44 +3293,36 @@ def detectpatterns(cpu, data, size):
         elif syscall == 210:
             print("found io_cancel inside the Container! with inum: " + str(inum_ring))
             syscall = "io_cancel"
-        # elif syscall == 211:
-        #     occurences['get_thread_area'] = occurences['get_thread_area'] + 1
-        #     # print("Update für folgenden System Call get_thread_area. Neue Häufigkeit: " + str(
-        #     #    occurences['get_thread_area']))
-        # elif syscall == 212:
-        #     occurences['lookup_dcookie'] = occurences['lookup_dcookie'] + 1
-        #     # print("Update für folgenden System Call lookup_dcookie. Neue Häufigkeit: " + str(
-        #     #    occurences['lookup_dcookie']))
-        # elif syscall == 213:
-        #     occurences['epoll_create'] = occurences['epoll_create'] + 1
-        #     # print("Update für folgenden System Call epoll_create. Neue Häufigkeit: " + str(
-        #     #    occurences['epoll_create']))
-        # elif syscall == 214:
-        #     occurences['epoll_ctl_old'] = occurences['epoll_ctl_old'] + 1
-        #     # print("Update für folgenden System Call epoll_ctl_old. Neue Häufigkeit: " + str(
-        #     #    occurences['epoll_ctl_old']))
-        # elif syscall == 215:
-        #     occurences['epoll_wait_old'] = occurences['epoll_wait_old'] + 1
-        #     # print("Update für folgenden System Call epoll_wait_old. Neue Häufigkeit: " + str(
-        #     #    occurences['epoll_wait_old']))
-        # elif syscall == 216:
-        #     occurences['remap_file_pages'] = occurences['remap_file_pages'] + 1
-        #     # print("Update für folgenden System Call remap_file_pages. Neue Häufigkeit: " + str(
-        #     #    occurences['remap_file_pages']))
-        # elif syscall == 217:
-        #     occurences['getdents64'] = occurences['getdents64'] + 1
-        #     # print("Update für folgenden System Call getdents64. Neue Häufigkeit: " + str(occurences['getdents64']))
-        # elif syscall == 218:
-        #     occurences['set_tid_address'] = occurences['set_tid_address'] + 1
-        #     # print("Update für folgenden System Call set_tid_address. Neue Häufigkeit: " + str(
-        #     #    occurences['set_tid_address']))
-        # elif syscall == 219:
-        #     occurences['restart_syscall'] = occurences['restart_syscall'] + 1
-        #     # print("Update für folgenden System Call restart_syscall. Neue Häufigkeit: " + str(
-        #     #    occurences['restart_syscall']))
-        # elif syscall == 220:
-        #     occurences['semtimedop'] = occurences['semtimedop'] + 1
-        #     # print("Update für folgenden System Call semtimedop. Neue Häufigkeit: " + str(occurences['semtimedop']))
+        elif syscall == 211:
+            print("found get_threat_area inside the Container! with inum: " + str(inum_ring))
+            syscall = "get_threat_area"
+        elif syscall == 212:
+            print("found lookup_dcookie inside the Container! with inum: " + str(inum_ring))
+            syscall = "lookup_dcookie"
+        elif syscall == 213:
+            print("found epoll_create inside the Container! with inum: " + str(inum_ring))
+            syscall = "epoll_create"
+        elif syscall == 214:
+            print("found epoll_ctl_old inside the Container! with inum: " + str(inum_ring))
+            syscall = "epoll_ctl_old"
+        elif syscall == 215:
+            print("found epoll_wait_old inside the Container! with inum: " + str(inum_ring))
+            syscall = "epoll_wait_old"
+        elif syscall == 216:
+            print("found remap_file_pages inside the Container! with inum: " + str(inum_ring))
+            syscall = "remap_file_pages"
+        elif syscall == 217:
+            print("found getdents64 inside the Container! with inum: " + str(inum_ring))
+            syscall = "getdents64"
+        elif syscall == 218:
+            print("found set_tid_address inside the Container! with inum: " + str(inum_ring))
+            syscall = "set_tid_address"
+        elif syscall == 219:
+            print("found restart_syscall inside the Container! with inum: " + str(inum_ring))
+            syscall = "restart_syscall"
+        elif syscall == 220:
+            print("found settimedop inside the Container! with inum: " + str(inum_ring))
+            syscall = "settimedop"
         # elif syscall == 221:
         #     occurences['fadvise64'] = occurences['fadvise64'] + 1
         #     # print("Update für folgenden System Call fadvise64. Neue Häufigkeit: " + str(occurences['fadvise64']))
