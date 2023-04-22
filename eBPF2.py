@@ -7,6 +7,7 @@ import sys
 # Die Lokale Variable speichert den eBPF C-Code.
 prog = """
 #include <uapi/linux/ptrace.h>
+#include <linux/pid_namespace.h>
 
 // Daten Struct für den Ring Buffer
 struct data_t {
