@@ -2971,7 +2971,7 @@ def detectpatterns(cpu, data, size):
     if str(inum_ring) == str(4026532485):
         # # print("Inside Container")
         if syscall == 0:
-            print("found clone inside the Container! with inum: " + str(inum_ring))
+            # print("found clone inside the Container! with inum: " + str(inum_ring))
             syscall = "clone"
             patterns.append(syscall)
         elif syscall == 1:
