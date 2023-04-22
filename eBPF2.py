@@ -6288,7 +6288,9 @@ def getringbuffer():
             except ZeroDivisionError:
                 print(
                     "Die Gesamtsumme der Häufigkeiten ist 0, daher kann die prozentuale Verteilung nicht berechnet werden.")
+            except KeyboardInterrupt:
                 signal_handler(signal.SIGINT, signal_handler)
+
 
 
 # Funktion für Signal Handler
