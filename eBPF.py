@@ -2403,6 +2403,97 @@ int skeyctl(struct pt_regs *ctx) {
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
+int sioprio_set(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 251;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sioprio_get"(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 252;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sinotify_init(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 253;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sinotify_add_watch(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 254;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sinotify_rm_watch(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 255;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int smigrate_pages(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 256;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sopenat(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 257;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int smkdirat(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 258;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int smknodat(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 259;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sfchownat(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 260;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+
 """
 b = BPF(text=prog)
 
@@ -2661,16 +2752,16 @@ def attachkretprobe():
     b.attach_kretprobe(event=b.get_syscall_fnname("add_key"), fn_name="sadd_key")
     b.attach_kretprobe(event=b.get_syscall_fnname("request_key"), fn_name="srequest_key")
     b.attach_kretprobe(event=b.get_syscall_fnname("keyctl"), fn_name="skeyctl")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("ioprio_set"), fn_name="sioprio_set")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("ioprio_get"), fn_name="sioprio_get")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("inotify_init"), fn_name="sinotify_init")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("inotify_add_watch"), fn_name="sinotify_add_watch")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("inotify_rm_watch"), fn_name="sinotify_rm_watch")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("migrate_pages"), fn_name="smigrate_pages")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("openat"), fn_name="sopenat")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("mkdirat"), fn_name="smkdirat")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("mknodat"), fn_name="smknodat")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("fchownat"), fn_name="sfchownat")
+    b.attach_kretprobe(event=b.get_syscall_fnname("ioprio_set"), fn_name="sioprio_set")
+    b.attach_kretprobe(event=b.get_syscall_fnname("ioprio_get"), fn_name="sioprio_get")
+    b.attach_kretprobe(event=b.get_syscall_fnname("inotify_init"), fn_name="sinotify_init")
+    b.attach_kretprobe(event=b.get_syscall_fnname("inotify_add_watch"), fn_name="sinotify_add_watch")
+    b.attach_kretprobe(event=b.get_syscall_fnname("inotify_rm_watch"), fn_name="sinotify_rm_watch")
+    b.attach_kretprobe(event=b.get_syscall_fnname("migrate_pages"), fn_name="smigrate_pages")
+    b.attach_kretprobe(event=b.get_syscall_fnname("openat"), fn_name="sopenat")
+    b.attach_kretprobe(event=b.get_syscall_fnname("mkdirat"), fn_name="smkdirat")
+    b.attach_kretprobe(event=b.get_syscall_fnname("mknodat"), fn_name="smknodat")
+    b.attach_kretprobe(event=b.get_syscall_fnname("fchownat"), fn_name="sfchownat")
     # b.attach_kretprobe(event=b.get_syscall_fnname("futimesat"), fn_name="sfutimesat")
     # b.attach_kretprobe(event=b.get_syscall_fnname("newfstatat"), fn_name="snewfstatat")
     # b.attach_kretprobe(event=b.get_syscall_fnname("unlinkat"), fn_name="sunlinkat")
@@ -3756,40 +3847,46 @@ def detectpatterns(cpu, data, size):
             print("found keyctl inside the Container! with inum: " + str(inum_ring))
             syscall = "keyctl"
             patterns.append(syscall)
-        # elif syscall == 251:
-        #     occurences['ioprio_set'] = occurences['ioprio_set'] + 1
-        #     # print("Update für folgenden System Call ioprio_set. Neue Häufigkeit: " + str(occurences['ioprio_set']))
-        # elif syscall == 252:
-        #     occurences['ioprio_get'] = occurences['ioprio_get'] + 1
-        #     # print("Update für folgenden System Call ioprio_get. Neue Häufigkeit: " + str(occurences['ioprio_get']))
-        # elif syscall == 253:
-        #     occurences['inotify_init'] = occurences['inotify_init'] + 1
-        #     # print("Update für folgenden System Call inotify_init. Neue Häufigkeit: " + str(
-        #     #    occurences['inotify_init']))
-        # elif syscall == 254:
-        #     occurences['inotify_add_watch'] = occurences['inotify_add_watch'] + 1
-        #     # print("Update für folgenden System Call inotify_add_watch. Neue Häufigkeit: " + str(
-        #     #    occurences['inotify_add_watch']))
-        # elif syscall == 255:
-        #     occurences['inotify_rm_watch'] = occurences['inotify_rm_watch'] + 1
-        #     # print("Update für folgenden System Call inotify_rm_watch. Neue Häufigkeit: " + str(
-        #     #    occurences['inotify_rm_watch']))
-        # elif syscall == 256:
-        #     occurences['migrate_pages'] = occurences['migrate_pages'] + 1
-        #     # print("Update für folgenden System Call migrate_pages. Neue Häufigkeit: " + str(
-        #     #    occurences['migrate_pages']))
-        # elif syscall == 257:
-        #     occurences['openat'] = occurences['openat'] + 1
-        #     # print("Update für folgenden System Call openat. Neue Häufigkeit: " + str(occurences['openat']))
-        # elif syscall == 258:
-        #     occurences['mkdirat'] = occurences['mkdirat'] + 1
-        #     # print("Update für folgenden System Call mkdirat. Neue Häufigkeit: " + str(occurences['mkdirat']))
-        # elif syscall == 259:
-        #     occurences['mknodat'] = occurences['mknodat'] + 1
-        #     # print("Update für folgenden System Call mknodat. Neue Häufigkeit: " + str(occurences['mknodat']))
-        # elif syscall == 260:
-        #     occurences['fchownat'] = occurences['fchownat'] + 1
-        #     # print("Update für folgenden System Call fchownat. Neue Häufigkeit: " + str(occurences['fchownat']))
+        elif syscall == 251:
+            print("found ioprio_set inside the Container! with inum: " + str(inum_ring))
+            syscall = "ioprio_set"
+            patterns.append(syscall)
+        elif syscall == 252:
+            print("found ioprio_get inside the Container! with inum: " + str(inum_ring))
+            syscall = "ioprio_get"
+            patterns.append(syscall)
+        elif syscall == 253:
+            print("found inotify_init inside the Container! with inum: " + str(inum_ring))
+            syscall = "inotify_init"
+            patterns.append(syscall)
+        elif syscall == 254:
+            print("found inotify_add_watch inside the Container! with inum: " + str(inum_ring))
+            syscall = "inotify_add_watch"
+            patterns.append(syscall)
+        elif syscall == 255:
+            print("found inotify_rm_watch inside the Container! with inum: " + str(inum_ring))
+            syscall = "inotify_rm_watch"
+            patterns.append(syscall)
+        elif syscall == 256:
+            print("found migrate_pages inside the Container! with inum: " + str(inum_ring))
+            syscall = "migrate_pages"
+            patterns.append(syscall)
+        elif syscall == 257:
+            print("found openat inside the Container! with inum: " + str(inum_ring))
+            syscall = "openat"
+            patterns.append(syscall)
+        elif syscall == 258:
+            print("found mkdirat inside the Container! with inum: " + str(inum_ring))
+            syscall = "mkdirat"
+            patterns.append(syscall)
+        elif syscall == 259:
+            print("found mknodat inside the Container! with inum: " + str(inum_ring))
+            syscall = "mknodat"
+            patterns.append(syscall)
+        elif syscall == 260:
+            print("found fchownat inside the Container! with inum: " + str(inum_ring))
+            syscall = "fchownat"
+            patterns.append(syscall)
         # elif syscall == 261:
         #     occurences['futimesat'] = occurences['futimesat'] + 1
         #     # print("Update für folgenden System Call futimesat. Neue Häufigkeit: " + str(occurences['futimesat']))
