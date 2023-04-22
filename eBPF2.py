@@ -5227,97 +5227,127 @@ def updateoccurences(cpu, data, size):
                 # print("Update für folgenden System Call Stat. Neue Häufigkeit: " + str(occurences['stat']))
             elif syscall == 6:
                 occurences['fstat'] = occurences['fstat'] + 1
+                patterns.append("fstat")
                 # print("Update für folgenden System Call fstat. Neue Häufigkeit: " + str(occurences['fstat']))
             elif syscall == 7:
                 occurences['lstat'] = occurences['lstat'] + 1
+                patterns.append("lstat")
                 # print("Update für folgenden System Call lstat. Neue Häufigkeit: " + str(occurences['lstat']))
             elif syscall == 8:
                 occurences['poll'] = occurences['poll'] + 1
+                patterns.append("poll")
                 # print("Update für folgenden System Call poll. Neue Häufigkeit: " + str(occurences['poll']))
             elif syscall == 9:
                 occurences['lseek'] = occurences['lseek'] + 1
+                patterns.append("lseek")
                 # print("Update für folgenden System Call lseek. Neue Häufigkeit: " + str(occurences['lseek']))
             elif syscall == 10:
                 occurences['mmap'] = occurences['mmap'] + 1
+                patterns.append("mmap")
                 # print("Update für folgenden System Call mmap. Neue Häufigkeit: " + str(occurences['mmap']))
             elif syscall == 11:
                 occurences['mprotect'] = occurences['mprotect'] + 1
+                patterns.append("mprotext")
                 # print("Update für folgenden System Call mprotect. Neue Häufigkeit: " + str(occurences['mprotect']))
             elif syscall == 12:
                 occurences['munmap'] = occurences['munmap'] + 1
+                patterns.append("munmap")
                 # print("Update für folgenden System Call munmap. Neue Häufigkeit: " + str(occurences['munmap']))
             elif syscall == 13:
                 occurences['brk'] = occurences['brk'] + 1
+                patterns.append("brk")
                 # print("Update für folgenden System Call brk. Neue Häufigkeit: " + str(occurences['brk']))
             elif syscall == 14:
                 occurences['rt_sigaction'] = occurences['rt_sigaction'] + 1
+                patterns.append("rt_sigaction")
                 # print("Update für folgenden System Call rt_sigaction. Neue Häufigkeit: " + str(
                 #    occurences['rt_sigaction']))
             elif syscall == 15:
                 occurences['rt_sigprocmask'] = occurences['rt_sigprocmask'] + 1
+                patterns.append("rt_sigprocmask")
                 # print("Update für folgenden System Call rt_sigprocmask. Neue Häufigkeit: " + str(
                 #    occurences['rt_sigprocmask']))
             elif syscall == 16:
                 occurences['rt_sigreturn'] = occurences['rt_sigreturn'] + 1
+                patterns.append("rt_sigreturn")
                 # print("Update für folgenden System Call rt_sigreturn. Neue Häufigkeit: " + str(
                 # occurences['rt_sigreturn']))
             elif syscall == 17:
                 occurences['ioctl'] = occurences['ioctl'] + 1
+                patterns.append("ioctl")
                 # print("Update für folgenden System Call ioctl. Neue Häufigkeit: " + str(occurences['ioctl']))
             elif syscall == 18:
                 occurences['pread64'] = occurences['pread64'] + 1
+                patterns.append("pread64")
                 # print("Update für folgenden System Call pread64. Neue Häufigkeit: " + str(occurences['pread64']))
             elif syscall == 19:
                 occurences['pwrite64'] = occurences['pwrite64'] + 1
+                patterns.append("pwrite64")
                 # print("Update für folgenden System Call pwrite64. Neue Häufigkeit: " + str(occurences['pwrite64']))
             elif syscall == 20:
                 occurences['readv'] = occurences['readv'] + 1
+                patterns.append("readv")
                 # print("Update für folgenden System Call readv. Neue Häufigkeit: " + str(occurences['readv']))
             elif syscall == 21:
                 occurences['writev'] = occurences['writev'] + 1
+                patterns.append("writev")
                 # print("Update für folgenden System Call writev. Neue Häufigkeit: " + str(occurences['writev']))
             elif syscall == 22:
                 occurences['access'] = occurences['access'] + 1
+                patterns.append("access")
                 # print("Update für folgenden System Call access. Neue Häufigkeit: " + str(occurences['access']))
             elif syscall == 23:
                 occurences['pipe'] = occurences['pipe'] + 1
+                patterns.append("pipe")
                 # print("Update für folgenden System Call pipe. Neue Häufigkeit: " + str(occurences['pipe']))
             elif syscall == 24:
                 occurences['select'] = occurences['select'] + 1
+                patterns.append("select")
                 # print("Update für folgenden System Call select. Neue Häufigkeit: " + str(occurences['select']))
             elif syscall == 25:
                 occurences['mremap'] = occurences['mremap'] + 1
+                patterns.append("mremap")
                 # print("Update für folgenden System Call mremap. Neue Häufigkeit: " + str(occurences['mremap']))
             elif syscall == 26:
                 occurences['sched_yield'] = occurences['sched_yield'] + 1
+                patterns.append("sched_yield")
                 # print(
                 #    "Update für folgenden System Call: sched_yield. Neue Häufigkeit: " + str(occurences['sched_yield']))
             elif syscall == 27:
                 occurences['msync'] = occurences['msync'] + 1
+                patterns.append("msync")
                 # print("Update für folgenden System Call msync. Neue Häufigkeit: " + str(occurences['msync']))
             elif syscall == 28:
                 occurences['mincore'] = occurences['mincore'] + 1
+                patterns.append("mincore")
                 # print("Update für folgenden System Call mincore. Neue Häufigkeit: " + str(occurences['mincore']))
             elif syscall == 29:
                 occurences['madvise'] = occurences['madvise'] + 1
+                patterns.append("madvise")
                 # print("Update für folgenden System Call madvise. Neue Häufigkeit: " + str(occurences['madvise']))
             elif syscall == 30:
                 occurences['shmget'] = occurences['shmget'] + 1
+                patterns.append("shmget")
                 # print("Update für folgenden System Call shmget. Neue Häufigkeit: " + str(occurences['shmget']))
             elif syscall == 31:
                 occurences['shmat'] = occurences['shmat'] + 1
+                patterns.append("shmat")
                 # print("Update für folgenden System Call shmat. Neue Häufigkeit: " + str(occurences['shmat']))
             elif syscall == 32:
                 occurences['shmctl'] = occurences['shmctl'] + 1
+                patterns.append("shmctl")
                 # print("Update für folgenden System Call shmctl. Neue Häufigkeit: " + str(occurences['shmctl']))
             elif syscall == 33:
                 occurences['dup'] = occurences['dup'] + 1
+                patterns.append("dup")
                 # print("Update für folgenden System Call dup. Neue Häufigkeit: " + str(occurences['dup']))
             elif syscall == 34:
                 occurences['dup2'] = occurences['dup2'] + 1
+                patterns.append("dup2")
                 # print("Update für folgenden System Call dup2. Neue Häufigkeit: " + str(occurences['dup2']))
             elif syscall == 35:
                 occurences['pause'] = occurences['pause'] + 1
+                patterns.append("pause")
                 # print("Update für folgenden System Call pause. Neue Häufigkeit: " + str(occurences['pause']))
             elif syscall == 36:
                 occurences['nanosleep'] = occurences['nanosleep'] + 1
@@ -6285,7 +6315,7 @@ def getringbuffer():
             print("\n" + ibinary + " got traced for " + str(uptime) + " seconds.")
             print("Patterns: \n")
             if len(patterns) == 0:
-                print("Es wurden keine Syscalls entdeckt")
+                print("Es wurden keine Syscalls entdeckt, deshalb wurden keine Patterns ausgegeben.")
             else:
                 print(patterns)
             try:
@@ -6303,7 +6333,7 @@ def getringbuffer():
                 return
             except ZeroDivisionError:
                 print(
-                    "\n Die Gesamtsumme der Häufigkeiten ist 0, daher kann die prozentuale Verteilung nicht "
+                    "\nDie Gesamtsumme der Häufigkeiten ist 0, daher kann die prozentuale Verteilung nicht "
                     "berechnet werden.")
                 return
 
