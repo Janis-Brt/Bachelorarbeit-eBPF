@@ -5200,7 +5200,8 @@ def updateoccurences(cpu, data, size):
     data = b["events"].event(data)
     syscall = data.syscallnumber
     ringbufferpid = data.pid
-    if localpids.__contains__(str(ringbufferpid)):
+    inum_ring = data.inum
+    if localpids.__contains__(str(ringbufferpid)) and str(inum_ring) == str(4026532483):
         if int(ringbufferpid) != 1:
             if syscall == 0:
                 occurences['clone'] = occurences['clone'] + 1
