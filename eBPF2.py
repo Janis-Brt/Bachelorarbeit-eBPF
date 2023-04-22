@@ -12,6 +12,7 @@ prog = """
 struct data_t {
     int syscallnumber;
     u32 pid;
+    unsigned int inum;
 };
 
 // Initialisierung des BPF Ring Buffers. Mit diesem kann man Daten an den Userspace übergeben
