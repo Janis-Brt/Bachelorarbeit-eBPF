@@ -33,9 +33,6 @@ int sclone(struct pt_regs *ctx) {
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    data.inum = inum_ring;
     data.pid = id >> 32;
     data.syscallnumber = 0;
     events.perf_submit(ctx, &data, sizeof(data));
@@ -51,9 +48,6 @@ int sopen(struct pt_regs *ctx) {
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    data.inum = inum_ring;
     data.pid = id >> 32;
     data.syscallnumber = 1;
     events.perf_submit(ctx, &data, sizeof(data));
@@ -66,9 +60,6 @@ int sread(struct pt_regs *ctx) {
     }
     struct data_t data = {};
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    data.inum = inum_ring;
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
@@ -88,9 +79,6 @@ int swrite(struct pt_regs *ctx) {
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    data.inum = inum_ring;
     data.pid = id >> 32;
     data.syscallnumber = 3;
     events.perf_submit(ctx, &data, sizeof(data));
@@ -102,9 +90,6 @@ int sclose(struct pt_regs *ctx) {
     }
     struct data_t data = {};
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    data.inum = inum_ring;
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
@@ -122,9 +107,6 @@ int sstat(struct pt_regs *ctx) {
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    data.inum = inum_ring;
     data.pid = id >> 32;
     data.syscallnumber = 5;
     events.perf_submit(ctx, &data, sizeof(data));
@@ -136,9 +118,6 @@ int sfstat(struct pt_regs *ctx) {
     }
     struct data_t data = {};
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    data.inum = inum_ring;
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
@@ -156,9 +135,6 @@ int slstat(struct pt_regs *ctx) {
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    data.inum = inum_ring;
     data.pid = id >> 32;
     data.syscallnumber = 7;
     events.perf_submit(ctx, &data, sizeof(data));
@@ -170,9 +146,6 @@ int spoll(struct pt_regs *ctx) {
     }
     struct data_t data = {};
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    data.inum = inum_ring;
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
@@ -190,9 +163,6 @@ int slseek(struct pt_regs *ctx) {
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    data.inum = inum_ring;
     data.pid = id >> 32;
     data.syscallnumber = 9;
     events.perf_submit(ctx, &data, sizeof(data));
@@ -204,9 +174,6 @@ int smmap(struct pt_regs *ctx) {
     }
     struct data_t data = {};
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    data.inum = inum_ring;
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
