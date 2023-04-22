@@ -4099,6 +4099,7 @@ def detectpatterns(cpu, data, size):
             # print("found utimensat inside the Container! with inum: " + str(inum_ring))
             syscall = "utimensat"
             patterns.append(syscall)
+            x=0
         # elif syscall == 281:
         #     occurences['epoll_pwait'] = occurences['epoll_pwait'] + 1
         #     # print(
