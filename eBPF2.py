@@ -5321,8 +5321,9 @@ def getringbuffer():
                 # Ergebnis ausgeben
                 print("Prozentuale Verteilung der Häufigkeiten:")
                 sorted_verteilung = sorted(prozentuale_verteilung.items(), key=lambda x: x[1], reverse=True)
+                max_key_length = max(len(k) for k, v in sorted_verteilung)
                 for k, v in sorted_verteilung:
-                    print(f"{k}: {v:.2f}%")
+                    print("%-*s: %6.2f%%" % (max_key_length, k, v))
             except ZeroDivisionError:
                 print(
                     "Die Gesamtsumme der Häufigkeiten ist 0, daher kann die prozentuale Verteilung nicht berechnet werden.")
