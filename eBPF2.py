@@ -1376,9 +1376,9 @@ int sumask(struct pt_regs *ctx) {
     return 0;
 }
 int sgettimeofday(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    /**if(PT_REGS_RC(ctx) < 0){
         return 0;
-    }
+    }**/
     struct data_t data = {};
     u64 id = bpf_get_current_pid_tgid();
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
