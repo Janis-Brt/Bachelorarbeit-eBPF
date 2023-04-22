@@ -6284,7 +6284,10 @@ def getringbuffer():
                 print("syscall: %-*s Häufigkeit: %s" % (25, str(syscall), str(occurence)))
             print("\n" + ibinary + " got traced for " + str(uptime) + " seconds.")
             print("Patterns: \n")
-            print(patterns)
+            if len(patterns) == 0:
+                print("Es wurden keine Syscalls entdeckt")
+            else:
+                print(patterns)
             try:
                 sigma = sum(occurences.values())
 
@@ -6300,7 +6303,7 @@ def getringbuffer():
                 return
             except ZeroDivisionError:
                 print(
-                    "Die Gesamtsumme der Häufigkeiten ist 0, daher kann die prozentuale Verteilung nicht "
+                    "\n Die Gesamtsumme der Häufigkeiten ist 0, daher kann die prozentuale Verteilung nicht "
                     "berechnet werden.")
                 return
 
