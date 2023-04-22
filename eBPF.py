@@ -4262,7 +4262,6 @@ def detectpatterns(cpu, data, size):
 
 
 def getringbuffer():
-    uptime = 0
     b["events"].open_perf_buffer(detectpatterns, page_cnt=256)
     while True:
         try:
@@ -4271,12 +4270,17 @@ def getringbuffer():
             print("Abbruch. Patterns:")
             print(patterns)
             getprobability()
-            signal_handler(signal.SIGINT, signal_handler)
+            signal_handler(signal.SIGINT, None)
+        except Exception as e:
+            print("Fehler:", e)
 
 
 def signal_handler(sig, frame):
     print('Exited with Keyboard Interrupt')
     sys.exit(0)
+
+
+signal.signal(signal.SIGINT, signal_handler)  # Signal an Handler binden
 
 
 # Die Funktion führt einen Shell Befehl aus, welcher sich alle PIDs des übergebenen Binaries holt und in ein Array
