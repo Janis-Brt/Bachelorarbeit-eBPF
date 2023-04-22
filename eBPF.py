@@ -2313,6 +2313,96 @@ int smq_open(struct pt_regs *ctx) {
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
+int smq_unlink(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 241;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int smq_timedsend(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 242;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int smq_timedreceive(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 243;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int smq_notify(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 244;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int smq_getsetattr(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 245;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int skexec_load(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 246;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int swaitid(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 247;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sadd_key(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 248;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int srequest_key(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 249;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int skeyctl(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 250;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
 """
 b = BPF(text=prog)
 
@@ -2561,16 +2651,16 @@ def attachkretprobe():
     b.attach_kretprobe(event=b.get_syscall_fnname("set_mempolicy"), fn_name="sset_mempolicy")
     b.attach_kretprobe(event=b.get_syscall_fnname("get_mempolicy"), fn_name="sget_mempolicy")
     b.attach_kretprobe(event=b.get_syscall_fnname("mq_open"), fn_name="smq_open")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("mq_unlink"), fn_name="smq_unlink")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("mq_timedsend"), fn_name="smq_timedsend")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("mq_timedreceive"), fn_name="smq_timedreceive")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("mq_notify"), fn_name="smq_notify")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("mq_getsetattr"), fn_name="smq_getsetattr")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("kexec_load"), fn_name="skexec_load")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("waitid"), fn_name="swaitid")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("add_key"), fn_name="sadd_key")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("request_key"), fn_name="srequest_key")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("keyctl"), fn_name="skeyctl")
+    b.attach_kretprobe(event=b.get_syscall_fnname("mq_unlink"), fn_name="smq_unlink")
+    b.attach_kretprobe(event=b.get_syscall_fnname("mq_timedsend"), fn_name="smq_timedsend")
+    b.attach_kretprobe(event=b.get_syscall_fnname("mq_timedreceive"), fn_name="smq_timedreceive")
+    b.attach_kretprobe(event=b.get_syscall_fnname("mq_notify"), fn_name="smq_notify")
+    b.attach_kretprobe(event=b.get_syscall_fnname("mq_getsetattr"), fn_name="smq_getsetattr")
+    b.attach_kretprobe(event=b.get_syscall_fnname("kexec_load"), fn_name="skexec_load")
+    b.attach_kretprobe(event=b.get_syscall_fnname("waitid"), fn_name="swaitid")
+    b.attach_kretprobe(event=b.get_syscall_fnname("add_key"), fn_name="sadd_key")
+    b.attach_kretprobe(event=b.get_syscall_fnname("request_key"), fn_name="srequest_key")
+    b.attach_kretprobe(event=b.get_syscall_fnname("keyctl"), fn_name="skeyctl")
     # b.attach_kretprobe(event=b.get_syscall_fnname("ioprio_set"), fn_name="sioprio_set")
     # b.attach_kretprobe(event=b.get_syscall_fnname("ioprio_get"), fn_name="sioprio_get")
     # b.attach_kretprobe(event=b.get_syscall_fnname("inotify_init"), fn_name="sinotify_init")
@@ -3362,7 +3452,6 @@ def detectpatterns(cpu, data, size):
             print("found create_module inside the Container! with inum: " + str(inum_ring))
             syscall = "create_module"
             patterns.append(syscall)
-            #    occurences['create_module']))
         elif syscall == 175:
             print("found init_module inside the Container! with inum: " + str(inum_ring))
             syscall = "init_module"
@@ -3370,6 +3459,7 @@ def detectpatterns(cpu, data, size):
         elif syscall == 176:
             print("found delete_module inside the Container! with inum: " + str(inum_ring))
             syscall = "delete_module"
+            patterns.append(syscall)
         elif syscall == 177:
             print("found get_kernel_syms inside the Container! with inum: " + str(inum_ring))
             syscall = "get_kernel_syms"
@@ -3377,226 +3467,295 @@ def detectpatterns(cpu, data, size):
         elif syscall == 178:
             print("found query_module inside the Container! with inum: " + str(inum_ring))
             syscall = "query_module"
+            patterns.append(syscall)
         elif syscall == 179:
             print("found quotactl inside the Container! with inum: " + str(inum_ring))
             syscall = "quotactl"
+            patterns.append(syscall)
         elif syscall == 180:
             print("found nfsservctl inside the Container! with inum: " + str(inum_ring))
             syscall = "nfsservctl"
+            patterns.append(syscall)
         elif syscall == 181:
             print("found getpmsg inside the Container! with inum: " + str(inum_ring))
             syscall = "getpmsg"
+            patterns.append(syscall)
         elif syscall == 182:
             print("found putpmsg inside the Container! with inum: " + str(inum_ring))
             syscall = "putpmsg"
+            patterns.append(syscall)
         elif syscall == 183:
             print("found afs_syscall inside the Container! with inum: " + str(inum_ring))
             syscall = "afs_syscall"
+            patterns.append(syscall)
         elif syscall == 184:
             print("found tuxcall inside the Container! with inum: " + str(inum_ring))
             syscall = "tuxcall"
+            patterns.append(syscall)
         elif syscall == 185:
             print("found security inside the Container! with inum: " + str(inum_ring))
             syscall = "security"
+            patterns.append(syscall)
         elif syscall == 186:
             print("found gettid inside the Container! with inum: " + str(inum_ring))
             syscall = "gettid"
+            patterns.append(syscall)
         elif syscall == 187:
             print("found readahead inside the Container! with inum: " + str(inum_ring))
             syscall = "readahead"
+            patterns.append(syscall)
         elif syscall == 188:
             print("found setxattr inside the Container! with inum: " + str(inum_ring))
             syscall = "setxattr"
+            patterns.append(syscall)
         elif syscall == 189:
             print("found lsetxattr inside the Container! with inum: " + str(inum_ring))
             syscall = "lsetxattr"
+            patterns.append(syscall)
         elif syscall == 190:
             print("found fsetxattr inside the Container! with inum: " + str(inum_ring))
             syscall = "fsetxattr"
+            patterns.append(syscall)
         elif syscall == 191:
             print("found getxattr inside the Container! with inum: " + str(inum_ring))
             syscall = "getxattr"
+            patterns.append(syscall)
         elif syscall == 192:
             print("found lgetxattr inside the Container! with inum: " + str(inum_ring))
             syscall = "lgetxattr"
+            patterns.append(syscall)
         elif syscall == 193:
             print("found fgetxattr inside the Container! with inum: " + str(inum_ring))
             syscall = "fgetxattr"
+            patterns.append(syscall)
         elif syscall == 194:
             print("found listxattr inside the Container! with inum: " + str(inum_ring))
             syscall = "listxattr"
+            patterns.append(syscall)
         elif syscall == 195:
             print("found llistxattr inside the Container! with inum: " + str(inum_ring))
             syscall = "llistxattr"
+            patterns.append(syscall)
         elif syscall == 196:
             print("found flistxattr inside the Container! with inum: " + str(inum_ring))
             syscall = "flistxattr"
+            patterns.append(syscall)
         elif syscall == 197:
             print("found removexattr inside the Container! with inum: " + str(inum_ring))
             syscall = "removexattr"
+            patterns.append(syscall)
         elif syscall == 198:
             print("found lremovexattr inside the Container! with inum: " + str(inum_ring))
             syscall = "lremovexattr"
+            patterns.append(syscall)
         elif syscall == 199:
             print("found fremovexattr inside the Container! with inum: " + str(inum_ring))
             syscall = "fremovexattr"
+            patterns.append(syscall)
         elif syscall == 200:
             print("found tkill inside the Container! with inum: " + str(inum_ring))
             syscall = "tkill"
+            patterns.append(syscall)
         elif syscall == 201:
             print("found time inside the Container! with inum: " + str(inum_ring))
             syscall = "time"
+            patterns.append(syscall)
         elif syscall == 202:
             print("found futex inside the Container! with inum: " + str(inum_ring))
             syscall = "futex"
+            patterns.append(syscall)
         elif syscall == 203:
             print("found sched_setaffinity inside the Container! with inum: " + str(inum_ring))
             syscall = "sched_setaffinity"
+            patterns.append(syscall)
         elif syscall == 204:
             print("found sched_getaffinity inside the Container! with inum: " + str(inum_ring))
             syscall = "sched_getaffinity"
+            patterns.append(syscall)
         elif syscall == 205:
             print("found set_threat_area inside the Container! with inum: " + str(inum_ring))
             syscall = "set_threat_area"
+            patterns.append(syscall)
         elif syscall == 206:
             print("found io_setup inside the Container! with inum: " + str(inum_ring))
             syscall = "io_setup"
+            patterns.append(syscall)
         elif syscall == 207:
             print("found io_destroy inside the Container! with inum: " + str(inum_ring))
             syscall = "io_destroy"
+            patterns.append(syscall)
         elif syscall == 208:
             print("found io_getevents inside the Container! with inum: " + str(inum_ring))
             syscall = "io_getevents"
+            patterns.append(syscall)
         elif syscall == 209:
             print("found io_submit inside the Container! with inum: " + str(inum_ring))
             syscall = "io_submit"
+            patterns.append(syscall)
         elif syscall == 210:
             print("found io_cancel inside the Container! with inum: " + str(inum_ring))
             syscall = "io_cancel"
+            patterns.append(syscall)
         elif syscall == 211:
             print("found get_threat_area inside the Container! with inum: " + str(inum_ring))
             syscall = "get_threat_area"
+            patterns.append(syscall)
         elif syscall == 212:
             print("found lookup_dcookie inside the Container! with inum: " + str(inum_ring))
             syscall = "lookup_dcookie"
+            patterns.append(syscall)
         elif syscall == 213:
             print("found epoll_create inside the Container! with inum: " + str(inum_ring))
             syscall = "epoll_create"
+            patterns.append(syscall)
         elif syscall == 214:
             print("found epoll_ctl_old inside the Container! with inum: " + str(inum_ring))
             syscall = "epoll_ctl_old"
+            patterns.append(syscall)
         elif syscall == 215:
             print("found epoll_wait_old inside the Container! with inum: " + str(inum_ring))
             syscall = "epoll_wait_old"
+            patterns.append(syscall)
         elif syscall == 216:
             print("found remap_file_pages inside the Container! with inum: " + str(inum_ring))
             syscall = "remap_file_pages"
+            patterns.append(syscall)
         elif syscall == 217:
             print("found getdents64 inside the Container! with inum: " + str(inum_ring))
             syscall = "getdents64"
+            patterns.append(syscall)
         elif syscall == 218:
             print("found set_tid_address inside the Container! with inum: " + str(inum_ring))
             syscall = "set_tid_address"
+            patterns.append(syscall)
         elif syscall == 219:
             print("found restart_syscall inside the Container! with inum: " + str(inum_ring))
             syscall = "restart_syscall"
+            patterns.append(syscall)
         elif syscall == 220:
             print("found settimedop inside the Container! with inum: " + str(inum_ring))
             syscall = "settimedop"
+            patterns.append(syscall)
         elif syscall == 221:
             print("found fadvise64 inside the Container! with inum: " + str(inum_ring))
             syscall = "fadvice64"
+            patterns.append(syscall)
         elif syscall == 222:
             print("found timer_create inside the Container! with inum: " + str(inum_ring))
             syscall = "timer_create"
+            patterns.append(syscall)
         elif syscall == 223:
             print("found timer_settime inside the Container! with inum: " + str(inum_ring))
             syscall = "timer_settime"
+            patterns.append(syscall)
         elif syscall == 224:
             print("found timer_gettime inside the Container! with inum: " + str(inum_ring))
             syscall = "timer_gettime"
+            patterns.append(syscall)
         elif syscall == 225:
             print("found timer_getoverrun inside the Container! with inum: " + str(inum_ring))
             syscall = "timer_getoverrun"
+            patterns.append(syscall)
         elif syscall == 226:
             print("found timer_delete inside the Container! with inum: " + str(inum_ring))
             syscall = "timer_delete"
+            patterns.append(syscall)
         elif syscall == 227:
             print("found clock_settime inside the Container! with inum: " + str(inum_ring))
             syscall = "clock_settime"
+            patterns.append(syscall)
         elif syscall == 228:
             print("found clock_gettime inside the Container! with inum: " + str(inum_ring))
             syscall = "clock_gettime"
+            patterns.append(syscall)
         elif syscall == 229:
             print("found clock_getres inside the Container! with inum: " + str(inum_ring))
             syscall = "clock_getres"
+            patterns.append(syscall)
         elif syscall == 230:
             print("found clock_nanosleep inside the Container! with inum: " + str(inum_ring))
             syscall = "clock_nanosleep"
+            patterns.append(syscall)
         elif syscall == 231:
             print("found exit_group inside the Container! with inum: " + str(inum_ring))
             syscall = "exit_group"
+            patterns.append(syscall)
         elif syscall == 232:
             print("found epoll_wait inside the Container! with inum: " + str(inum_ring))
             syscall = "epoll_wait"
+            patterns.append(syscall)
         elif syscall == 233:
             print("found epoll_ctl inside the Container! with inum: " + str(inum_ring))
             syscall = "epoll_ctl"
+            patterns.append(syscall)
         elif syscall == 234:
             print("found tgkill inside the Container! with inum: " + str(inum_ring))
             syscall = "tgkill"
+            patterns.append(syscall)
         elif syscall == 235:
             print("found utimes inside the Container! with inum: " + str(inum_ring))
             syscall = "utimes"
+            patterns.append(syscall)
         elif syscall == 236:
             print("found vserver inside the Container! with inum: " + str(inum_ring))
             syscall = "vserver"
+            patterns.append(syscall)
         elif syscall == 237:
             print("found mbind inside the Container! with inum: " + str(inum_ring))
             syscall = "mbind"
+            patterns.append(syscall)
         elif syscall == 238:
             print("found set_mempolicy inside the Container! with inum: " + str(inum_ring))
             syscall = "set_mempolicy"
+            patterns.append(syscall)
         elif syscall == 239:
             print("found get_mempolicy inside the Container! with inum: " + str(inum_ring))
             syscall = "get_mempolicy"
+            patterns.append(syscall)
         elif syscall == 240:
             print("found mq_open inside the Container! with inum: " + str(inum_ring))
             syscall = "mq_open"
-        # elif syscall == 241:
-        #     occurences['mq_unlink'] = occurences['mq_unlink'] + 1
-        #     # print("Update für folgenden System Call mq_unlink. Neue Häufigkeit: " + str(occurences['mq_unlink']))
-        # elif syscall == 242:
-        #     occurences['mq_timedsend'] = occurences['mq_timedsend'] + 1
-        #     # print("Update für folgenden System Call mq_timedsend. Neue Häufigkeit: " + str(
-        #     #    occurences['mq_timedsend']))
-        # elif syscall == 243:
-        #     occurences['mq_timedreceive'] = occurences['mq_timedreceive'] + 1
-        #     # print("Update für folgenden System Call mq_timedreceive. Neue Häufigkeit: " + str(
-        #     #    occurences['mq_timedreceive']))
-        # elif syscall == 244:
-        #     occurences['mq_notify'] = occurences['mq_notify'] + 1
-        #     # print("Update für folgenden System Call mq_notify. Neue Häufigkeit: " + str(occurences['mq_notify']))
-        # elif syscall == 245:
-        #     occurences['mq_getsetattr'] = occurences['mq_getsetattr'] + 1
-        #     # print("Update für folgenden System Call mq_getsetattr. Neue Häufigkeit: " + str(
-        #     #    occurences['mq_getsetattr']))
-        # elif syscall == 246:
-        #     occurences['kexec_load'] = occurences['kexec_load'] + 1
-        #     # print("Update für folgenden System Call kexec_load. Neue Häufigkeit: " + str(occurences['kexec_load']))
-        # elif syscall == 247:
-        #     occurences['waitid'] = occurences['waitid'] + 1
-        #     # print("Update für folgenden System Call waitid. Neue Häufigkeit: " + str(occurences['waitid']))
-        # elif syscall == 248:
-        #     occurences['add_key'] = occurences['add_key'] + 1
-        #     # print("Update für folgenden System Call add_key. Neue Häufigkeit: " + str(occurences['add_key']))
-        # elif syscall == 249:
-        #     occurences['request_key'] = occurences['request_key'] + 1
-        #     # print(
-        #     #     "Update für folgenden System Call: request_key. Neue Häufigkeit: " + str(occurences['request_key']))
-        # elif syscall == 250:
-        #     occurences['keyctl'] = occurences['keyctl'] + 1
-        #     # print("Update für folgenden System Call keyctl. Neue Häufigkeit: " + str(occurences['keyctl']))
+            patterns.append(syscall)
+        elif syscall == 241:
+            print("found mq_unlink inside the Container! with inum: " + str(inum_ring))
+            syscall = "mq_unlink"
+            patterns.append(syscall)
+        elif syscall == 242:
+            print("found mq_timedsend inside the Container! with inum: " + str(inum_ring))
+            syscall = "mq_timedsend"
+            patterns.append(syscall)
+        elif syscall == 243:
+            print("found mq_timedreceive inside the Container! with inum: " + str(inum_ring))
+            syscall = "mq_timedreceive"
+            patterns.append(syscall)
+        elif syscall == 244:
+            print("found mq_notify inside the Container! with inum: " + str(inum_ring))
+            syscall = "mq_notify"
+            patterns.append(syscall)
+        elif syscall == 245:
+            print("found mq_getsetattr inside the Container! with inum: " + str(inum_ring))
+            syscall = "mq_getsetattr"
+            patterns.append(syscall)
+        elif syscall == 246:
+            print("found kexec_load inside the Container! with inum: " + str(inum_ring))
+            syscall = "kexec_load"
+            patterns.append(syscall)
+        elif syscall == 247:
+            print("found waitid inside the Container! with inum: " + str(inum_ring))
+            syscall = "waitid"
+            patterns.append(syscall)
+        elif syscall == 248:
+            print("found add_key inside the Container! with inum: " + str(inum_ring))
+            syscall = "add_key"
+            patterns.append(syscall)
+        elif syscall == 249:
+            print("found request_key inside the Container! with inum: " + str(inum_ring))
+            syscall = "request_key"
+            patterns.append(syscall)
+        elif syscall == 250:
+            print("found keyctl inside the Container! with inum: " + str(inum_ring))
+            syscall = "keyctl"
+            patterns.append(syscall)
         # elif syscall == 251:
         #     occurences['ioprio_set'] = occurences['ioprio_set'] + 1
         #     # print("Update für folgenden System Call ioprio_set. Neue Häufigkeit: " + str(occurences['ioprio_set']))
