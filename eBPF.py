@@ -2493,6 +2493,96 @@ int sfchownat(struct pt_regs *ctx) {
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
+int sfutimesat(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 261;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int snewfstatat(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 262;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sunlinkat(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 263;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int srenameat(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 264;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int slinkat(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 265;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int ssymlinkat(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 266;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sreadlinkat(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 267;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sfchmodat(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 268;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sfaccessat(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 269;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int spselect6(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 270;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
 
 """
 b = BPF(text=prog)
@@ -2762,16 +2852,16 @@ def attachkretprobe():
     b.attach_kretprobe(event=b.get_syscall_fnname("mkdirat"), fn_name="smkdirat")
     b.attach_kretprobe(event=b.get_syscall_fnname("mknodat"), fn_name="smknodat")
     b.attach_kretprobe(event=b.get_syscall_fnname("fchownat"), fn_name="sfchownat")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("futimesat"), fn_name="sfutimesat")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("newfstatat"), fn_name="snewfstatat")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("unlinkat"), fn_name="sunlinkat")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("renameat"), fn_name="srenameat")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("linkat"), fn_name="slinkat")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("symlinkat"), fn_name="ssymlinkat")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("readlinkat"), fn_name="sreadlinkat")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("fchmodat"), fn_name="sfchmodat")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("faccessat"), fn_name="sfaccessat")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("pselect6"), fn_name="spselect6")
+    b.attach_kretprobe(event=b.get_syscall_fnname("futimesat"), fn_name="sfutimesat")
+    b.attach_kretprobe(event=b.get_syscall_fnname("newfstatat"), fn_name="snewfstatat")
+    b.attach_kretprobe(event=b.get_syscall_fnname("unlinkat"), fn_name="sunlinkat")
+    b.attach_kretprobe(event=b.get_syscall_fnname("renameat"), fn_name="srenameat")
+    b.attach_kretprobe(event=b.get_syscall_fnname("linkat"), fn_name="slinkat")
+    b.attach_kretprobe(event=b.get_syscall_fnname("symlinkat"), fn_name="ssymlinkat")
+    b.attach_kretprobe(event=b.get_syscall_fnname("readlinkat"), fn_name="sreadlinkat")
+    b.attach_kretprobe(event=b.get_syscall_fnname("fchmodat"), fn_name="sfchmodat")
+    b.attach_kretprobe(event=b.get_syscall_fnname("faccessat"), fn_name="sfaccessat")
+    b.attach_kretprobe(event=b.get_syscall_fnname("pselect6"), fn_name="spselect6")
     # b.attach_kretprobe(event=b.get_syscall_fnname("ppoll"), fn_name="sppoll")
     # b.attach_kretprobe(event=b.get_syscall_fnname("unshare"), fn_name="sunshare")
     # b.attach_kretprobe(event=b.get_syscall_fnname("set_robust_list"), fn_name="sset_robust_list")
@@ -3887,36 +3977,46 @@ def detectpatterns(cpu, data, size):
             print("found fchownat inside the Container! with inum: " + str(inum_ring))
             syscall = "fchownat"
             patterns.append(syscall)
-        # elif syscall == 261:
-        #     occurences['futimesat'] = occurences['futimesat'] + 1
-        #     # print("Update für folgenden System Call futimesat. Neue Häufigkeit: " + str(occurences['futimesat']))
-        # elif syscall == 262:
-        #     occurences['newfstatat'] = occurences['newfstatat'] + 1
-        #     # print("Update für folgenden System Call newfstatat. Neue Häufigkeit: " + str(occurences['newfstatat']))
-        # elif syscall == 263:
-        #     occurences['unlinkat'] = occurences['unlinkat'] + 1
-        #     # print("Update für folgenden System Call unlinkat. Neue Häufigkeit: " + str(occurences['unlinkat']))
-        # elif syscall == 264:
-        #     occurences['renameat'] = occurences['renameat'] + 1
-        #     # print("Update für folgenden System Call renameat. Neue Häufigkeit: " + str(occurences['renameat']))
-        # elif syscall == 265:
-        #     occurences['linkat'] = occurences['linkat'] + 1
-        #     # print("Update für folgenden System Call linkat. Neue Häufigkeit: " + str(occurences['linkat']))
-        # elif syscall == 266:
-        #     occurences['symlinkat'] = occurences['symlinkat'] + 1
-        #     # print("Update für folgenden System Call symlinkat. Neue Häufigkeit: " + str(occurences['symlinkat']))
-        # elif syscall == 267:
-        #     occurences['readlinkat'] = occurences['readlinkat'] + 1
-        #     # print("Update für folgenden System Call readlinkat. Neue Häufigkeit: " + str(occurences['readlinkat']))
-        # elif syscall == 268:
-        #     occurences['fchmodat'] = occurences['fchmodat'] + 1
-        #     # print("Update für folgenden System Call fchmodat. Neue Häufigkeit: " + str(occurences['fchmodat']))
-        # elif syscall == 269:
-        #     occurences['faccessat'] = occurences['faccessat'] + 1
-        #     # print("Update für folgenden System Call faccessat. Neue Häufigkeit: " + str(occurences['faccessat']))
-        # elif syscall == 270:
-        #     occurences['pselect6'] = occurences['pselect6'] + 1
-        #     # print("Update für folgenden System Call pselect6. Neue Häufigkeit: " + str(occurences['pselect6']))
+        elif syscall == 261:
+            print("found futimesat inside the Container! with inum: " + str(inum_ring))
+            syscall = "futimesat"
+            patterns.append(syscall)
+        elif syscall == 262:
+            print("found newfstat inside the Container! with inum: " + str(inum_ring))
+            syscall = "newfstat"
+            patterns.append(syscall)
+        elif syscall == 263:
+            print("found unlinkat inside the Container! with inum: " + str(inum_ring))
+            syscall = "unlinkat"
+            patterns.append(syscall)
+        elif syscall == 264:
+            print("found renameat inside the Container! with inum: " + str(inum_ring))
+            syscall = "renameat"
+            patterns.append(syscall)
+        elif syscall == 265:
+            print("found linkat inside the Container! with inum: " + str(inum_ring))
+            syscall = "linkat"
+            patterns.append(syscall)
+        elif syscall == 266:
+            print("found symlinkat inside the Container! with inum: " + str(inum_ring))
+            syscall = "symlinkat"
+            patterns.append(syscall)
+        elif syscall == 267:
+            print("found readlinkat inside the Container! with inum: " + str(inum_ring))
+            syscall = "readlinkat"
+            patterns.append(syscall)
+        elif syscall == 268:
+            print("found fchmodat inside the Container! with inum: " + str(inum_ring))
+            syscall = "fchmodat"
+            patterns.append(syscall)
+        elif syscall == 269:
+            print("found faccsessat inside the Container! with inum: " + str(inum_ring))
+            syscall = "faccsessat"
+            patterns.append(syscall)
+        elif syscall == 270:
+            print("found pselect6 inside the Container! with inum: " + str(inum_ring))
+            syscall = "pselect69"
+            patterns.append(syscall)
         # elif syscall == 271:
         #     occurences['ppoll'] = occurences['ppoll'] + 1
         #     # print("Update für folgenden System Call ppoll. Neue Häufigkeit: " + str(occurences['ppoll']))
