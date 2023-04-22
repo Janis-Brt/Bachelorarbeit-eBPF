@@ -4263,7 +4263,7 @@ def detectpatterns(cpu, data, size):
 
 
 def getringbuffer():
-    b["events"].open_perf_buffer(detectpatterns(), page_cnt=256)
+    b["events"].open_perf_buffer(detectpatterns, page_cnt=256)
     while True:
         try:
             b.perf_buffer_poll(timeout=10 * 1000)
