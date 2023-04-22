@@ -10,8 +10,6 @@ prog = """
 
 struct data_t {
     int syscallnumber;
-    u32 pid;
-    u32 cgroup;
     unsigned int inum;
 };
 
@@ -21,10 +19,6 @@ int sclone(struct pt_regs *ctx) {
     struct data_t data = {};
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    u64 id = bpf_get_current_pid_tgid();
-    u32 cgroup_id = bpf_get_current_cgroup_id();
-    data.cgroup = cgroup_id;
-    data.pid = id >> 32;
     data.syscallnumber = 0;
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
@@ -35,10 +29,6 @@ int sopen(struct pt_regs *ctx) {
     struct data_t data = {};
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    u64 id = bpf_get_current_pid_tgid();
-    u32 cgroup_id = bpf_get_current_cgroup_id();
-    data.cgroup = cgroup_id;
-    data.pid = id >> 32;
     data.syscallnumber = 1;
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
@@ -48,10 +38,6 @@ int sread(struct pt_regs *ctx) {
     struct data_t data = {};
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    u64 id = bpf_get_current_pid_tgid();
-    u32 cgroup_id = bpf_get_current_cgroup_id();
-    data.cgroup = cgroup_id;
-    data.pid = id >> 32;
     data.syscallnumber = 2;
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
@@ -61,10 +47,6 @@ int swrite(struct pt_regs *ctx) {
     struct data_t data = {};
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    u64 id = bpf_get_current_pid_tgid();
-    u32 cgroup_id = bpf_get_current_cgroup_id();
-    data.cgroup = cgroup_id;
-    data.pid = id >> 32;
     data.syscallnumber = 3;
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
@@ -74,10 +56,6 @@ int sclose(struct pt_regs *ctx) {
     struct data_t data = {};
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    u64 id = bpf_get_current_pid_tgid();
-    u32 cgroup_id = bpf_get_current_cgroup_id();
-    data.cgroup = cgroup_id;
-    data.pid = id >> 32;
     data.syscallnumber = 4;
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
@@ -87,10 +65,6 @@ int sstat(struct pt_regs *ctx) {
     struct data_t data = {};
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    u64 id = bpf_get_current_pid_tgid();
-    u32 cgroup_id = bpf_get_current_cgroup_id();
-    data.cgroup = cgroup_id;
-    data.pid = id >> 32;
     data.syscallnumber = 5;
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
@@ -100,10 +74,6 @@ int sfstat(struct pt_regs *ctx) {
     struct data_t data = {};
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    u64 id = bpf_get_current_pid_tgid();
-    u32 cgroup_id = bpf_get_current_cgroup_id();
-    data.cgroup = cgroup_id;
-    data.pid = id >> 32;
     data.syscallnumber = 6;
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
@@ -113,10 +83,6 @@ int slstat(struct pt_regs *ctx) {
     struct data_t data = {};
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    u64 id = bpf_get_current_pid_tgid();
-    u32 cgroup_id = bpf_get_current_cgroup_id();
-    data.cgroup = cgroup_id;
-    data.pid = id >> 32;
     data.syscallnumber = 7;
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
@@ -126,10 +92,6 @@ int spoll(struct pt_regs *ctx) {
     struct data_t data = {};
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    u64 id = bpf_get_current_pid_tgid();
-    u32 cgroup_id = bpf_get_current_cgroup_id();
-    data.cgroup = cgroup_id;
-    data.pid = id >> 32;
     data.syscallnumber = 8;
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
@@ -139,10 +101,6 @@ int slseek(struct pt_regs *ctx) {
     struct data_t data = {};
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    u64 id = bpf_get_current_pid_tgid();
-    u32 cgroup_id = bpf_get_current_cgroup_id();
-    data.cgroup = cgroup_id;
-    data.pid = id >> 32;
     data.syscallnumber = 9;
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
@@ -152,10 +110,6 @@ int smmap(struct pt_regs *ctx) {
     struct data_t data = {};
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    u64 id = bpf_get_current_pid_tgid();
-    u32 cgroup_id = bpf_get_current_cgroup_id();
-    data.cgroup = cgroup_id;
-    data.pid = id >> 32;
     data.syscallnumber = 10;
     data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
@@ -3011,15 +2965,13 @@ patterns = []
 def detectpatterns(cpu, data, size):
     data = b["events"].event(data)
     syscall = data.syscallnumber
-    pid = data.pid
     inum_ring = data.inum
-    cgroup = data.cgroup
     # if localpids.__contains__(str(pid)):
     host_pid_ns = 4026531836
-    if str(inum_ring) == str(4026532302):
+    if str(inum_ring) == str(4026532485):
         # # print("Inside Container")
         if syscall == 0:
-            print("found clone inside the Container! with inum: " + str(inum_ring))
+            # print("found clone inside the Container! with inum: " + str(inum_ring))
             syscall = "clone"
             patterns.append(syscall)
         elif syscall == 1:
@@ -4290,7 +4242,7 @@ def detectpatterns(cpu, data, size):
         #     #    occurences['kexec_file_load']))
         # elif syscall == 321:
         #     occurences['bpf'] = occurences['bpf'] + 1
-            # print("Update für folgenden System Call bpf. Neue Häufigkeit: " + str(occurences['process_vm_readv']))
+        # print("Update für folgenden System Call bpf. Neue Häufigkeit: " + str(occurences['process_vm_readv']))
         # else:
         #     print("found gettimeofdate inside the Container! with PID: " + str(pid) + " and cgroup_id: " + str(
         #         cgroup) + " and inum: " + str(
@@ -4311,21 +4263,24 @@ def detectpatterns(cpu, data, size):
 
 
 def getringbuffer():
-    uptime = 0
     b["events"].open_perf_buffer(detectpatterns, page_cnt=256)
     while True:
         try:
             b.perf_buffer_poll(timeout=10 * 1000)
-        except KeyboardInterrupt:
+        except KeyboardInterrupt and Exception:
             print("Abbruch. Patterns:")
             print(patterns)
             getprobability()
             signal_handler(signal.SIGINT, signal_handler)
 
 
+
 def signal_handler(sig, frame):
     print('Exited with Keyboard Interrupt')
     sys.exit(0)
+
+
+signal.signal(signal.SIGINT, signal_handler)  # Signal an Handler binden
 
 
 # Die Funktion führt einen Shell Befehl aus, welcher sich alle PIDs des übergebenen Binaries holt und in ein Array
@@ -4354,7 +4309,6 @@ def getpids(input):
 #             break
 #     # print("PID-Namespace ID des Host Systems:", pid_ns_id)
 #     return pid_ns_id
-
 
 
 def getprobability():
