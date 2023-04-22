@@ -29,6 +29,8 @@ int sclone(struct pt_regs *ctx) {
     }
     struct data_t data = {};
     u64 id = bpf_get_current_pid_tgid();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.inum = inum_ring;
     data.pid = id >> 32;
     data.syscallnumber = 0;
     events.perf_submit(ctx, &data, sizeof(data));
