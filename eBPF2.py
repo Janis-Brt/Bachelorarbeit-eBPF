@@ -5186,6 +5186,8 @@ occurences = dict(read=0,
                   kexec_file_load=0,
                   bpf=0, )
 
+patterns = []
+
 
 # Callback Funktion des Ring Buffers. Erhält die aus dem Kernelspace übergebene PID und Syscall-Nummer
 # Danach wird geprüft, ob die PID im Array steht, welches alle PID's des zu tracenden Binaries enthält.
@@ -6273,7 +6275,6 @@ def getringbuffer():
             for syscall, occurence in res2.items():
                 print("syscall: %-*s Häufigkeit: %s" % (25, str(syscall), str(occurence)))
             print("\n" + ibinary + " got traced for " + str(uptime) + " seconds.")
-
             try:
                 gesamt = sum(occurences.values())
 
@@ -6286,12 +6287,11 @@ def getringbuffer():
                 max_key_length = max(len(k) for k, v in sorted_verteilung)
                 for k, v in sorted_verteilung:
                     print("%-*s: %6.2f%%" % (max_key_length, k, v))
-                return
             except ZeroDivisionError:
                 print(
                     "Die Gesamtsumme der Häufigkeiten ist 0, daher kann die prozentuale Verteilung nicht berechnet werden.")
-            # except KeyboardInterrupt:
-            #     signal_handler(signal.SIGINT, signal_handler)
+            else:
+                return
 
 
 
