@@ -2556,7 +2556,7 @@ def attachkretprobe():
     b.attach_kretprobe(event=b.get_syscall_fnname("epoll_ctl"), fn_name="sepoll_ctl")
     b.attach_kretprobe(event=b.get_syscall_fnname("tgkill"), fn_name="stgkill")
     b.attach_kretprobe(event=b.get_syscall_fnname("utimes"), fn_name="sutimes")
-    b.attach_kretprobe(event=b.get_syscall_fnname("vserver"), fn_name="svserver")
+    # b.attach_kretprobe(event=b.get_syscall_fnname("vserver"), fn_name="svserver") not traceable
     b.attach_kretprobe(event=b.get_syscall_fnname("mbind"), fn_name="smbind")
     b.attach_kretprobe(event=b.get_syscall_fnname("set_mempolicy"), fn_name="sset_mempolicy")
     b.attach_kretprobe(event=b.get_syscall_fnname("get_mempolicy"), fn_name="sget_mempolicy")
