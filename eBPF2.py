@@ -6301,11 +6301,7 @@ def getringbuffer():
                 print(
                     "Die Gesamtsumme der Häufigkeiten ist 0, daher kann die prozentuale Verteilung nicht "
                     "berechnet werden.")
-                go = input("Continue? [Y/n]")
-                if go == "Y" or "y" or "yes" or "Yes":
-                    continue
-                else:
-                    return
+                return
 
 
 
