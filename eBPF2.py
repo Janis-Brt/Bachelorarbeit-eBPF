@@ -5202,21 +5202,27 @@ def updateoccurences(cpu, data, size):
         if int(ringbufferpid) != 1:
             if syscall == 0:
                 occurences['clone'] = occurences['clone'] + 1
+                patterns.append("clone")
                 # print("Update für folgenden System Call Clone. Neue Häufigkeit: " + str(occurences['clone']))
             elif syscall == 1:
                 occurences['open'] = occurences['open'] + 1
+                patterns.append("open")
                 # print("Update für folgenden System Call Open. Neue Häufigkeit: " + str(occurences['open']))
             elif syscall == 2:
                 occurences['read'] = occurences['read'] + 1
+                patterns.append("read")
                 # print("Update für folgenden System Call Read. Neue Häufigkeit: " + str(occurences['read']))
             elif syscall == 3:
                 occurences['write'] = occurences['write'] + 1
+                patterns.append("write")
                 # print("Update für folgenden System Call Write. Neue Häufigkeit: " + str(occurences['write']))
             elif syscall == 4:
                 occurences['close'] = occurences['close'] + 1
+                patterns.append("close")
                 # print("Update für folgenden System Call Close. Neue Häufigkeit: " + str(occurences['close']))
             elif syscall == 5:
                 occurences['stat'] = occurences['stat'] + 1
+                patterns.append("stat")
                 # print("Update für folgenden System Call Stat. Neue Häufigkeit: " + str(occurences['stat']))
             elif syscall == 6:
                 occurences['fstat'] = occurences['fstat'] + 1
@@ -5496,6 +5502,7 @@ def updateoccurences(cpu, data, size):
                 # print("Update für folgenden System Call umask. Neue Häufigkeit: " + str(occurences['umask']))
             elif syscall == 96:
                 occurences['gettimeofday'] = occurences['gettimeofday'] + 1
+                patterns.append("gettimeofday")
                 # print("Update für folgenden System Call gettimeofday. Neue Häufigkeit: " + str(
                 #    occurences['gettimeofday']))
             elif syscall == 97:
@@ -6275,22 +6282,25 @@ def getringbuffer():
             for syscall, occurence in res2.items():
                 print("syscall: %-*s Häufigkeit: %s" % (25, str(syscall), str(occurence)))
             print("\n" + ibinary + " got traced for " + str(uptime) + " seconds.")
+            print("Patterns: \n")
+            print(patterns)
             try:
-                gesamt = sum(occurences.values())
+                sigma = sum(occurences.values())
 
                 # Prozentuale Verteilung der Häufigkeiten berechnen
-                prozentuale_verteilung = {k: v / gesamt * 100 for k, v in occurences.items()}
+                distribution = {k: v / sigma * 100 for k, v in occurences.items()}
 
                 # Ergebnis ausgeben
                 print("Prozentuale Verteilung der Häufigkeiten:")
-                sorted_verteilung = sorted(prozentuale_verteilung.items(), key=lambda x: x[1], reverse=True)
-                max_key_length = max(len(k) for k, v in sorted_verteilung)
-                for k, v in sorted_verteilung:
+                sorted_distribution = sorted(distribution.items(), key=lambda x: x[1], reverse=True)
+                max_key_length = max(len(k) for k, v in sorted_distribution)
+                for k, v in sorted_distribution:
                     print("%-*s: %6.2f%%" % (max_key_length, k, v))
                 return
             except ZeroDivisionError:
                 print(
-                    "Die Gesamtsumme der Häufigkeiten ist 0, daher kann die prozentuale Verteilung nicht berechnet werden.")
+                    "Die Gesamtsumme der Häufigkeiten ist 0, daher kann die prozentuale Verteilung nicht "
+                    "berechnet werden.")
                 return
 
 
