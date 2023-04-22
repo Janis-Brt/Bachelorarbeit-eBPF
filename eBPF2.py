@@ -5307,7 +5307,7 @@ def getringbuffer():
             # for syscall, occurence in res2.items():
             #     print("syscall: %-*s Häufigkeit: %s" % (25, str(syscall), str(occurence)))
             # print("\n" + ibinary + " got traced for " + str(uptime) + " seconds.")
-            getprobability()
+            # getprobability()
             print(occurences)
             signal_handler(signal.SIGINT, signal_handler)
 
