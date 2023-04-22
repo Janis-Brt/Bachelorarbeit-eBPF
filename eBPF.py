@@ -4276,6 +4276,7 @@ def getringbuffer():
         except KeyboardInterrupt:
             getprobability()
             print(patterns)
+            break
             # signal_handler(signal.SIGINT, signal_handler)
 
 
