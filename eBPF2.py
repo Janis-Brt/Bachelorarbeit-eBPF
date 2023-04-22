@@ -6368,7 +6368,7 @@ def getringbuffer():
                 distribution = {k: v / sigma * 100 for k, v in occurences.items()}
 
                 # Ergebnis ausgeben
-                print("\n Prozentuale Verteilung der Häufigkeiten:")
+                print("\nProzentuale Verteilung der Häufigkeiten:")
                 sorted_distribution = sorted(distribution.items(), key=lambda x: x[1], reverse=True)
                 max_key_length = max(len(k) for k, v in sorted_distribution)
                 for k, v in sorted_distribution:
