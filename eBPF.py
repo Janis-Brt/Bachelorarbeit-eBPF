@@ -4277,7 +4277,8 @@ def getringbuffer():
 
 def signal_handler(sig, frame):
     print('Exited with Keyboard Interrupt')
-    sys.exit(0)
+    pass
+    # sys.exit(0)
 
 
 signal.signal(signal.SIGINT, signal_handler)  # Signal an Handler binden
