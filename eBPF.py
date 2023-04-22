@@ -2223,6 +2223,96 @@ int sclock_nanosleep(struct pt_regs *ctx) {
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
+int sexit_group(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 231;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sepoll_wait(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 232;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sepoll_ctl(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 233;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int stgkill(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 234;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sutimes(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 235;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int svserver(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 236;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int smbind(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 237;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sset_mempolicy(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 238;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int sget_mempolicy(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 239;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
+int smq_open(struct pt_regs *ctx) {
+    struct data_t data = {};
+    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.syscallnumber = 240;
+    data.inum = inum_ring;
+    events.perf_submit(ctx, &data, sizeof(data));
+    return 0;
+}
 """
 b = BPF(text=prog)
 
@@ -2461,16 +2551,16 @@ def attachkretprobe():
     b.attach_kretprobe(event=b.get_syscall_fnname("clock_gettime"), fn_name="sclock_gettime")
     b.attach_kretprobe(event=b.get_syscall_fnname("clock_getres"), fn_name="sclock_getres")
     b.attach_kretprobe(event=b.get_syscall_fnname("clock_nanosleep"), fn_name="sclock_nanosleep")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("exit_group"), fn_name="sexit_group")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("epoll_wait"), fn_name="sepoll_wait")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("epoll_ctl"), fn_name="sepoll_ctl")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("tgkill"), fn_name="stgkill")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("utimes"), fn_name="sutimes")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("vserver"), fn_name="svserver")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("mbind"), fn_name="smbind")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("set_mempolicy"), fn_name="sset_mempolicy")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("get_mempolicy"), fn_name="sget_mempolicy")
-    # b.attach_kretprobe(event=b.get_syscall_fnname("mq_open"), fn_name="smq_open")
+    b.attach_kretprobe(event=b.get_syscall_fnname("exit_group"), fn_name="sexit_group")
+    b.attach_kretprobe(event=b.get_syscall_fnname("epoll_wait"), fn_name="sepoll_wait")
+    b.attach_kretprobe(event=b.get_syscall_fnname("epoll_ctl"), fn_name="sepoll_ctl")
+    b.attach_kretprobe(event=b.get_syscall_fnname("tgkill"), fn_name="stgkill")
+    b.attach_kretprobe(event=b.get_syscall_fnname("utimes"), fn_name="sutimes")
+    b.attach_kretprobe(event=b.get_syscall_fnname("vserver"), fn_name="svserver")
+    b.attach_kretprobe(event=b.get_syscall_fnname("mbind"), fn_name="smbind")
+    b.attach_kretprobe(event=b.get_syscall_fnname("set_mempolicy"), fn_name="sset_mempolicy")
+    b.attach_kretprobe(event=b.get_syscall_fnname("get_mempolicy"), fn_name="sget_mempolicy")
+    b.attach_kretprobe(event=b.get_syscall_fnname("mq_open"), fn_name="smq_open")
     # b.attach_kretprobe(event=b.get_syscall_fnname("mq_unlink"), fn_name="smq_unlink")
     # b.attach_kretprobe(event=b.get_syscall_fnname("mq_timedsend"), fn_name="smq_timedsend")
     # b.attach_kretprobe(event=b.get_syscall_fnname("mq_timedreceive"), fn_name="smq_timedreceive")
@@ -3443,38 +3533,36 @@ def detectpatterns(cpu, data, size):
         elif syscall == 230:
             print("found clock_nanosleep inside the Container! with inum: " + str(inum_ring))
             syscall = "clock_nanosleep"
-        # elif syscall == 231:
-        #     occurences['exit_group'] = occurences['exit_group'] + 1
-        #     # print("Update für folgenden System Call exit_group. Neue Häufigkeit: " + str(occurences['exit_group']))
-        # elif syscall == 232:
-        #     occurences['epoll_wait'] = occurences['epoll_wait'] + 1
-        #     # print("Update für folgenden System Call epoll_wait. Neue Häufigkeit: " + str(occurences['epoll_wait']))
-        # elif syscall == 233:
-        #     occurences['epoll_ctl'] = occurences['epoll_ctl'] + 1
-        #     # print("Update für folgenden System Call epoll_ctl. Neue Häufigkeit: " + str(occurences['epoll_ctl']))
-        # elif syscall == 234:
-        #     occurences['tgkill'] = occurences['tgkill'] + 1
-        #     # print("Update für folgenden System Call tgkill. Neue Häufigkeit: " + str(occurences['tgkill']))
-        # elif syscall == 235:
-        #     occurences['utimes'] = occurences['utimes'] + 1
-        #     # print("Update für folgenden System Call utimes. Neue Häufigkeit: " + str(occurences['utimes']))
-        # elif syscall == 236:
-        #     occurences['vserver'] = occurences['vserver'] + 1
-        #     # print("Update für folgenden System Call vserver. Neue Häufigkeit: " + str(occurences['vserver']))
-        # elif syscall == 237:
-        #     occurences['mbind'] = occurences['mbind'] + 1
-        #     # print("Update für folgenden System Call mbind. Neue Häufigkeit: " + str(occurences['mbind']))
-        # elif syscall == 238:
-        #     occurences['set_mempolicy'] = occurences['set_mempolicy'] + 1
-        #     # print("Update für folgenden System Call set_mempolicy. Neue Häufigkeit: " + str(
-        # #     occurences['set_mempolicy']))
-        # elif syscall == 239:
-        #     occurences['get_mempolicy'] = occurences['get_mempolicy'] + 1
-        #     # print("Update für folgenden System Call get_mempolicy. Neue Häufigkeit: " + str(
-        #     #    occurences['get_mempolicy']))
-        # elif syscall == 240:
-        #     occurences['mq_open'] = occurences['mq_open'] + 1
-        #     # print("Update für folgenden System Call mq_open. Neue Häufigkeit: " + str(occurences['mq_open']))
+        elif syscall == 231:
+            print("found exit_group inside the Container! with inum: " + str(inum_ring))
+            syscall = "exit_group"
+        elif syscall == 232:
+            print("found epoll_wait inside the Container! with inum: " + str(inum_ring))
+            syscall = "epoll_wait"
+        elif syscall == 233:
+            print("found epoll_ctl inside the Container! with inum: " + str(inum_ring))
+            syscall = "epoll_ctl"
+        elif syscall == 234:
+            print("found tgkill inside the Container! with inum: " + str(inum_ring))
+            syscall = "tgkill"
+        elif syscall == 235:
+            print("found utimes inside the Container! with inum: " + str(inum_ring))
+            syscall = "utimes"
+        elif syscall == 236:
+            print("found vserver inside the Container! with inum: " + str(inum_ring))
+            syscall = "vserver"
+        elif syscall == 237:
+            print("found mbind inside the Container! with inum: " + str(inum_ring))
+            syscall = "mbind"
+        elif syscall == 238:
+            print("found set_mempolicy inside the Container! with inum: " + str(inum_ring))
+            syscall = "set_mempolicy"
+        elif syscall == 239:
+            print("found get_mempolicy inside the Container! with inum: " + str(inum_ring))
+            syscall = "get_mempolicy"
+        elif syscall == 240:
+            print("found mq_open inside the Container! with inum: " + str(inum_ring))
+            syscall = "mq_open"
         # elif syscall == 241:
         #     occurences['mq_unlink'] = occurences['mq_unlink'] + 1
         #     # print("Update für folgenden System Call mq_unlink. Neue Häufigkeit: " + str(occurences['mq_unlink']))
