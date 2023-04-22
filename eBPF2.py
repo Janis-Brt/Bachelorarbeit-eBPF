@@ -5310,6 +5310,15 @@ def getringbuffer():
             for syscall, occurence in res2.items():
                 print("syscall: %-*s Häufigkeit: %s" % (25, str(syscall), str(occurence)))
             print("\n" + ibinary + " got traced for " + str(uptime) + " seconds.")
+
+            # Häufigkeit prozentual:
+            sigma = sum(occurences.values())
+            prozentuale_verteilung = {k: v / sigma * 100 for k, v in occurences.items()}
+
+            # print percentage
+            print("Prozentuale Verteilung der Häufigkeiten:")
+            for k, v in prozentuale_verteilung.items():
+                print(f"{k}: {v}%")
             signal_handler(signal.SIGINT, signal_handler)
 
 
