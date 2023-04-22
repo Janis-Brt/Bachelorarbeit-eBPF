@@ -1874,6 +1874,7 @@ int ssigaltstack(struct pt_regs *ctx) {
     data.pid = id >> 32;
     data.syscallnumber = 132;
     events.perf_submit(ctx, &data, sizeof(data));
+    int x = 0;
     return 0;
 }
 int sutime(struct pt_regs *ctx) {
