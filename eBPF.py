@@ -2963,12 +2963,13 @@ patterns = []
 
 
 def detectpatterns(cpu, data, size):
+    # try:
     data = b["events"].event(data)
     syscall = data.syscallnumber
     inum_ring = data.inum
     # if localpids.__contains__(str(pid)):
     host_pid_ns = 4026531836
-    if str(inum_ring) == str(4026532485):
+    if str(inum_ring) == str(4026532486):
         # # print("Inside Container")
         if syscall == 0:
             # print("found clone inside the Container! with inum: " + str(inum_ring))
@@ -4057,7 +4058,7 @@ def detectpatterns(cpu, data, size):
             patterns.append(syscall)
         elif syscall == 270:
             # print("found pselect6 inside the Container! with inum: " + str(inum_ring))
-            syscall = "pselect69"
+            syscall = "pselect6"
             patterns.append(syscall)
         elif syscall == 271:
             # print("found ppoll inside the Container! with inum: " + str(inum_ring))
@@ -4260,6 +4261,11 @@ def detectpatterns(cpu, data, size):
 
     # elif syscall == 1:
     #     print("found read!")
+    # except KeyboardInterrupt:
+    #     getprobability()
+    #     print(patterns)
+    #     signal_handler(signal.SIGINT, signal_handler)
+
 
 
 def getringbuffer():
