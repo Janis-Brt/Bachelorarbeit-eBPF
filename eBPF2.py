@@ -5312,14 +5312,22 @@ def getringbuffer():
             print("\n" + ibinary + " got traced for " + str(uptime) + " seconds.")
 
             # Häufigkeit prozentual:
-            sigma = sum(occurences.values())
-            prozentuale_verteilung = {k: v / sigma * 100 for k, v in occurences.items()}
+            # Summe der Häufigkeiten berechnen
+            gesamt = sum(occurences.values())
 
-            # print percentage
+            # Prozentuale Verteilung der Häufigkeiten berechnen, mit Fehlerbehandlung
+            prozentuale_verteilung = {}
+            if gesamt != 0:
+                prozentuale_verteilung = {k: v / gesamt * 100 for k, v in occurences.items()}
+
+            # Ergebnis ausgeben
             print("Prozentuale Verteilung der Häufigkeiten:")
-            for k, v in prozentuale_verteilung.items():
-                print(f"{k}: {v}%")
-            signal_handler(signal.SIGINT, signal_handler)
+            if prozentuale_verteilung:
+                for k, v in prozentuale_verteilung.items():
+                    print(f"{k}: {v}%")
+            else:
+                print(
+                    "Die Gesamtsumme der Häufigkeiten ist 0, daher kann die prozentuale Verteilung nicht berechnet werden.")
 
 
 # Funktion für Signal Handler
