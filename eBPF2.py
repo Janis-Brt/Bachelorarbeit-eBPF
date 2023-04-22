@@ -5307,13 +5307,14 @@ def getringbuffer():
             # for syscall, occurence in res2.items():
             #     print("syscall: %-*s Häufigkeit: %s" % (25, str(syscall), str(occurence)))
             # print("\n" + ibinary + " got traced for " + str(uptime) + " seconds.")
-            # getprobability()
-            print(occurences)
+
             signal_handler(signal.SIGINT, signal_handler)
 
 
 # Funktion für Signal Handler
 def signal_handler(sig, frame):
+    getprobability()
+    print(occurences)
     print('Exited with Keyboard Interrupt')
     sys.exit(0)
 
