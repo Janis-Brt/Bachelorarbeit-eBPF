@@ -5295,48 +5295,29 @@ def updateoccurences(cpu, data, size):
 # Funktion zum Auslesen der events im Kernel Ring Buffer. Dabei wird für jeden Eintrag im Ring Buffer die
 # Callback Funktion aufgerufen
 def getringbuffer():
+    uptime = 0
     b["events"].open_perf_buffer(updateoccurences, page_cnt=256)
     while True:
         try:
             b.perf_buffer_poll(timeout=10 * 1000)
+            uptime+=1
+            time.sleep(1)
         except KeyboardInterrupt:
-            # res = {key: val for key, val in sorted(occurences.items(), key=lambda ele: ele[0])}
-            # res2 = {key: val for key, val in sorted(res.items(), key=lambda ele: ele[1], reverse=True)}
-            # # https: // www.geeksforgeeks.org / python - sort - a - dictionary /
-            # print("\n")
-            # for syscall, occurence in res2.items():
-            #     print("syscall: %-*s Häufigkeit: %s" % (25, str(syscall), str(occurence)))
-            # print("\n" + ibinary + " got traced for " + str(uptime) + " seconds.")
-
+            res = {key: val for key, val in sorted(occurences.items(), key=lambda ele: ele[0])}
+            res2 = {key: val for key, val in sorted(res.items(), key=lambda ele: ele[1], reverse=True)}
+            # https: // www.geeksforgeeks.org / python - sort - a - dictionary /
+            print("\n")
+            for syscall, occurence in res2.items():
+                print("syscall: %-*s Häufigkeit: %s" % (25, str(syscall), str(occurence)))
+            print("\n" + ibinary + " got traced for " + str(uptime) + " seconds.")
             signal_handler(signal.SIGINT, signal_handler)
 
 
 # Funktion für Signal Handler
 def signal_handler(sig, frame):
-    getprobability()
-    print(occurences)
     print('Exited with Keyboard Interrupt')
     sys.exit(0)
 
-
-def getprobability():
-    anzahl_eintraege = len(occurences)
-    haeufigkeiten = {}
-    for eintrag in occurences:
-        if eintrag in haeufigkeiten:
-            haeufigkeiten[eintrag] += 1
-        else:
-            haeufigkeiten[eintrag] = 1
-
-    # Berechne die prozentuale Verteilung
-    prozent_verteilung = {}
-    for eintrag, haeufigkeit in haeufigkeiten.items():
-        prozent_verteilung[eintrag] = (haeufigkeit / anzahl_eintraege) * 100
-
-    # Ergebnis ausgeben
-    print("Prozentuale Verteilung der Einträge:")
-    for eintrag, prozent in prozent_verteilung.items():
-        print(f"{eintrag}: {prozent}%")
 
 # Die Funktion führt einen Shell Befehl aus, welcher sich alle PIDs des übergebenen Binaries holt und in ein Array
 # schreibt.
