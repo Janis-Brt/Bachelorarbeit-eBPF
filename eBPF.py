@@ -4266,19 +4266,17 @@ def getringbuffer():
     while True:
         try:
             b.perf_buffer_poll(timeout=10 * 1000)
-        except KeyboardInterrupt:
+        except KeyboardInterrupt and Exception:
             print("Abbruch. Patterns:")
             print(patterns)
             getprobability()
-            signal_handler(signal.SIGINT, None)
-        except Exception as e:
-            print("Fehler:", e)
+            signal_handler(signal.SIGINT, signal_handler)
+
 
 
 def signal_handler(sig, frame):
     print('Exited with Keyboard Interrupt')
-    pass
-    # sys.exit(0)
+    sys.exit(0)
 
 
 signal.signal(signal.SIGINT, signal_handler)  # Signal an Handler binden
