@@ -4268,6 +4268,7 @@ def getringbuffer():
         try:
             b.perf_buffer_poll(timeout=10 * 1000)
         except KeyboardInterrupt:
+            getprobability()
             print(patterns)
             signal_handler(signal.SIGINT, signal_handler)
 
