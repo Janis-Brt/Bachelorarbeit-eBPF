@@ -6254,8 +6254,10 @@ def updateoccurences(cpu, data, size):
                 # print("Update für folgenden System Call bpf. Neue Häufigkeit: " + str(occurences['process_vm_readv']))
 
 
-# Funktion zum Auslesen der events im Kernel Ring Buffer. Dabei wird für jeden Eintrag im Ring Buffer die
-# Callback Funktion aufgerufen
+# Funktion zum Auslesen der events im Kernel Ring Buffer. Dabei wird für jeden neuen Eintrag im Ring Buffer die
+# Callback Funktion aufgerufen. Wird das Programm vom Benutzer mit STRG + C beendet, gibt das Programm das sortierte
+# Dictionary mit den Häufigkeiten aus. Anschließend wird noch die Häufigkeit prozentual ausgegeben, bevor das Programm
+# terminiert
 def getringbuffer():
     uptime = 0
     b["events"].open_perf_buffer(updateoccurences, page_cnt=256)
@@ -6267,7 +6269,6 @@ def getringbuffer():
         except KeyboardInterrupt:
             res = {key: val for key, val in sorted(occurences.items(), key=lambda ele: ele[0])}
             res2 = {key: val for key, val in sorted(res.items(), key=lambda ele: ele[1], reverse=True)}
-            # https: // www.geeksforgeeks.org / python - sort - a - dictionary /
             print("\n")
             for syscall, occurence in res2.items():
                 print("syscall: %-*s Häufigkeit: %s" % (25, str(syscall), str(occurence)))
