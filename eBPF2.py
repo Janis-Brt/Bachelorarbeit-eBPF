@@ -1376,16 +1376,11 @@ int sumask(struct pt_regs *ctx) {
     return 0;
 }
 int sgettimeofday(struct pt_regs *ctx) {
-    /**if(PT_REGS_RC(ctx) < 0){
-        return 0;
-    }**/
     struct data_t data = {};
-    u64 id = bpf_get_current_pid_tgid();
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    data.inum = inum_ring;
-    data.pid = id >> 32;
     data.syscallnumber = 96;
+    data.inum = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
