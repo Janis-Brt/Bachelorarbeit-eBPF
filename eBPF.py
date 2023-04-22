@@ -4099,7 +4099,6 @@ def detectpatterns(cpu, data, size):
             # print("found utimensat inside the Container! with inum: " + str(inum_ring))
             syscall = "utimensat"
             patterns.append(syscall)
-            x = 0
         # elif syscall == 281:
         #     occurences['epoll_pwait'] = occurences['epoll_pwait'] + 1
         #     # print(
@@ -4270,7 +4269,24 @@ def getringbuffer():
         except KeyboardInterrupt and Exception:
             print("Abbruch. Patterns:")
             print(patterns)
-            getprobability()
+            # getprobability()
+            anzahl_eintraege = len(patterns)
+            haeufigkeiten = {}
+            for eintrag in patterns:
+                if eintrag in haeufigkeiten:
+                    haeufigkeiten[eintrag] += 1
+                else:
+                    haeufigkeiten[eintrag] = 1
+
+            # Berechne die prozentuale Verteilung
+            prozent_verteilung = {}
+            for eintrag, haeufigkeit in haeufigkeiten.items():
+                prozent_verteilung[eintrag] = (haeufigkeit / anzahl_eintraege) * 100
+
+            # Ergebnis ausgeben
+            print("Prozentuale Verteilung der Einträge:")
+            for eintrag, prozent in prozent_verteilung.items():
+                print(f"{eintrag}: {prozent}%")
             signal_handler(signal.SIGINT, signal_handler)
 
 
