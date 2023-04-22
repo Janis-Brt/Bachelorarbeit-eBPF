@@ -3774,7 +3774,7 @@ def attachkretprobe():
     b.attach_kretprobe(event=b.get_syscall_fnname("lsetxattr"), fn_name="slsetxattr")
     b.attach_kretprobe(event=b.get_syscall_fnname("fsetxattr"), fn_name="sfsetxattr")
     b.attach_kretprobe(event=b.get_syscall_fnname("getxattr"), fn_name="sgetxattr")
-#    b.attach_kretprobe(event=b.get_syscall_fnname("lgetxattr"), fn_name="slgetxattr")
+    #    b.attach_kretprobe(event=b.get_syscall_fnname("lgetxattr"), fn_name="slgetxattr")
     b.attach_kretprobe(event=b.get_syscall_fnname("fgetxattr"), fn_name="sfgetxattr")
     b.attach_kretprobe(event=b.get_syscall_fnname("listxattr"), fn_name="slistxattr")
     b.attach_kretprobe(event=b.get_syscall_fnname("llistxattr"), fn_name="sllistxattr")
@@ -5297,6 +5297,7 @@ def updateoccurences(cpu, data, size):
                 occurences['bpf'] = occurences['bpf'] + 1
                 # print("Update für folgenden System Call bpf. Neue Häufigkeit: " + str(occurences['process_vm_readv']))
 
+
 # Funktion zum Auslesen der events im Kernel Ring Buffer. Dabei wird für jeden Eintrag im Ring Buffer die
 # Callback Funktion aufgerufen
 def getringbuffer():
@@ -5305,7 +5306,7 @@ def getringbuffer():
     while True:
         try:
             b.perf_buffer_poll(timeout=10 * 1000)
-            uptime+=1
+            uptime += 1
             time.sleep(1)
         except KeyboardInterrupt:
             res = {key: val for key, val in sorted(occurences.items(), key=lambda ele: ele[0])}
@@ -5315,7 +5316,6 @@ def getringbuffer():
             for syscall, occurence in res2.items():
                 print("syscall: %-*s Häufigkeit: %s" % (25, str(syscall), str(occurence)))
             print("\n" + ibinary + " got traced for " + str(uptime) + " seconds.")
-
 
             try:
                 gesamt = sum(occurences.values())
@@ -5329,7 +5329,7 @@ def getringbuffer():
                 max_key_length = max(len(k) for k, v in sorted_verteilung)
                 for k, v in sorted_verteilung:
                     print("%-*s: %6.2f%%" % (max_key_length, k, v))
-            except ZeroDivisionError and KeyboardInterrupt:
+            except ZeroDivisionError:
                 print(
                     "Die Gesamtsumme der Häufigkeiten ist 0, daher kann die prozentuale Verteilung nicht berechnet werden.")
                 signal_handler(signal.SIGINT, signal_handler)
