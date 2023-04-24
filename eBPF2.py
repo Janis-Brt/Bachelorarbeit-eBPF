@@ -5259,7 +5259,7 @@ def updateoccurences(cpu, data, size):
                 # print("Update für folgenden System Call brk. Neue Häufigkeit: " + str(occurences['brk']))
             elif syscall == 14:
                 occurences['rt_sigaction'] = occurences['rt_sigaction'] + 1
-                syscalls.append("rt_sigaction")
+                syscalls.append("rt_sigaction" + inum_ring)
                 # print("Update für folgenden System Call rt_sigaction. Neue Häufigkeit: " + str(
                 #    occurences['rt_sigaction']))
             elif syscall == 15:
