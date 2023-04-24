@@ -5190,8 +5190,6 @@ occurences = dict(read=0,
                   bpf=0, )
 
 
-
-
 # Callback Funktion des Ring Buffers. Erhält die aus dem Kernelspace übergebene PID und Syscall-Nummer
 # Danach wird geprüft, ob die PID im Array steht, welches alle PID's des zu tracenden Binaries enthält.
 # Nun wird mittels der eindeutigen System Call Nummer überprüft, welcher System Call aufgerufen wurde,
@@ -6381,7 +6379,6 @@ def getringbuffer():
                     "\nDie Gesamtsumme der Häufigkeiten ist 0, daher kann die prozentuale Verteilung nicht "
                     "berechnet werden.")
                 return
-
 
 
 # Funktion für Signal Handler
