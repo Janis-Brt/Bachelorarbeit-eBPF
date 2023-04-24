@@ -5546,33 +5546,43 @@ def updateoccurences(cpu, data, size):
                 # print("Update für folgenden System Call creat. Neue Häufigkeit: " + str(occurences['creat']))
             elif syscall == 86:
                 occurences['link'] = occurences['link'] + 1
+                syscalls.append("link")
                 # print("Update für folgenden System Call link. Neue Häufigkeit: " + str(occurences['link']))
             elif syscall == 87:
                 occurences['unlink'] = occurences['unlink'] + 1
+                syscalls.append("unlink")
                 # print("Update für folgenden System Call unlink. Neue Häufigkeit: " + str(occurences['unlink']))
             elif syscall == 88:
                 occurences['symlink'] = occurences['symlink'] + 1
+                syscalls.append("symlink")
                 # print("Update für folgenden System Call symlink. Neue Häufigkeit: " + str(occurences['symlink']))
             elif syscall == 89:
                 occurences['readlink'] = occurences['readlink'] + 1
+                syscalls.append("readlink")
                 # print("Update für folgenden System Call readlink. Neue Häufigkeit: " + str(occurences['readlink']))
             elif syscall == 90:
                 occurences['chmod'] = occurences['chmod'] + 1
+                syscalls.append("chmod")
                 # print("Update für folgenden System Call chmod. Neue Häufigkeit: " + str(occurences['chmod']))
             elif syscall == 91:
                 occurences['fchmod'] = occurences['fchmod'] + 1
+                syscalls.append("fchmod")
                 # print("Update für folgenden System Call fchmod. Neue Häufigkeit: " + str(occurences['fchmod']))
             elif syscall == 92:
                 occurences['chown'] = occurences['chown'] + 1
+                syscalls.append("chown")
                 # print("Update für folgenden System Call chown. Neue Häufigkeit: " + str(occurences['chown']))
             elif syscall == 93:
                 occurences['fchown'] = occurences['fchown'] + 1
+                syscalls.append("fchown")
                 # print("Update für folgenden System Call fchown. Neue Häufigkeit: " + str(occurences['fchown']))
             elif syscall == 94:
                 occurences['lchown'] = occurences['lchown'] + 1
+                syscalls.append("lchown")
                 # print("Update für folgenden System Call lchown. Neue Häufigkeit: " + str(occurences['lchown']))
             elif syscall == 95:
                 occurences['umask'] = occurences['umask'] + 1
+                syscalls.append("umask")
                 # print("Update für folgenden System Call umask. Neue Häufigkeit: " + str(occurences['umask']))
             elif syscall == 96:
                 occurences['gettimeofday'] = occurences['gettimeofday'] + 1
@@ -5581,759 +5591,982 @@ def updateoccurences(cpu, data, size):
                 #    occurences['gettimeofday']))
             elif syscall == 97:
                 occurences['getrlimit'] = occurences['getrlimit'] + 1
+                syscalls.append("getrlimit")
                 # print("Update für folgenden System Call getrlimit. Neue Häufigkeit: " + str(occurences['getrlimit']))
             elif syscall == 98:
                 occurences['getrusage'] = occurences['getrusage'] + 1
+                syscalls.append("getrusage")
                 # print("Update für folgenden System Call getrusage. Neue Häufigkeit: " + str(occurences['getrusage']))
             elif syscall == 99:
                 occurences['sysinfo'] = occurences['sysinfo'] + 1
+                syscalls.append("sysinfo")
                 # print("Update für folgenden System Call sysinfo. Neue Häufigkeit: " + str(occurences['sysinfo']))
             elif syscall == 100:
                 occurences['times'] = occurences['times'] + 1
+                syscalls.append("times")
                 # print("Update für folgenden System Call times. Neue Häufigkeit: " + str(occurences['times']))
             elif syscall == 102:
                 occurences['ptrace'] = occurences['ptrace'] + 1
+                syscalls.append("ptrace")
                 # print("Update für folgenden System Call ptrace. Neue Häufigkeit: " + str(occurences['ptrace']))
             elif syscall == 103:
                 occurences['getuid'] = occurences['getuid'] + 1
+                syscalls.append("getuid")
                 # print("Update für folgenden System Call getuid. Neue Häufigkeit: " + str(occurences['getuid']))
             elif syscall == 104:
                 occurences['syslog'] = occurences['syslog'] + 1
+                syscalls.append("syslog")
                 # print("Update für folgenden System Call syslog. Neue Häufigkeit: " + str(occurences['syslog']))
             elif syscall == 105:
                 occurences['getgid'] = occurences['getgid'] + 1
+                syscalls.append("getgid")
                 # print("Update für folgenden System Call getgid. Neue Häufigkeit: " + str(occurences['getgid']))
             elif syscall == 106:
                 occurences['setuid'] = occurences['setuid'] + 1
+                syscalls.append("setuid")
                 # print("Update für folgenden System Call setuid. Neue Häufigkeit: " + str(occurences['setuid']))
             elif syscall == 107:
                 occurences['setgid'] = occurences['setgid'] + 1
+                syscalls.append("setgid")
                 # print("Update für folgenden System Call setgid. Neue Häufigkeit: " + str(occurences['setgid']))
             elif syscall == 108:
                 occurences['geteuid'] = occurences['geteuid'] + 1
+                syscalls.append("geteuid")
                 # print("Update für folgenden System Call geteuid. Neue Häufigkeit: " + str(occurences['geteuid']))
             elif syscall == 109:
                 occurences['getegid'] = occurences['getegid'] + 1
+                syscalls.append("getegid")
                 # print("Update für folgenden System Call getegid. Neue Häufigkeit: " + str(occurences['getegid']))
             elif syscall == 110:
                 occurences['setpgid'] = occurences['setpgid'] + 1
+                syscalls.append("setpgid")
                 # print("Update für folgenden System Call setpgid. Neue Häufigkeit: " + str(occurences['setpgid']))
             elif syscall == 111:
                 occurences['getppid'] = occurences['getppid'] + 1
+                syscalls.append("getppid")
                 # print("Update für folgenden System Call getppid. Neue Häufigkeit: " + str(occurences['getppid']))
             elif syscall == 112:
                 occurences['getpgrp'] = occurences['getpgrp'] + 1
+                syscalls.append("getpgrp")
                 # print("Update für folgenden System Call getpgrp. Neue Häufigkeit: " + str(occurences['getpgrp']))
             elif syscall == 113:
                 occurences['setsid'] = occurences['setsid'] + 1
+                syscalls.append("setsid")
                 # print("Update für folgenden System Call setsid. Neue Häufigkeit: " + str(occurences['setsid']))
             elif syscall == 114:
                 occurences['setreuid'] = occurences['setreuid'] + 1
+                syscalls.append("setreuid")
                 # print("Update für folgenden System Call setreuid. Neue Häufigkeit: " + str(occurences['setreuid']))
             elif syscall == 115:
                 occurences['setregid'] = occurences['setregid'] + 1
+                syscalls.append("setregid")
                 # print("Update für folgenden System Call setregid. Neue Häufigkeit: " + str(occurences['setregid']))
             elif syscall == 116:
                 occurences['getgroups'] = occurences['getgroups'] + 1
+                syscalls.append("getgroups")
                 # print("Update für folgenden System Call getgroups. Neue Häufigkeit: " + str(occurences['getgroups']))
             elif syscall == 117:
                 occurences['setgroups'] = occurences['setgroups'] + 1
+                syscalls.append("setgroups")
                 # print("Update für folgenden System Call setgroups. Neue Häufigkeit: " + str(occurences['setgroups']))
             elif syscall == 118:
                 occurences['setresuid'] = occurences['setresuid'] + 1
+                syscalls.append("setresuid")
                 # print("Update für folgenden System Call setresuid. Neue Häufigkeit: " + str(occurences['setresuid']))
             elif syscall == 119:
                 occurences['getresuid'] = occurences['getresuid'] + 1
+                syscalls.append("getresuid")
                 # print("Update für folgenden System Call getresuid. Neue Häufigkeit: " + str(occurences['getresuid']))
             elif syscall == 120:
                 occurences['setresgid'] = occurences['setresgid'] + 1
+                syscalls.append("setresgid")
                 # print("Update für folgenden System Call setresgid. Neue Häufigkeit: " + str(occurences['setresgid']))
             elif syscall == 121:
                 occurences['getresgid'] = occurences['getresgid'] + 1
+                syscalls.append("getresgid")
                 # print("Update für folgenden System Call getresgid. Neue Häufigkeit: " + str(occurences['getresgid']))
             elif syscall == 122:
                 occurences['getpgid'] = occurences['getpgid'] + 1
+                syscalls.append("getpgid")
                 # print("Update für folgenden System Call getpgid. Neue Häufigkeit: " + str(occurences['getpgid']))
             elif syscall == 123:
                 occurences['setfsuid'] = occurences['setfsuid'] + 1
+                syscalls.append("setfsuid")
                 # print("Update für folgenden System Call setfsuid. Neue Häufigkeit: " + str(occurences['setfsuid']))
             elif syscall == 124:
                 occurences['setfsgid'] = occurences['setfsgid'] + 1
+                syscalls.append("setfsgid")
                 # print("Update für folgenden System Call setfsgid. Neue Häufigkeit: " + str(occurences['setfsgid']))
             elif syscall == 125:
                 occurences['getsid'] = occurences['getsid'] + 1
+                syscalls.append("getsid")
                 # print("Update für folgenden System Call getsid. Neue Häufigkeit: " + str(occurences['getsid']))
             elif syscall == 126:
                 occurences['capget'] = occurences['capget'] + 1
+                syscalls.append("capget")
                 # print("Update für folgenden System Call capget. Neue Häufigkeit: " + str(occurences['capget']))
             elif syscall == 127:
                 occurences['capset'] = occurences['capset'] + 1
+                syscalls.append("capset")
                 # print("Update für folgenden System Call capset. Neue Häufigkeit: " + str(occurences['capset']))
             elif syscall == 128:
                 occurences['rt_sigpending'] = occurences['rt_sigpending'] + 1
+                syscalls.append("rt_sigpending")
                 # print("Update für folgenden System Call rt_sigpending. Neue Häufigkeit: " + str(
                 #    occurences['rt_sigpending']))
             elif syscall == 129:
                 occurences['rt_sigtimedwait'] = occurences['rt_sigtimedwait'] + 1
+                syscalls.append("rt_sigtimedwait")
                 # print("Update für folgenden System Call rt_sigtimedwait. Neue Häufigkeit: " + str(
                 #    occurences['rt_sigtimedwait']))
             elif syscall == 130:
                 occurences['rt_sigqueueinfo'] = occurences['rt_sigqueueinfo'] + 1
+                syscalls.append("rt_sigqueueinfo")
                 # print("Update für folgenden System Call rt_sigqueueinfo. Neue Häufigkeit: " + str(
                 #    occurences['rt_sigqueueinfo']))
             elif syscall == 131:
                 occurences['rt_sigsuspend'] = occurences['rt_sigsuspend'] + 1
+                syscalls.append("rt_sigsuspend")
                 # print("Update für folgenden System Call rt_sigsuspend. Neue Häufigkeit: " + str(
                 #    occurences['rt_sigsuspend']))
             elif syscall == 132:
                 occurences['sigaltstack'] = occurences['sigaltstack'] + 1
+                syscalls.append("sigaltstack")
                 # print(
                 #     "Update für folgenden System Call: sigaltstack. Neue Häufigkeit: " + str(occurences['sigaltstack']))
             elif syscall == 133:
                 occurences['utime'] = occurences['utime'] + 1
+                syscalls.append("utime")
                 # print("Update für folgenden System Call utime. Neue Häufigkeit: " + str(occurences['utime']))
             elif syscall == 134:
                 occurences['mknod'] = occurences['mknod'] + 1
+                syscalls.append("mknod")
                 # print("Update für folgenden System Call mknod. Neue Häufigkeit: " + str(occurences['mknod']))
             elif syscall == 135:
                 occurences['uselib'] = occurences['uselib'] + 1
+                syscalls.append("uselib")
                 # print("Update für folgenden System Call uselib. Neue Häufigkeit: " + str(occurences['uselib']))
             elif syscall == 136:
                 occurences['personality'] = occurences['personality'] + 1
-                print(
-                    "Update für folgenden System Call: personality. Neue Häufigkeit: " + str(occurences['personality']))
+                syscalls.append("personality")
+                # print(
+                #     "Update für folgenden System Call: personality. Neue Häufigkeit: " + str(occurences['personality']))
             elif syscall == 137:
                 occurences['ustat'] = occurences['ustat'] + 1
+                syscalls.append("ustat")
                 # print("Update für folgenden System Call ustat. Neue Häufigkeit: " + str(occurences['ustat']))
             elif syscall == 138:
                 occurences['statfs'] = occurences['statfs'] + 1
+                syscalls.append("statfs")
                 # print("Update für folgenden System Call statfs. Neue Häufigkeit: " + str(occurences['statfs']))
             elif syscall == 139:
                 occurences['fstatfs'] = occurences['fstatfs'] + 1
+                syscalls.append("fstatfs")
                 # print("Update für folgenden System Call fstatfs. Neue Häufigkeit: " + str(occurences['fstatfs']))
             elif syscall == 140:
                 occurences['sysfs'] = occurences['sysfs'] + 1
+                syscalls.append("sysfs")
                 # print("Update für folgenden System Call sysfs. Neue Häufigkeit: " + str(occurences['sysfs']))
             elif syscall == 141:
                 occurences['getpriority'] = occurences['getpriority'] + 1
+                syscalls.append("getpriority")
                 # print(
                 #     "Update für folgenden System Call: getpriority. Neue Häufigkeit: " + str(occurences['getpriority']))
             elif syscall == 142:
                 occurences['setpriority'] = occurences['setpriority'] + 1
+                syscalls.append("setpriority")
                 # print(
                 #     "Update für folgenden System Call: setpriority. Neue Häufigkeit: " + str(occurences['setpriority']))
             elif syscall == 143:
                 occurences['sched_setparam'] = occurences['sched_setparam'] + 1
+                syscalls.append("sched_setparam")
                 # print("Update für folgenden System Call sched_setparam. Neue Häufigkeit: " + str(
                 #    occurences['sched_setparam']))
             elif syscall == 144:
                 occurences['sched_getparam'] = occurences['sched_getparam'] + 1
+                syscalls.append("sched_getparam")
                 # print("Update für folgenden System Call sched_getparam. Neue Häufigkeit: " + str(
                 #    occurences['sched_getparam']))
             elif syscall == 145:
                 occurences['sched_setscheduler'] = occurences['sched_setscheduler'] + 1
+                syscalls.append("sched_setscheduler")
                 # print("Update für folgenden System Call sched_setscheduler. Neue Häufigkeit: " + str(
                 #    occurences['sched_setscheduler']))
             elif syscall == 146:
                 occurences['sched_getscheduler'] = occurences['sched_getscheduler'] + 1
+                syscalls.append("sched_getscheduler")
                 # print("Update für folgenden System Call sched_getscheduler. Neue Häufigkeit: " + str(
                 #    occurences['sched_getscheduler']))
             elif syscall == 147:
                 occurences['sched_get_priority_max'] = occurences['sched_get_priority_max'] + 1
+                syscalls.append("sched_get_priority_max")
                 # print("Update für folgenden System Call sched_get_priority_max. Neue Häufigkeit: " + str(
                 #    occurences['sched_get_priority_max']))
             elif syscall == 148:
                 occurences['sched_get_priority_min'] = occurences['sched_get_priority_min'] + 1
+                syscalls.append("sched_get_priority_min")
                 # print("Update für folgenden System Call sched_get_priority_min. Neue Häufigkeit: " + str(
                 #    occurences['sched_get_priority_min']))
             elif syscall == 149:
                 occurences['sched_rr_get_interval'] = occurences['sched_rr_get_interval'] + 1
+                syscalls.append("sched_rr_get_interval")
                 # print("Update für folgenden System Call sched_rr_get_interval. Neue Häufigkeit: " + str(
                 #    occurences['sched_rr_get_interval']))
             elif syscall == 150:
                 occurences['mlock'] = occurences['mlock'] + 1
+                syscalls.append("mlock")
                 # print("Update für folgenden System Call mlock. Neue Häufigkeit: " + str(occurences['mlock']))
             elif syscall == 151:
                 occurences['munlock'] = occurences['munlock'] + 1
+                syscalls.append("munlock")
                 # print("Update für folgenden System Call munlock. Neue Häufigkeit: " + str(occurences['munlock']))
             elif syscall == 152:
                 occurences['mlockall'] = occurences['mlockall'] + 1
+                syscalls.append("mlockall")
                 # print("Update für folgenden System Call mlockall. Neue Häufigkeit: " + str(occurences['mlockall']))
             elif syscall == 153:
                 occurences['munlockall'] = occurences['munlockall'] + 1
+                syscalls.append("munlockall")
                 # print("Update für folgenden System Call munlockall. Neue Häufigkeit: " + str(occurences['munlockall']))
             elif syscall == 154:
                 occurences['vhangup'] = occurences['vhangup'] + 1
+                syscalls.append("vhangup")
                 # print("Update für folgenden System Call vhangup. Neue Häufigkeit: " + str(occurences['vhangup']))
             elif syscall == 155:
                 occurences['modify_ldt'] = occurences['modify_ldt'] + 1
+                syscalls.append("modify_ldt")
                 # print("Update für folgenden System Call modify_ldt. Neue Häufigkeit: " + str(occurences['modify_ldt']))
             elif syscall == 156:
                 occurences['pivot_root'] = occurences['pivot_root'] + 1
+                syscalls.append("pivot_root")
                 # print("Update für folgenden System Call pivot_root. Neue Häufigkeit: " + str(occurences['pivot_root']))
             elif syscall == 157:
                 occurences['sysctl'] = occurences['sysctl'] + 1
+                syscalls.append("sysctl")
                 # print("Update für folgenden System Call sysctl. Neue Häufigkeit: " + str(occurences['sysctl']))
             elif syscall == 158:
                 occurences['prctl'] = occurences['prctl'] + 1
+                syscalls.append("prctl")
                 # print("Update für folgenden System Call prctl. Neue Häufigkeit: " + str(occurences['prctl']))
             elif syscall == 159:
                 occurences['arch_prctl'] = occurences['arch_prctl'] + 1
+                syscalls.append("arch_prctl")
                 # print("Update für folgenden System Call arch_prctl. Neue Häufigkeit: " + str(occurences['arch_prctl']))
             elif syscall == 160:
                 occurences['adjtimex'] = occurences['adjtimex'] + 1
+                syscalls.append("adjtimex")
                 # print("Update für folgenden System Call adjtimex. Neue Häufigkeit: " + str(occurences['adjtimex']))
             elif syscall == 161:
                 occurences['setrlimit'] = occurences['setrlimit'] + 1
+                syscalls.append("setrlimit")
                 # print("Update für folgenden System Call setrlimit. Neue Häufigkeit: " + str(occurences['setrlimit']))
             elif syscall == 162:
                 occurences['chroot'] = occurences['chroot'] + 1
+                syscalls.append("chroot")
                 # print("Update für folgenden System Call chroot. Neue Häufigkeit: " + str(occurences['chroot']))
             elif syscall == 163:
                 occurences['sync'] = occurences['sync'] + 1
+                syscalls.append("sync")
                 # print("Update für folgenden System Call sync. Neue Häufigkeit: " + str(occurences['sync']))
             elif syscall == 164:
                 occurences['acct'] = occurences['acct'] + 1
+                syscalls.append("acct")
                 # print("Update für folgenden System Call acct. Neue Häufigkeit: " + str(occurences['acct']))
             elif syscall == 165:
                 occurences['settimeofday'] = occurences['settimeofday'] + 1
+                syscalls.append("settimeofday")
                 # print("Update für folgenden System Call settimeofday. Neue Häufigkeit: " + str(
                 #    occurences['settimeofday']))
             elif syscall == 166:
                 occurences['mount'] = occurences['mount'] + 1
+                syscalls.append("mount")
                 # print("Update für folgenden System Call mount. Neue Häufigkeit: " + str(occurences['mount']))
             elif syscall == 167:
                 occurences['umount2'] = occurences['umount2'] + 1
+                syscalls.append("umount2")
                 # print("Update für folgenden System Call umount2. Neue Häufigkeit: " + str(occurences['umount2']))
             elif syscall == 168:
                 occurences['swapon'] = occurences['swapon'] + 1
+                syscalls.append("swapon")
                 # print("Update für folgenden System Call swapon. Neue Häufigkeit: " + str(occurences['swapon']))
             elif syscall == 169:
                 occurences['swapoff'] = occurences['swapoff'] + 1
+                syscalls.append("swapoff")
                 # print("Update für folgenden System Call swapoff. Neue Häufigkeit: " + str(occurences['swapoff']))
             elif syscall == 170:
                 occurences['reboot'] = occurences['reboot'] + 1
+                syscalls.append("reboot")
                 # print("Update für folgenden System Call reboot. Neue Häufigkeit: " + str(occurences['reboot']))
             elif syscall == 171:
                 occurences['sethostname'] = occurences['sethostname'] + 1
+                syscalls.append("sethostname")
                 # print(
                 #     "Update für folgenden System Call: sethostname. Neue Häufigkeit: " + str(occurences['sethostname']))
             elif syscall == 172:
                 occurences['setdomainname'] = occurences['setdomainname'] + 1
+                syscalls.append("setdomainname")
                 # print("Update für folgenden System Call setdomainname. Neue Häufigkeit: " + str(
                 #    occurences['setdomainname']))
             elif syscall == 173:
                 occurences['iopl'] = occurences['iopl'] + 1
+                syscalls.append("iopl")
                 # print("Update für folgenden System Call iopl. Neue Häufigkeit: " + str(occurences['iopl']))
             elif syscall == 174:
                 occurences['ioperm'] = occurences['ioperm'] + 1
+                syscalls.append("ioperm")
                 # print("Update für folgenden System Call ioperm. Neue Häufigkeit: " + str(occurences['ioperm']))
             elif syscall == 175:
                 occurences['create_module'] = occurences['create_module'] + 1
+                syscalls.append("create_module")
                 # print("Update für folgenden System Call create_module. Neue Häufigkeit: " + str(
                 #    occurences['create_module']))
             elif syscall == 176:
                 occurences['init_module'] = occurences['init_module'] + 1
+                syscalls.append("init_module")
                 # print(
                 #     "Update für folgenden System Call: init_module. Neue Häufigkeit: " + str(occurences['init_module']))
             elif syscall == 177:
                 occurences['delete_module'] = occurences['delete_module'] + 1
+                syscalls.append("delete_module")
                 # print("Update für folgenden System Call delete_module. Neue Häufigkeit: " + str(
                 #    occurences['delete_module']))
             elif syscall == 178:
                 occurences['get_kernel_syms'] = occurences['get_kernel_syms'] + 1
+                syscalls.append("get_kernel_syms")
                 # print("Update für folgenden System Call get_kernel_syms. Neue Häufigkeit: " + str(
                 #    occurences['get_kernel_syms']))
             elif syscall == 179:
                 occurences['query_module'] = occurences['query_module'] + 1
+                syscalls.append("query_module")
                 # print("Update für folgenden System Call query_module. Neue Häufigkeit: " + str(
                 #    occurences['query_module']))
             elif syscall == 180:
                 occurences['quotactl'] = occurences['quotactl'] + 1
+                syscalls.append("quotactl")
                 # print("Update für folgenden System Call quotactl. Neue Häufigkeit: " + str(occurences['quotactl']))
             elif syscall == 181:
                 occurences['nfsservctl'] = occurences['nfsservctl'] + 1
+                syscalls.append("nfsservctl")
                 # print("Update für folgenden System Call nfsservctl. Neue Häufigkeit: " + str(occurences['nfsservctl']))
             elif syscall == 182:
                 occurences['getpmsg'] = occurences['getpmsg'] + 1
+                syscalls.append("getpmsg")
                 # print("Update für folgenden System Call getpmsg. Neue Häufigkeit: " + str(occurences['getpmsg']))
             elif syscall == 183:
                 occurences['putpmsg'] = occurences['putpmsg'] + 1
+                syscalls.append("putpmsg")
                 # print("Update für folgenden System Call putpmsg. Neue Häufigkeit: " + str(occurences['putpmsg']))
             elif syscall == 184:
                 occurences['afs_syscall'] = occurences['afs_syscall'] + 1
-                # print(
+                syscalls.append("afs_syscall")# print(
                 #     "Update für folgenden System Call: afs_syscall. Neue Häufigkeit: " + str(occurences['afs_syscall']))
             elif syscall == 185:
                 occurences['tuxcall'] = occurences['tuxcall'] + 1
+                syscalls.append("tuxcall")
                 # print("Update für folgenden System Call tuxcall. Neue Häufigkeit: " + str(occurences['tuxcall']))
             elif syscall == 186:
                 occurences['security'] = occurences['security'] + 1
+                syscalls.append("security")
                 # print("Update für folgenden System Call security. Neue Häufigkeit: " + str(occurences['security']))
             elif syscall == 187:
                 occurences['gettid'] = occurences['gettid'] + 1
+                syscalls.append("gettid")
                 # print("Update für folgenden System Call gettid. Neue Häufigkeit: " + str(occurences['gettid']))
             elif syscall == 188:
                 occurences['readahead'] = occurences['readahead'] + 1
+                syscalls.append("readahead")
                 # print("Update für folgenden System Call readahead. Neue Häufigkeit: " + str(occurences['readahead']))
             elif syscall == 189:
                 occurences['setxattr'] = occurences['setxattr'] + 1
+                syscalls.append("setxattr")
                 # print("Update für folgenden System Call setxattr. Neue Häufigkeit: " + str(occurences['setxattr']))
             elif syscall == 190:
                 occurences['lsetxattr'] = occurences['lsetxattr'] + 1
+                syscalls.append("lsetxattr")
                 # print("Update für folgenden System Call lsetxattr. Neue Häufigkeit: " + str(occurences['lsetxattr']))
             elif syscall == 191:
                 occurences['fsetxattr'] = occurences['fsetxattr'] + 1
+                syscalls.append("fsetxattr")
                 # print("Update für folgenden System Call fsetxattr. Neue Häufigkeit: " + str(occurences['fsetxattr']))
             elif syscall == 192:
                 occurences['getxattr'] = occurences['getxattr'] + 1
+                syscalls.append("getxattr")
                 # print("Update für folgenden System Call getxattr. Neue Häufigkeit: " + str(occurences['getxattr']))
             # elif syscall == 192:
             #     occurences['lgetxattr'] = occurences['lgetxattr'] + 1
             #     # print("Update für folgenden System Call lgetxattr. Neue Häufigkeit: " + str(occurences['lgetxattr']))
             elif syscall == 193:
                 occurences['fgetxattr'] = occurences['fgetxattr'] + 1
+                syscalls.append("fgetxattr")
                 # print("Update für folgenden System Call fgetxattr. Neue Häufigkeit: " + str(occurences['fgetxattr']))
             elif syscall == 194:
                 occurences['listxattr'] = occurences['listxattr'] + 1
+                syscalls.append("listxattr")
                 # print("Update für folgenden System Call listxattr. Neue Häufigkeit: " + str(occurences['listxattr']))
             elif syscall == 195:
                 occurences['llistxattr'] = occurences['llistxattr'] + 1
+                syscalls.append("llistxattr")
                 # print("Update für folgenden System Call llistxattr. Neue Häufigkeit: " + str(occurences['llistxattr']))
             elif syscall == 196:
                 occurences['flistxattr'] = occurences['flistxattr'] + 1
+                syscalls.append("flistxattr")
                 # print("Update für folgenden System Call flistxattr. Neue Häufigkeit: " + str(occurences['flistxattr']))
             elif syscall == 197:
                 occurences['removexattr'] = occurences['removexattr'] + 1
-                print(
-                    "Update für folgenden System Call: removexattr. Neue Häufigkeit: " + str(occurences['removexattr']))
+                syscalls.append("removexattr")
+                # print(
+                #     "Update für folgenden System Call: removexattr. Neue Häufigkeit: " + str(occurences['removexattr']))
             elif syscall == 198:
                 occurences['lremovexattr'] = occurences['lremovexattr'] + 1
+                syscalls.append("lremovexattr")
                 # print("Update für folgenden System Call lremovexattr. Neue Häufigkeit: " + str(
                 #    occurences['lremovexattr']))
             elif syscall == 199:
                 occurences['fremovexattr'] = occurences['fremovexattr'] + 1
+                syscalls.append("fremovexattr")
                 # print("Update für folgenden System Call fremovexattr. Neue Häufigkeit: " + str(
                 #    occurences['fremovexattr']))
             elif syscall == 200:
                 occurences['tkill'] = occurences['tkill'] + 1
+                syscalls.append("tkill")
                 # print("Update für folgenden System Call tkill. Neue Häufigkeit: " + str(occurences['tkill']))
             elif syscall == 201:
                 occurences['time'] = occurences['time'] + 1
+                syscalls.append("time")
                 # print("Update für folgenden System Call time. Neue Häufigkeit: " + str(occurences['time']))
             elif syscall == 202:
                 occurences['futex'] = occurences['futex'] + 1
+                syscalls.append("futex")
                 # print("Update für folgenden System Call futex. Neue Häufigkeit: " + str(occurences['futex']))
             elif syscall == 203:
                 occurences['sched_setaffinity'] = occurences['sched_setaffinity'] + 1
+                syscalls.append("sched_setaffinity")
                 # print("Update für folgenden System Call sched_setaffinity. Neue Häufigkeit: " + str(
                 #    occurences['sched_setaffinity']))
             elif syscall == 204:
                 occurences['sched_getaffinity'] = occurences['sched_getaffinity'] + 1
+                syscalls.append("sched_getaffinity")
                 # print("Update für folgenden System Call sched_getaffinity. Neue Häufigkeit: " + str(
                 #    occurences['sched_getaffinity']))
             elif syscall == 205:
                 occurences['set_thread_area'] = occurences['set_thread_area'] + 1
+                syscalls.append("set_thread_area")
                 # print("Update für folgenden System Call set_thread_area. Neue Häufigkeit: " + str(
                 #    occurences['set_thread_area']))
             elif syscall == 206:
                 occurences['io_setup'] = occurences['io_setup'] + 1
+                syscalls.append("io_setup")
                 # print("Update für folgenden System Call io_setup. Neue Häufigkeit: " + str(occurences['io_setup']))
             elif syscall == 207:
                 occurences['io_destroy'] = occurences['io_destroy'] + 1
+                syscalls.append("io_destroy")
                 # print("Update für folgenden System Call io_destroy. Neue Häufigkeit: " + str(occurences['io_destroy']))
             elif syscall == 208:
                 occurences['io_getevents'] = occurences['io_getevents'] + 1
+                syscalls.append("io_getevents")
                 # print("Update für folgenden System Call io_getevents. Neue Häufigkeit: " + str(
                 #    occurences['io_getevents']))
             elif syscall == 209:
                 occurences['io_submit'] = occurences['io_submit'] + 1
+                syscalls.append("io_submit")
                 # print("Update für folgenden System Call io_submit. Neue Häufigkeit: " + str(occurences['io_submit']))
             elif syscall == 210:
                 occurences['io_cancel'] = occurences['io_cancel'] + 1
+                syscalls.append("io_cancel")
                 # print("Update für folgenden System Call io_cancel. Neue Häufigkeit: " + str(occurences['io_cancel']))
             elif syscall == 211:
                 occurences['get_thread_area'] = occurences['get_thread_area'] + 1
+                syscalls.append("get_thread_area")
                 # print("Update für folgenden System Call get_thread_area. Neue Häufigkeit: " + str(
                 #    occurences['get_thread_area']))
             elif syscall == 212:
                 occurences['lookup_dcookie'] = occurences['lookup_dcookie'] + 1
+                syscalls.append("lookup_dcookie")
                 # print("Update für folgenden System Call lookup_dcookie. Neue Häufigkeit: " + str(
                 #    occurences['lookup_dcookie']))
             elif syscall == 213:
                 occurences['epoll_create'] = occurences['epoll_create'] + 1
+                syscalls.append("epoll_create")
                 # print("Update für folgenden System Call epoll_create. Neue Häufigkeit: " + str(
                 #    occurences['epoll_create']))
             elif syscall == 214:
                 occurences['epoll_ctl_old'] = occurences['epoll_ctl_old'] + 1
+                syscalls.append("epoll_ctl_old")
                 # print("Update für folgenden System Call epoll_ctl_old. Neue Häufigkeit: " + str(
                 #    occurences['epoll_ctl_old']))
             elif syscall == 215:
                 occurences['epoll_wait_old'] = occurences['epoll_wait_old'] + 1
+                syscalls.append("epoll_wait_old")
                 # print("Update für folgenden System Call epoll_wait_old. Neue Häufigkeit: " + str(
                 #    occurences['epoll_wait_old']))
             elif syscall == 216:
                 occurences['remap_file_pages'] = occurences['remap_file_pages'] + 1
+                syscalls.append("remap_file_pages")
                 # print("Update für folgenden System Call remap_file_pages. Neue Häufigkeit: " + str(
                 #    occurences['remap_file_pages']))
             elif syscall == 217:
                 occurences['getdents64'] = occurences['getdents64'] + 1
+                syscalls.append("getdents64")
                 # print("Update für folgenden System Call getdents64. Neue Häufigkeit: " + str(occurences['getdents64']))
             elif syscall == 218:
                 occurences['set_tid_address'] = occurences['set_tid_address'] + 1
+                syscalls.append("set_tid_address")
                 # print("Update für folgenden System Call set_tid_address. Neue Häufigkeit: " + str(
                 #    occurences['set_tid_address']))
             elif syscall == 219:
                 occurences['restart_syscall'] = occurences['restart_syscall'] + 1
+                syscalls.append("restart_syscall")
                 # print("Update für folgenden System Call restart_syscall. Neue Häufigkeit: " + str(
                 #    occurences['restart_syscall']))
             elif syscall == 220:
                 occurences['semtimedop'] = occurences['semtimedop'] + 1
+                syscalls.append("semtimedop")
                 # print("Update für folgenden System Call semtimedop. Neue Häufigkeit: " + str(occurences['semtimedop']))
             elif syscall == 221:
                 occurences['fadvise64'] = occurences['fadvise64'] + 1
+                syscalls.append("fadvise64")
                 # print("Update für folgenden System Call fadvise64. Neue Häufigkeit: " + str(occurences['fadvise64']))
             elif syscall == 222:
                 occurences['timer_create'] = occurences['timer_create'] + 1
+                syscalls.append("timer_create")
                 # print("Update für folgenden System Call timer_create. Neue Häufigkeit: " + str(
                 #    occurences['timer_create']))
             elif syscall == 223:
                 occurences['timer_settime'] = occurences['timer_settime'] + 1
+                syscalls.append("timer_settime")
                 # print("Update für folgenden System Call timer_settime. Neue Häufigkeit: " + str(
                 #    occurences['timer_settime']))
             elif syscall == 224:
                 occurences['timer_gettime'] = occurences['timer_gettime'] + 1
+                syscalls.append("timer_gettime")
                 # print("Update für folgenden System Call timer_gettime. Neue Häufigkeit: " + str(
                 #    occurences['timer_gettime']))
             elif syscall == 225:
                 occurences['timer_getoverrun'] = occurences['timer_getoverrun'] + 1
+                syscalls.append("timer_getoverrun")
                 # print("Update für folgenden System Call timer_getoverrun. Neue Häufigkeit: " + str(
                 #    occurences['timer_getoverrun']))
             elif syscall == 226:
                 occurences['timer_delete'] = occurences['timer_delete'] + 1
+                syscalls.append("timer_delete")
                 # print("Update für folgenden System Call timer_delete. Neue Häufigkeit: " + str(
                 #    occurences['timer_delete']))
             elif syscall == 227:
                 occurences['clock_settime'] = occurences['clock_settime'] + 1
+                syscalls.append("clock_settime")
                 # print("Update für folgenden System Call clock_settime. Neue Häufigkeit: " + str(
                 #    occurences['clock_settime']))
             elif syscall == 228:
                 occurences['clock_gettime'] = occurences['clock_gettime'] + 1
+                syscalls.append("clock_gettime")
                 # print("Update für folgenden System Call clock_gettime. Neue Häufigkeit: " + str(
                 #    occurences['clock_gettime']))
             elif syscall == 229:
                 occurences['clock_getres'] = occurences['clock_getres'] + 1
+                syscalls.append("clock_getres")
                 # print("Update für folgenden System Call clock_getres. Neue Häufigkeit: " + str(
                 #    occurences['clock_getres']))
             elif syscall == 230:
                 occurences['clock_nanosleep'] = occurences['clock_nanosleep'] + 1
+                syscalls.append("clock_nanosleep")
                 # print("Update für folgenden System Call clock_nanosleep. Neue Häufigkeit: " + str(
                 #    occurences['clock_nanosleep']))
             elif syscall == 231:
                 occurences['exit_group'] = occurences['exit_group'] + 1
+                syscalls.append("exit_group")
                 # print("Update für folgenden System Call exit_group. Neue Häufigkeit: " + str(occurences['exit_group']))
             elif syscall == 232:
                 occurences['epoll_wait'] = occurences['epoll_wait'] + 1
+                syscalls.append("epoll_wait")
                 # print("Update für folgenden System Call epoll_wait. Neue Häufigkeit: " + str(occurences['epoll_wait']))
             elif syscall == 233:
                 occurences['epoll_ctl'] = occurences['epoll_ctl'] + 1
+                syscalls.append("epoll_ctl")
                 # print("Update für folgenden System Call epoll_ctl. Neue Häufigkeit: " + str(occurences['epoll_ctl']))
             elif syscall == 234:
                 occurences['tgkill'] = occurences['tgkill'] + 1
+                syscalls.append("tgkill")
                 # print("Update für folgenden System Call tgkill. Neue Häufigkeit: " + str(occurences['tgkill']))
             elif syscall == 235:
                 occurences['utimes'] = occurences['utimes'] + 1
+                syscalls.append("utimes")
                 # print("Update für folgenden System Call utimes. Neue Häufigkeit: " + str(occurences['utimes']))
             elif syscall == 236:
                 occurences['vserver'] = occurences['vserver'] + 1
+                syscalls.append("vserver")
                 # print("Update für folgenden System Call vserver. Neue Häufigkeit: " + str(occurences['vserver']))
             elif syscall == 237:
                 occurences['mbind'] = occurences['mbind'] + 1
+                syscalls.append("mbind")
                 # print("Update für folgenden System Call mbind. Neue Häufigkeit: " + str(occurences['mbind']))
             elif syscall == 238:
                 occurences['set_mempolicy'] = occurences['set_mempolicy'] + 1
+                syscalls.append("set_mempolicy")
                 # print("Update für folgenden System Call set_mempolicy. Neue Häufigkeit: " + str(
             #     occurences['set_mempolicy']))
             elif syscall == 239:
                 occurences['get_mempolicy'] = occurences['get_mempolicy'] + 1
+                syscalls.append("get_mempolicy")
                 # print("Update für folgenden System Call get_mempolicy. Neue Häufigkeit: " + str(
                 #    occurences['get_mempolicy']))
             elif syscall == 240:
                 occurences['mq_open'] = occurences['mq_open'] + 1
+                syscalls.append("mq_open")
                 # print("Update für folgenden System Call mq_open. Neue Häufigkeit: " + str(occurences['mq_open']))
             elif syscall == 241:
                 occurences['mq_unlink'] = occurences['mq_unlink'] + 1
+                syscalls.append("mq_unlink")
                 # print("Update für folgenden System Call mq_unlink. Neue Häufigkeit: " + str(occurences['mq_unlink']))
             elif syscall == 242:
                 occurences['mq_timedsend'] = occurences['mq_timedsend'] + 1
+                syscalls.append("mq_timedsend")
                 # print("Update für folgenden System Call mq_timedsend. Neue Häufigkeit: " + str(
                 #    occurences['mq_timedsend']))
             elif syscall == 243:
                 occurences['mq_timedreceive'] = occurences['mq_timedreceive'] + 1
+                syscalls.append("mq_timedreceive")
                 # print("Update für folgenden System Call mq_timedreceive. Neue Häufigkeit: " + str(
                 #    occurences['mq_timedreceive']))
             elif syscall == 244:
                 occurences['mq_notify'] = occurences['mq_notify'] + 1
+                syscalls.append("mq_notify")
                 # print("Update für folgenden System Call mq_notify. Neue Häufigkeit: " + str(occurences['mq_notify']))
             elif syscall == 245:
                 occurences['mq_getsetattr'] = occurences['mq_getsetattr'] + 1
+                syscalls.append("mq_getsetattr")
                 # print("Update für folgenden System Call mq_getsetattr. Neue Häufigkeit: " + str(
                 #    occurences['mq_getsetattr']))
             elif syscall == 246:
                 occurences['kexec_load'] = occurences['kexec_load'] + 1
+                syscalls.append("kexec_load")
                 # print("Update für folgenden System Call kexec_load. Neue Häufigkeit: " + str(occurences['kexec_load']))
             elif syscall == 247:
                 occurences['waitid'] = occurences['waitid'] + 1
+                syscalls.append("waitid")
                 # print("Update für folgenden System Call waitid. Neue Häufigkeit: " + str(occurences['waitid']))
             elif syscall == 248:
                 occurences['add_key'] = occurences['add_key'] + 1
+                syscalls.append("add_key")
                 # print("Update für folgenden System Call add_key. Neue Häufigkeit: " + str(occurences['add_key']))
             elif syscall == 249:
                 occurences['request_key'] = occurences['request_key'] + 1
+                syscalls.append("request_key")
                 # print(
                 #     "Update für folgenden System Call: request_key. Neue Häufigkeit: " + str(occurences['request_key']))
             elif syscall == 250:
                 occurences['keyctl'] = occurences['keyctl'] + 1
+                syscalls.append("keyctl")
                 # print("Update für folgenden System Call keyctl. Neue Häufigkeit: " + str(occurences['keyctl']))
             elif syscall == 251:
                 occurences['ioprio_set'] = occurences['ioprio_set'] + 1
+                syscalls.append("ioprio_set")
                 # print("Update für folgenden System Call ioprio_set. Neue Häufigkeit: " + str(occurences['ioprio_set']))
             elif syscall == 252:
                 occurences['ioprio_get'] = occurences['ioprio_get'] + 1
+                syscalls.append("ioprio_get")
                 # print("Update für folgenden System Call ioprio_get. Neue Häufigkeit: " + str(occurences['ioprio_get']))
             elif syscall == 253:
                 occurences['inotify_init'] = occurences['inotify_init'] + 1
+                syscalls.append("inotify_init")
                 # print("Update für folgenden System Call inotify_init. Neue Häufigkeit: " + str(
                 #    occurences['inotify_init']))
             elif syscall == 254:
                 occurences['inotify_add_watch'] = occurences['inotify_add_watch'] + 1
+                syscalls.append("inotify_add_watch")
                 # print("Update für folgenden System Call inotify_add_watch. Neue Häufigkeit: " + str(
                 #    occurences['inotify_add_watch']))
             elif syscall == 255:
                 occurences['inotify_rm_watch'] = occurences['inotify_rm_watch'] + 1
+                syscalls.append("inotify_rm_watch")
                 # print("Update für folgenden System Call inotify_rm_watch. Neue Häufigkeit: " + str(
                 #    occurences['inotify_rm_watch']))
             elif syscall == 256:
                 occurences['migrate_pages'] = occurences['migrate_pages'] + 1
+                syscalls.append("migrate_pages")
                 # print("Update für folgenden System Call migrate_pages. Neue Häufigkeit: " + str(
                 #    occurences['migrate_pages']))
             elif syscall == 257:
                 occurences['openat'] = occurences['openat'] + 1
+                syscalls.append("openat")
                 # print("Update für folgenden System Call openat. Neue Häufigkeit: " + str(occurences['openat']))
             elif syscall == 258:
                 occurences['mkdirat'] = occurences['mkdirat'] + 1
+                syscalls.append("mkdirat")
                 # print("Update für folgenden System Call mkdirat. Neue Häufigkeit: " + str(occurences['mkdirat']))
             elif syscall == 259:
                 occurences['mknodat'] = occurences['mknodat'] + 1
+                syscalls.append("mknodat")
                 # print("Update für folgenden System Call mknodat. Neue Häufigkeit: " + str(occurences['mknodat']))
             elif syscall == 260:
                 occurences['fchownat'] = occurences['fchownat'] + 1
+                syscalls.append("fchownat")
                 # print("Update für folgenden System Call fchownat. Neue Häufigkeit: " + str(occurences['fchownat']))
             elif syscall == 261:
                 occurences['futimesat'] = occurences['futimesat'] + 1
+                syscalls.append("futimesat")
                 # print("Update für folgenden System Call futimesat. Neue Häufigkeit: " + str(occurences['futimesat']))
             elif syscall == 262:
                 occurences['newfstatat'] = occurences['newfstatat'] + 1
+                syscalls.append("newfstatat")
                 # print("Update für folgenden System Call newfstatat. Neue Häufigkeit: " + str(occurences['newfstatat']))
             elif syscall == 263:
                 occurences['unlinkat'] = occurences['unlinkat'] + 1
+                syscalls.append("unlinkat")
                 # print("Update für folgenden System Call unlinkat. Neue Häufigkeit: " + str(occurences['unlinkat']))
             elif syscall == 264:
                 occurences['renameat'] = occurences['renameat'] + 1
+                syscalls.append("renameat")
                 # print("Update für folgenden System Call renameat. Neue Häufigkeit: " + str(occurences['renameat']))
             elif syscall == 265:
                 occurences['linkat'] = occurences['linkat'] + 1
+                syscalls.append("linkat")
                 # print("Update für folgenden System Call linkat. Neue Häufigkeit: " + str(occurences['linkat']))
             elif syscall == 266:
                 occurences['symlinkat'] = occurences['symlinkat'] + 1
+                syscalls.append("symlinkat")
                 # print("Update für folgenden System Call symlinkat. Neue Häufigkeit: " + str(occurences['symlinkat']))
             elif syscall == 267:
                 occurences['readlinkat'] = occurences['readlinkat'] + 1
+                syscalls.append("readlinkat")
                 # print("Update für folgenden System Call readlinkat. Neue Häufigkeit: " + str(occurences['readlinkat']))
             elif syscall == 268:
                 occurences['fchmodat'] = occurences['fchmodat'] + 1
+                syscalls.append("fchmodat")
                 # print("Update für folgenden System Call fchmodat. Neue Häufigkeit: " + str(occurences['fchmodat']))
             elif syscall == 269:
                 occurences['faccessat'] = occurences['faccessat'] + 1
+                syscalls.append("faccessat")
                 # print("Update für folgenden System Call faccessat. Neue Häufigkeit: " + str(occurences['faccessat']))
             elif syscall == 270:
                 occurences['pselect6'] = occurences['pselect6'] + 1
+                syscalls.append("pselect6")
                 # print("Update für folgenden System Call pselect6. Neue Häufigkeit: " + str(occurences['pselect6']))
             elif syscall == 271:
                 occurences['ppoll'] = occurences['ppoll'] + 1
+                syscalls.append("ppoll")
                 # print("Update für folgenden System Call ppoll. Neue Häufigkeit: " + str(occurences['ppoll']))
             elif syscall == 272:
                 occurences['unshare'] = occurences['unshare'] + 1
+                syscalls.append("unshare")
                 # print("Update für folgenden System Call unshare. Neue Häufigkeit: " + str(occurences['unshare']))
             elif syscall == 273:
                 occurences['set_robust_list'] = occurences['set_robust_list'] + 1
+                syscalls.append("set_robust_list")
                 # print("Update für folgenden System Call set_robust_list. Neue Häufigkeit: " + str(
                 #    occurences['set_robust_list']))
             elif syscall == 274:
                 occurences['get_robust_list'] = occurences['get_robust_list'] + 1
+                syscalls.append("get_robust_list")
                 # print("Update für folgenden System Call get_robust_list. Neue Häufigkeit: " + str(
                 #    occurences['get_robust_list']))
             elif syscall == 275:
                 occurences['splice'] = occurences['splice'] + 1
+                syscalls.append("splice")
                 # print("Update für folgenden System Call splice. Neue Häufigkeit: " + str(occurences['splice']))
             elif syscall == 276:
                 occurences['tee'] = occurences['tee'] + 1
+                syscalls.append("tee")
                 # print("Update für folgenden System Call tee. Neue Häufigkeit: " + str(occurences['tee']))
             elif syscall == 277:
                 occurences['sync_file_range'] = occurences['sync_file_range'] + 1
+                syscalls.append("sync_file_range")
                 # print("Update für folgenden System Call sync_file_range. Neue Häufigkeit: " + str(
                 #    occurences['sync_file_range']))
             elif syscall == 278:
                 occurences['vmsplice'] = occurences['vmsplice'] + 1
+                syscalls.append("vmsplice")
                 # print("Update für folgenden System Call vmsplice. Neue Häufigkeit: " + str(occurences['vmsplice']))
             elif syscall == 279:
                 occurences['move_pages'] = occurences['move_pages'] + 1
+                syscalls.append("move_pages")
                 # print("Update für folgenden System Call move_pages. Neue Häufigkeit: " + str(occurences['move_pages']))
             elif syscall == 280:
                 occurences['utimensat'] = occurences['utimensat'] + 1
+                syscalls.append("utimensat")
                 # print("Update für folgenden System Call utimensat. Neue Häufigkeit: " + str(occurences['utimensat']))
             elif syscall == 281:
                 occurences['epoll_pwait'] = occurences['epoll_pwait'] + 1
+                syscalls.append("epoll_pwait")
                 # print(
                 #     "Update für folgenden System Call: epoll_pwait. Neue Häufigkeit: " + str(occurences['epoll_pwait']))
             elif syscall == 282:
                 occurences['signalfd'] = occurences['signalfd'] + 1
+                syscalls.append("signalfd")
                 # print("Update für folgenden System Call signalfd. Neue Häufigkeit: " + str(occurences['utimensat']))
             elif syscall == 283:
                 occurences['timerfd_create'] = occurences['timerfd_create'] + 1
+                syscalls.append("timerfd_create")
                 # print("Update für folgenden System Call timerfd_create. Neue Häufigkeit: " + str(
                 #    occurences['timerfd_create']))
             elif syscall == 284:
                 occurences['eventfd'] = occurences['eventfd'] + 1
+                syscalls.append("eventfd")
                 # print("Update für folgenden System Call eventfd. Neue Häufigkeit: " + str(occurences['eventfd']))
             elif syscall == 285:
                 occurences['fallocate'] = occurences['fallocate'] + 1
+                syscalls.append("fallocate")
                 # print("Update für folgenden System Call fallocate. Neue Häufigkeit: " + str(occurences['fallocate']))
             elif syscall == 286:
                 occurences['timerfd_settime'] = occurences['timerfd_settime'] + 1
+                syscalls.append("timerfd_settime")
                 # print("Update für folgenden System Call timerfd_settime. Neue Häufigkeit: " + str(
                 #    occurences['timerfd_settime']))
             elif syscall == 287:
                 occurences['timerfd_gettime'] = occurences['timerfd_gettime'] + 1
+                syscalls.append("timerfd_gettime")
                 # print("Update für folgenden System Call timerfd_gettime. Neue Häufigkeit: " + str(
                 #    occurences['timerfd_gettime']))
             elif syscall == 288:
                 occurences['accept4'] = occurences['accept4'] + 1
+                syscalls.append("accept4")
                 # print("Update für folgenden System Call accept4. Neue Häufigkeit: " + str(occurences['accept4']))
             elif syscall == 289:
                 occurences['signalfd4'] = occurences['signalfd4'] + 1
+                syscalls.append("signalfd4")
                 # print("Update für folgenden System Call signalfd4. Neue Häufigkeit: " + str(occurences['signalfd4']))
             elif syscall == 290:
                 occurences['eventfd2'] = occurences['eventfd2'] + 1
+                syscalls.append("eventfd2")
                 # print("Update für folgenden System Call eventfd2. Neue Häufigkeit: " + str(occurences['eventfd2']))
             elif syscall == 291:
                 occurences['epoll_create1'] = occurences['epoll_create1'] + 1
+                syscalls.append("epoll_create1")
                 # print("Update für folgenden System Call epoll_create1. Neue Häufigkeit: " + str(
                 #    occurences['epoll_create1']))
             elif syscall == 292:
                 occurences['dup3'] = occurences['dup3'] + 1
+                syscalls.append("dup3")
                 # print("Update für folgenden System Call dup3. Neue Häufigkeit: " + str(occurences['eventfd2']))
             elif syscall == 293:
                 occurences['pipe2'] = occurences['pipe2'] + 1
+                syscalls.append("pipe2")
                 # print("Update für folgenden System Call pipe2. Neue Häufigkeit: " + str(occurences['pipe2']))
             elif syscall == 294:
                 occurences['inotify_init1'] = occurences['inotify_init1'] + 1
+                syscalls.append("inotify_init1")
                 # print("Update für folgenden System Call inotify_init1. Neue Häufigkeit: " + str(
                 #    occurences['inotify_init1']))
             elif syscall == 295:
                 occurences['preadv'] = occurences['preadv'] + 1
+                syscalls.append("preadv")
                 # print("Update für folgenden System Call preadv. Neue Häufigkeit: " + str(occurences['preadv']))
             elif syscall == 296:
                 occurences['pwritev'] = occurences['pwritev'] + 1
+                syscalls.append("pwritev")
                 # print("Update für folgenden System Call pwritev. Neue Häufigkeit: " + str(occurences['pwritev']))
             elif syscall == 297:
                 occurences['rt_tgsigqueueinfo'] = occurences['rt_tgsigqueueinfo'] + 1
+                syscalls.append("rt_tgsigqueueinfo")
                 # print("Update für folgenden System Call rt_tgsigqueueinfo. Neue Häufigkeit: " + str(
                 #    occurences['rt_tgsigqueueinfo']))
             elif syscall == 298:
                 occurences['perf_event_open'] = occurences['perf_event_open'] + 1
+                syscalls.append("perf_event_open")
                 # print("Update für folgenden System Call perf_event_open. Neue Häufigkeit: " + str(
                 #    occurences['perf_event_open']))
             elif syscall == 299:
                 occurences['recvmmsg'] = occurences['recvmmsg'] + 1
+                syscalls.append("recvmmsg")
                 # print("Update für folgenden System Call recvmmsg. Neue Häufigkeit: " + str(occurences['recvmmsg']))
             elif syscall == 300:
                 occurences['fanotify_init'] = occurences['fanotify_init'] + 1
+                syscalls.append("fanotify_init")
                 # print("Update für folgenden System Call fanotify_init. Neue Häufigkeit: " + str(
                 #    occurences['fanotify_init']))
             elif syscall == 301:
                 occurences['fanotify_mark'] = occurences['fanotify_mark'] + 1
+                syscalls.append("fanotify_mark")
                 # print("Update für folgenden System Call fanotify_mark. Neue Häufigkeit: " + str(
                 #    occurences['fanotify_mark']))
             elif syscall == 302:
                 occurences['prlimit64'] = occurences['prlimit64'] + 1
+                syscalls.append("prlimit64")
                 # print("Update für folgenden System Call prlimit64. Neue Häufigkeit: " + str(occurences['prlimit64']))
             elif syscall == 303:
                 occurences['name_to_handle_at'] = occurences['name_to_handle_at'] + 1
+                syscalls.append("name_to_handle_at")
                 # print("Update für folgenden System Call name_to_handle_at. Neue Häufigkeit: " + str(
                 #    occurences['name_to_handle_at']))
             elif syscall == 304:
                 occurences['open_by_handle_at'] = occurences['open_by_handle_at'] + 1
+                syscalls.append("open_by_handle_at")
                 # print("Update für folgenden System Call open_by_handle_at. Neue Häufigkeit: " + str(
                 #    occurences['open_by_handle_at']))
             elif syscall == 305:
                 occurences['clock_adjtime'] = occurences['clock_adjtime'] + 1
+                syscalls.append("clock_adjtime")
                 # print("Update für folgenden System Call clock_adjtime. Neue Häufigkeit: " + str(
                 #    occurences['clock_adjtime']))
             elif syscall == 306:
                 occurences['syncfs'] = occurences['syncfs'] + 1
+                syscalls.append("syncfs")
                 # print("Update für folgenden System Call syncfs. Neue Häufigkeit: " + str(occurences['syncfs']))
             elif syscall == 307:
                 occurences['sendmmsg'] = occurences['sendmmsg'] + 1
+                syscalls.append("sendmmsg")
                 # print("Update für folgenden System Call sendmmsg. Neue Häufigkeit: " + str(occurences['sendmmsg']))
             elif syscall == 308:
                 occurences['setns'] = occurences['setns'] + 1
+                syscalls.append("setns")
                 # print("Update für folgenden System Call setns. Neue Häufigkeit: " + str(occurences['setns']))
             elif syscall == 309:
                 occurences['getcpu'] = occurences['getcpu'] + 1
+                syscalls.append("getcpu")
                 # print("Update für folgenden System Call getcpu. Neue Häufigkeit: " + str(occurences['getcpu']))
             elif syscall == 310:
                 occurences['process_vm_readv'] = occurences['process_vm_readv'] + 1
+                syscalls.append("process_vm_readv")
                 # print("Update für folgenden System Call process_vm_readv. Neue Häufigkeit: " + str(
                 #    occurences['process_vm_readv']))
             elif syscall == 311:
                 occurences['process_vm_writev'] = occurences['process_vm_writev'] + 1
+                syscalls.append("process_vm_writev")
                 # print("Update für folgenden System Call process_vm_writev. Neue Häufigkeit: " + str(
                 #    occurences['process_vm_writev']))
             elif syscall == 312:
                 occurences['kcmp'] = occurences['kcmp'] + 1
+                syscalls.append("kcmp")
                 # print("Update für folgenden System Call kcmp. Neue Häufigkeit: " + str(occurences['kcmp']))
             elif syscall == 313:
                 occurences['finit_module'] = occurences['finit_module'] + 1
+                syscalls.append("finit_module")
                 # print("Update für folgenden System Call finit_module. Neue Häufigkeit: " + str(
                 #    occurences['finit_module']))
             elif syscall == 314:
                 occurences['sched_setattr'] = occurences['sched_setattr'] + 1
+                syscalls.append("sched_setattr")
                 # print("Update für folgenden System Call sched_setattr. Neue Häufigkeit: " + str(
                 #    occurences['sched_setattr']))
             elif syscall == 315:
                 occurences['sched_getattr'] = occurences['sched_getattr'] + 1
+                syscalls.append("sched_getattr")
                 # print("Update für folgenden System Call sched_getattr. Neue Häufigkeit: " + str(
                 #    occurences['sched_getattr']))
             elif syscall == 316:
                 occurences['renameat2'] = occurences['renameat2'] + 1
+                syscalls.append("renameat2")
                 # print("Update für folgenden System Call renameat2. Neue Häufigkeit: " + str(occurences['renameat2']))
             elif syscall == 317:
                 occurences['seccomp'] = occurences['seccomp'] + 1
+                syscalls.append("seccomp")
                 # print("Update für folgenden System Call seccomp. Neue Häufigkeit: " + str(occurences['seccomp']))
             elif syscall == 318:
                 occurences['getrandom'] = occurences['getrandom'] + 1
+                syscalls.append("getrandom")
                 # print("Update für folgenden System Call getrandom. Neue Häufigkeit: " + str(occurences['getrandom']))
             elif syscall == 319:
                 occurences['memfd_create'] = occurences['memfd_create'] + 1
+                syscalls.append("memfd_create")
                 # print("Update für folgenden System Call memfd_create. Neue Häufigkeit: " + str(
                 #    occurences['memfd_create']))
             elif syscall == 320:
                 occurences['kexec_file_load'] = occurences['kexec_file_load'] + 1
+                syscalls.append("kexec_file_load")
                 # print("Update für folgenden System Call kexec_file_load. Neue Häufigkeit: " + str(
                 #    occurences['kexec_file_load']))
             elif syscall == 321:
                 occurences['bpf'] = occurences['bpf'] + 1
+                syscalls.append("bpf")
                 # print("Update für folgenden System Call bpf. Neue Häufigkeit: " + str(occurences['process_vm_readv']))
 
 
