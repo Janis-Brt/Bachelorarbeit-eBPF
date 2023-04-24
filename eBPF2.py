@@ -6409,7 +6409,9 @@ def createpatterns():
 
     # Ausgabe der Teil-Listen
     print("System Call Patterns mit 3 Elementen\n")
-    print(patterns, end="\n")
+    for element in patterns:
+        print(element)
+        print('\n')
 
 
 # Eingabe des zu tracenden Binaries.
