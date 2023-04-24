@@ -6361,6 +6361,7 @@ def getringbuffer():
                 print("Es wurden keine Syscalls entdeckt, deshalb wurden keine Patterns ausgegeben.")
             else:
                 print(syscalls)
+                createpatterns()
             try:
                 sigma = sum(occurences.values())
 
