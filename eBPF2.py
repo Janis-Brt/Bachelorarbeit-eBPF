@@ -6411,7 +6411,7 @@ def createpatterns():
     print("System Call Patterns mit 3 Elementen\n")
     for element in patterns:
         print(element)
-        print('\n')
+        print()
 
 
 # Eingabe des zu tracenden Binaries.
