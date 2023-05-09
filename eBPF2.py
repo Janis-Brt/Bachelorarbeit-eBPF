@@ -6638,7 +6638,7 @@ def getringbuffer():
             time.sleep(1)
         except KeyboardInterrupt:
             for pid, pattern in occurenceswithtpid.items():
-                print("PID: %-*s Pattern: %s" % (25, str(pid), str(pattern)))
+                print("\nPID: %-*s Pattern: %s" % (5, str(pid), str(pattern)))
 
             print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
             return
