@@ -4864,6 +4864,7 @@ def attachkretprobe():
 
 syscalls = []
 
+occurenceswithtgid = {"1234": ["test", "test2"]}
 # Das Dictionary occurences speichert die Häufigkeit aller System Calls. Initial wird die Häufigkeit für alle
 # System Calls auf 0 gesetzt und beim erfolgreichen Aufruf abgeändert.
 occurences = dict(read=0,
@@ -5958,7 +5959,7 @@ def updateoccurences(cpu, data, size):
                 # print("Update für folgenden System Call putpmsg. Neue Häufigkeit: " + str(occurences['putpmsg']))
             elif syscall == 184:
                 occurences['afs_syscall'] = occurences['afs_syscall'] + 1
-                syscalls.append("afs_syscall")# print(
+                syscalls.append("afs_syscall")  # print(
                 #     "Update für folgenden System Call: afs_syscall. Neue Häufigkeit: " + str(occurences['afs_syscall']))
             elif syscall == 185:
                 occurences['tuxcall'] = occurences['tuxcall'] + 1
@@ -6647,8 +6648,8 @@ def createpatterns():
 
 
 # Eingabe des zu tracenden Binaries.
-ibinary = input("Input Binary: ")
-localpids = getpids(ibinary)
+# ibinary = input("Input Binary: ")
+# localpids = getpids(ibinary)
 print("attaching to kretprobes")
 attachkretprobe()
 print("attachment ready" + "\n" + "now tracing! \npress CTRL + C to stop tracing.")
