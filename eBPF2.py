@@ -4864,7 +4864,7 @@ def attachkretprobe():
 
 syscalls = []
 
-occurenceswithtgid = {"1234": ["test", "test2"]}
+
 # Das Dictionary occurences speichert die Häufigkeit aller System Calls. Initial wird die Häufigkeit für alle
 # System Calls auf 0 gesetzt und beim erfolgreichen Aufruf abgeändert.
 occurences = dict(read=0,
@@ -5191,6 +5191,8 @@ occurences = dict(read=0,
                   bpf=0, )
 
 
+occurenceswithtpid = {}
+
 # Callback Funktion des Ring Buffers. Erhält die aus dem Kernelspace übergebene PID und Syscall-Nummer
 # Danach wird geprüft, ob die PID im Array steht, welches alle PID's des zu tracenden Binaries enthält.
 # Nun wird mittels der eindeutigen System Call Nummer überprüft, welcher System Call aufgerufen wurde,
@@ -5203,21 +5205,37 @@ def updateoccurences(cpu, data, size):
     if str(inum_ring) == str(4026532483):
         if int(ringbufferpid) != 1:
             if syscall == 0:
-                occurences['clone'] = occurences['clone'] + 1
-                syscalls.append("clone")
-                # print("Update für folgenden System Call Clone. Neue Häufigkeit: " + str(occurences['clone']))
+                if occurenceswithtpid.__contains__(ringbufferpid):
+                    occurenceswithtpid[ringbufferpid].append("clone")
+                    occurences['clone'] = occurences['clone'] + 1
+                    syscalls.append("clone")
+                else:
+                    occurenceswithtpid[ringbufferpid] = "clone"
+                    # print("Update für folgenden System Call Clone. Neue Häufigkeit: " + str(occurences['clone']))
             elif syscall == 1:
-                occurences['open'] = occurences['open'] + 1
-                syscalls.append("open")
+                if occurenceswithtpid.__contains__(ringbufferpid):
+                    occurenceswithtpid[ringbufferpid].append("open")
+                    occurences['open'] = occurences['open'] + 1
+                    syscalls.append("open")
+                else:
+                    occurenceswithtpid[ringbufferpid] = "open"
                 # print("Update für folgenden System Call Open. Neue Häufigkeit: " + str(occurences['open']))
             elif syscall == 2:
-                occurences['read'] = occurences['read'] + 1
-                syscalls.append("read")
-                # print("Update für folgenden System Call Read. Neue Häufigkeit: " + str(occurences['read']))
+                if occurenceswithtpid.__contains__(ringbufferpid):
+                    occurenceswithtpid[ringbufferpid].append("read")
+                    occurences['read'] = occurences['read'] + 1
+                    syscalls.append("read")
+                else:
+                    occurenceswithtpid[ringbufferpid] = "read"
+                # print("Update für folgenden System Call Open. Neue Häufigkeit: " + str(occurences['open']))
             elif syscall == 3:
-                occurences['write'] = occurences['write'] + 1
-                syscalls.append("write")
-                # print("Update für folgenden System Call Write. Neue Häufigkeit: " + str(occurences['write']))
+                if occurenceswithtpid.__contains__(ringbufferpid):
+                    occurenceswithtpid[ringbufferpid].append("write")
+                    occurences['write'] = occurences['write'] + 1
+                    syscalls.append("write")
+                else:
+                    occurenceswithtpid[ringbufferpid] = "write"
+                # print("Update für folgenden System Call Open. Neue Häufigkeit: " + str(occurences['open']))
             elif syscall == 4:
                 occurences['close'] = occurences['close'] + 1
                 syscalls.append("close")
@@ -6584,7 +6602,7 @@ def getringbuffer():
             uptime += 1
             time.sleep(1)
         except KeyboardInterrupt:
-            print(occurenceswithtgid)
+            print(occurenceswithtpid)
             res = {key: val for key, val in sorted(occurences.items(), key=lambda ele: ele[0])}
             res2 = {key: val for key, val in sorted(res.items(), key=lambda ele: ele[1], reverse=True)}
             print("\n")
