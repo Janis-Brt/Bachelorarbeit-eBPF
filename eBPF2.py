@@ -5213,6 +5213,7 @@ def updateoccurences(cpu, data, size):
             elif syscall == 2:
                 occurences['read'] = occurences['read'] + 1
                 syscalls.append("read")
+                i = 0
                 # print("Update für folgenden System Call Read. Neue Häufigkeit: " + str(occurences['read']))
             elif syscall == 3:
                 occurences['write'] = occurences['write'] + 1
