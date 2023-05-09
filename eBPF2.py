@@ -6591,7 +6591,7 @@ def getringbuffer():
             print("\n")
             for syscall, occurence in res2.items():
                 print("syscall: %-*s Häufigkeit: %s" % (25, str(syscall), str(occurence)))
-            print("\n" + ibinary + " got traced for " + str(uptime) + " seconds.")
+            # print("\n" + ibinary + " got traced for " + str(uptime) + " seconds.")
             print("Patterns: \n")
             if len(syscalls) == 0:
                 print("Es wurden keine Syscalls entdeckt, deshalb wurden keine Patterns ausgegeben.")
