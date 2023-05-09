@@ -5641,6 +5641,7 @@ def updateoccurences(cpu, data, size):
             elif syscall == 96:
                 occurences['gettimeofday'] = occurences['gettimeofday'] + 1
                 syscalls.append("gettimeofday")
+                add_to_pid_dict(ringbufferpid, "gettimeofday" + " " + str(ringbufferpid))
                 # print("Update für folgenden System Call gettimeofday. Neue Häufigkeit: " + str(
                 #    occurences['gettimeofday']))
             elif syscall == 97:
