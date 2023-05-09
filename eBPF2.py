@@ -6603,6 +6603,9 @@ def getringbuffer():
             time.sleep(1)
         except KeyboardInterrupt:
             print(occurenceswithtpid)
+
+            print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+
             res = {key: val for key, val in sorted(occurences.items(), key=lambda ele: ele[0])}
             res2 = {key: val for key, val in sorted(res.items(), key=lambda ele: ele[1], reverse=True)}
             print("\n")
