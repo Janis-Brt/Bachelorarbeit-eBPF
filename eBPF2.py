@@ -6637,7 +6637,8 @@ def getringbuffer():
             uptime += 1
             time.sleep(1)
         except KeyboardInterrupt:
-            print(occurenceswithtpid)
+            for element in occurenceswithtpid:
+                print(element)
 
             print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
 
