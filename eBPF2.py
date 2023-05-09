@@ -36,6 +36,7 @@ int sclone(struct pt_regs *ctx) {
     data.pid = id >> 32;
     data.syscallnumber = 0;
     events.perf_submit(ctx, &data, sizeof(data));
+    int i = 0;
     return 0;
 }
 int sopen(struct pt_regs *ctx) {
