@@ -6637,42 +6637,43 @@ def getringbuffer():
             uptime += 1
             time.sleep(1)
         except KeyboardInterrupt:
-            for element in occurenceswithtpid:
-                print(element)
+            for pid, pattern in occurenceswithtpid.items():
+                print("PID: %-*s Pattern: %s" % (25, str(pid), str(pattern)))
 
             print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
 
-            res = {key: val for key, val in sorted(occurences.items(), key=lambda ele: ele[0])}
-            res2 = {key: val for key, val in sorted(res.items(), key=lambda ele: ele[1], reverse=True)}
-            print("\n")
-            for syscall, occurence in res2.items():
-                print("syscall: %-*s Häufigkeit: %s" % (25, str(syscall), str(occurence)))
-            # print("\n" + ibinary + " got traced for " + str(uptime) + " seconds.")
-            print("Patterns: \n")
-            if len(syscalls) == 0:
-                print("Es wurden keine Syscalls entdeckt, deshalb wurden keine Patterns ausgegeben.")
-            else:
-                print(syscalls)
-                createpatterns()
-            try:
-                sigma = sum(occurences.values())
-
-                # Prozentuale Verteilung der Häufigkeiten berechnen
-                distribution = {k: v / sigma * 100 for k, v in occurences.items()}
-
-                # Ergebnis ausgeben
-                print("\nProzentuale Verteilung der Häufigkeiten:")
-                sorted_distribution = sorted(distribution.items(), key=lambda x: x[1], reverse=True)
-                max_key_length = max(len(k) for k, v in sorted_distribution)
-                for k, v in sorted_distribution:
-                    print("%-*s: %6.2f%%" % (max_key_length, k, v))
-                return
-            except ZeroDivisionError:
-                print(
-                    "\nDie Gesamtsumme der Häufigkeiten ist 0, daher kann die prozentuale Verteilung nicht "
-                    "berechnet werden.")
-                return
-
+            # Das einkommentieren für die Häufigkeiten, Verteilung und Pattern Berechnung!!!
+            # res = {key: val for key, val in sorted(occurences.items(), key=lambda ele: ele[0])}
+            # res2 = {key: val for key, val in sorted(res.items(), key=lambda ele: ele[1], reverse=True)}
+            # print("\n")
+            # for syscall, occurence in res2.items():
+            #     print("syscall: %-*s Häufigkeit: %s" % (25, str(syscall), str(occurence)))
+            # # print("\n" + ibinary + " got traced for " + str(uptime) + " seconds.")
+            # print("Patterns: \n")
+            # if len(syscalls) == 0:
+            #     print("Es wurden keine Syscalls entdeckt, deshalb wurden keine Patterns ausgegeben.")
+            # else:
+            #     print(syscalls)
+            #     createpatterns()
+            # try:
+            #     sigma = sum(occurences.values())
+            #
+            #     # Prozentuale Verteilung der Häufigkeiten berechnen
+            #     distribution = {k: v / sigma * 100 for k, v in occurences.items()}
+            #
+            #     # Ergebnis ausgeben
+            #     print("\nProzentuale Verteilung der Häufigkeiten:")
+            #     sorted_distribution = sorted(distribution.items(), key=lambda x: x[1], reverse=True)
+            #     max_key_length = max(len(k) for k, v in sorted_distribution)
+            #     for k, v in sorted_distribution:
+            #         print("%-*s: %6.2f%%" % (max_key_length, k, v))
+            #     return
+            # except ZeroDivisionError:
+            #     print(
+            #         "\nDie Gesamtsumme der Häufigkeiten ist 0, daher kann die prozentuale Verteilung nicht "
+            #         "berechnet werden.")
+            #     return
+            # Das einkommentieren für die Häufigkeiten, Verteilung und Pattern Berechnung!!!
 
 # Funktion für Signal Handler
 def signal_handler(sig, frame):
