@@ -6641,7 +6641,7 @@ def getringbuffer():
                 print("PID: %-*s Pattern: %s" % (25, str(pid), str(pattern)))
 
             print("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-
+            return
             # Das einkommentieren für die Häufigkeiten, Verteilung und Pattern Berechnung!!!
             # res = {key: val for key, val in sorted(occurences.items(), key=lambda ele: ele[0])}
             # res2 = {key: val for key, val in sorted(res.items(), key=lambda ele: ele[1], reverse=True)}
