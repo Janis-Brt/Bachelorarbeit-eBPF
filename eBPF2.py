@@ -36,7 +36,6 @@ int sclone(struct pt_regs *ctx) {
     data.pid = id >> 32;
     data.syscallnumber = 0;
     events.perf_submit(ctx, &data, sizeof(data));
-    int i = 0;
     return 0;
 }
 int sopen(struct pt_regs *ctx) {
@@ -5214,7 +5213,6 @@ def updateoccurences(cpu, data, size):
             elif syscall == 2:
                 occurences['read'] = occurences['read'] + 1
                 syscalls.append("read")
-                i = 0
                 # print("Update für folgenden System Call Read. Neue Häufigkeit: " + str(occurences['read']))
             elif syscall == 3:
                 occurences['write'] = occurences['write'] + 1
@@ -6586,6 +6584,7 @@ def getringbuffer():
             uptime += 1
             time.sleep(1)
         except KeyboardInterrupt:
+            print(occurenceswithtgid)
             res = {key: val for key, val in sorted(occurences.items(), key=lambda ele: ele[0])}
             res2 = {key: val for key, val in sorted(res.items(), key=lambda ele: ele[1], reverse=True)}
             print("\n")
