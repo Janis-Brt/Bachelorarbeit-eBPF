@@ -6749,9 +6749,9 @@ def add_to_pid_dict(key, value, tid):
     else:
         occurenceswithtpid[key] = [value]
     if tid in occurenceswithttid:
-        occurenceswithtpid[tid].append(value)
+        occurenceswithttid[tid].append(value)
     else:
-        occurenceswithtpid[tid] = [value]
+        occurenceswithttid[tid] = [value]
 
 
 
