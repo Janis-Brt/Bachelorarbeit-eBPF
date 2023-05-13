@@ -5278,7 +5278,7 @@ def updateoccurences(cpu, data, size):
             elif syscall == 14:
                 occurences['rt_sigaction'] = occurences['rt_sigaction'] + 1
                 syscalls.append("rt_sigaction" + str(inum_ring))
-                add_to_pid_dict(ringbufferpid, "rt_sigaction", tid)
+                add_to_pid_dict(ringbufferpid, "rt_sigaction" + " " + ringbufferpid, tid)
                 # print("Update für folgenden System Call rt_sigaction. Neue Häufigkeit: " + str(
                 #    occurences['rt_sigaction']))
             elif syscall == 15:
