@@ -5461,182 +5461,227 @@ def updateoccurences(cpu, data, size):
             elif syscall == 50:
                 occurences['bind'] = occurences['bind'] + 1
                 syscalls.append("bind")
-                add_to_pid_dict(ringbufferpid, "bind" + " " + str(ringbufferpid))
+                add_to_pid_dict(ringbufferpid, "bind")
                 # print("Update für folgenden System Call bind. Neue Häufigkeit: " + str(occurences['bind']))
             elif syscall == 51:
                 occurences['listen'] = occurences['listen'] + 1
                 syscalls.append("listen")
+                add_to_pid_dict(ringbufferpid, "listen")
                 # print("Update für folgenden System Call listen. Neue Häufigkeit: " + str(occurences['listen']))
             elif syscall == 52:
                 occurences['getsockname'] = occurences['getsockname'] + 1
                 syscalls.append("getsockname")
+                add_to_pid_dict(ringbufferpid, "getsockname")
             elif syscall == 53:
                 occurences['getpeername'] = occurences['getpeername'] + 1
                 syscalls.append("getpeername")
+                add_to_pid_dict(ringbufferpid, "getpeername")
             elif syscall == 54:
                 occurences['socketpair'] = occurences['socketpair'] + 1
                 syscalls.append("socketpair")
+                add_to_pid_dict(ringbufferpid, "socketpair")
             elif syscall == 55:
                 occurences['setsockopt'] = occurences['setsockopt'] + 1
                 syscalls.append("setsockopt")
+                add_to_pid_dict(ringbufferpid, "setsockopt")
             elif syscall == 56:
                 occurences['getsockopt'] = occurences['getsockopt'] + 1
                 syscalls.append("getsockopt")
+                add_to_pid_dict(ringbufferpid, "getsockopt")
             elif syscall == 57:
                 occurences['fork'] = occurences['fork'] + 1
                 syscalls.append("fork")
+                add_to_pid_dict(ringbufferpid, "fork")
                 # print("Update für folgenden System Call fork. Neue Häufigkeit: " + str(occurences['fork']))
             elif syscall == 58:
                 occurences['vfork'] = occurences['vfork'] + 1
                 syscalls.append("vfork")
+                add_to_pid_dict(ringbufferpid, "vfork")
                 # print("Update für folgenden System Call vfork. Neue Häufigkeit: " + str(occurences['vfork']))
             elif syscall == 59:
                 occurences['execve'] = occurences['execve'] + 1
                 syscalls.append("execve")
+                add_to_pid_dict(ringbufferpid, "execve")
                 # print("Update für folgenden System Call execve. Neue Häufigkeit: " + str(occurences['execve']))
             elif syscall == 60:
                 occurences['exit'] = occurences['exit'] + 1
                 syscalls.append("exit")
+                add_to_pid_dict(ringbufferpid, "exit")
                 # print("Update für folgenden System Call exit. Neue Häufigkeit: " + str(occurences['exit']))
             elif syscall == 61:
                 occurences['wait4'] = occurences['wait4'] + 1
                 syscalls.append("wait4")
+                add_to_pid_dict(ringbufferpid, "wait4")
                 # print("Update für folgenden System Call wait4. Neue Häufigkeit: " + str(occurences['wait4']))
             elif syscall == 62:
                 occurences['kill'] = occurences['kill'] + 1
                 syscalls.append("kill")
+                add_to_pid_dict(ringbufferpid, "kill")
                 # print("Update für folgenden System Call kill. Neue Häufigkeit: " + str(occurences['kill']))
             elif syscall == 63:
                 occurences['uname'] = occurences['uname'] + 1
                 syscalls.append("uname")
+                add_to_pid_dict(ringbufferpid, "uname")
                 # print("Update für folgenden System Call uname. Neue Häufigkeit: " + str(occurences['uname']))
             elif syscall == 64:
                 occurences['semget'] = occurences['semget'] + 1
                 syscalls.append("semget")
+                add_to_pid_dict(ringbufferpid, "semget")
                 # print("Update für folgenden System Call semget. Neue Häufigkeit: " + str(occurences['semget']))
             elif syscall == 65:
                 occurences['semop'] = occurences['semop'] + 1
                 syscalls.append("semop")
+                add_to_pid_dict(ringbufferpid, "semop")
                 # print("Update für folgenden System Call semop. Neue Häufigkeit: " + str(occurences['semop']))
             elif syscall == 66:
                 occurences['semctl'] = occurences['semctl'] + 1
                 syscalls.append("semctl")
+                add_to_pid_dict(ringbufferpid, "semctl")
                 # print("Update für folgenden System Call semctl. Neue Häufigkeit: " + str(occurences['semctl']))
             elif syscall == 67:
                 occurences['shmdt'] = occurences['shmdt'] + 1
                 syscalls.append("shmdt")
+                add_to_pid_dict(ringbufferpid, "shmdt")
                 # print("Update für folgenden System Call shmdt. Neue Häufigkeit: " + str(occurences['shmdt']))
             elif syscall == 68:
                 occurences['msgget'] = occurences['msgget'] + 1
                 syscalls.append("msgget")
+                add_to_pid_dict(ringbufferpid, "msgget")
                 # print("Update für folgenden System Call msgget. Neue Häufigkeit: " + str(occurences['msgget']))
             elif syscall == 69:
                 occurences['msgsnd'] = occurences['msgsnd'] + 1
                 syscalls.append("msgsnd")
+                add_to_pid_dict(ringbufferpid, "msgsnd")
                 # print("Update für folgenden System Call msgsnd. Neue Häufigkeit: " + str(occurences['msgsnd']))
             elif syscall == 70:
                 occurences['msgrcv'] = occurences['msgrcv'] + 1
                 syscalls.append("msgrcv")
+                add_to_pid_dict(ringbufferpid, "msgrcv")
                 # print("Update für folgenden System Call msgrcv. Neue Häufigkeit: " + str(occurences['msgrcv']))
             elif syscall == 71:
                 occurences['msgctl'] = occurences['msgctl'] + 1
                 syscalls.append("msgctl")
+                add_to_pid_dict(ringbufferpid, "msgctl")
                 # print("Update für folgenden System Call msgctl. Neue Häufigkeit: " + str(occurences['msgctl']))
             elif syscall == 72:
                 occurences['fcntl'] = occurences['fcntl'] + 1
                 syscalls.append("fcntl")
+                add_to_pid_dict(ringbufferpid, "fcntl")
                 # print("Update für folgenden System Call fcntl. Neue Häufigkeit: " + str(occurences['fcntl']))
             elif syscall == 73:
                 occurences['flock'] = occurences['flock'] + 1
                 syscalls.append("flock")
+                add_to_pid_dict(ringbufferpid, "flock")
                 # print("Update für folgenden System Call flock. Neue Häufigkeit: " + str(occurences['flock']))
             elif syscall == 74:
                 occurences['fsync'] = occurences['fsync'] + 1
                 syscalls.append("fsync")
+                add_to_pid_dict(ringbufferpid, "fsync")
                 # print("Update für folgenden System Call fsync. Neue Häufigkeit: " + str(occurences['fsync']))
             elif syscall == 75:
                 occurences['fdatasync'] = occurences['fdatasync'] + 1
                 syscalls.append("fdatasync")
+                add_to_pid_dict(ringbufferpid, "fdatasync")
                 # print("Update für folgenden System Call fdatasync. Neue Häufigkeit: " + str(occurences['fdatasync']))
             elif syscall == 76:
                 occurences['truncate'] = occurences['truncate'] + 1
                 syscalls.append("truncate")
+                add_to_pid_dict(ringbufferpid, "truncate")
                 # print("Update für folgenden System Call truncate. Neue Häufigkeit: " + str(occurences['truncate']))
             elif syscall == 77:
                 occurences['ftruncate'] = occurences['ftruncate'] + 1
                 syscalls.append("ftruncate")
+                add_to_pid_dict(ringbufferpid, "ftruncate")
                 # print("Update für folgenden System Call ftruncate. Neue Häufigkeit: " + str(occurences['ftruncate']))
             elif syscall == 78:
                 occurences['getdents'] = occurences['getdents'] + 1
                 syscalls.append("getdents")
+                add_to_pid_dict(ringbufferpid, "getdents")
                 # print("Update für folgenden System Call getdents. Neue Häufigkeit: " + str(occurences['getdents']))
             elif syscall == 79:
                 occurences['getcwd'] = occurences['getcwd'] + 1
                 syscalls.append("getcwd")
+                add_to_pid_dict(ringbufferpid, "getcwd")
                 # print("Update für folgenden System Call getcwd. Neue Häufigkeit: " + str(occurences['getcwd']))
             elif syscall == 80:
                 occurences['chdir'] = occurences['chdir'] + 1
                 syscalls.append("chdir")
+                add_to_pid_dict(ringbufferpid, "chdir")
                 # print("Update für folgenden System Call chdir. Neue Häufigkeit: " + str(occurences['chdir']))
             elif syscall == 81:
                 occurences['fchdir'] = occurences['fchdir'] + 1
                 syscalls.append("fchdir")
+                add_to_pid_dict(ringbufferpid, "fchdir")
                 # print("Update für folgenden System Call fchdir. Neue Häufigkeit: " + str(occurences['fchdir']))
             elif syscall == 82:
                 occurences['rename'] = occurences['rename'] + 1
                 syscalls.append("rename")
+                add_to_pid_dict(ringbufferpid, "rename")
                 # print("Update für folgenden System Call rename. Neue Häufigkeit: " + str(occurences['rename']))
             elif syscall == 83:
                 occurences['mkdir'] = occurences['mkdir'] + 1
                 syscalls.append("mkdir")
+                add_to_pid_dict(ringbufferpid, "mkdir")
                 # print("Update für folgenden System Call mkdir. Neue Häufigkeit: " + str(occurences['mkdir']))
             elif syscall == 84:
                 occurences['rmdir'] = occurences['rmdir'] + 1
                 syscalls.append("rmdir")
+                add_to_pid_dict(ringbufferpid, "rmdir")
                 # print("Update für folgenden System Call rmdir. Neue Häufigkeit: " + str(occurences['rmdir']))
             elif syscall == 85:
                 occurences['creat'] = occurences['creat'] + 1
                 syscalls.append("creat")
+                add_to_pid_dict(ringbufferpid, "creat")
                 # print("Update für folgenden System Call creat. Neue Häufigkeit: " + str(occurences['creat']))
             elif syscall == 86:
                 occurences['link'] = occurences['link'] + 1
                 syscalls.append("link")
+                add_to_pid_dict(ringbufferpid, "link")
                 # print("Update für folgenden System Call link. Neue Häufigkeit: " + str(occurences['link']))
             elif syscall == 87:
                 occurences['unlink'] = occurences['unlink'] + 1
                 syscalls.append("unlink")
+                add_to_pid_dict(ringbufferpid, "unlink")
                 # print("Update für folgenden System Call unlink. Neue Häufigkeit: " + str(occurences['unlink']))
             elif syscall == 88:
                 occurences['symlink'] = occurences['symlink'] + 1
                 syscalls.append("symlink")
+                add_to_pid_dict(ringbufferpid, "symlink")
                 # print("Update für folgenden System Call symlink. Neue Häufigkeit: " + str(occurences['symlink']))
             elif syscall == 89:
                 occurences['readlink'] = occurences['readlink'] + 1
                 syscalls.append("readlink")
+                add_to_pid_dict(ringbufferpid, "readlink")
                 # print("Update für folgenden System Call readlink. Neue Häufigkeit: " + str(occurences['readlink']))
             elif syscall == 90:
                 occurences['chmod'] = occurences['chmod'] + 1
                 syscalls.append("chmod")
+                add_to_pid_dict(ringbufferpid, "chmod")
                 # print("Update für folgenden System Call chmod. Neue Häufigkeit: " + str(occurences['chmod']))
             elif syscall == 91:
                 occurences['fchmod'] = occurences['fchmod'] + 1
                 syscalls.append("fchmod")
+                add_to_pid_dict(ringbufferpid, "fchmod")
                 # print("Update für folgenden System Call fchmod. Neue Häufigkeit: " + str(occurences['fchmod']))
             elif syscall == 92:
                 occurences['chown'] = occurences['chown'] + 1
                 syscalls.append("chown")
+                add_to_pid_dict(ringbufferpid, "chown")
                 # print("Update für folgenden System Call chown. Neue Häufigkeit: " + str(occurences['chown']))
             elif syscall == 93:
                 occurences['fchown'] = occurences['fchown'] + 1
                 syscalls.append("fchown")
+                add_to_pid_dict(ringbufferpid, "fchown")
                 # print("Update für folgenden System Call fchown. Neue Häufigkeit: " + str(occurences['fchown']))
             elif syscall == 94:
                 occurences['lchown'] = occurences['lchown'] + 1
                 syscalls.append("lchown")
+                add_to_pid_dict(ringbufferpid, "lchown")
                 # print("Update für folgenden System Call lchown. Neue Häufigkeit: " + str(occurences['lchown']))
             elif syscall == 95:
                 occurences['umask'] = occurences['umask'] + 1
                 syscalls.append("umask")
+                add_to_pid_dict(ringbufferpid, "umask")
                 # print("Update für folgenden System Call umask. Neue Häufigkeit: " + str(occurences['umask']))
             elif syscall == 96:
                 occurences['gettimeofday'] = occurences['gettimeofday'] + 1
@@ -5647,18 +5692,22 @@ def updateoccurences(cpu, data, size):
             elif syscall == 97:
                 occurences['getrlimit'] = occurences['getrlimit'] + 1
                 syscalls.append("getrlimit")
+                add_to_pid_dict(ringbufferpid, "getrlimit")
                 # print("Update für folgenden System Call getrlimit. Neue Häufigkeit: " + str(occurences['getrlimit']))
             elif syscall == 98:
                 occurences['getrusage'] = occurences['getrusage'] + 1
                 syscalls.append("getrusage")
+                add_to_pid_dict(ringbufferpid, "getrusage")
                 # print("Update für folgenden System Call getrusage. Neue Häufigkeit: " + str(occurences['getrusage']))
             elif syscall == 99:
                 occurences['sysinfo'] = occurences['sysinfo'] + 1
                 syscalls.append("sysinfo")
+                add_to_pid_dict(ringbufferpid, "sysinfo")
                 # print("Update für folgenden System Call sysinfo. Neue Häufigkeit: " + str(occurences['sysinfo']))
             elif syscall == 100:
                 occurences['times'] = occurences['times'] + 1
                 syscalls.append("times")
+                add_to_pid_dict(ringbufferpid, "times")
                 # print("Update für folgenden System Call times. Neue Häufigkeit: " + str(occurences['times']))
             elif syscall == 102:
                 occurences['ptrace'] = occurences['ptrace'] + 1
