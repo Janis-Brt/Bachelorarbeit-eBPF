@@ -6904,7 +6904,7 @@ def getringbuffer():
     while True:
         try:
             b.perf_buffer_poll(timeout=10 * 1000)
-            # time.sleep(1)
+            time.sleep(1)
         except KeyboardInterrupt:
             for pid, pattern in occurenceswithtpid.items():
                 print("\nPID: %-*s Pattern: %s" % (5, str(pid), str(pattern)))
