@@ -9,7 +9,7 @@ prog = """
 #include <uapi/linux/ptrace.h>
 #include <linux/pid_namespace.h>
 
-// Daten Struct für den Ring Buffer
+// Datenstruktur für den Ring Buffer
 struct data_t {
     int syscallnumber;
     u32 pid;
@@ -6900,18 +6900,16 @@ def updateoccurences(cpu, data, size):
 # Dictionary mit den Häufigkeiten aus. Anschließend wird noch die Häufigkeit prozentual ausgegeben, bevor das Programm
 # terminiert
 def getringbuffer():
-    uptime = 0
     b["events"].open_perf_buffer(updateoccurences, page_cnt=256)
     while True:
         try:
             b.perf_buffer_poll(timeout=10 * 1000)
-            uptime += 1
-            time.sleep(1)
+            # time.sleep(1)
         except KeyboardInterrupt:
             for pid, pattern in occurenceswithtpid.items():
                 print("\nPID: %-*s Pattern: %s" % (5, str(pid), str(pattern)))
 
-            print("\n+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+            print("\n++++++++++++++++++++++++++++")
             for pid, pattern in occurenceswithttid.items():
                 print("\nTID: %-*s Pattern: %s" % (5, str(pid), str(pattern)))
             return
@@ -6947,6 +6945,9 @@ def getringbuffer():
             #         "berechnet werden.")
             #     return
             # Das einkommentieren für die Häufigkeiten, Verteilung und Pattern Berechnung!!!
+
+
+
 
 # Funktion für Signal Handler
 def signal_handler(sig, frame):
@@ -6988,6 +6989,7 @@ def add_to_pid_dict(key, value, tid):
 #     print("System Call Patterns mit 3 Elementen\n")
 #     for element in patterns:
 #         print(element)
+
 
 
 def getinum():
