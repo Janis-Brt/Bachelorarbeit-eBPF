@@ -6721,9 +6721,30 @@ def createpatterns():
         print(element)
 
 
+def getinum():
+    # Führe den Befehl aus und lese die Ausgabe
+    result = os.popen("ls -la /proc/self/ns").read()
+
+    # Splitten der Ausgabe an den Leerzeichen
+    # Beispiel-Ausgabe: "total 0\nlrwxrwxrwx 1 user user 0 Apr 20 10:00 pid -> 'pid:[4026531836]'\n"
+    parts = result.split(" ")
+
+    # Suche nach der Zeichenkette "'pid:[...]'"
+    pid_ns_id = None
+    for part in parts:
+        if part.__contains__("pid:["):  # and part.endswith("]'\n"):
+            # Extrahiere die ID aus der Zeichenkette
+            pid_ns_id = part[5:-12]
+            break
+    print("PID-Namespace ID des Host Systems:", pid_ns_id)
+    return pid_ns_id
+
+
 # Eingabe des zu tracenden Binaries.
 # ibinary = input("Input Binary: ")
 # localpids = getpids(ibinary)
+print("Getting Host-PID-NS")
+getinum()
 print("attaching to kretprobes")
 attachkretprobe()
 print("attachment ready" + "\n" + "now tracing! \npress CTRL + C to stop tracing.")
