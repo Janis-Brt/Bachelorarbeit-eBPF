@@ -6736,7 +6736,8 @@ def getinum():
             # Extrahiere die ID aus der Zeichenkette
             pid_ns_id = part[5:-12]
             break
-    print("PID-Namespace ID des Host Systems:", pid_ns_id)
+    print("PID-Namespace ID des Host Systems:")
+    print(pid_ns_id)
     return pid_ns_id
 
 
