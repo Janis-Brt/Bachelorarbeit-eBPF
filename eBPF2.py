@@ -5283,7 +5283,7 @@ def updateoccurences(cpu, data, size):
             elif syscall == 15:
                 occurences['rt_sigprocmask'] = occurences['rt_sigprocmask'] + 1
                 syscalls.append("rt_sigprocmask")
-                add_to_pid_dict(ringbufferpid, "rt_sigprocmask" + " " + str(ringbufferpid))
+                add_to_pid_dict(ringbufferpid, "rt_sigprocmask" + " " + str(ringbufferpid) + " "  + str(inum_ring))
                 # print("Update für folgenden System Call rt_sigprocmask. Neue Häufigkeit: " + str(
                 #    occurences['rt_sigprocmask']))
             elif syscall == 16:
