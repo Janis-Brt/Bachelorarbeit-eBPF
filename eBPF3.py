@@ -4865,8 +4865,8 @@ def attachkretprobe():
 syscalls = []
 
 
-sequencesswithtpid = {}
-sequencesswithttid = {}
+
+
 
 
 # Callback Funktion des Ring Buffers. Erhält die aus dem Kernelspace übergebene PID und Syscall-Nummer
@@ -4878,6 +4878,8 @@ def updatesequence(cpu, data, size):
     syscall_number = data.syscallnumber
     ringbufferpid = data.pid
     inum_ring = data.inum
+    inum_host = getinum()
+    print(inum_host)
     tid = 1 # dummy wert. Hier kommt noch die korrekte tid rein
     if str(inum_ring) == str(4026532483):
         # if int(ringbufferpid) != 1:
@@ -5871,8 +5873,8 @@ def signal_handler(sig, frame):
     print('Exited with Keyboard Interrupt')
     sys.exit(0)
 
-
-
+sequencesswithtpid = {}
+sequencesswithttid = {}
 # todo
 def add_to_pid_dict(key, value, tid):
     if key in sequencesswithtpid:
