@@ -4878,11 +4878,11 @@ def updatesequence(cpu, data, size):
     syscall_number = data.syscallnumber
     ringbufferpid = data.pid
     inum_ring = data.inum
-    inum_host = getinum()
+    # inum_host = getinum()
     # print(inum_host)
     tid = 1 # dummy wert. Hier kommt noch die korrekte tid rein
-    # if str(inum_ring) == str(4026532483):
-    if str(inum_ring) != str(inum_host):
+    if str(inum_ring) == str(4026532483):
+    # if str(inum_ring) != str(inum_host):
         # if int(ringbufferpid) != 1:
         if syscall_number == 0:
             syscalls.append("clone")
