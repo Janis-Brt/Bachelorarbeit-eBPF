@@ -4883,10 +4883,9 @@ def updatesequence(cpu, data, size):
     syscall_number = data.syscallnumber
     ringbufferpid = data.pid
     inum_ring = data.inum
-    ringbuffertid = data.tid
     # inum_host = getinum()
     # print(inum_host)
-    tid = 1 # dummy wert. Hier kommt noch die korrekte tid rein
+    tid = data.tgid # dummy wert. Hier kommt noch die korrekte tid rein
     if str(inum_ring) == str(4026532486):
     # if str(inum_ring) != str(host_ns):
         # if int(ringbufferpid) != 1:
@@ -4898,10 +4897,10 @@ def updatesequence(cpu, data, size):
             add_to_pid_dict(ringbufferpid, "open", tid)
         elif syscall_number == 2:
             syscalls.append("read")
-            add_to_pid_dict(ringbufferpid, "read" + " " + str(ringbuffertid), tid)
+            add_to_pid_dict(ringbufferpid, "read" + " " + str(tid), tid)
         elif syscall_number == 3:
             syscalls.append("write")
-            add_to_pid_dict(ringbufferpid, "write" + " " + str(ringbuffertid), tid)
+            add_to_pid_dict(ringbufferpid, "write" + " " + str(tid), tid)
         elif syscall_number == 4:
             syscalls.append("close")
             add_to_pid_dict(ringbufferpid, "close", tid)
