@@ -4886,7 +4886,7 @@ def updatesequence(cpu, data, size):
     # inum_host = getinum()
     # print(inum_host)
     tid = data.tgid # dummy wert. Hier kommt noch die korrekte tid rein
-    if str(inum_ring) == str(4026532486):
+    if str(inum_ring) == str(4026532483):
     # if str(inum_ring) != str(host_ns):
         # if int(ringbufferpid) != 1:
         if syscall_number == 0:
