@@ -35,7 +35,7 @@ int sclone(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
-    data.tgid = id << 32;
+    data.tgid = bpf_get_current_pid_tgid() << 32;
     data.syscallnumber = 0;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -51,7 +51,7 @@ int sopen(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
-    data.tgid = id << 32;
+    data.tgid = bpf_get_current_pid_tgid() << 32;
     data.syscallnumber = 1;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -67,7 +67,7 @@ int sread(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
-    data.tgid = id << 32;
+    data.tgid = bpf_get_current_pid_tgid() << 32;
     data.syscallnumber = 2;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -84,7 +84,7 @@ int swrite(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
-    data.tgid = id << 32;
+    data.tgid = bpf_get_current_pid_tgid() << 32;
     data.syscallnumber = 3;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4883,10 +4883,10 @@ def updatesequence(cpu, data, size):
     syscall_number = data.syscallnumber
     ringbufferpid = data.pid
     inum_ring = data.inum
-    getinumcontainer(ringbufferpid)
+    # getinumcontainer(ringbufferpid)
     # inum_host = getinum()
     # print(inum_host)
-    tid = data.tgid # dummy wert. Hier kommt noch die korrekte tid rein
+    tid = data.tgid
     if str(inum_ring) == str(4026532483):
     # if str(inum_ring) != str(host_ns):
         # if int(ringbufferpid) != 1:
