@@ -14,6 +14,7 @@ struct data_t {
     int syscallnumber;
     u32 pid;
     unsigned int inum;
+    u32 tgid;
 };
 
 // Initialisierung des BPF Ring Buffers. Mit diesem kann man Daten an den Userspace übergeben
@@ -34,6 +35,7 @@ int sclone(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    data.tgid = id << 32;
     data.syscallnumber = 0;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -49,6 +51,7 @@ int sopen(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    data.tgid = id << 32;
     data.syscallnumber = 1;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -64,6 +67,7 @@ int sread(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    data.tgid = id << 32;
     data.syscallnumber = 2;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -80,6 +84,7 @@ int swrite(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    data.tgid = id << 32;
     data.syscallnumber = 3;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4878,6 +4883,7 @@ def updatesequence(cpu, data, size):
     syscall_number = data.syscallnumber
     ringbufferpid = data.pid
     inum_ring = data.inum
+    ringbuffertid = data.tid
     # inum_host = getinum()
     # print(inum_host)
     tid = 1 # dummy wert. Hier kommt noch die korrekte tid rein
@@ -4892,10 +4898,10 @@ def updatesequence(cpu, data, size):
             add_to_pid_dict(ringbufferpid, "open", tid)
         elif syscall_number == 2:
             syscalls.append("read")
-            add_to_pid_dict(ringbufferpid, "read" + " " + str(inum_ring), tid)
+            add_to_pid_dict(ringbufferpid, "read" + " " + str(ringbuffertid), tid)
         elif syscall_number == 3:
             syscalls.append("write")
-            add_to_pid_dict(ringbufferpid, "write" + " " + str(inum_ring), tid)
+            add_to_pid_dict(ringbufferpid, "write" + " " + str(ringbuffertid), tid)
         elif syscall_number == 4:
             syscalls.append("close")
             add_to_pid_dict(ringbufferpid, "close", tid)
