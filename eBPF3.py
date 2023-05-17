@@ -5915,7 +5915,7 @@ def getinum():
 
 def getinumcontainer(pid):
     # Führe den Befehl aus und lese die Ausgabe
-    result = os.popen("ls -la /proc/" + pid + "/ns").read()
+    result = os.popen("ls -la /proc/" + str(pid) + "/ns").read()
     print("Result des search strings: " + str(result))
 
     # Splitten der Ausgabe an den Leerzeichen
