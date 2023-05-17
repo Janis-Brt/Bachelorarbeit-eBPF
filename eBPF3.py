@@ -4883,6 +4883,7 @@ def updatesequence(cpu, data, size):
     syscall_number = data.syscallnumber
     ringbufferpid = data.pid
     inum_ring = data.inum
+    getinumcontainer(ringbufferpid)
     # inum_host = getinum()
     # print(inum_host)
     tid = data.tgid # dummy wert. Hier kommt noch die korrekte tid rein
@@ -5910,6 +5911,25 @@ def getinum():
             pid_ns_id = part[5:-12]
             break
     # print("PID-Namespace ID des Host Systems: " + str(pid_ns_id))
+    return pid_ns_id
+
+def getinumcontainer(pid):
+    # Führe den Befehl aus und lese die Ausgabe
+    result = os.popen("ls -la /proc/" + pid + "/ns").read()
+    print("Result des search strings: " + str(result))
+
+    # Splitten der Ausgabe an den Leerzeichen
+    # Beispiel-Ausgabe: "total 0\nlrwxrwxrwx 1 user user 0 Apr 20 10:00 pid -> 'pid:[4026531836]'\n"
+    parts = result.split(" ")
+
+    # Suche nach der Zeichenkette "'pid:[...]'"
+    pid_ns_id = None
+    for part in parts:
+        if part.__contains__("pid:["):  # and part.endswith("]'\n"):
+            # Extrahiere die ID aus der Zeichenkette
+            pid_ns_id = part[5:-12]
+            break
+    print("PID-Namespace ID des Containers: " + str(pid_ns_id))
     return pid_ns_id
 
 
