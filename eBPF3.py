@@ -5922,7 +5922,7 @@ def getinumcontainer():
         if line.startswith('PID:'):
             pid = int(line.split(':')[1].strip())
             print(pid)
-            result = os.popen("ls -la /" + str(pid) + "/ns").read()
+            result = os.popen("ls -la /proc/" + str(pid) + "/ns").read()
 
             # Splitten der Ausgabe an den Leerzeichen
             # Beispiel-Ausgabe: "total 0\nlrwxrwxrwx 1 user user 0 Apr 20 10:00 pid -> 'pid:[4026531836]'\n"
