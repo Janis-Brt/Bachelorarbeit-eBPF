@@ -5917,6 +5917,7 @@ def getinum():
 def getinumcontainer():
     for proc in psutil.process_iter():
         if "systemd" in proc.name() and "init" in proc.cmdline():
+            print(proc)
             pid = proc.pid
             print(proc.pid)
             return pid
