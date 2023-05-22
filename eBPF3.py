@@ -4886,9 +4886,8 @@ def updatesequence(cpu, data, size):
     ringbufferpid = data.pid
     inum_ring = data.inum
     inum_container = getinumcontainer()
-    print(inum_container)
     tid = data.tgid
-    if str(inum_ring) == str(4026532483):
+    if str(inum_ring) == str(inum_container):
     # if str(inum_ring) != str(host_ns):
         # if int(ringbufferpid) != 1:
         if syscall_number == 0:
