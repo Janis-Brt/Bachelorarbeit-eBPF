@@ -4885,7 +4885,6 @@ def updatesequence(cpu, data, size):
     syscall_number = data.syscallnumber
     ringbufferpid = data.pid
     inum_ring = data.inum
-    inum_container = getinumcontainer()
     tid = data.tgid
     if str(inum_ring) == str(inum_container):
     # if str(inum_ring) != str(host_ns):
@@ -5944,7 +5943,8 @@ def getinumcontainer():
 # host_ns = getinum()
 # print(host_ns)
 print("Getting Container-PID")
-getinumcontainer()
+inum_container = getinumcontainer()
+print(str(inum_container))
 print("attaching to kretprobes")
 attachkretprobe()
 print("attachment ready" + "\n" + "now tracing! \npress CTRL + C to stop tracing.")
