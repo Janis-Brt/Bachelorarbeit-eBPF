@@ -3,8 +3,7 @@ import os
 import time
 import signal
 import sys
-import subprocess
-import psutil
+import json
 
 # Die Lokale Variable speichert den eBPF C-Code.
 prog = """
@@ -5871,6 +5870,15 @@ def getringbuffer():
             print("\n++++++++++++++++++++++++++++")
             for pid, pattern in sequencesswithttid.items():
                 print("\nTID: %-*s Pattern: %s" % (5, str(pid), str(pattern)))
+                json_file = "sequencesswithtpid.json"
+                json_file2 = "sequencesswithttid.json"
+                with open(json_file, 'w') as f:
+                    # Schreibe das JSON in die Datei
+                    json.dump(sequencesswithtpid, f)
+                with open(json_file2, 'w') as f:
+                    # Schreibe das JSON in die Datei
+                    json.dump(sequencesswithttid, f)
+
             return
 
 
