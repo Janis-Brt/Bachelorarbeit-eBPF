@@ -3,6 +3,7 @@ import os
 import time
 import signal
 import sys
+import psutil
 
 # Die Lokale Variable speichert den eBPF C-Code.
 prog = """
@@ -4898,7 +4899,6 @@ def updatesequence(cpu, data, size):
             add_to_pid_dict(ringbufferpid, "open", tid)
         elif syscall_number == 2:
             syscalls.append("read")
-            getinumcontainer(ringbufferpid)
             add_to_pid_dict(ringbufferpid, "read" + " " + str(tid), tid)
         elif syscall_number == 3:
             syscalls.append("write")
@@ -5914,24 +5914,12 @@ def getinum():
     # print("PID-Namespace ID des Host Systems: " + str(pid_ns_id))
     return pid_ns_id
 
-def getinumcontainer(pid):
-    # Führe den Befehl aus und lese die Ausgabe
-    result = os.popen("ls -la /proc/" + str(pid) + "/ns").read()
-    print("Result des search strings: " + str(result))
-
-    # Splitten der Ausgabe an den Leerzeichen
-    # Beispiel-Ausgabe: "total 0\nlrwxrwxrwx 1 user user 0 Apr 20 10:00 pid -> 'pid:[4026531836]'\n"
-    parts = result.split(" ")
-
-    # Suche nach der Zeichenkette "'pid:[...]'"
-    pid_ns_id = None
-    for part in parts:
-        if part.__contains__("pid:["):  # and part.endswith("]'\n"):
-            # Extrahiere die ID aus der Zeichenkette
-            pid_ns_id = part[5:-12]
-            break
-    print("PID-Namespace ID des Containers: " + str(pid_ns_id))
-    return pid_ns_id
+def getinumcontainer():
+    for proc in psutil.process_iter():
+        if "systemd" in proc.name() and "init" in proc.cmdline():
+            containerpid = proc.pid
+            print(proc.pid)
+        return containerpid
 
 
 # Eingabe des zu tracenden Binaries.
@@ -5939,6 +5927,10 @@ def getinumcontainer(pid):
 # localpids = getpids(ibinary)
 print("Getting Host-PID-NS")
 host_ns = getinum()
+print(host_ns)
+print("Getting Container-PID")
+getinumcontainer()
+print(host_ns)
 print("attaching to kretprobes")
 attachkretprobe()
 print("attachment ready" + "\n" + "now tracing! \npress CTRL + C to stop tracing.")
