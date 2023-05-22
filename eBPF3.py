@@ -3,6 +3,7 @@ import os
 import time
 import signal
 import sys
+import subprocess
 import psutil
 
 # Die Lokale Variable speichert den eBPF C-Code.
@@ -5915,11 +5916,14 @@ def getinum():
     return pid_ns_id
 
 def getinumcontainer():
-    for proc in psutil.process_iter():
-        if "systemd" in proc.name() and "init" in proc.cmdline():
-            print("Test" + str(proc.name) + str(proc.cmdline()))
-            pid = proc.pid
-            print(proc.pid)
+    container_name = "ubuntu-ct"
+    command = ['lxc-info', '-p', '-H', '-n', container_name]
+    output = subprocess.check_output(command).decode('utf-8').strip()
+    lines = output.split('\n')
+    for line in lines:
+        if line.startswith('PID:'):
+            pid = int(line.split(':')[1].strip())
+            print(pid)
             return pid
         # else:
         #     print("not found")
