@@ -5897,26 +5897,26 @@ def add_to_pid_dict(key, value, tid):
 
 
 # Die Funktion gibt die PID-Namespace Nummer des Host Systems zurück
-def getinum():
-    # Führe den Befehl aus und lese die Ausgabe
-    result = os.popen("ls -la /proc/self/ns").read()
-
-    # Splitten der Ausgabe an den Leerzeichen
-    # Beispiel-Ausgabe: "total 0\nlrwxrwxrwx 1 user user 0 Apr 20 10:00 pid -> 'pid:[4026531836]'\n"
-    parts = result.split(" ")
-
-    # Suche nach der Zeichenkette "'pid:[...]'"
-    pid_ns_id = None
-    for part in parts:
-        if part.__contains__("pid:["):  # and part.endswith("]'\n"):
-            # Extrahiere die ID aus der Zeichenkette
-            pid_ns_id = part[5:-12]
-            break
-    # print("PID-Namespace ID des Host Systems: " + str(pid_ns_id))
-    return pid_ns_id
+# def getinum():
+#     # Führe den Befehl aus und lese die Ausgabe
+#     result = os.popen("ls -la /proc/self/ns").read()
+#
+#     # Splitten der Ausgabe an den Leerzeichen
+#     # Beispiel-Ausgabe: "total 0\nlrwxrwxrwx 1 user user 0 Apr 20 10:00 pid -> 'pid:[4026531836]'\n"
+#     parts = result.split(" ")
+#
+#     # Suche nach der Zeichenkette "'pid:[...]'"
+#     pid_ns_id = None
+#     for part in parts:
+#         if part.__contains__("pid:["):  # and part.endswith("]'\n"):
+#             # Extrahiere die ID aus der Zeichenkette
+#             pid_ns_id = part[5:-12]
+#             break
+#     # print("PID-Namespace ID des Host Systems: " + str(pid_ns_id))
+#     return pid_ns_id
 
 def getinumcontainer():
-    output = os.popen("sudo lxc-info -n ubuntu-ct").read()
+    output = os.popen("lxc-info -n ubuntu-ct").read()
     lines = output.split('\n')
     for line in lines:
         if line.startswith('PID:'):
@@ -5935,7 +5935,6 @@ def getinumcontainer():
                     # Extrahiere die ID aus der Zeichenkette
                     pid_ns_id = part[5:-12]
                     break
-            # print("PID-Namespace ID des Host Systems: " + str(pid_ns_id))
             print(pid_ns_id)
             return pid_ns_id
 
@@ -5945,8 +5944,8 @@ def getinumcontainer():
 # Eingabe des zu tracenden Binaries.
 # ibinary = input("Input Binary: ")
 # localpids = getpids(ibinary)
-print("Getting Host-PID-NS")
-host_ns = getinum()
+# print("Getting Host-PID-NS")
+# host_ns = getinum()
 print(host_ns)
 print("Getting Container-PID")
 getinumcontainer()
