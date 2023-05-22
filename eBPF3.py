@@ -5920,7 +5920,6 @@ def getinumcontainer():
     for line in lines:
         if line.startswith('PID:'):
             pid = int(line.split(':')[1].strip())
-            print(pid)
             result = os.popen("ls -la /proc/" + str(pid) + "/ns").read()
 
             # Splitten der Ausgabe an den Leerzeichen
