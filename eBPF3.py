@@ -4885,9 +4885,8 @@ def updatesequence(cpu, data, size):
     syscall_number = data.syscallnumber
     ringbufferpid = data.pid
     inum_ring = data.inum
-    # getinumcontainer(ringbufferpid)
-    # inum_host = getinum()
-    # print(inum_host)
+    inum_container = getinumcontainer()
+    print(inum_container)
     tid = data.tgid
     if str(inum_ring) == str(4026532483):
     # if str(inum_ring) != str(host_ns):
@@ -5916,8 +5915,8 @@ def add_to_pid_dict(key, value, tid):
 #     return pid_ns_id
 
 def getinumcontainer():
-    output = os.popen("lxc-info -n ubuntu-ct").read()
-    lines = output.split('\n')
+    result = os.popen("sudo lxc-info -n ubuntu-ct").read()
+    lines = result.split('\n')
     for line in lines:
         if line.startswith('PID:'):
             pid = int(line.split(':')[1].strip())
@@ -5925,17 +5924,16 @@ def getinumcontainer():
             result = os.popen("ls -la /proc/" + str(pid) + "/ns").read()
 
             # Splitten der Ausgabe an den Leerzeichen
-            # Beispiel-Ausgabe: "total 0\nlrwxrwxrwx 1 user user 0 Apr 20 10:00 pid -> 'pid:[4026531836]'\n"
             parts = result.split(" ")
 
             # Suche nach der Zeichenkette "'pid:[...]'"
             pid_ns_id = None
             for part in parts:
-                if part.__contains__("pid:["):  # and part.endswith("]'\n"):
+                if part.__contains__("pid:["):
                     # Extrahiere die ID aus der Zeichenkette
                     pid_ns_id = part[5:-12]
                     break
-            print(pid_ns_id)
+            # print(pid_ns_id)
             return pid_ns_id
 
         # else:
@@ -5946,7 +5944,7 @@ def getinumcontainer():
 # localpids = getpids(ibinary)
 # print("Getting Host-PID-NS")
 # host_ns = getinum()
-print(host_ns)
+# print(host_ns)
 print("Getting Container-PID")
 getinumcontainer()
 print("attaching to kretprobes")
