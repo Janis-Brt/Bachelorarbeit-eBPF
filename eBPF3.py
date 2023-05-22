@@ -5916,7 +5916,7 @@ def getinum():
     return pid_ns_id
 
 def getinumcontainer():
-    result = os.popen("sudo lxc-info -n ubuntu-ct")
+    result = os.popen("sudo lxc-info -n ubuntu-ct").read()
     print(result)
         # else:
         #     print("not found")
