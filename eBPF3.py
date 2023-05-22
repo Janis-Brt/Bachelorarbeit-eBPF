@@ -4,6 +4,7 @@ import time
 import signal
 import sys
 import json
+import time
 
 # Die Lokale Variable speichert den eBPF C-Code.
 prog = """
@@ -4871,10 +4872,6 @@ def attachkretprobe():
 syscalls = []
 
 
-
-
-
-
 # Callback Funktion des Ring Buffers. Erhält die aus dem Kernelspace übergebene PID und Syscall-Nummer
 # Danach wird geprüft, ob die PID im Array steht, welches alle PID's des zu tracenden Binaries enthält.
 # Nun wird mittels der eindeutigen System Call Nummer überprüft, welcher System Call aufgerufen wurde,
@@ -4886,7 +4883,7 @@ def updatesequence(cpu, data, size):
     inum_ring = data.inum
     tid = data.tgid
     if str(inum_ring) == str(inum_container):
-    # if str(inum_ring) != str(host_ns):
+        # if str(inum_ring) != str(host_ns):
         # if int(ringbufferpid) != 1:
         if syscall_number == 0:
             syscalls.append("clone")
@@ -5870,8 +5867,9 @@ def getringbuffer():
             print("\n++++++++++++++++++++++++++++")
             for pid, pattern in sequencesswithttid.items():
                 print("\nTID: %-*s Pattern: %s" % (5, str(pid), str(pattern)))
-                json_file = "sequencesswithtpid.json"
-                json_file2 = "sequencesswithttid.json"
+                timestamp = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime())
+                json_file = "sequencesswithtpid_" + str(timestamp) + ".json"
+                json_file2 = "sequencesswithttid_" + str(timestamp) + ".json"
                 with open(json_file, 'w') as f:
                     # Schreibe das JSON in die Datei
                     json.dump(sequencesswithtpid, f)
@@ -5887,8 +5885,11 @@ def signal_handler(sig, frame):
     print('Exited with Keyboard Interrupt')
     sys.exit(0)
 
+
 sequencesswithtpid = {}
 sequencesswithttid = {}
+
+
 # todo
 def add_to_pid_dict(key, value, tid):
     if key in sequencesswithtpid:
@@ -5943,6 +5944,7 @@ def getinumcontainer():
 
         # else:
         #     print("not found")
+
 
 # Eingabe des zu tracenden Binaries.
 # ibinary = input("Input Binary: ")
