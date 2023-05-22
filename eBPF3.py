@@ -5917,12 +5917,12 @@ def getinum():
 def getinumcontainer():
     for proc in psutil.process_iter():
         if "systemd" in proc.name() and "init" in proc.cmdline():
-            print(str(proc.name) + str(proc.cmdline()))
+            print("Test" + str(proc.name) + str(proc.cmdline()))
             pid = proc.pid
             print(proc.pid)
             return pid
-        else:
-            print("not found")
+        # else:
+        #     print("not found")
 
 # Eingabe des zu tracenden Binaries.
 # ibinary = input("Input Binary: ")
