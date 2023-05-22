@@ -5917,7 +5917,7 @@ def getinum():
 
 def getinumcontainer():
     container_name = "ubuntu-ct"
-    command = ['lxc-info', '-p', '-H', '-n', container_name]
+    command = ['sudo lxc-info', '-p', '-H', '-n', container_name]
     output = subprocess.check_output(command).decode('utf-8').strip()
     lines = output.split('\n')
     for line in lines:
