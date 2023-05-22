@@ -5920,7 +5920,8 @@ def getinumcontainer():
             pid = proc.pid
             print(proc.pid)
             return pid
-
+        else:
+            print("not found")
 
 # Eingabe des zu tracenden Binaries.
 # ibinary = input("Input Binary: ")
@@ -5930,7 +5931,6 @@ host_ns = getinum()
 print(host_ns)
 print("Getting Container-PID")
 getinumcontainer()
-print(host_ns)
 print("attaching to kretprobes")
 attachkretprobe()
 print("attachment ready" + "\n" + "now tracing! \npress CTRL + C to stop tracing.")
