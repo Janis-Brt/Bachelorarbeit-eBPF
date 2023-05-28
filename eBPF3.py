@@ -4932,7 +4932,7 @@ def updatesequence(cpu, data, size):
             add_to_pid_dict(ringbufferpid, "rt_sigaction", tid)
         elif syscall_number == 15:
             syscalls.append("rt_sigprocmask")
-            add_to_pid_dict(ringbufferpid, "rt_sigprocmask" + " " + str(inum_ring), tid)
+            add_to_pid_dict(ringbufferpid, "rt_sigprocmask")
         elif syscall_number == 16:
             syscalls.append("rt_sigreturn")
             add_to_pid_dict(ringbufferpid, "rt_sigreturn", tid)
