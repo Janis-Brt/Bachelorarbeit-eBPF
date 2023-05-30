@@ -4901,10 +4901,10 @@ def updatesequence(cpu, data, size):
             add_to_pid_dict(ringbufferpid, "open", tid)
         elif syscall_number == 2:
             syscalls.append("read")
-            add_to_pid_dict(ringbufferpid, "read" + " " + str(tid), tid)
+            add_to_pid_dict(ringbufferpid, "read", tid)
         elif syscall_number == 3:
             syscalls.append("write")
-            add_to_pid_dict(ringbufferpid, "write" + " " + str(tid), tid)
+            add_to_pid_dict(ringbufferpid, "write", tid)
         elif syscall_number == 4:
             syscalls.append("close")
             add_to_pid_dict(ringbufferpid, "close", tid)
@@ -4940,7 +4940,7 @@ def updatesequence(cpu, data, size):
             add_to_pid_dict(ringbufferpid, "rt_sigaction", tid)
         elif syscall_number == 15:
             syscalls.append("rt_sigprocmask")
-            add_to_pid_dict(ringbufferpid, "rt_sigprocmask")
+            add_to_pid_dict(ringbufferpid, "rt_sigprocmask", tid)
         elif syscall_number == 16:
             syscalls.append("rt_sigreturn")
             add_to_pid_dict(ringbufferpid, "rt_sigreturn", tid)
