@@ -1662,6 +1662,8 @@ int sptrace(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 102;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -1676,6 +1678,8 @@ int sgetuid(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 103;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -1690,6 +1694,8 @@ int ssyslog(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 104;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -1704,6 +1710,8 @@ int sgetgid(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 105;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -1718,6 +1726,8 @@ int ssetuid(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 106;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -1732,6 +1742,8 @@ int ssetgid(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 107;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -1746,6 +1758,8 @@ int sgeteuid(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 108;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -1760,6 +1774,8 @@ int sgetegid(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 109;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -1774,6 +1790,8 @@ int ssetpgid(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 110;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -1788,6 +1806,8 @@ int sgetppid(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 111;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -1802,6 +1822,8 @@ int sgetpgrp(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 112;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -1816,6 +1838,8 @@ int ssetsid(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 113;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -1830,6 +1854,8 @@ int ssetreuid(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 114;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -1844,6 +1870,8 @@ int ssetregid(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 115;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -1858,6 +1886,8 @@ int sgetgroups(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 116;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -1872,6 +1902,8 @@ int ssetgroups(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 117;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -1886,6 +1918,8 @@ int ssetresuid(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 118;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -1900,6 +1934,8 @@ int sgetresuid(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 119;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -1914,6 +1950,8 @@ int ssetresgid(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 120;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -1928,6 +1966,8 @@ int sgetresgid(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 121;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -1942,6 +1982,8 @@ int sgetpgid(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 122;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -1956,6 +1998,8 @@ int ssetfsuid(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 123;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -1970,6 +2014,8 @@ int ssetfsgid(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 124;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -1984,6 +2030,8 @@ int sgetsid(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 125;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -1998,6 +2046,8 @@ int scapget(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 126;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2012,6 +2062,8 @@ int scapset(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 127;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2026,6 +2078,8 @@ int srt_sigpending(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 128;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2040,6 +2094,8 @@ int srt_sigtimedwait(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 129;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2054,6 +2110,8 @@ int srt_sigqueueinfo(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 130;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2068,6 +2126,8 @@ int srt_sigsuspend(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 131;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2082,6 +2142,8 @@ int ssigaltstack(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 132;
     events.perf_submit(ctx, &data, sizeof(data));
     int x = 0;
@@ -2097,6 +2159,8 @@ int sutime(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 133;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2111,6 +2175,8 @@ int smknod(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 134;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2125,6 +2191,8 @@ int suselib(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 135;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2139,6 +2207,8 @@ int spersonality(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 136;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2153,6 +2223,8 @@ int sustat(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 137;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2167,6 +2239,8 @@ int sstatfs(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 138;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2181,6 +2255,8 @@ int sfstatfs(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 139;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2195,6 +2271,8 @@ int ssysfs(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 140;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2209,6 +2287,8 @@ int sgetpriority(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 141;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2223,6 +2303,8 @@ int ssetpriority(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 142;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2237,6 +2319,8 @@ int ssched_setparam(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 143;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2251,6 +2335,8 @@ int ssched_getparam(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 144;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2265,6 +2351,8 @@ int ssched_setscheduler(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 145;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2279,6 +2367,8 @@ int ssched_getscheduler(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 146;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2293,6 +2383,8 @@ int ssched_get_priority_max(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 147;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2307,6 +2399,8 @@ int ssched_get_priority_min(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 148;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2321,6 +2415,8 @@ int ssched_rr_get_interval(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 149;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2335,6 +2431,8 @@ int smlock(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 150;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2349,6 +2447,8 @@ int smunlock(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 151;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2363,6 +2463,8 @@ int smlockall(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 152;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2377,6 +2479,8 @@ int smunlockall(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 153;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2391,6 +2495,8 @@ int svhangup(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 154;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2405,6 +2511,8 @@ int smodify_ldt(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 155;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2419,6 +2527,8 @@ int spivot_root(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 156;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2433,6 +2543,8 @@ int ssysctl(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 157;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2447,6 +2559,8 @@ int sprctl(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 158;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2461,6 +2575,8 @@ int sarch_prctl(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 159;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2475,6 +2591,8 @@ int sadjtimex(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 160;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2489,6 +2607,8 @@ int ssetrlimit(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 161;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2503,6 +2623,8 @@ int schroot(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 162;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2517,6 +2639,8 @@ int ssync(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 163;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2531,6 +2655,8 @@ int sacct(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 164;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2545,6 +2671,8 @@ int ssettimeofday(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 165;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2559,6 +2687,8 @@ int smount(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 166;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2573,6 +2703,8 @@ int sumount2(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 167;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2587,6 +2719,8 @@ int sswapon(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 168;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2601,6 +2735,8 @@ int sswapoff(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 169;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2615,6 +2751,8 @@ int sreboot(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 170;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2629,6 +2767,8 @@ int ssethostname(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 171;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2643,6 +2783,8 @@ int ssetdomainname(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 172;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2657,6 +2799,8 @@ int siopl(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 173;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2671,6 +2815,8 @@ int sioperm(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 174;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2685,6 +2831,8 @@ int screate_module(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 175;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2699,6 +2847,8 @@ int sinit_module(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 176;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2713,6 +2863,8 @@ int sdelete_module(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 177;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2727,6 +2879,8 @@ int sget_kernel_syms(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 178;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2741,6 +2895,8 @@ int squery_module(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 179;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2755,6 +2911,8 @@ int squotactl(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 180;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2769,6 +2927,8 @@ int snfsservctl(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 181;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2783,6 +2943,8 @@ int sgetpmsg(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 182;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2797,6 +2959,8 @@ int sputpmsg(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 183;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2811,6 +2975,8 @@ int safs_syscall(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 184;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2825,6 +2991,8 @@ int stuxcall(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 185;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2839,6 +3007,8 @@ int ssecurity(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 186;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2853,6 +3023,8 @@ int sgettid(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 187;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2867,6 +3039,8 @@ int sreadahead(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 188;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2881,6 +3055,8 @@ int ssetxattr(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 189;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2895,6 +3071,8 @@ int slsetxattr(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 190;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2909,6 +3087,8 @@ int sfsetxattr(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 191;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2923,6 +3103,8 @@ int sgetxattr(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 192;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2937,6 +3119,8 @@ int sfgetxattr(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 193;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2951,6 +3135,8 @@ int slistxattr(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 194;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2965,6 +3151,8 @@ int sllistxattr(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 195;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2979,6 +3167,8 @@ int sflistxattr(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 196;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -2993,6 +3183,8 @@ int sremovexattr(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 197;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3007,6 +3199,8 @@ int slremovexattr(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 198;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3021,6 +3215,8 @@ int sfremovexattr(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 199;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3035,6 +3231,8 @@ int stkill(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 200;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3049,6 +3247,8 @@ int stime(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 201;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3063,6 +3263,8 @@ int sfutex(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 202;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3077,6 +3279,8 @@ int ssched_setaffinity(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 203;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3091,6 +3295,8 @@ int ssched_getaffinity(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 204;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3105,6 +3311,8 @@ int sset_thread_area(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 205;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3119,6 +3327,8 @@ int sio_setup(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 206;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3133,6 +3343,8 @@ int sio_destroy(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 207;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3147,6 +3359,8 @@ int sio_getevents(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 208;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3161,6 +3375,8 @@ int sio_submit(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 209;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3175,6 +3391,8 @@ int sio_cancel(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 210;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3189,6 +3407,8 @@ int sget_thread_area(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 211;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3203,6 +3423,8 @@ int slookup_dcookie(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 212;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3217,6 +3439,8 @@ int sepoll_create(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 213;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3231,6 +3455,8 @@ int sepoll_ctl_old(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 214;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3245,6 +3471,8 @@ int sepoll_wait_old(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 215;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3259,6 +3487,8 @@ int sremap_file_pages(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 216;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3273,6 +3503,8 @@ int sgetdents64(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 217;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3287,6 +3519,8 @@ int sset_tid_address(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 218;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3301,6 +3535,8 @@ int srestart_syscall(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 219;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3315,6 +3551,8 @@ int ssemtimedop(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 220;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3329,6 +3567,8 @@ int sfadvise64(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 221;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3343,6 +3583,8 @@ int stimer_create(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 222;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3357,6 +3599,8 @@ int stimer_settime(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 223;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3371,6 +3615,8 @@ int stimer_gettime(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 224;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3385,6 +3631,8 @@ int stimer_getoverrun(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 225;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3399,6 +3647,8 @@ int stimer_delete(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 226;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3413,6 +3663,8 @@ int sclock_settime(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 227;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3427,6 +3679,8 @@ int sclock_gettime(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 228;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3441,6 +3695,8 @@ int sclock_getres(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 229;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3455,6 +3711,8 @@ int sclock_nanosleep(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 230;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3469,6 +3727,8 @@ int sexit_group(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 231;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3483,6 +3743,8 @@ int sepoll_wait(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 232;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3497,6 +3759,8 @@ int sepoll_ctl(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 233;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3511,6 +3775,8 @@ int stgkill(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 234;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3525,6 +3791,8 @@ int sutimes(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 235;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3539,6 +3807,8 @@ int svserver(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 236;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3553,6 +3823,8 @@ int smbind(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 237;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3567,6 +3839,8 @@ int sset_mempolicy(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 238;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3581,6 +3855,8 @@ int sget_mempolicy(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 239;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3595,6 +3871,8 @@ int smq_open(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 240;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3609,6 +3887,8 @@ int smq_unlink(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 241;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3623,6 +3903,8 @@ int smq_timedsend(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 242;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3637,6 +3919,8 @@ int smq_timedreceive(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 243;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3651,6 +3935,8 @@ int smq_notify(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 244;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3665,6 +3951,8 @@ int smq_getsetattr(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 245;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3679,6 +3967,8 @@ int skexec_load(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 246;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3693,6 +3983,8 @@ int swaitid(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 247;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3707,6 +3999,8 @@ int sadd_key(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 248;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3721,6 +4015,8 @@ int srequest_key(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 249;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3735,6 +4031,8 @@ int skeyctl(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 250;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3749,6 +4047,8 @@ int sioprio_set(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 251;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3763,6 +4063,8 @@ int sioprio_get(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 252;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3777,6 +4079,8 @@ int sinotify_init(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 253;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3791,6 +4095,8 @@ int sinotify_add_watch(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 254;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3805,6 +4111,8 @@ int sinotify_rm_watch(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 255;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3819,6 +4127,8 @@ int smigrate_pages(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 256;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3833,6 +4143,8 @@ int sopenat(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 257;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3847,6 +4159,8 @@ int smkdirat(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 258;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3861,6 +4175,8 @@ int smknodat(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 259;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3875,6 +4191,8 @@ int sfchownat(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 260;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3889,6 +4207,8 @@ int sfutimesat(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 261;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3903,6 +4223,8 @@ int snewfstatat(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 262;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3917,6 +4239,8 @@ int sunlinkat(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 263;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3931,6 +4255,8 @@ int srenameat(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 264;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3945,6 +4271,8 @@ int slinkat(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 265;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3959,6 +4287,8 @@ int ssymlinkat(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 266;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3973,6 +4303,8 @@ int sreadlinkat(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 267;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -3987,6 +4319,8 @@ int sfchmodat(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 268;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4001,6 +4335,8 @@ int sfaccessat(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 269;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4015,6 +4351,8 @@ int spselect6(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 270;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4029,6 +4367,8 @@ int sppoll(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 271;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4043,6 +4383,8 @@ int sunshare(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 272;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4057,6 +4399,8 @@ int sset_robust_list(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 273;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4071,6 +4415,8 @@ int sget_robust_list(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 274;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4085,6 +4431,8 @@ int ssplice(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 275;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4099,6 +4447,8 @@ int stee(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 276;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4113,6 +4463,8 @@ int ssync_file_range(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 277;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4127,6 +4479,8 @@ int svmsplice(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 278;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4141,6 +4495,8 @@ int smove_pages(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 279;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4155,6 +4511,8 @@ int sutimensat(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 280;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4169,6 +4527,8 @@ int sepoll_pwait(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 281;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4183,6 +4543,8 @@ int ssignalfd(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 282;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4197,6 +4559,8 @@ int stimerfd_create(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 283;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4211,6 +4575,8 @@ int seventfd(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 284;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4225,6 +4591,8 @@ int sfallocate(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 285;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4239,6 +4607,8 @@ int stimerfd_settime(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 286;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4253,6 +4623,8 @@ int stimerfd_gettime(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 287;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4267,6 +4639,8 @@ int saccept4(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 288;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4281,6 +4655,8 @@ int ssignalfd4(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 289;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4295,6 +4671,8 @@ int seventfd2(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 290;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4309,6 +4687,8 @@ int epoll_create1(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 291;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4323,6 +4703,8 @@ int sdup3(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 292;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4337,6 +4719,8 @@ int spipe2(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 293;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4351,6 +4735,8 @@ int sinotify_init1(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 294;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4365,6 +4751,8 @@ int spreadv(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 295;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4379,6 +4767,8 @@ int spwritev(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 296;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4393,6 +4783,8 @@ int srt_tgsigqueueinfo(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 297;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4407,6 +4799,8 @@ int sperf_event_open(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 298;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4422,6 +4816,8 @@ int srecvmmsg(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 299;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4436,6 +4832,8 @@ int sfanotify_init(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 300;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4450,6 +4848,8 @@ int sfanotify_mark(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 301;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4464,6 +4864,8 @@ int sprlimit64(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 302;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4478,6 +4880,8 @@ int sname_to_handle_at(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 303;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4492,6 +4896,8 @@ int sopen_by_handle_at(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 304;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4506,6 +4912,8 @@ int sclock_adjtime(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 305;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4520,6 +4928,8 @@ int ssyncfs(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 306;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4534,6 +4944,8 @@ int ssendmmsg(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 307;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4548,6 +4960,8 @@ int ssetns(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 308;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4562,6 +4976,8 @@ int sgetcpu(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 309;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4576,6 +4992,8 @@ int sprocess_vm_readv(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 310;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4590,6 +5008,8 @@ int sprocess_vm_writev(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 311;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4604,6 +5024,8 @@ int skcmp(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 312;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4618,6 +5040,8 @@ int sfinit_module(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 313;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4632,6 +5056,8 @@ int ssched_setattr(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 314;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4647,6 +5073,8 @@ int ssched_getattr(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 315;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4661,6 +5089,8 @@ int srenameat2(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 316;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4676,6 +5106,8 @@ int sseccomp(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 317;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4690,6 +5122,8 @@ int sgetrandom(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 318;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4704,6 +5138,8 @@ int smemfd_create(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 319;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4718,6 +5154,8 @@ int skexec_file_load(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 320;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -4732,6 +5170,8 @@ int sbpf(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 321;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
