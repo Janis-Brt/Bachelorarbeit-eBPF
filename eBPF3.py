@@ -37,7 +37,8 @@ int sclone(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
-    data.tgid = bpf_get_current_pid_tgid() << 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 0;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -53,7 +54,8 @@ int sopen(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
-    data.tgid = bpf_get_current_pid_tgid() << 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 1;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -69,7 +71,8 @@ int sread(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
-    data.tgid = bpf_get_current_pid_tgid() << 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 2;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -86,7 +89,8 @@ int swrite(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
-    data.tgid = bpf_get_current_pid_tgid() << 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 3;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -101,6 +105,8 @@ int sclose(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 4;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -115,6 +121,8 @@ int sstat(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
+    u32 tgid = bpf_get_current_pid_tgid();
+    data.tgid = tgid;
     data.syscallnumber = 5;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -5881,11 +5889,9 @@ def getringbuffer():
                 with open(json_file2, 'w') as f:
                     # Schreibe das JSON in die Datei
                     json.dump(sequencesswithttid, f)
-
             return
 
 
-# todo
 def signal_handler(sig, frame):
     print('Exited with Keyboard Interrupt')
     sys.exit(0)
