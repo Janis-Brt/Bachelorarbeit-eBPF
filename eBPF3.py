@@ -6606,12 +6606,12 @@ def createpatterns():
                 patterns[teil_liste] = 1
 
     for key, value in sequencesswithtpid.items():
-    print(f"Ursprünglicher Schlüssel: {key}")
-    for i in range(len(value) - 2):
-        teil_liste = tuple(value[i:i + 3])
-        count = patterns.get(teil_liste, 0)
-        print(f"Item: {teil_liste}, Anzahl: {count}")
-    print()
+        print(f"Ursprünglicher Schlüssel: {key}")
+        for i in range(len(value) - 2):
+            teil_liste = tuple(value[i:i + 3])
+            count = patterns.get(teil_liste, 0)
+            print(f"Item: {teil_liste}, Anzahl: {count}")
+        print()
 
 
 # Eingabe des zu tracenden Binaries.
