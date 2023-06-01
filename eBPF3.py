@@ -5562,8 +5562,8 @@ def updatesequence(cpu, data, size):
             syscalls.append("mmap")
             add_to_pid_dict(ringbufferpid, "mmap", tid)
         elif syscall_number == 11:
-            syscalls.append("mprotext")
-            add_to_pid_dict(ringbufferpid, "mprotext", tid)
+            syscalls.append("mprotect")
+            add_to_pid_dict(ringbufferpid, "mprotect", tid)
         elif syscall_number == 12:
             syscalls.append("munmap")
             add_to_pid_dict(ringbufferpid, "munmap", tid)
@@ -6602,6 +6602,8 @@ def createpatterns():
                 print("Doppelte Vorkomniss  erkannt!" + value[i] + value[i+1] )
                 value[i] = value[i] + "*"
                 print("Update " + value[i])
+                del value[i+1]
+
             teil_liste = tuple(value[i:i + 3])
             # Zähle die Anzahl der eindeutigen Einträge
             key_list = [1 if teil_liste not in patterns else patterns[teil_liste][0] + 1, key]
