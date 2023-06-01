@@ -6600,7 +6600,7 @@ def createpatterns():
             # Extrahiere die Elemente mit den entsprechenden Indizes
             if value[i] == value[i + 1]:
                 print("Doppelte Vorkomniss  erkannt!" + value[i] + value[i+1] )
-                value[i] = str(i) + "*"
+                value[i] = value[i] + "*"
                 print("Update " + value[i])
             teil_liste = tuple(value[i:i + 3])
             # Zähle die Anzahl der eindeutigen Einträge
