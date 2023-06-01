@@ -6513,16 +6513,16 @@ def getringbuffer():
             folder_path = "data"
             # Überprüfe, ob der Ordner existiert, andernfalls lege ihn an
             if not os.path.exists(folder_path):
-            os.makedirs(folder_path)
-            timestamp = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime())
-            json_file = "data/sequencesswithtpid_" + str(timestamp) + ".json"
-            json_file2 = "data/sequencesswithttid_" + str(timestamp) + ".json"
-            with open(json_file, 'w') as f:
+                os.makedirs(folder_path)
+                timestamp = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime())
+                json_file = "data/sequencesswithtpid_" + str(timestamp) + ".json"
+                json_file2 = "data/sequencesswithttid_" + str(timestamp) + ".json"
+                with open(json_file, 'w') as f:
                 # Schreibe das JSON in die Datei
-                json.dump(sequencesswithtpid, f)
-            with open(json_file2, 'w') as f:
+                    json.dump(sequencesswithtpid, f)
+                with open(json_file2, 'w') as f:
                 # Schreibe das JSON in die Datei
-                json.dump(sequencesswithttid, f)
+                    json.dump(sequencesswithttid, f)
             createpatterns()
             return
 
