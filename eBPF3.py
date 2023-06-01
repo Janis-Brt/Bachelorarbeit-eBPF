@@ -6599,7 +6599,7 @@ def createpatterns():
         for i in range(len(value) - 2):
             # Extrahiere die Elemente mit den entsprechenden Indizes
             if value[i] == value[i + 1]:
-                print("Doppelte Vorkomniss  erkannt!")
+                print("Doppelte Vorkomniss  erkannt!" + value[i] + value[i+1] )
             teil_liste = tuple(value[i:i + 3])
             # Zähle die Anzahl der eindeutigen Einträge
             key_list = [1 if teil_liste not in patterns else patterns[teil_liste][0] + 1, key]
