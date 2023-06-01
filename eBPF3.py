@@ -6610,6 +6610,7 @@ def createpatterns():
     for pattern, count_key in patterns.items():
         count, key = count_key
         print(f"Häufigkeit: {pattern}, Count: {count}, PID: {key}")
+        print("++++++++++++++++++++++++++++++++++++++++++++++++++")
 
 
 
