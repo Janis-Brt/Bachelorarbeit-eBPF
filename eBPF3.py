@@ -6593,6 +6593,7 @@ def getinumcontainer():
 
 def createpatterns():
     patterns = {}
+    grouped_patterns = {}
     # Schleife von 0 bis Länge der Liste minus 2
     for key, value in sequencesswithtpid.items():
         # Überprüfe, ob die Liste im Wert mindestens 3 Elemente enthält
@@ -6604,14 +6605,20 @@ def createpatterns():
                 patterns[teil_liste] += 1
             else:
                 patterns[teil_liste] = 1
+    for key, pattern_dict in patterns.items():
+        for pattern, count in pattern_dict.items():
+            if pattern in grouped_patterns:
+                grouped_patterns[pattern].append((key, count))
+            else:
+                grouped_patterns[pattern] = [(key, count)]
+    for pattern, key_count_list in grouped_patterns.items():
+        print("Muster:", pattern)
 
-    for key, value in sequencesswithtpid.items():
-        print(f"Ursprünglicher Schlüssel: {key}")
-        for i in range(len(value) - 2):
-            # teil_liste = tuple(value[i:i + 3])
-            count = patterns.get(teil_liste, 0)
-            print(f"Item: {teil_liste}, Anzahl: {count}")
+        for key, count in key_count_list:
+            print("Schlüssel:", key, "Anzahl:", count)
+
         print()
+
 
 
 # Eingabe des zu tracenden Binaries.
