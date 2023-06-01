@@ -6605,7 +6605,7 @@ def createpatterns():
             else:
                 patterns[teil_liste] = 1
 
-        print("tripletts with PID + " + str(key) + "\n")
+        print("tripletts with PID:" + str(key) + "\n")
         for element, count in patterns.items():
             print(element, count)
 
