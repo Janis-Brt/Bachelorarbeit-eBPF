@@ -6504,12 +6504,12 @@ def getringbuffer():
             b.perf_buffer_poll(timeout=10 * 1000)
             time.sleep(1)
         except KeyboardInterrupt:
-            for pid, pattern in sequencesswithtpid.items():
-                print("\nPID: %-*s Pattern: %s" % (5, str(pid), str(pattern)))
+            #for pid, pattern in sequencesswithtpid.items():
+            #    print("\nPID: %-*s Pattern: %s" % (5, str(pid), str(pattern)))
 
-            print("\n++++++++++++++++++++++++++++")
-            for pid, pattern in sequencesswithttid.items():
-                print("\nTID: %-*s Pattern: %s" % (5, str(pid), str(pattern)))
+            #print("\n++++++++++++++++++++++++++++")
+            #for pid, pattern in sequencesswithttid.items():
+            #    print("\nTID: %-*s Pattern: %s" % (5, str(pid), str(pattern)))
                 folder_path = "data"
                 # Überprüfe, ob der Ordner existiert, andernfalls lege ihn an
                 if not os.path.exists(folder_path):
