@@ -6599,11 +6599,9 @@ def createpatterns():
         # Überprüfe, ob die Liste im Wert mindestens 3 Elemente enthält
         for i in range(len(value) - 2):
             # Extrahiere die Elemente mit den entsprechenden Indizes
-            teil_liste = tuple(value[i:i + 3])  # Konvertiere den Slice in ein Tuple
-            # Füge die Teilliste zum Dictionary der Teil-Listen hinzu, wenn sie noch nicht existiert
-            if teil_liste not in patterns:
-                patterns[teil_liste] = counter + 1
-                counter += 1
+            teil_liste = tuple(value[i:i + 3])
+            # Zähle die Anzahl der eindeutigen Einträge
+            patterns[teil_liste] += 1
 
         print("tripletts:\n")
         for element, count in patterns.items():
