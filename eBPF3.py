@@ -6605,9 +6605,9 @@ def createpatterns():
             else:
                 patterns[teil_liste] = 1
 
-        print("tripletts with PID:" + str(key) + "\n")
-        for element, count in patterns.items():
-            print(element, count)
+        def print_triplets(triplet_dict):
+            for triplet, count in triplet_dict.items():
+                print(f"Triplet: {triplet}, Count: {count}")
 
 
 # Eingabe des zu tracenden Binaries.
