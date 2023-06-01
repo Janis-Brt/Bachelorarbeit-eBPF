@@ -6601,6 +6601,7 @@ def createpatterns():
             if value[i] == value[i + 1]:
                 print("Doppelte Vorkomniss  erkannt!" + value[i] + value[i+1] )
                 value[i] = str(i) + "*"
+                print("Update " + value[i])
             teil_liste = tuple(value[i:i + 3])
             # Zähle die Anzahl der eindeutigen Einträge
             key_list = [1 if teil_liste not in patterns else patterns[teil_liste][0] + 1, key]
