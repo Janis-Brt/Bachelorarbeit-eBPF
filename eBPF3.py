@@ -6590,6 +6590,20 @@ def getinumcontainer():
         # else:
         #     print("not found")
 
+ def createpatterns():
+     patterns = []
+     # Schleife von 0 bis Länge der Liste minus 2
+     for i in range(len(sequencesswithtpid) - 2):
+         # Extrahiere die Elemente mit den entsprechenden Indizes
+         teil_liste = sequencesswithtpid[i:i + 3]
+         # Füge die Teilliste zur Liste der Teil-Listen hinzu
+         patterns.append(teil_liste)
+
+     # Ausgabe der Teil-Listen
+     print("System Call Patterns mit 3 Elementen\n")
+     for element in patterns:
+         print(element)
+
 
 # Eingabe des zu tracenden Binaries.
 # ibinary = input("Input Binary: ")

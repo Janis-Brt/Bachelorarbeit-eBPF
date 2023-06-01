@@ -6976,19 +6976,19 @@ def add_to_pid_dict(key, value, tid):
 
 
 
-# def createpatterns():
-#     patterns = []
-#     # Schleife von 0 bis Länge der Liste minus 2
-#     for i in range(len(syscalls) - 2):
-#         # Extrahiere die Elemente mit den entsprechenden Indizes
-#         teil_liste = syscalls[i:i + 3]
-#         # Füge die Teilliste zur Liste der Teil-Listen hinzu
-#         patterns.append(teil_liste)
-#
-#     # Ausgabe der Teil-Listen
-#     print("System Call Patterns mit 3 Elementen\n")
-#     for element in patterns:
-#         print(element)
+ def createpatterns():
+     patterns = []
+     # Schleife von 0 bis Länge der Liste minus 2
+     for i in range(len(syscalls) - 2):
+         # Extrahiere die Elemente mit den entsprechenden Indizes
+         teil_liste = syscalls[i:i + 3]
+         # Füge die Teilliste zur Liste der Teil-Listen hinzu
+         patterns.append(teil_liste)
+
+     # Ausgabe der Teil-Listen
+     print("System Call Patterns mit 3 Elementen\n")
+     for element in patterns:
+         print(element)
 
 
 # Die Funktion gibt die PID-Namespace Nummer des Host Systems zurück
