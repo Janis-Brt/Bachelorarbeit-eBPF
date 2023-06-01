@@ -6605,8 +6605,13 @@ def createpatterns():
             else:
                 patterns[teil_liste] = 1
 
-        for triplet, count in patterns.items():
-            print(f"Triplet: {triplet}, Count: {count}")
+    for key, value in sequencesswithtpid.items():
+    print(f"Ursprünglicher Schlüssel: {key}")
+    for i in range(len(value) - 2):
+        teil_liste = tuple(value[i:i + 3])
+        count = patterns.get(teil_liste, 0)
+        print(f"Item: {teil_liste}, Anzahl: {count}")
+    print()
 
 
 # Eingabe des zu tracenden Binaries.
