@@ -6593,7 +6593,6 @@ def getinumcontainer():
 
 def createpatterns():
     patterns = {}
-    grouped_patterns = {}
     # Schleife von 0 bis Länge der Liste minus 2
     for key, value in sequencesswithtpid.items():
         # Überprüfe, ob die Liste im Wert mindestens 3 Elemente enthält
@@ -6601,23 +6600,17 @@ def createpatterns():
             # Extrahiere die Elemente mit den entsprechenden Indizes
             teil_liste = tuple(value[i:i + 3])
             # Zähle die Anzahl der eindeutigen Einträge
+            key_list = [patterns.get(teil_liste, 0), key]
+
+            # Zähle die Anzahl der eindeutigen Einträge unter Verwendung des neuen Schlüssels
             if teil_liste in patterns:
-                patterns[teil_liste] += 1
+                patterns[teil_liste][0] += 1
             else:
-                patterns[teil_liste] = 1
-    for key, pattern_dict in patterns.items():
-        for pattern, count in pattern_dict.items():
-            if pattern in grouped_patterns:
-                grouped_patterns[pattern].append((key, count))
-            else:
-                grouped_patterns[pattern] = [(key, count)]
-    for pattern, key_count_list in grouped_patterns.items():
-        print("Muster:", pattern)
+                patterns[teil_liste] = key_list
+    for pattern, count_key in patterns.items():
+        count, key = count_key
+        print(f"Pattern: {pattern}, Count: {count}, Key: {key}")
 
-        for key, count in key_count_list:
-            print("Schlüssel:", key, "Anzahl:", count)
-
-        print()
 
 
 
