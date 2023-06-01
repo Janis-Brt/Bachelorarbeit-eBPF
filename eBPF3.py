@@ -6598,11 +6598,16 @@ def createpatterns():
         # Überprüfe, ob die Liste im Wert mindestens 3 Elemente enthält
         for i in range(len(value) - 2):
             # Extrahiere die Elemente mit den entsprechenden Indizes
-            if i+1 < len(value) and value[i] == value[i + 1]:
+            if i+1 < len(value) and value[i] == value[i + 1] or value[i] == value[i + 2]:
                 #print("Doppelte Vorkomniss  erkannt!" + value[i] + value[i+1] )
                 value[i] = value[i] + "*"
                 #print("Update " + value[i])
                 del value[i+1]
+            if i + 2 < len(value) and value[i] == value[i + 1] and value[i] == value[i + 2]:
+                value[i] = value[i] + "*"
+                # print("Update " + value[i])
+                del value[i + 1]
+                del value[i + 2]
 
             teil_liste = tuple(value[i:i + 3])
             # Zähle die Anzahl der eindeutigen Einträge
