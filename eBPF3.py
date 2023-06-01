@@ -6599,9 +6599,9 @@ def createpatterns():
         for i in range(len(value) - 2):
             # Extrahiere die Elemente mit den entsprechenden Indizes
             if i+1 < len(value) and value[i] == value[i + 1]:
-                print("Doppelte Vorkomniss  erkannt!" + value[i] + value[i+1] )
+                #print("Doppelte Vorkomniss  erkannt!" + value[i] + value[i+1] )
                 value[i] = value[i] + "*"
-                print("Update " + value[i])
+                #print("Update " + value[i])
                 del value[i+1]
 
             teil_liste = tuple(value[i:i + 3])
