@@ -6592,7 +6592,7 @@ def getinumcontainer():
         #     print("not found")
 
 def createpatterns():
-    patterns = []
+    patterns = {}
     # Schleife von 0 bis Länge der Liste minus 2
     for key, value in sequencesswithtpid.items():
         # Überprüfe, ob die Liste im Wert mindestens 3 Elemente enthält
