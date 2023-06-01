@@ -6596,19 +6596,12 @@ def createpatterns():
     # Schleife von 0 bis Länge der Liste minus 2
     for key, value in sequencesswithtpid.items():
         # Überprüfe, ob die Liste im Wert mindestens 3 Elemente enthält
-        if len(value) >= 3:
-            # Iteriere über die Liste bis zum vorletzten Element
-            for i in range(len(value) - 2):
-                # Kombiniere die aktuellen Zeichen mit den nächsten beiden Zeichen
-                combined = value[i] + value[i + 1] + value[i + 2]
+        for i in range(len(syscalls) - 2):
+            # Extrahiere die Elemente mit den entsprechenden Indizes
+            teil_liste = syscalls[i:i + 3]
+            # Füge die Teilliste zur Liste der Teil-Listen hinzu
+            patterns.append(teil_liste)
 
-                # Überprüfe, ob das Pattern bereits im Dictionary vorhanden ist
-                if combined in patterns:
-                    # Erhöhe den Zähler (Key) des Patterns um 1
-                    patterns[combined] += 1
-                else:
-                    # Füge das Pattern zum Dictionary hinzu und setze den Zähler auf 1
-                    patterns[combined] = 1
     print("tripletts: " + "\n")
     for element in patterns:
         print(element)
