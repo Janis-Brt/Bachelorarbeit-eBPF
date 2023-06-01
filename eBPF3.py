@@ -6598,7 +6598,7 @@ def createpatterns():
         # Überprüfe, ob die Liste im Wert mindestens 3 Elemente enthält
         for i in range(len(value) - 2):
             # Extrahiere die Elemente mit den entsprechenden Indizes
-            if value[i] == value[i + 1]:
+            if i+1 < len(value) and value[i] == value[i + 1]:
                 print("Doppelte Vorkomniss  erkannt!" + value[i] + value[i+1] )
                 value[i] = value[i] + "*"
                 print("Update " + value[i])
