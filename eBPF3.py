@@ -6601,7 +6601,14 @@ def createpatterns():
             for i in range(len(value) - 2):
                 # Kombiniere die aktuellen Zeichen mit den nächsten beiden Zeichen
                 combined = value[i] + value[i + 1] + value[i + 2]
-                patterns.append(combined)
+
+                # Überprüfe, ob das Pattern bereits im Dictionary vorhanden ist
+                if combined in patterns:
+                    # Erhöhe den Zähler (Key) des Patterns um 1
+                    patterns[combined] += 1
+                else:
+                    # Füge das Pattern zum Dictionary hinzu und setze den Zähler auf 1
+                    patterns[combined] = 1
     print("tripletts: " + "\n")
     for element in patterns:
         print(element)
