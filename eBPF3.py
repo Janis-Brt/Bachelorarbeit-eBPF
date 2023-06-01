@@ -6600,7 +6600,7 @@ def createpatterns():
             # Extrahiere die Elemente mit den entsprechenden Indizes
             teil_liste = tuple(value[i:i + 3])
             # Zähle die Anzahl der eindeutigen Einträge
-            key_list = [patterns.get(teil_liste, 0), key]
+            key_list = [1 if teil_liste not in patterns else patterns[teil_liste][0] + 1, key]
 
             # Zähle die Anzahl der eindeutigen Einträge unter Verwendung des neuen Schlüssels
             if teil_liste in patterns:
@@ -6609,7 +6609,7 @@ def createpatterns():
                 patterns[teil_liste] = key_list
     for pattern, count_key in patterns.items():
         count, key = count_key
-        print(f"Pattern: {pattern}, Count: {count}, Key: {key}")
+        print(f"Häufigkeit: {pattern}, Count: {count}, PID: {key}")
 
 
 
