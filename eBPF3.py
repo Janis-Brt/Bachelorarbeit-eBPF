@@ -6597,9 +6597,9 @@ def createpatterns():
     # Schleife von 0 bis Länge der Liste minus 2
     for key, value in sequencesswithtpid.items():
         # Überprüfe, ob die Liste im Wert mindestens 3 Elemente enthält
-        for i in range(len(syscalls) - 2):
+        for i in range(len(value) - 2):
             # Extrahiere die Elemente mit den entsprechenden Indizes
-            teil_liste = syscalls[i:i + 3]
+            teil_liste = sequencesswithtpid[i:i + 3]
             # Füge die Teilliste zur Liste der Teil-Listen hinzu
             if tuple(teil_liste) not in patterns:
                 patterns[tuple(teil_liste)] = counter + 1
