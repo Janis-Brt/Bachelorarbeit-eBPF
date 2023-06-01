@@ -6593,6 +6593,7 @@ def getinumcontainer():
 
 def createpatterns():
     patterns = {}
+    counter = 0
     # Schleife von 0 bis Länge der Liste minus 2
     for key, value in sequencesswithtpid.items():
         # Überprüfe, ob die Liste im Wert mindestens 3 Elemente enthält
@@ -6600,11 +6601,14 @@ def createpatterns():
             # Extrahiere die Elemente mit den entsprechenden Indizes
             teil_liste = syscalls[i:i + 3]
             # Füge die Teilliste zur Liste der Teil-Listen hinzu
-            patterns.append(teil_liste)
+            if tuple(teil_liste) not in patterns:
+                patterns[tuple(teil_liste)] = counter + 1
+            else:
+                patterns[tuple(teil_liste)] += 1
 
-    print("tripletts: " + "\n")
-    for element in patterns:
-        print(element)
+        print("tripletts:\n")
+        for element, count in patterns.items():
+            print(element, count)
 
 
 # Eingabe des zu tracenden Binaries.
