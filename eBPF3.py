@@ -6593,7 +6593,6 @@ def getinumcontainer():
 
 def createpatterns():
     patterns = {}
-    counter = 0
     # Schleife von 0 bis Länge der Liste minus 2
     for key, value in sequencesswithtpid.items():
         # Überprüfe, ob die Liste im Wert mindestens 3 Elemente enthält
@@ -6601,7 +6600,10 @@ def createpatterns():
             # Extrahiere die Elemente mit den entsprechenden Indizes
             teil_liste = tuple(value[i:i + 3])
             # Zähle die Anzahl der eindeutigen Einträge
-            patterns[teil_liste] += 1
+            if teil_liste in patterns:
+                patterns[teil_liste] += 1
+            else:
+                patterns[teil_liste] = 1
 
         print("tripletts:\n")
         for element, count in patterns.items():
