@@ -6598,6 +6598,7 @@ def createpatterns():
         # Überprüfe, ob die Liste im Wert mindestens 3 Elemente enthält
         for i in range(len(value) - 2):
             # Extrahiere die Elemente mit den entsprechenden Indizes
+            # enthält noch bugs. Das muss ich noch fixen
             if i+1 < len(value) and value[i] == value[i + 1]:
                 #print("Doppelte Vorkomniss  erkannt!" + value[i] + value[i+1] )
                 value[i] = value[i] + "*"
@@ -6632,7 +6633,7 @@ def createpatterns():
 # print("Getting Host-PID-NS")
 # host_ns = getinum()
 # print(host_ns)
-print("Getting Container-PID")
+print("Getting Container-INUM")
 inum_container = getinumcontainer()
 print(str(inum_container))
 print("attaching to kretprobes")
