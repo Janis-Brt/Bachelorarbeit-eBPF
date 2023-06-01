@@ -6523,6 +6523,7 @@ def getringbuffer():
                 with open(json_file2, 'w') as f:
                     # Schreibe das JSON in die Datei
                     json.dump(sequencesswithttid, f)
+                createpatterns()
             return
 
 
