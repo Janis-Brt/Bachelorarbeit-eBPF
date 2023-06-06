@@ -36,7 +36,7 @@ BPF_HASH(inum, struct key_t, unsigned int, 128);
 
 static void stats_increment(int key) {
     INUM_RING
-    stats.increment(&inum_container);
+    inums.increment(&inum_container);
 }
 
 /**int insert(struct pt_regs *ctx) {
