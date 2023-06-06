@@ -25,8 +25,8 @@ BPF_PERF_OUTPUT(events);
 // BPF_ARRAY(counts, unsigned int, 32);
 // unsigned int value = 1234;
 //bpf_map_update_elem(&counts, &index, &value, BPF_ANY);
-BPF_HASH(inums, int inum, int index);
-inums.insert(1,1);
+BPF_HASH(inums, int inum, int, index);
+// inums.insert(1,1);
 
 
 // INUM_RING
