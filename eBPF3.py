@@ -24,7 +24,7 @@ struct data_t {
 BPF_PERF_OUTPUT(events);
 // BPF_ARRAY(inums, u64, 128);
 
-INUM_RING
+// INUM_RING
 // bpf_trace_printk("Wert der Variable: %u", inum_container);
 
 
@@ -33,14 +33,15 @@ Zuerst wird geprüft, ob der Return Wert kleiner als 0 ist, in diesem Fall wurde
 und es wird nichts übergeben, andernfalls wird die PID des Prozesses übergeben und die eindeutige System Call Nummer, 
 in diesem Fall die 0.**/
 int sclone(struct pt_regs *ctx) {
-    // hier auf return Value zugreifen
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
     u64 id = bpf_get_current_pid_tgid();
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -51,7 +52,10 @@ int sclone(struct pt_regs *ctx) {
 }
 int sopen(struct pt_regs *ctx) {
     // hier auf return Value zugreifen
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -68,7 +72,10 @@ int sopen(struct pt_regs *ctx) {
 }
 int sread(struct pt_regs *ctx) {
     // hier auf return Value zugreifen
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -80,15 +87,16 @@ int sread(struct pt_regs *ctx) {
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
     data.syscallnumber = 2;
-    INUM_RING
-    data.test_inum = inum_container;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
 
 int swrite(struct pt_regs *ctx) {
     // hier auf return Value zugreifen
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -104,7 +112,10 @@ int swrite(struct pt_regs *ctx) {
     return 0;
 }
 int sclose(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -120,7 +131,10 @@ int sclose(struct pt_regs *ctx) {
     return 0;
 }
 int sstat(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -136,7 +150,10 @@ int sstat(struct pt_regs *ctx) {
     return 0;
 }
 int sfstat(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -152,7 +169,10 @@ int sfstat(struct pt_regs *ctx) {
     return 0;
 }
 int slstat(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -168,7 +188,10 @@ int slstat(struct pt_regs *ctx) {
     return 0;
 }
 int spoll(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -184,7 +207,10 @@ int spoll(struct pt_regs *ctx) {
     return 0;
 }
 int slseek(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -200,7 +226,10 @@ int slseek(struct pt_regs *ctx) {
     return 0;
 }
 int smmap(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -216,7 +245,10 @@ int smmap(struct pt_regs *ctx) {
     return 0;
 }
 int smprotect(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -232,7 +264,10 @@ int smprotect(struct pt_regs *ctx) {
     return 0;
 }
 int smunmap(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -248,7 +283,10 @@ int smunmap(struct pt_regs *ctx) {
     return 0;
 }
 int sbrk(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -264,7 +302,10 @@ int sbrk(struct pt_regs *ctx) {
     return 0;
 }
 int srt_sigaction(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -280,7 +321,10 @@ int srt_sigaction(struct pt_regs *ctx) {
     return 0;
 }
 int srt_sigprocmask(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -296,7 +340,10 @@ int srt_sigprocmask(struct pt_regs *ctx) {
     return 0;
 }
 int srt_sigreturn(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -312,7 +359,10 @@ int srt_sigreturn(struct pt_regs *ctx) {
     return 0;
 }
 int sioctl(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -328,7 +378,10 @@ int sioctl(struct pt_regs *ctx) {
     return 0;
 }
 int spread64(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -344,7 +397,10 @@ int spread64(struct pt_regs *ctx) {
     return 0;
 }
 int spwrite64(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -360,7 +416,10 @@ int spwrite64(struct pt_regs *ctx) {
     return 0;
 }
 int sreadv(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -376,7 +435,10 @@ int sreadv(struct pt_regs *ctx) {
     return 0;
 }
 int swritev(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -392,7 +454,10 @@ int swritev(struct pt_regs *ctx) {
     return 0;
 }
 int saccess(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -408,7 +473,10 @@ int saccess(struct pt_regs *ctx) {
     return 0;
 }
 int spipe(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -424,7 +492,10 @@ int spipe(struct pt_regs *ctx) {
     return 0;
 }
 int sselect(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -440,7 +511,10 @@ int sselect(struct pt_regs *ctx) {
     return 0;
 }
 int smremap(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -456,7 +530,10 @@ int smremap(struct pt_regs *ctx) {
     return 0;
 }
 int ssched_yield(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -472,7 +549,10 @@ int ssched_yield(struct pt_regs *ctx) {
     return 0;
 }
 int smsync(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -488,7 +568,10 @@ int smsync(struct pt_regs *ctx) {
     return 0;
 }
 int smincore(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -504,7 +587,10 @@ int smincore(struct pt_regs *ctx) {
     return 0;
 }
 int smadvise(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -520,7 +606,10 @@ int smadvise(struct pt_regs *ctx) {
     return 0;
 }
 int sshmget(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -536,7 +625,10 @@ int sshmget(struct pt_regs *ctx) {
     return 0;
 }
 int sshmat(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -552,7 +644,10 @@ int sshmat(struct pt_regs *ctx) {
     return 0;
 }
 int sshmctl(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -568,7 +663,10 @@ int sshmctl(struct pt_regs *ctx) {
     return 0;
 }
 int sdup(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -584,7 +682,10 @@ int sdup(struct pt_regs *ctx) {
     return 0;
 }
 int sdup2(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -600,7 +701,10 @@ int sdup2(struct pt_regs *ctx) {
     return 0;
 }
 int spause(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -616,7 +720,10 @@ int spause(struct pt_regs *ctx) {
     return 0;
 }
 int snanosleep(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -632,7 +739,10 @@ int snanosleep(struct pt_regs *ctx) {
     return 0;
 }
 int sgetitimer(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -648,7 +758,10 @@ int sgetitimer(struct pt_regs *ctx) {
     return 0;
 }
 int salarm(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -664,7 +777,10 @@ int salarm(struct pt_regs *ctx) {
     return 0;
 }
 int ssetitimer(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -680,7 +796,10 @@ int ssetitimer(struct pt_regs *ctx) {
     return 0;
 }
 int sgetpid(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -696,7 +815,10 @@ int sgetpid(struct pt_regs *ctx) {
     return 0;
 }
 int ssendfile(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -712,7 +834,10 @@ int ssendfile(struct pt_regs *ctx) {
     return 0;
 }
 int ssocket(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -728,7 +853,10 @@ int ssocket(struct pt_regs *ctx) {
     return 0;
 }
 int sconnect(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -744,7 +872,10 @@ int sconnect(struct pt_regs *ctx) {
     return 0;
 }
 int saccept(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -760,7 +891,10 @@ int saccept(struct pt_regs *ctx) {
     return 0;
 }
 int ssendto(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -776,7 +910,10 @@ int ssendto(struct pt_regs *ctx) {
     return 0;
 }
 int srecvfrom(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -793,7 +930,10 @@ int srecvfrom(struct pt_regs *ctx) {
 }
 
 int ssendmsg(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -809,7 +949,10 @@ int ssendmsg(struct pt_regs *ctx) {
     return 0;
 }
 int srecvmsg(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -825,7 +968,10 @@ int srecvmsg(struct pt_regs *ctx) {
     return 0;
 }
 int sshutdown(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -841,7 +987,10 @@ int sshutdown(struct pt_regs *ctx) {
     return 0;
 }
 int sbind(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -857,7 +1006,10 @@ int sbind(struct pt_regs *ctx) {
     return 0;
 }
 int slisten(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -873,7 +1025,10 @@ int slisten(struct pt_regs *ctx) {
     return 0;
 }
 int sgetsockname(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -889,7 +1044,10 @@ int sgetsockname(struct pt_regs *ctx) {
     return 0;
 }
 int sgetpeername(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -905,7 +1063,10 @@ int sgetpeername(struct pt_regs *ctx) {
     return 0;
 }
 int ssocketpair(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -921,7 +1082,10 @@ int ssocketpair(struct pt_regs *ctx) {
     return 0;
 }
 int ssetsockopt(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -937,7 +1101,10 @@ int ssetsockopt(struct pt_regs *ctx) {
     return 0;
 }
 int sgetsockopt(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -953,7 +1120,10 @@ int sgetsockopt(struct pt_regs *ctx) {
     return 0;
 }
 int sfork(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -969,7 +1139,10 @@ int sfork(struct pt_regs *ctx) {
     return 0;
 }
 int svfork(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -985,7 +1158,10 @@ int svfork(struct pt_regs *ctx) {
     return 0;
 }
 int sexecve(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1001,7 +1177,10 @@ int sexecve(struct pt_regs *ctx) {
     return 0;
 }
 int sexit(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1017,7 +1196,10 @@ int sexit(struct pt_regs *ctx) {
     return 0;
 }
 int swait4(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1033,7 +1215,10 @@ int swait4(struct pt_regs *ctx) {
     return 0;
 }
 int skill(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1049,7 +1234,10 @@ int skill(struct pt_regs *ctx) {
     return 0;
 }
 int suname(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1065,7 +1253,10 @@ int suname(struct pt_regs *ctx) {
     return 0;
 }
 int ssemget(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1081,7 +1272,10 @@ int ssemget(struct pt_regs *ctx) {
     return 0;
 }
 int ssemop(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1097,7 +1291,10 @@ int ssemop(struct pt_regs *ctx) {
     return 0;
 }
 int ssemctl(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1113,7 +1310,10 @@ int ssemctl(struct pt_regs *ctx) {
     return 0;
 }
 int sshmdt(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1130,7 +1330,10 @@ int sshmdt(struct pt_regs *ctx) {
 }
 
 int smsgget(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1146,7 +1349,10 @@ int smsgget(struct pt_regs *ctx) {
     return 0;
 }
 int smsgsnd(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1162,7 +1368,10 @@ int smsgsnd(struct pt_regs *ctx) {
     return 0;
 }
 int smsgrcv(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1178,7 +1387,10 @@ int smsgrcv(struct pt_regs *ctx) {
     return 0;
 }
 int smsgctl(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1194,7 +1406,10 @@ int smsgctl(struct pt_regs *ctx) {
     return 0;
 }
 int sfcntl(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1210,7 +1425,10 @@ int sfcntl(struct pt_regs *ctx) {
     return 0;
 }
 int sflock(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1226,7 +1444,10 @@ int sflock(struct pt_regs *ctx) {
     return 0;
 }
 int sfsync(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1242,7 +1463,10 @@ int sfsync(struct pt_regs *ctx) {
     return 0;
 }
 int sfdatasync(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1258,7 +1482,10 @@ int sfdatasync(struct pt_regs *ctx) {
     return 0;
 }
 int struncate(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1274,7 +1501,10 @@ int struncate(struct pt_regs *ctx) {
     return 0;
 }
 int sftruncate(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1290,7 +1520,10 @@ int sftruncate(struct pt_regs *ctx) {
     return 0;
 }
 int sgetdents(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1306,7 +1539,10 @@ int sgetdents(struct pt_regs *ctx) {
     return 0;
 }
 int sgetcwd(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1322,7 +1558,10 @@ int sgetcwd(struct pt_regs *ctx) {
     return 0;
 }
 int schdir(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1338,7 +1577,10 @@ int schdir(struct pt_regs *ctx) {
     return 0;
 }
 int sfchdir(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1354,7 +1596,10 @@ int sfchdir(struct pt_regs *ctx) {
     return 0;
 }
 int srename(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1370,7 +1615,10 @@ int srename(struct pt_regs *ctx) {
     return 0;
 }
 int smkdir(struct pt_regs *ctx) {
-    /**if(PT_REGS_RC(ctx) < 0){
+    /**INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }**/
     struct data_t data = {};
@@ -1386,7 +1634,10 @@ int smkdir(struct pt_regs *ctx) {
     return 0;
 }
 int srmdir(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1402,7 +1653,10 @@ int srmdir(struct pt_regs *ctx) {
     return 0;
 }
 int screat(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1418,7 +1672,10 @@ int screat(struct pt_regs *ctx) {
     return 0;
 }
 int slink(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1434,7 +1691,10 @@ int slink(struct pt_regs *ctx) {
     return 0;
 }
 int sunlink(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1450,7 +1710,10 @@ int sunlink(struct pt_regs *ctx) {
     return 0;
 }
 int ssymlink(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1466,7 +1729,10 @@ int ssymlink(struct pt_regs *ctx) {
     return 0;
 }
 int sreadlink(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1482,7 +1748,10 @@ int sreadlink(struct pt_regs *ctx) {
     return 0;
 }
 int schmod(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1499,7 +1768,10 @@ int schmod(struct pt_regs *ctx) {
 }
 
 int sfchmod(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1515,7 +1787,10 @@ int sfchmod(struct pt_regs *ctx) {
     return 0;
 }
 int schown(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1531,7 +1806,10 @@ int schown(struct pt_regs *ctx) {
     return 0;
 }
 int sfchown(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1547,7 +1825,10 @@ int sfchown(struct pt_regs *ctx) {
     return 0;
 }
 int slchown(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1563,7 +1844,10 @@ int slchown(struct pt_regs *ctx) {
     return 0;
 }
 int sumask(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1579,7 +1863,10 @@ int sumask(struct pt_regs *ctx) {
     return 0;
 }
 int sgettimeofday(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1595,7 +1882,10 @@ int sgettimeofday(struct pt_regs *ctx) {
     return 0;
 }
 int sgetrlimit(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1612,7 +1902,10 @@ int sgetrlimit(struct pt_regs *ctx) {
 }
 
 int sgetrusage(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1629,7 +1922,10 @@ int sgetrusage(struct pt_regs *ctx) {
 }
 
 int ssysinfo(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1645,7 +1941,10 @@ int ssysinfo(struct pt_regs *ctx) {
     return 0;
 }
 int stimes(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1661,7 +1960,10 @@ int stimes(struct pt_regs *ctx) {
     return 0;
 }
 int sptrace(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1677,7 +1979,10 @@ int sptrace(struct pt_regs *ctx) {
     return 0;
 }
 int sgetuid(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1693,7 +1998,10 @@ int sgetuid(struct pt_regs *ctx) {
     return 0;
 }
 int ssyslog(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1709,7 +2017,10 @@ int ssyslog(struct pt_regs *ctx) {
     return 0;
 }
 int sgetgid(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1725,7 +2036,10 @@ int sgetgid(struct pt_regs *ctx) {
     return 0;
 }
 int ssetuid(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1741,7 +2055,10 @@ int ssetuid(struct pt_regs *ctx) {
     return 0;
 }
 int ssetgid(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1757,7 +2074,10 @@ int ssetgid(struct pt_regs *ctx) {
     return 0;
 }
 int sgeteuid(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1773,7 +2093,10 @@ int sgeteuid(struct pt_regs *ctx) {
     return 0;
 }
 int sgetegid(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1789,7 +2112,10 @@ int sgetegid(struct pt_regs *ctx) {
     return 0;
 }
 int ssetpgid(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1805,7 +2131,10 @@ int ssetpgid(struct pt_regs *ctx) {
     return 0;
 }
 int sgetppid(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1821,7 +2150,10 @@ int sgetppid(struct pt_regs *ctx) {
     return 0;
 }
 int sgetpgrp(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1837,7 +2169,10 @@ int sgetpgrp(struct pt_regs *ctx) {
     return 0;
 }
 int ssetsid(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1853,7 +2188,10 @@ int ssetsid(struct pt_regs *ctx) {
     return 0;
 }
 int ssetreuid(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1869,7 +2207,10 @@ int ssetreuid(struct pt_regs *ctx) {
     return 0;
 }
 int ssetregid(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1885,7 +2226,10 @@ int ssetregid(struct pt_regs *ctx) {
     return 0;
 }
 int sgetgroups(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1901,7 +2245,10 @@ int sgetgroups(struct pt_regs *ctx) {
     return 0;
 }
 int ssetgroups(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1917,7 +2264,10 @@ int ssetgroups(struct pt_regs *ctx) {
     return 0;
 }
 int ssetresuid(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1933,7 +2283,10 @@ int ssetresuid(struct pt_regs *ctx) {
     return 0;
 }
 int sgetresuid(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1949,7 +2302,10 @@ int sgetresuid(struct pt_regs *ctx) {
     return 0;
 }
 int ssetresgid(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1965,7 +2321,10 @@ int ssetresgid(struct pt_regs *ctx) {
     return 0;
 }
 int sgetresgid(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1981,7 +2340,10 @@ int sgetresgid(struct pt_regs *ctx) {
     return 0;
 }
 int sgetpgid(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -1997,7 +2359,10 @@ int sgetpgid(struct pt_regs *ctx) {
     return 0;
 }
 int ssetfsuid(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2013,7 +2378,10 @@ int ssetfsuid(struct pt_regs *ctx) {
     return 0;
 }
 int ssetfsgid(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2029,7 +2397,10 @@ int ssetfsgid(struct pt_regs *ctx) {
     return 0;
 }
 int sgetsid(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2045,7 +2416,10 @@ int sgetsid(struct pt_regs *ctx) {
     return 0;
 }
 int scapget(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2061,7 +2435,10 @@ int scapget(struct pt_regs *ctx) {
     return 0;
 }
 int scapset(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2077,7 +2454,10 @@ int scapset(struct pt_regs *ctx) {
     return 0;
 }
 int srt_sigpending(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2093,7 +2473,10 @@ int srt_sigpending(struct pt_regs *ctx) {
     return 0;
 }
 int srt_sigtimedwait(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2109,7 +2492,10 @@ int srt_sigtimedwait(struct pt_regs *ctx) {
     return 0;
 }
 int srt_sigqueueinfo(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2125,7 +2511,10 @@ int srt_sigqueueinfo(struct pt_regs *ctx) {
     return 0;
 }
 int srt_sigsuspend(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2141,7 +2530,10 @@ int srt_sigsuspend(struct pt_regs *ctx) {
     return 0;
 }
 int ssigaltstack(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2158,7 +2550,10 @@ int ssigaltstack(struct pt_regs *ctx) {
     return 0;
 }
 int sutime(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2174,7 +2569,10 @@ int sutime(struct pt_regs *ctx) {
     return 0;
 }
 int smknod(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2190,7 +2588,10 @@ int smknod(struct pt_regs *ctx) {
     return 0;
 }
 int suselib(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2206,7 +2607,10 @@ int suselib(struct pt_regs *ctx) {
     return 0;
 }
 int spersonality(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2222,7 +2626,10 @@ int spersonality(struct pt_regs *ctx) {
     return 0;
 }
 int sustat(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2238,7 +2645,10 @@ int sustat(struct pt_regs *ctx) {
     return 0;
 }
 int sstatfs(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2254,7 +2664,10 @@ int sstatfs(struct pt_regs *ctx) {
     return 0;
 }
 int sfstatfs(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2270,7 +2683,10 @@ int sfstatfs(struct pt_regs *ctx) {
     return 0;
 }
 int ssysfs(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2286,7 +2702,10 @@ int ssysfs(struct pt_regs *ctx) {
     return 0;
 }
 int sgetpriority(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2302,7 +2721,10 @@ int sgetpriority(struct pt_regs *ctx) {
     return 0;
 }
 int ssetpriority(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2318,7 +2740,10 @@ int ssetpriority(struct pt_regs *ctx) {
     return 0;
 }
 int ssched_setparam(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2334,7 +2759,10 @@ int ssched_setparam(struct pt_regs *ctx) {
     return 0;
 }
 int ssched_getparam(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2350,7 +2778,10 @@ int ssched_getparam(struct pt_regs *ctx) {
     return 0;
 }
 int ssched_setscheduler(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2366,7 +2797,10 @@ int ssched_setscheduler(struct pt_regs *ctx) {
     return 0;
 }
 int ssched_getscheduler(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2382,7 +2816,10 @@ int ssched_getscheduler(struct pt_regs *ctx) {
     return 0;
 }
 int ssched_get_priority_max(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2398,7 +2835,10 @@ int ssched_get_priority_max(struct pt_regs *ctx) {
     return 0;
 }
 int ssched_get_priority_min(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2414,7 +2854,10 @@ int ssched_get_priority_min(struct pt_regs *ctx) {
     return 0;
 }
 int ssched_rr_get_interval(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2430,7 +2873,10 @@ int ssched_rr_get_interval(struct pt_regs *ctx) {
     return 0;
 }
 int smlock(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2446,7 +2892,10 @@ int smlock(struct pt_regs *ctx) {
     return 0;
 }
 int smunlock(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2462,7 +2911,10 @@ int smunlock(struct pt_regs *ctx) {
     return 0;
 }
 int smlockall(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2478,7 +2930,10 @@ int smlockall(struct pt_regs *ctx) {
     return 0;
 }
 int smunlockall(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2494,7 +2949,10 @@ int smunlockall(struct pt_regs *ctx) {
     return 0;
 }
 int svhangup(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2510,7 +2968,10 @@ int svhangup(struct pt_regs *ctx) {
     return 0;
 }
 int smodify_ldt(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2526,7 +2987,10 @@ int smodify_ldt(struct pt_regs *ctx) {
     return 0;
 }
 int spivot_root(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2542,7 +3006,10 @@ int spivot_root(struct pt_regs *ctx) {
     return 0;
 }
 int ssysctl(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2558,7 +3025,10 @@ int ssysctl(struct pt_regs *ctx) {
     return 0;
 }
 int sprctl(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2574,7 +3044,10 @@ int sprctl(struct pt_regs *ctx) {
     return 0;
 }
 int sarch_prctl(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2590,7 +3063,10 @@ int sarch_prctl(struct pt_regs *ctx) {
     return 0;
 }
 int sadjtimex(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2606,7 +3082,10 @@ int sadjtimex(struct pt_regs *ctx) {
     return 0;
 }
 int ssetrlimit(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2622,7 +3101,10 @@ int ssetrlimit(struct pt_regs *ctx) {
     return 0;
 }
 int schroot(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2638,7 +3120,10 @@ int schroot(struct pt_regs *ctx) {
     return 0;
 }
 int ssync(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2654,7 +3139,10 @@ int ssync(struct pt_regs *ctx) {
     return 0;
 }
 int sacct(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2670,7 +3158,10 @@ int sacct(struct pt_regs *ctx) {
     return 0;
 }
 int ssettimeofday(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2686,7 +3177,10 @@ int ssettimeofday(struct pt_regs *ctx) {
     return 0;
 }
 int smount(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2702,7 +3196,10 @@ int smount(struct pt_regs *ctx) {
     return 0;
 }
 int sumount2(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2718,7 +3215,10 @@ int sumount2(struct pt_regs *ctx) {
     return 0;
 }
 int sswapon(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2734,7 +3234,10 @@ int sswapon(struct pt_regs *ctx) {
     return 0;
 }
 int sswapoff(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2750,7 +3253,10 @@ int sswapoff(struct pt_regs *ctx) {
     return 0;
 }
 int sreboot(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2766,7 +3272,10 @@ int sreboot(struct pt_regs *ctx) {
     return 0;
 }
 int ssethostname(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2782,7 +3291,10 @@ int ssethostname(struct pt_regs *ctx) {
     return 0;
 }
 int ssetdomainname(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2798,7 +3310,10 @@ int ssetdomainname(struct pt_regs *ctx) {
     return 0;
 }
 int siopl(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2814,7 +3329,10 @@ int siopl(struct pt_regs *ctx) {
     return 0;
 }
 int sioperm(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2830,7 +3348,10 @@ int sioperm(struct pt_regs *ctx) {
     return 0;
 }
 int screate_module(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2846,7 +3367,10 @@ int screate_module(struct pt_regs *ctx) {
     return 0;
 }
 int sinit_module(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2862,7 +3386,10 @@ int sinit_module(struct pt_regs *ctx) {
     return 0;
 }
 int sdelete_module(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2878,7 +3405,10 @@ int sdelete_module(struct pt_regs *ctx) {
     return 0;
 }
 int sget_kernel_syms(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2894,7 +3424,10 @@ int sget_kernel_syms(struct pt_regs *ctx) {
     return 0;
 }
 int squery_module(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2910,7 +3443,10 @@ int squery_module(struct pt_regs *ctx) {
     return 0;
 }
 int squotactl(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2926,7 +3462,10 @@ int squotactl(struct pt_regs *ctx) {
     return 0;
 }
 int snfsservctl(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2942,7 +3481,10 @@ int snfsservctl(struct pt_regs *ctx) {
     return 0;
 }
 int sgetpmsg(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2958,7 +3500,10 @@ int sgetpmsg(struct pt_regs *ctx) {
     return 0;
 }
 int sputpmsg(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2974,7 +3519,10 @@ int sputpmsg(struct pt_regs *ctx) {
     return 0;
 }
 int safs_syscall(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -2990,7 +3538,10 @@ int safs_syscall(struct pt_regs *ctx) {
     return 0;
 }
 int stuxcall(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3006,7 +3557,10 @@ int stuxcall(struct pt_regs *ctx) {
     return 0;
 }
 int ssecurity(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3022,7 +3576,10 @@ int ssecurity(struct pt_regs *ctx) {
     return 0;
 }
 int sgettid(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3038,7 +3595,10 @@ int sgettid(struct pt_regs *ctx) {
     return 0;
 }
 int sreadahead(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3054,7 +3614,10 @@ int sreadahead(struct pt_regs *ctx) {
     return 0;
 }
 int ssetxattr(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3070,7 +3633,10 @@ int ssetxattr(struct pt_regs *ctx) {
     return 0;
 }
 int slsetxattr(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3086,7 +3652,10 @@ int slsetxattr(struct pt_regs *ctx) {
     return 0;
 }
 int sfsetxattr(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3102,7 +3671,10 @@ int sfsetxattr(struct pt_regs *ctx) {
     return 0;
 }
 int sgetxattr(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3118,7 +3690,10 @@ int sgetxattr(struct pt_regs *ctx) {
     return 0;
 }
 int sfgetxattr(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3134,7 +3709,10 @@ int sfgetxattr(struct pt_regs *ctx) {
     return 0;
 }
 int slistxattr(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3150,7 +3728,10 @@ int slistxattr(struct pt_regs *ctx) {
     return 0;
 }
 int sllistxattr(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3166,7 +3747,10 @@ int sllistxattr(struct pt_regs *ctx) {
     return 0;
 }
 int sflistxattr(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3182,7 +3766,10 @@ int sflistxattr(struct pt_regs *ctx) {
     return 0;
 }
 int sremovexattr(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3198,7 +3785,10 @@ int sremovexattr(struct pt_regs *ctx) {
     return 0;
 }
 int slremovexattr(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3214,7 +3804,10 @@ int slremovexattr(struct pt_regs *ctx) {
     return 0;
 }
 int sfremovexattr(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3230,7 +3823,10 @@ int sfremovexattr(struct pt_regs *ctx) {
     return 0;
 }
 int stkill(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3246,7 +3842,10 @@ int stkill(struct pt_regs *ctx) {
     return 0;
 }
 int stime(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3262,7 +3861,10 @@ int stime(struct pt_regs *ctx) {
     return 0;
 }
 int sfutex(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3278,7 +3880,10 @@ int sfutex(struct pt_regs *ctx) {
     return 0;
 }
 int ssched_setaffinity(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3294,7 +3899,10 @@ int ssched_setaffinity(struct pt_regs *ctx) {
     return 0;
 }
 int ssched_getaffinity(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3310,7 +3918,10 @@ int ssched_getaffinity(struct pt_regs *ctx) {
     return 0;
 }
 int sset_thread_area(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3326,7 +3937,10 @@ int sset_thread_area(struct pt_regs *ctx) {
     return 0;
 }
 int sio_setup(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3342,7 +3956,10 @@ int sio_setup(struct pt_regs *ctx) {
     return 0;
 }
 int sio_destroy(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3358,7 +3975,10 @@ int sio_destroy(struct pt_regs *ctx) {
     return 0;
 }
 int sio_getevents(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3374,7 +3994,10 @@ int sio_getevents(struct pt_regs *ctx) {
     return 0;
 }
 int sio_submit(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3390,7 +4013,10 @@ int sio_submit(struct pt_regs *ctx) {
     return 0;
 }
 int sio_cancel(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3406,7 +4032,10 @@ int sio_cancel(struct pt_regs *ctx) {
     return 0;
 }
 int sget_thread_area(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3422,7 +4051,10 @@ int sget_thread_area(struct pt_regs *ctx) {
     return 0;
 }
 int slookup_dcookie(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3438,7 +4070,10 @@ int slookup_dcookie(struct pt_regs *ctx) {
     return 0;
 }
 int sepoll_create(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3454,7 +4089,10 @@ int sepoll_create(struct pt_regs *ctx) {
     return 0;
 }
 int sepoll_ctl_old(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3470,7 +4108,10 @@ int sepoll_ctl_old(struct pt_regs *ctx) {
     return 0;
 }
 int sepoll_wait_old(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3486,7 +4127,10 @@ int sepoll_wait_old(struct pt_regs *ctx) {
     return 0;
 }
 int sremap_file_pages(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3502,7 +4146,10 @@ int sremap_file_pages(struct pt_regs *ctx) {
     return 0;
 }
 int sgetdents64(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3518,7 +4165,10 @@ int sgetdents64(struct pt_regs *ctx) {
     return 0;
 }
 int sset_tid_address(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3534,7 +4184,10 @@ int sset_tid_address(struct pt_regs *ctx) {
     return 0;
 }
 int srestart_syscall(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3550,7 +4203,10 @@ int srestart_syscall(struct pt_regs *ctx) {
     return 0;
 }
 int ssemtimedop(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3566,7 +4222,10 @@ int ssemtimedop(struct pt_regs *ctx) {
     return 0;
 }
 int sfadvise64(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3582,7 +4241,10 @@ int sfadvise64(struct pt_regs *ctx) {
     return 0;
 }
 int stimer_create(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3598,7 +4260,10 @@ int stimer_create(struct pt_regs *ctx) {
     return 0;
 }
 int stimer_settime(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3614,7 +4279,10 @@ int stimer_settime(struct pt_regs *ctx) {
     return 0;
 }
 int stimer_gettime(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3630,7 +4298,10 @@ int stimer_gettime(struct pt_regs *ctx) {
     return 0;
 }
 int stimer_getoverrun(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3646,7 +4317,10 @@ int stimer_getoverrun(struct pt_regs *ctx) {
     return 0;
 }
 int stimer_delete(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3662,7 +4336,10 @@ int stimer_delete(struct pt_regs *ctx) {
     return 0;
 }
 int sclock_settime(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3678,7 +4355,10 @@ int sclock_settime(struct pt_regs *ctx) {
     return 0;
 }
 int sclock_gettime(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3694,7 +4374,10 @@ int sclock_gettime(struct pt_regs *ctx) {
     return 0;
 }
 int sclock_getres(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3710,7 +4393,10 @@ int sclock_getres(struct pt_regs *ctx) {
     return 0;
 }
 int sclock_nanosleep(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3726,7 +4412,10 @@ int sclock_nanosleep(struct pt_regs *ctx) {
     return 0;
 }
 int sexit_group(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3742,7 +4431,10 @@ int sexit_group(struct pt_regs *ctx) {
     return 0;
 }
 int sepoll_wait(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3758,7 +4450,10 @@ int sepoll_wait(struct pt_regs *ctx) {
     return 0;
 }
 int sepoll_ctl(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3774,7 +4469,10 @@ int sepoll_ctl(struct pt_regs *ctx) {
     return 0;
 }
 int stgkill(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3790,7 +4488,10 @@ int stgkill(struct pt_regs *ctx) {
     return 0;
 }
 int sutimes(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3806,7 +4507,10 @@ int sutimes(struct pt_regs *ctx) {
     return 0;
 }
 int svserver(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3822,7 +4526,10 @@ int svserver(struct pt_regs *ctx) {
     return 0;
 }
 int smbind(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3838,7 +4545,10 @@ int smbind(struct pt_regs *ctx) {
     return 0;
 }
 int sset_mempolicy(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3854,7 +4564,10 @@ int sset_mempolicy(struct pt_regs *ctx) {
     return 0;
 }
 int sget_mempolicy(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3870,7 +4583,10 @@ int sget_mempolicy(struct pt_regs *ctx) {
     return 0;
 }
 int smq_open(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3886,7 +4602,10 @@ int smq_open(struct pt_regs *ctx) {
     return 0;
 }
 int smq_unlink(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3902,7 +4621,10 @@ int smq_unlink(struct pt_regs *ctx) {
     return 0;
 }
 int smq_timedsend(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3918,7 +4640,10 @@ int smq_timedsend(struct pt_regs *ctx) {
     return 0;
 }
 int smq_timedreceive(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3934,7 +4659,10 @@ int smq_timedreceive(struct pt_regs *ctx) {
     return 0;
 }
 int smq_notify(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3950,7 +4678,10 @@ int smq_notify(struct pt_regs *ctx) {
     return 0;
 }
 int smq_getsetattr(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3966,7 +4697,10 @@ int smq_getsetattr(struct pt_regs *ctx) {
     return 0;
 }
 int skexec_load(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3982,7 +4716,10 @@ int skexec_load(struct pt_regs *ctx) {
     return 0;
 }
 int swaitid(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -3998,7 +4735,10 @@ int swaitid(struct pt_regs *ctx) {
     return 0;
 }
 int sadd_key(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4014,7 +4754,10 @@ int sadd_key(struct pt_regs *ctx) {
     return 0;
 }
 int srequest_key(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4030,7 +4773,10 @@ int srequest_key(struct pt_regs *ctx) {
     return 0;
 }
 int skeyctl(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4046,7 +4792,10 @@ int skeyctl(struct pt_regs *ctx) {
     return 0;
 }
 int sioprio_set(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4062,7 +4811,10 @@ int sioprio_set(struct pt_regs *ctx) {
     return 0;
 }
 int sioprio_get(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4078,7 +4830,10 @@ int sioprio_get(struct pt_regs *ctx) {
     return 0;
 }
 int sinotify_init(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4094,7 +4849,10 @@ int sinotify_init(struct pt_regs *ctx) {
     return 0;
 }
 int sinotify_add_watch(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4110,7 +4868,10 @@ int sinotify_add_watch(struct pt_regs *ctx) {
     return 0;
 }
 int sinotify_rm_watch(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4126,7 +4887,10 @@ int sinotify_rm_watch(struct pt_regs *ctx) {
     return 0;
 }
 int smigrate_pages(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4142,7 +4906,10 @@ int smigrate_pages(struct pt_regs *ctx) {
     return 0;
 }
 int sopenat(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4158,7 +4925,10 @@ int sopenat(struct pt_regs *ctx) {
     return 0;
 }
 int smkdirat(struct pt_regs *ctx) {
-    /**if(PT_REGS_RC(ctx) < 0){
+    /**INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }**/
     struct data_t data = {};
@@ -4174,7 +4944,10 @@ int smkdirat(struct pt_regs *ctx) {
     return 0;
 }
 int smknodat(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4190,7 +4963,10 @@ int smknodat(struct pt_regs *ctx) {
     return 0;
 }
 int sfchownat(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4206,7 +4982,10 @@ int sfchownat(struct pt_regs *ctx) {
     return 0;
 }
 int sfutimesat(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4222,7 +5001,10 @@ int sfutimesat(struct pt_regs *ctx) {
     return 0;
 }
 int snewfstatat(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4238,7 +5020,10 @@ int snewfstatat(struct pt_regs *ctx) {
     return 0;
 }
 int sunlinkat(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4254,7 +5039,10 @@ int sunlinkat(struct pt_regs *ctx) {
     return 0;
 }
 int srenameat(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4270,7 +5058,10 @@ int srenameat(struct pt_regs *ctx) {
     return 0;
 }
 int slinkat(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4286,7 +5077,10 @@ int slinkat(struct pt_regs *ctx) {
     return 0;
 }
 int ssymlinkat(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4302,7 +5096,10 @@ int ssymlinkat(struct pt_regs *ctx) {
     return 0;
 }
 int sreadlinkat(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4318,7 +5115,10 @@ int sreadlinkat(struct pt_regs *ctx) {
     return 0;
 }
 int sfchmodat(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4334,7 +5134,10 @@ int sfchmodat(struct pt_regs *ctx) {
     return 0;
 }
 int sfaccessat(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4350,7 +5153,10 @@ int sfaccessat(struct pt_regs *ctx) {
     return 0;
 }
 int spselect6(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4366,7 +5172,10 @@ int spselect6(struct pt_regs *ctx) {
     return 0;
 }
 int sppoll(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4382,7 +5191,10 @@ int sppoll(struct pt_regs *ctx) {
     return 0;
 }
 int sunshare(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4398,7 +5210,10 @@ int sunshare(struct pt_regs *ctx) {
     return 0;
 }
 int sset_robust_list(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4414,7 +5229,10 @@ int sset_robust_list(struct pt_regs *ctx) {
     return 0;
 }
 int sget_robust_list(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4430,7 +5248,10 @@ int sget_robust_list(struct pt_regs *ctx) {
     return 0;
 }
 int ssplice(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4446,7 +5267,10 @@ int ssplice(struct pt_regs *ctx) {
     return 0;
 }
 int stee(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4462,7 +5286,10 @@ int stee(struct pt_regs *ctx) {
     return 0;
 }
 int ssync_file_range(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4478,7 +5305,10 @@ int ssync_file_range(struct pt_regs *ctx) {
     return 0;
 }
 int svmsplice(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4494,7 +5324,10 @@ int svmsplice(struct pt_regs *ctx) {
     return 0;
 }
 int smove_pages(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4510,7 +5343,10 @@ int smove_pages(struct pt_regs *ctx) {
     return 0;
 }
 int sutimensat(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4526,7 +5362,10 @@ int sutimensat(struct pt_regs *ctx) {
     return 0;
 }
 int sepoll_pwait(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4542,7 +5381,10 @@ int sepoll_pwait(struct pt_regs *ctx) {
     return 0;
 }
 int ssignalfd(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4558,7 +5400,10 @@ int ssignalfd(struct pt_regs *ctx) {
     return 0;
 }
 int stimerfd_create(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4574,7 +5419,10 @@ int stimerfd_create(struct pt_regs *ctx) {
     return 0;
 }
 int seventfd(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4590,7 +5438,10 @@ int seventfd(struct pt_regs *ctx) {
     return 0;
 }
 int sfallocate(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4606,7 +5457,10 @@ int sfallocate(struct pt_regs *ctx) {
     return 0;
 }
 int stimerfd_settime(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4622,7 +5476,10 @@ int stimerfd_settime(struct pt_regs *ctx) {
     return 0;
 }
 int stimerfd_gettime(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4638,7 +5495,10 @@ int stimerfd_gettime(struct pt_regs *ctx) {
     return 0;
 }
 int saccept4(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4654,7 +5514,10 @@ int saccept4(struct pt_regs *ctx) {
     return 0;
 }
 int ssignalfd4(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4670,7 +5533,10 @@ int ssignalfd4(struct pt_regs *ctx) {
     return 0;
 }
 int seventfd2(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4686,7 +5552,10 @@ int seventfd2(struct pt_regs *ctx) {
     return 0;
 }
 int epoll_create1(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4702,7 +5571,10 @@ int epoll_create1(struct pt_regs *ctx) {
     return 0;
 }
 int sdup3(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4718,7 +5590,10 @@ int sdup3(struct pt_regs *ctx) {
     return 0;
 }
 int spipe2(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4734,7 +5609,10 @@ int spipe2(struct pt_regs *ctx) {
     return 0;
 }
 int sinotify_init1(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4750,7 +5628,10 @@ int sinotify_init1(struct pt_regs *ctx) {
     return 0;
 }
 int spreadv(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4766,7 +5647,10 @@ int spreadv(struct pt_regs *ctx) {
     return 0;
 }
 int spwritev(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4782,7 +5666,10 @@ int spwritev(struct pt_regs *ctx) {
     return 0;
 }
 int srt_tgsigqueueinfo(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4798,7 +5685,10 @@ int srt_tgsigqueueinfo(struct pt_regs *ctx) {
     return 0;
 }
 int sperf_event_open(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4815,7 +5705,10 @@ int sperf_event_open(struct pt_regs *ctx) {
 }
 
 int srecvmmsg(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4831,7 +5724,10 @@ int srecvmmsg(struct pt_regs *ctx) {
     return 0;
 }
 int sfanotify_init(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4847,7 +5743,10 @@ int sfanotify_init(struct pt_regs *ctx) {
     return 0;
 }
 int sfanotify_mark(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4863,7 +5762,10 @@ int sfanotify_mark(struct pt_regs *ctx) {
     return 0;
 }
 int sprlimit64(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4879,7 +5781,10 @@ int sprlimit64(struct pt_regs *ctx) {
     return 0;
 }
 int sname_to_handle_at(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4895,7 +5800,10 @@ int sname_to_handle_at(struct pt_regs *ctx) {
     return 0;
 }
 int sopen_by_handle_at(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4911,7 +5819,10 @@ int sopen_by_handle_at(struct pt_regs *ctx) {
     return 0;
 }
 int sclock_adjtime(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4927,7 +5838,10 @@ int sclock_adjtime(struct pt_regs *ctx) {
     return 0;
 }
 int ssyncfs(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4943,7 +5857,10 @@ int ssyncfs(struct pt_regs *ctx) {
     return 0;
 }
 int ssendmmsg(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4959,7 +5876,10 @@ int ssendmmsg(struct pt_regs *ctx) {
     return 0;
 }
 int ssetns(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4975,7 +5895,10 @@ int ssetns(struct pt_regs *ctx) {
     return 0;
 }
 int sgetcpu(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -4991,7 +5914,10 @@ int sgetcpu(struct pt_regs *ctx) {
     return 0;
 }
 int sprocess_vm_readv(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -5007,7 +5933,10 @@ int sprocess_vm_readv(struct pt_regs *ctx) {
     return 0;
 }
 int sprocess_vm_writev(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -5023,7 +5952,10 @@ int sprocess_vm_writev(struct pt_regs *ctx) {
     return 0;
 }
 int skcmp(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -5039,7 +5971,10 @@ int skcmp(struct pt_regs *ctx) {
     return 0;
 }
 int sfinit_module(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -5055,7 +5990,10 @@ int sfinit_module(struct pt_regs *ctx) {
     return 0;
 }
 int ssched_setattr(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -5072,7 +6010,10 @@ int ssched_setattr(struct pt_regs *ctx) {
 }
 
 int ssched_getattr(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -5088,7 +6029,10 @@ int ssched_getattr(struct pt_regs *ctx) {
     return 0;
 }
 int srenameat2(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -5105,7 +6049,10 @@ int srenameat2(struct pt_regs *ctx) {
 }
 
 int sseccomp(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -5121,7 +6068,10 @@ int sseccomp(struct pt_regs *ctx) {
     return 0;
 }
 int sgetrandom(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -5137,7 +6087,10 @@ int sgetrandom(struct pt_regs *ctx) {
     return 0;
 }
 int smemfd_create(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -5153,7 +6106,10 @@ int smemfd_create(struct pt_regs *ctx) {
     return 0;
 }
 int skexec_file_load(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -5169,7 +6125,10 @@ int skexec_file_load(struct pt_regs *ctx) {
     return 0;
 }
 int sbpf(struct pt_regs *ctx) {
-    if(PT_REGS_RC(ctx) < 0){
+    INUM_RING
+    data.test_inum = inum_container;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     struct data_t data = {};
@@ -5542,18 +6501,18 @@ def updatesequence(cpu, data, size):
         if syscall_number == 0:
             syscalls.append("clone")
             add_to_pid_dict(ringbufferpid, "clone", tid)
-            print("Test inum: " + str(test_inum))
+            print("Test inum: ")
         elif syscall_number == 1:
             syscalls.append("open")
             add_to_pid_dict(ringbufferpid, "open", tid)
         elif syscall_number == 2:
             syscalls.append("read")
             add_to_pid_dict(ringbufferpid, "read", tid)
-            print("Test inum: " + str(test_inum))
+            print("Test inum: ")
         elif syscall_number == 3:
             syscalls.append("write")
             add_to_pid_dict(ringbufferpid, "write", tid)
-            print("Test inum: " + str(test_inum))
+            print("Test inum: ")
         elif syscall_number == 4:
             syscalls.append("close")
             add_to_pid_dict(ringbufferpid, "close", tid)
