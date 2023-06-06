@@ -1538,7 +1538,6 @@ int smkdir(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
-    struct data_t data = {};
     u64 id = bpf_get_current_pid_tgid();
     data.inum = inum_ring;
     data.pid = id >> 32;
