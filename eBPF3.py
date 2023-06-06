@@ -34,6 +34,13 @@ struct key_t {
 
 BPF_HASH(inum, struct key_t, unsigned int, 128);
 
+int do_count(struct pt_regs *ctx) {
+    struct key_t key = {};
+    key.ip = 1
+    inum.atomic_increment(key);
+    return 0;
+}
+
 
 /**Diese Funktion wird immer aufgerufen, wenn der System Call clone detektiert wird. 
 Zuerst wird geprüft, ob der Return Wert kleiner als 0 ist, in diesem Fall wurde der System Call nicht korrekt aufgerufen 
