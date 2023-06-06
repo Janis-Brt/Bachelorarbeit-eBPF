@@ -42,7 +42,6 @@ int sclone(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -81,8 +80,6 @@ int sread(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -101,8 +98,6 @@ int swrite(struct pt_regs *ctx) {
         return 0;
     }
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -121,8 +116,6 @@ int sclose(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -141,8 +134,6 @@ int sstat(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -161,8 +152,6 @@ int sfstat(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -181,8 +170,6 @@ int slstat(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -201,8 +188,6 @@ int spoll(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -221,8 +206,6 @@ int slseek(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -241,8 +224,6 @@ int smmap(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -261,8 +242,6 @@ int smprotect(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -281,8 +260,6 @@ int smunmap(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -301,8 +278,6 @@ int sbrk(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -321,8 +296,6 @@ int srt_sigaction(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -341,8 +314,6 @@ int srt_sigprocmask(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -361,8 +332,6 @@ int srt_sigreturn(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -381,8 +350,6 @@ int sioctl(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -401,8 +368,6 @@ int spread64(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -421,8 +386,6 @@ int spwrite64(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -441,8 +404,6 @@ int sreadv(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -461,8 +422,6 @@ int swritev(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -481,8 +440,6 @@ int saccess(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -501,8 +458,6 @@ int spipe(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -521,8 +476,6 @@ int sselect(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -541,8 +494,6 @@ int smremap(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -561,8 +512,6 @@ int ssched_yield(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -581,8 +530,6 @@ int smsync(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -601,8 +548,6 @@ int smincore(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -621,8 +566,6 @@ int smadvise(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -641,8 +584,6 @@ int sshmget(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -661,8 +602,6 @@ int sshmat(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -681,8 +620,6 @@ int sshmctl(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -701,8 +638,6 @@ int sdup(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -721,8 +656,6 @@ int sdup2(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -741,8 +674,6 @@ int spause(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -761,8 +692,6 @@ int snanosleep(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -781,8 +710,6 @@ int sgetitimer(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -801,8 +728,6 @@ int salarm(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -821,8 +746,6 @@ int ssetitimer(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -841,8 +764,6 @@ int sgetpid(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -861,8 +782,6 @@ int ssendfile(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -881,8 +800,6 @@ int ssocket(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -901,8 +818,6 @@ int sconnect(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -921,8 +836,6 @@ int saccept(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -941,8 +854,6 @@ int ssendto(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -961,8 +872,6 @@ int srecvfrom(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -982,8 +891,6 @@ int ssendmsg(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1002,8 +909,6 @@ int srecvmsg(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1022,8 +927,6 @@ int sshutdown(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1042,8 +945,6 @@ int sbind(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1062,8 +963,6 @@ int slisten(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1082,8 +981,6 @@ int sgetsockname(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1102,8 +999,6 @@ int sgetpeername(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1122,8 +1017,6 @@ int ssocketpair(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1142,8 +1035,6 @@ int ssetsockopt(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1162,8 +1053,6 @@ int sgetsockopt(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1182,8 +1071,6 @@ int sfork(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1202,8 +1089,6 @@ int svfork(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1222,8 +1107,6 @@ int sexecve(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1242,8 +1125,6 @@ int sexit(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1262,8 +1143,6 @@ int swait4(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1282,8 +1161,6 @@ int skill(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1302,8 +1179,6 @@ int suname(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1322,8 +1197,6 @@ int ssemget(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1342,8 +1215,6 @@ int ssemop(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1362,8 +1233,6 @@ int ssemctl(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1382,8 +1251,6 @@ int sshmdt(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1403,8 +1270,6 @@ int smsgget(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1423,8 +1288,6 @@ int smsgsnd(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1443,8 +1306,6 @@ int smsgrcv(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1463,8 +1324,6 @@ int smsgctl(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1483,8 +1342,6 @@ int sfcntl(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1503,8 +1360,6 @@ int sflock(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1523,8 +1378,6 @@ int sfsync(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1543,8 +1396,6 @@ int sfdatasync(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1563,8 +1414,6 @@ int struncate(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1583,8 +1432,6 @@ int sftruncate(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1603,8 +1450,6 @@ int sgetdents(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1623,8 +1468,6 @@ int sgetcwd(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1643,8 +1486,6 @@ int schdir(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1663,8 +1504,6 @@ int sfchdir(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1683,8 +1522,6 @@ int srename(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1702,8 +1539,6 @@ int smkdir(struct pt_regs *ctx) {
     }**/
     struct data_t data = {};
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1722,8 +1557,6 @@ int srmdir(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1742,8 +1575,6 @@ int screat(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1762,8 +1593,6 @@ int slink(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1782,8 +1611,6 @@ int sunlink(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1802,8 +1629,6 @@ int ssymlink(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1822,8 +1647,6 @@ int sreadlink(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1842,8 +1665,6 @@ int schmod(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1863,8 +1684,6 @@ int sfchmod(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1883,8 +1702,6 @@ int schown(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1903,8 +1720,6 @@ int sfchown(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1923,8 +1738,6 @@ int slchown(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1943,8 +1756,6 @@ int sumask(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1963,8 +1774,6 @@ int sgettimeofday(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -1983,8 +1792,6 @@ int sgetrlimit(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2004,8 +1811,6 @@ int sgetrusage(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2025,8 +1830,6 @@ int ssysinfo(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2045,8 +1848,6 @@ int stimes(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2065,8 +1866,6 @@ int sptrace(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2085,8 +1884,6 @@ int sgetuid(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2105,8 +1902,6 @@ int ssyslog(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2125,8 +1920,6 @@ int sgetgid(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2145,8 +1938,6 @@ int ssetuid(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2165,8 +1956,6 @@ int ssetgid(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2185,8 +1974,6 @@ int sgeteuid(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2205,8 +1992,6 @@ int sgetegid(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2225,8 +2010,6 @@ int ssetpgid(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2245,8 +2028,6 @@ int sgetppid(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2265,8 +2046,6 @@ int sgetpgrp(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2285,8 +2064,6 @@ int ssetsid(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2305,8 +2082,6 @@ int ssetreuid(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2325,8 +2100,6 @@ int ssetregid(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2345,8 +2118,6 @@ int sgetgroups(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2365,8 +2136,6 @@ int ssetgroups(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2385,8 +2154,6 @@ int ssetresuid(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2405,8 +2172,6 @@ int sgetresuid(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2425,8 +2190,6 @@ int ssetresgid(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2445,8 +2208,6 @@ int sgetresgid(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2465,8 +2226,6 @@ int sgetpgid(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2485,8 +2244,6 @@ int ssetfsuid(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2505,8 +2262,6 @@ int ssetfsgid(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2525,8 +2280,6 @@ int sgetsid(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2545,8 +2298,6 @@ int scapget(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2565,8 +2316,6 @@ int scapset(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2585,8 +2334,6 @@ int srt_sigpending(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2605,8 +2352,6 @@ int srt_sigtimedwait(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2625,8 +2370,6 @@ int srt_sigqueueinfo(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2645,8 +2388,6 @@ int srt_sigsuspend(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2665,8 +2406,6 @@ int ssigaltstack(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2686,8 +2425,6 @@ int sutime(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2706,8 +2443,6 @@ int smknod(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2726,8 +2461,6 @@ int suselib(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2746,8 +2479,6 @@ int spersonality(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2766,8 +2497,6 @@ int sustat(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2786,8 +2515,6 @@ int sstatfs(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2806,8 +2533,6 @@ int sfstatfs(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2826,8 +2551,6 @@ int ssysfs(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2846,8 +2569,6 @@ int sgetpriority(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2866,8 +2587,6 @@ int ssetpriority(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2886,8 +2605,6 @@ int ssched_setparam(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2906,8 +2623,6 @@ int ssched_getparam(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2926,8 +2641,6 @@ int ssched_setscheduler(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2946,8 +2659,6 @@ int ssched_getscheduler(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2966,8 +2677,6 @@ int ssched_get_priority_max(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -2986,8 +2695,6 @@ int ssched_get_priority_min(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3006,8 +2713,6 @@ int ssched_rr_get_interval(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3026,8 +2731,6 @@ int smlock(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3046,8 +2749,6 @@ int smunlock(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3066,8 +2767,6 @@ int smlockall(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3086,8 +2785,6 @@ int smunlockall(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3106,8 +2803,6 @@ int svhangup(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3126,8 +2821,6 @@ int smodify_ldt(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3146,8 +2839,6 @@ int spivot_root(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3166,8 +2857,6 @@ int ssysctl(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3186,8 +2875,6 @@ int sprctl(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3206,8 +2893,6 @@ int sarch_prctl(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3226,8 +2911,6 @@ int sadjtimex(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3246,8 +2929,6 @@ int ssetrlimit(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3266,8 +2947,6 @@ int schroot(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3286,8 +2965,6 @@ int ssync(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3306,8 +2983,6 @@ int sacct(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3326,8 +3001,6 @@ int ssettimeofday(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3346,8 +3019,6 @@ int smount(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3366,8 +3037,6 @@ int sumount2(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3386,8 +3055,6 @@ int sswapon(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3406,8 +3073,6 @@ int sswapoff(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3426,8 +3091,6 @@ int sreboot(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3446,8 +3109,6 @@ int ssethostname(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3466,8 +3127,6 @@ int ssetdomainname(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3486,8 +3145,6 @@ int siopl(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3506,8 +3163,6 @@ int sioperm(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3526,8 +3181,6 @@ int screate_module(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3546,8 +3199,6 @@ int sinit_module(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3566,8 +3217,6 @@ int sdelete_module(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3586,8 +3235,6 @@ int sget_kernel_syms(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3606,8 +3253,6 @@ int squery_module(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3626,8 +3271,6 @@ int squotactl(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3646,8 +3289,6 @@ int snfsservctl(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3666,8 +3307,6 @@ int sgetpmsg(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3686,8 +3325,6 @@ int sputpmsg(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3706,8 +3343,6 @@ int safs_syscall(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3726,8 +3361,6 @@ int stuxcall(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3746,8 +3379,6 @@ int ssecurity(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3766,8 +3397,6 @@ int sgettid(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3786,8 +3415,6 @@ int sreadahead(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3806,8 +3433,6 @@ int ssetxattr(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3826,8 +3451,6 @@ int slsetxattr(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3846,8 +3469,6 @@ int sfsetxattr(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3866,8 +3487,6 @@ int sgetxattr(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3886,8 +3505,6 @@ int sfgetxattr(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3906,8 +3523,6 @@ int slistxattr(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3926,8 +3541,6 @@ int sllistxattr(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3946,8 +3559,6 @@ int sflistxattr(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3966,8 +3577,6 @@ int sremovexattr(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -3986,8 +3595,6 @@ int slremovexattr(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4006,8 +3613,6 @@ int sfremovexattr(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4026,8 +3631,6 @@ int stkill(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4046,8 +3649,6 @@ int stime(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4066,8 +3667,6 @@ int sfutex(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4086,8 +3685,6 @@ int ssched_setaffinity(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4106,8 +3703,6 @@ int ssched_getaffinity(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4126,8 +3721,6 @@ int sset_thread_area(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4146,8 +3739,6 @@ int sio_setup(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4166,8 +3757,6 @@ int sio_destroy(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4186,8 +3775,6 @@ int sio_getevents(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4206,8 +3793,6 @@ int sio_submit(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4226,8 +3811,6 @@ int sio_cancel(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4246,8 +3829,6 @@ int sget_thread_area(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4266,8 +3847,6 @@ int slookup_dcookie(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4286,8 +3865,6 @@ int sepoll_create(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4306,8 +3883,6 @@ int sepoll_ctl_old(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4326,8 +3901,6 @@ int sepoll_wait_old(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4346,8 +3919,6 @@ int sremap_file_pages(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4366,8 +3937,6 @@ int sgetdents64(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4386,8 +3955,6 @@ int sset_tid_address(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4406,8 +3973,6 @@ int srestart_syscall(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4426,8 +3991,6 @@ int ssemtimedop(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4446,8 +4009,6 @@ int sfadvise64(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4466,8 +4027,6 @@ int stimer_create(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4486,8 +4045,6 @@ int stimer_settime(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4506,8 +4063,6 @@ int stimer_gettime(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4526,8 +4081,6 @@ int stimer_getoverrun(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4546,8 +4099,6 @@ int stimer_delete(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4566,8 +4117,6 @@ int sclock_settime(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4586,8 +4135,6 @@ int sclock_gettime(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4606,8 +4153,6 @@ int sclock_getres(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4626,8 +4171,6 @@ int sclock_nanosleep(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4646,8 +4189,6 @@ int sexit_group(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4666,8 +4207,6 @@ int sepoll_wait(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4686,8 +4225,6 @@ int sepoll_ctl(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4706,8 +4243,6 @@ int stgkill(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4726,8 +4261,6 @@ int sutimes(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4746,8 +4279,6 @@ int svserver(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4766,8 +4297,6 @@ int smbind(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4786,8 +4315,6 @@ int sset_mempolicy(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4806,8 +4333,6 @@ int sget_mempolicy(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4826,8 +4351,6 @@ int smq_open(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4846,8 +4369,6 @@ int smq_unlink(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4866,8 +4387,6 @@ int smq_timedsend(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4886,8 +4405,6 @@ int smq_timedreceive(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4906,8 +4423,6 @@ int smq_notify(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4926,8 +4441,6 @@ int smq_getsetattr(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4946,8 +4459,6 @@ int skexec_load(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4966,8 +4477,6 @@ int swaitid(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -4986,8 +4495,6 @@ int sadd_key(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5006,8 +4513,6 @@ int srequest_key(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5026,8 +4531,6 @@ int skeyctl(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5046,8 +4549,6 @@ int sioprio_set(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5066,8 +4567,6 @@ int sioprio_get(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5086,8 +4585,6 @@ int sinotify_init(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5106,8 +4603,6 @@ int sinotify_add_watch(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5126,8 +4621,6 @@ int sinotify_rm_watch(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5146,8 +4639,6 @@ int smigrate_pages(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5166,8 +4657,6 @@ int sopenat(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5185,8 +4674,6 @@ int smkdirat(struct pt_regs *ctx) {
     }**/
     struct data_t data = {};
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5205,8 +4692,6 @@ int smknodat(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5225,8 +4710,6 @@ int sfchownat(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5245,8 +4728,6 @@ int sfutimesat(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5265,8 +4746,6 @@ int snewfstatat(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5285,8 +4764,6 @@ int sunlinkat(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5305,8 +4782,6 @@ int srenameat(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5325,8 +4800,6 @@ int slinkat(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5345,8 +4818,6 @@ int ssymlinkat(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5365,8 +4836,6 @@ int sreadlinkat(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5385,8 +4854,6 @@ int sfchmodat(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5405,8 +4872,6 @@ int sfaccessat(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5425,8 +4890,6 @@ int spselect6(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5445,8 +4908,6 @@ int sppoll(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5465,8 +4926,6 @@ int sunshare(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5485,8 +4944,6 @@ int sset_robust_list(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5505,8 +4962,6 @@ int sget_robust_list(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5525,8 +4980,6 @@ int ssplice(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5545,8 +4998,6 @@ int stee(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5565,8 +5016,6 @@ int ssync_file_range(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5585,8 +5034,6 @@ int svmsplice(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5605,8 +5052,6 @@ int smove_pages(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5625,8 +5070,6 @@ int sutimensat(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5645,8 +5088,6 @@ int sepoll_pwait(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5665,8 +5106,6 @@ int ssignalfd(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5685,8 +5124,6 @@ int stimerfd_create(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5705,8 +5142,6 @@ int seventfd(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5725,8 +5160,6 @@ int sfallocate(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5745,8 +5178,6 @@ int stimerfd_settime(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5765,8 +5196,6 @@ int stimerfd_gettime(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5785,8 +5214,6 @@ int saccept4(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5805,8 +5232,6 @@ int ssignalfd4(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5825,8 +5250,6 @@ int seventfd2(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5845,8 +5268,6 @@ int epoll_create1(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5865,8 +5286,6 @@ int sdup3(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5885,8 +5304,6 @@ int spipe2(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5905,8 +5322,6 @@ int sinotify_init1(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5925,8 +5340,6 @@ int spreadv(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5945,8 +5358,6 @@ int spwritev(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5965,8 +5376,6 @@ int srt_tgsigqueueinfo(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -5985,8 +5394,6 @@ int sperf_event_open(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -6006,8 +5413,6 @@ int srecvmmsg(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -6026,8 +5431,6 @@ int sfanotify_init(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -6046,8 +5449,6 @@ int sfanotify_mark(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -6066,8 +5467,6 @@ int sprlimit64(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -6086,8 +5485,6 @@ int sname_to_handle_at(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -6106,8 +5503,6 @@ int sopen_by_handle_at(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -6126,8 +5521,6 @@ int sclock_adjtime(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -6146,8 +5539,6 @@ int ssyncfs(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -6166,8 +5557,6 @@ int ssendmmsg(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -6186,8 +5575,6 @@ int ssetns(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -6206,8 +5593,6 @@ int sgetcpu(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -6226,8 +5611,6 @@ int sprocess_vm_readv(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -6246,8 +5629,6 @@ int sprocess_vm_writev(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -6266,8 +5647,6 @@ int skcmp(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -6286,8 +5665,6 @@ int sfinit_module(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -6306,8 +5683,6 @@ int ssched_setattr(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -6327,8 +5702,6 @@ int ssched_getattr(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -6347,8 +5720,6 @@ int srenameat2(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -6368,8 +5739,6 @@ int sseccomp(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -6388,8 +5757,6 @@ int sgetrandom(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -6408,8 +5775,6 @@ int smemfd_create(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -6428,8 +5793,6 @@ int skexec_file_load(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
@@ -6448,8 +5811,6 @@ int sbpf(struct pt_regs *ctx) {
     }
     data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
