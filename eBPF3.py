@@ -4666,13 +4666,13 @@ int sopenat(struct pt_regs *ctx) {
     return 0;
 }
 int smkdirat(struct pt_regs *ctx) {
+    struct data_t data = {};
     INUM_RING
     data.test_inum = inum_container;
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
-    struct data_t data = {};
     u64 id = bpf_get_current_pid_tgid();
     data.inum = inum_ring;
     data.pid = id >> 32;
