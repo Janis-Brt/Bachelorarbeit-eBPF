@@ -37,7 +37,7 @@ BPF_HASH(inum, struct key_t, unsigned int, 128);
 int do_count(struct pt_regs *ctx) {
     struct key_t key = {};
     key.inumcontainer = 1;
-    inum.atomic_increment(key);
+    inum.increment(key);
     return 0;
 }
 
