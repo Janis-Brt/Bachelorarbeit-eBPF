@@ -26,21 +26,19 @@ BPF_PERF_OUTPUT(events);
 // unsigned int value = 1234;
 //bpf_map_update_elem(&counts, &index, &value, BPF_ANY);
 
-struct inum {
-  unsigned int inumcontainer;
-};
 
-BPF_HASH(inum, struct inum, int, 1024);
-struct inum insert = {};
-struct data_t data = {};
-data_t.syscallnumber = 1234;
+void initarray(){
+    struct inum {
+    unsigned int inumcontainer;
+    };
+    BPF_HASH(inum, struct inum, int, 1024);
+
+}
+
+// struct inum insert = {};
 // insert.inumcontainer = 1234;
-
 // insert.inum_container=val;
 // inum.insert(&insert, %val);
-
-
-
 // INUM_RING
 // bpf_trace_printk("Wert der Variable: %u", inum_container);
 
