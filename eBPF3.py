@@ -26,9 +26,11 @@ BPF_PERF_OUTPUT(events);
 // unsigned int value = 1234;
 //bpf_map_update_elem(&counts, &index, &value, BPF_ANY);
 
-INUM_RING
+struct ipkey {
+  INUM_RING
+};
 
-BPF_HASH(learned_ips, unsigned int inum_container, int, 1024);
+BPF_HASH(learned_ips, struct ipkey, int, 1024);
 
 
 
