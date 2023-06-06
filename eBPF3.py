@@ -34,13 +34,18 @@ struct key_t {
 BPF_ARRAY(inums, unsigned int, 128);
 BPF_HASH(inum, struct key_t, unsigned int, 128);
 
-int insert(struct pt_regs *ctx) {
+static void stats_increment(int key) {
+    INUM_RING
+    stats.increment(&inum_container);
+}
+
+/**int insert(struct pt_regs *ctx) {
     struct key_t key = {};
     INUM_RING
     key.inumcontainer = inum_container;
     inum.increment(key);
     return 0;
-}
+}**/
 
 /**int lookup_count(struct pt_regs *ctx){
     // get current value
