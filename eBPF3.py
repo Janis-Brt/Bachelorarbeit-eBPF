@@ -47,7 +47,7 @@ int lookup_count(struct pt_regs *ctx){
     struct key_t key = {};
     INUM_RING
     key.inumcontainer = inum_container;
-    inum.lookup(key);
+    inum.lookup(&key);
     return 0;
 }
 
