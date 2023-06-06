@@ -27,13 +27,13 @@ BPF_PERF_OUTPUT(events);
 //bpf_map_update_elem(&counts, &index, &value, BPF_ANY);
 
 
-void initarray(){
-    struct inum {
-    unsigned int inumcontainer;
-    };
-    BPF_HASH(inum, struct inum, int, 1024);
 
-}
+struct inum {
+unsigned int inumcontainer;
+};
+BPF_HASH(inum, struct inum, int, 1024);
+
+
 
 // struct inum insert = {};
 // insert.inumcontainer = 1234;
