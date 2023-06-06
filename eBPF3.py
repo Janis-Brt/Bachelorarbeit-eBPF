@@ -33,7 +33,7 @@ struct inum {
 BPF_HASH(inum, struct inum, int, 1024);
 int val = 1;
 struct inum insert = {};
-insert.inum_container=1;
+insert.inum_container=val;
 // inum.insert(&insert, %val);
 
 
