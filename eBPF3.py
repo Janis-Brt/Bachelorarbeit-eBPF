@@ -27,9 +27,9 @@ BPF_PERF_OUTPUT(events);
 //bpf_map_update_elem(&counts, &index, &value, BPF_ANY);
 
 
-struct key_t {
+/**struct key_t {
     unsigned int inumcontainer;
-};
+};**/
 
 BPF_ARRAY(inums, unsigned int, 128);
 
