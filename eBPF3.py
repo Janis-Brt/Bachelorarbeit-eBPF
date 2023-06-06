@@ -32,7 +32,9 @@ struct inum {
 
 BPF_HASH(inum, struct inum, int, 1024);
 struct inum insert = {};
-insert.inumcontainer = 1234;
+struct data_t data = {};
+data_t.syscallnumber = 1234;
+// insert.inumcontainer = 1234;
 
 // insert.inum_container=val;
 // inum.insert(&insert, %val);
