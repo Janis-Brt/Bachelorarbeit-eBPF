@@ -42,6 +42,15 @@ int do_count(struct pt_regs *ctx) {
     return 0;
 }
 
+int lookup_count(struct pt_regs *ctx){
+    // get current value
+    struct key_t key = {};
+    INUM_RING
+    key.inumcontainer = inum_container;
+    inum.lookup(key);
+    return 0;
+}
+
 
 /**Diese Funktion wird immer aufgerufen, wenn der System Call clone detektiert wird. 
 Zuerst wird geprüft, ob der Return Wert kleiner als 0 ist, in diesem Fall wurde der System Call nicht korrekt aufgerufen 
