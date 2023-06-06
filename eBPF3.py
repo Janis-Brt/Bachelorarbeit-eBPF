@@ -49,7 +49,7 @@ int inums_lookup(unsigned int inum){
     return 0;
 }
 
-
+inums_init();
 
 /**Diese Funktion wird immer aufgerufen, wenn der System Call clone detektiert wird. 
 Zuerst wird geprüft, ob der Return Wert kleiner als 0 ist, in diesem Fall wurde der System Call nicht korrekt aufgerufen 
