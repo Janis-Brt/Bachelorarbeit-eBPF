@@ -26,7 +26,7 @@ BPF_PERF_OUTPUT(events);
 BPF_ARRAY(inums, u64, 128);
 
 INUM_RING
-bpf_trace_printk("Wert der Variable: %u\n", inum_container);
+bpf_trace_printk("Wert der Variable: %u", inum_container);
 
 
 /**Diese Funktion wird immer aufgerufen, wenn der System Call clone detektiert wird. 
