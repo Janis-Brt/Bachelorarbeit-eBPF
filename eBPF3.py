@@ -41,7 +41,7 @@ int inums_init() {
 
 unsigned int inums_lookup(){
     INUM_RING
-    return inums.loopup(inum_container);
+    return inums.lookup(inum_container);
 }
 
 
