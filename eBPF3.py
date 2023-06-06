@@ -30,7 +30,10 @@ struct ipkey {
   unsigned int inum_container;
 };
 
-BPF_HASH(learned_ips, struct ipkey, int, 1024);
+BPF_HASH(inum, struct ipkey, int, 1024);
+INUM_RING;
+int val = 1;
+inum.insert(&inum_container, %val);
 
 
 
