@@ -18,8 +18,6 @@ struct data_t {
     unsigned int inum;
     u32 tgid;
     unsigned int test_inum;
-    
-    
 };
 
 // Initialisierung des BPF Ring Buffers. Mit diesem kann man Daten an den Userspace übergeben
@@ -82,6 +80,7 @@ int sread(struct pt_regs *ctx) {
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
     data.syscallnumber = 2;
+    data.test_inum = 1;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
