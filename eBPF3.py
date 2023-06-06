@@ -28,10 +28,10 @@ BPF_PERF_OUTPUT(events);
 
 
 
-struct inum {
 unsigned int inumcontainer;
-};
-BPF_HASH(inum, struct inum, int, 1024);
+
+
+BPF_HASH(inum, unsigned int inumcontainer, unsigned int, 128);
 
 /**int insert(){
     struct inum key = { inumcontainer = 1234;);
