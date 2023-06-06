@@ -34,7 +34,7 @@ BPF_HASH(inum, struct inum, int, 1024);
 int val = 1;
 struct inum insert = {};
 insert.inum_container=1;
-inum.insert(&insert, %val);
+// inum.insert(&insert, %val);
 
 
 
