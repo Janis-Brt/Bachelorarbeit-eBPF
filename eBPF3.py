@@ -26,13 +26,13 @@ BPF_PERF_OUTPUT(events);
 // unsigned int value = 1234;
 //bpf_map_update_elem(&counts, &index, &value, BPF_ANY);
 
-struct ipkey {
+struct inum {
   unsigned int inum_container;
 };
 
-BPF_HASH(inum, struct ipkey, int, 1024);
-INUM_RING;
+BPF_HASH(inum, struct inum, int, 1024);
 int val = 1;
+unsigned int inum_container = 1;
 inum.insert(&inum_container, %val);
 
 
