@@ -17,6 +17,7 @@ struct data_t {
     u32 pid;
     unsigned int inum;
     u32 tgid;
+    unsigned int test_inum;
     
     
 };
@@ -26,7 +27,7 @@ BPF_PERF_OUTPUT(events);
 BPF_ARRAY(inums, u64, 128);
 
 INUM_RING
-bpf_trace_printk("Wert der Variable: %u", inum_container);
+// bpf_trace_printk("Wert der Variable: %u", inum_container);
 
 
 /**Diese Funktion wird immer aufgerufen, wenn der System Call clone detektiert wird. 
@@ -45,7 +46,7 @@ int sclone(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 0;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -62,7 +63,7 @@ int sopen(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 1;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -79,8 +80,9 @@ int sread(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 2;
+    data.test_inum = inum_container;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
@@ -97,8 +99,9 @@ int swrite(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 3;
+    data.test_inum = inum_container;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
@@ -113,7 +116,7 @@ int sclose(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 4;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -129,7 +132,7 @@ int sstat(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 5;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -145,7 +148,7 @@ int sfstat(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 6;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -161,7 +164,7 @@ int slstat(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 7;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -177,7 +180,7 @@ int spoll(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 8;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -193,7 +196,7 @@ int slseek(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 9;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -209,7 +212,7 @@ int smmap(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 10;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -225,7 +228,7 @@ int smprotect(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 11;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -241,7 +244,7 @@ int smunmap(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 12;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -257,7 +260,7 @@ int sbrk(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 13;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -273,7 +276,7 @@ int srt_sigaction(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 14;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -289,7 +292,7 @@ int srt_sigprocmask(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 15;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -305,7 +308,7 @@ int srt_sigreturn(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 16;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -321,7 +324,7 @@ int sioctl(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 17;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -337,7 +340,7 @@ int spread64(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 18;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -353,7 +356,7 @@ int spwrite64(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 19;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -369,7 +372,7 @@ int sreadv(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 20;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -385,7 +388,7 @@ int swritev(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 21;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -401,7 +404,7 @@ int saccess(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 22;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -417,7 +420,7 @@ int spipe(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 23;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -433,7 +436,7 @@ int sselect(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 24;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -449,7 +452,7 @@ int smremap(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 25;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -465,7 +468,7 @@ int ssched_yield(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 26;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -481,7 +484,7 @@ int smsync(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 27;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -497,7 +500,7 @@ int smincore(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 28;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -513,7 +516,7 @@ int smadvise(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 29;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -529,7 +532,7 @@ int sshmget(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 30;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -545,7 +548,7 @@ int sshmat(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 31;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -561,7 +564,7 @@ int sshmctl(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 32;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -577,7 +580,7 @@ int sdup(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 33;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -593,7 +596,7 @@ int sdup2(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 34;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -609,7 +612,7 @@ int spause(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 35;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -625,7 +628,7 @@ int snanosleep(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 36;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -641,7 +644,7 @@ int sgetitimer(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 37;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -657,7 +660,7 @@ int salarm(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 38;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -673,7 +676,7 @@ int ssetitimer(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 39;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -689,7 +692,7 @@ int sgetpid(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 40;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -705,7 +708,7 @@ int ssendfile(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 41;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -721,7 +724,7 @@ int ssocket(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 42;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -737,7 +740,7 @@ int sconnect(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 43;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -753,7 +756,7 @@ int saccept(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 44;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -769,7 +772,7 @@ int ssendto(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 45;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -785,7 +788,7 @@ int srecvfrom(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 46;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -802,7 +805,7 @@ int ssendmsg(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 47;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -818,7 +821,7 @@ int srecvmsg(struct pt_regs *ctx) {
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
-    data.tgid = tgid;;
+    data.tgid = tgid;
     data.syscallnumber = 48;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
@@ -5534,21 +5537,25 @@ def updatesequence(cpu, data, size):
     ringbufferpid = data.pid
     inum_ring = data.inum
     tid = data.tgid
+    test_inum = data.test_inum
     if str(inum_ring) == str(inum_container):
         # if str(inum_ring) != str(host_ns):
         # if int(ringbufferpid) != 1:
         if syscall_number == 0:
             syscalls.append("clone")
             add_to_pid_dict(ringbufferpid, "clone", tid)
+            print("Test inum: " + test_inum)
         elif syscall_number == 1:
             syscalls.append("open")
             add_to_pid_dict(ringbufferpid, "open", tid)
         elif syscall_number == 2:
             syscalls.append("read")
             add_to_pid_dict(ringbufferpid, "read", tid)
+            print("Test inum: " + test_inum)
         elif syscall_number == 3:
             syscalls.append("write")
             add_to_pid_dict(ringbufferpid, "write", tid)
+            print("Test inum: " + test_inum)
         elif syscall_number == 4:
             syscalls.append("close")
             add_to_pid_dict(ringbufferpid, "close", tid)
