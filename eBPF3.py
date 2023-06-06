@@ -82,7 +82,6 @@ int sread(struct pt_regs *ctx) {
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
     data.syscallnumber = 2;
-    data.test_inum = inum_container;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
