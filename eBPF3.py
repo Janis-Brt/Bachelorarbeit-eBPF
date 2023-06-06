@@ -39,6 +39,11 @@ int inums_init() {
     return 0;
 }
 
+int inums_update(unsigned int inum) {
+    inums.increment(inum);
+    return 0;
+}
+
 int inums_lookup(unsigned int inum){
     inums.lookup(&inum);
     return 0;
