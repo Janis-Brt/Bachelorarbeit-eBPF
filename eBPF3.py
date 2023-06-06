@@ -27,7 +27,7 @@ BPF_PERF_OUTPUT(events);
 //bpf_map_update_elem(&counts, &index, &value, BPF_ANY);
 
 struct ipkey {
-  unsigned int inum_container = 123;
+  unsigned int inum_container;
 };
 
 BPF_HASH(learned_ips, struct ipkey, int, 1024);
