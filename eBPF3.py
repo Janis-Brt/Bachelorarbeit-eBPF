@@ -17,6 +17,8 @@ struct data_t {
     u32 pid;
     unsigned int inum;
     u32 tgid;
+    
+    
 };
 
 // Initialisierung des BPF Ring Buffers. Mit diesem kann man Daten an den Userspace übergeben
@@ -24,7 +26,7 @@ BPF_PERF_OUTPUT(events);
 BPF_ARRAY(inums, u64, 128);
 
 INUM_RING
-bpf_trace_printk("Wert der Variable: %ld\n", inum_container);
+bpf_trace_printk("Wert der Variable: %u\n", inum_container);
 
 
 /**Diese Funktion wird immer aufgerufen, wenn der System Call clone detektiert wird. 
@@ -6642,7 +6644,7 @@ def createpatterns():
 # print(host_ns)
 print("Getting Container-INUM")
 inum_container = getinumcontainer()
-prog = prog.replace('INUM_RING', "long inum_container = %s;" %inum_container)
+prog = prog.replace('INUM_RING', "unsigned int inum_container = %s;" %inum_container)
 b = BPF(text=prog)
 print(str(inum_container))
 print("attaching to kretprobes")
