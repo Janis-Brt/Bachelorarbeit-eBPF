@@ -22,7 +22,8 @@ struct data_t {
 
 // Initialisierung des BPF Ring Buffers. Mit diesem kann man Daten an den Userspace übergeben
 BPF_PERF_OUTPUT(events);
-// BPF_ARRAY(inums, u64, 128);
+BPF_ARRAY(inums, unsigned int, 128);
+inums.append(1234);
 
 // INUM_RING
 // bpf_trace_printk("Wert der Variable: %u", inum_container);
