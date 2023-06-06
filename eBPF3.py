@@ -24,7 +24,7 @@ BPF_PERF_OUTPUT(events);
 BPF_ARRAY(inums, u64, 128);
 
 INUM_RING
-bpf_trace_printk("INUM replaced!\\n");
+//bpf_trace_printk("INUM replaced!\\n");
 
 
 /**Diese Funktion wird immer aufgerufen, wenn der System Call clone detektiert wird. 
