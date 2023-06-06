@@ -24,8 +24,7 @@ BPF_PERF_OUTPUT(events);
 BPF_ARRAY(inums, u64, 128);
 
 INUM_RING
-printf("Test!!");
-// printf("inum: %ld", inum_container);
+bpf_trace_printk("Wert der Variable: %ld\n", inum_container);
 
 
 /**Diese Funktion wird immer aufgerufen, wenn der System Call clone detektiert wird. 
