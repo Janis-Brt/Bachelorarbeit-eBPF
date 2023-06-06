@@ -32,31 +32,18 @@ struct key_t {
 };
 
 BPF_ARRAY(inums, unsigned int, 128);
-BPF_HASH(inum, struct key_t, unsigned int, 128);
 
-int stats_increment(int key) {
+int inums_init() {
     INUM_RING
     inums.increment(inum_container);
     return 0;
 }
 
-
-/**int insert(struct pt_regs *ctx) {
-    struct key_t key = {};
+unsigned int inums_lookup(){
     INUM_RING
-    key.inumcontainer = inum_container;
-    inum.increment(key);
-    return 0;
-}**/
+    return inums.loopup(inum_container);
+}
 
-/**int lookup_count(struct pt_regs *ctx){
-    // get current value
-    struct key_t key = {};
-    INUM_RING
-    key.inumcontainer = inum_container;
-    inum.lookup(&key);
-    return 0;
-}**/
 
 
 /**Diese Funktion wird immer aufgerufen, wenn der System Call clone detektiert wird. 
