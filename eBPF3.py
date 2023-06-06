@@ -21,6 +21,11 @@ struct data_t {
 
 // Initialisierung des BPF Ring Buffers. Mit diesem kann man Daten an den Userspace übergeben
 BPF_PERF_OUTPUT(events);
+BPF_ARRAY(inums, u64, 128);
+
+INUM_RING
+bpf_trace_printk("INUM replaced!\\n");
+
 
 /**Diese Funktion wird immer aufgerufen, wenn der System Call clone detektiert wird. 
 Zuerst wird geprüft, ob der Return Wert kleiner als 0 ist, in diesem Fall wurde der System Call nicht korrekt aufgerufen 
@@ -5178,8 +5183,10 @@ int sbpf(struct pt_regs *ctx) {
 }
 """
 
+
+
 # Initialisierung des BPF Objekts, welches den C-Code übergeben bekommt
-b = BPF(text=prog)
+
 
 
 # attachkretprobe ruft die Kernel Space Funktion für jeden Syscall auf, und heftet sich an den entsprechenden
@@ -6635,6 +6642,8 @@ def createpatterns():
 # print(host_ns)
 print("Getting Container-INUM")
 inum_container = getinumcontainer()
+prog = prog.replace('INUM_RING', inum_container)
+b = BPF(text=prog)
 print(str(inum_container))
 print("attaching to kretprobes")
 attachkretprobe()
