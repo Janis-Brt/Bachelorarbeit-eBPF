@@ -33,7 +33,14 @@ unsigned int inumcontainer;
 };
 BPF_HASH(inum, struct inum, int, 1024);
 
+int insert(){
+    struct inum key = { inumcontainer = 1234;);
+    int val = 1;
+    inum.insert(&key, &val);
+    return 0;
+}
 
+insert();
 
 // struct inum insert = {};
 // insert.inumcontainer = 1234;
