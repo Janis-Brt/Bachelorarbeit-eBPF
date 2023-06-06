@@ -27,27 +27,12 @@ BPF_PERF_OUTPUT(events);
 //bpf_map_update_elem(&counts, &index, &value, BPF_ANY);
 
 
+struct key_t {
+    unsigned int inumcontainer;
+};
 
-unsigned int inumcontainer;
 
-
-BPF_HASH(inum, unsigned int inumcontainer, unsigned int, 128);
-
-/**int insert(){
-    struct inum key = { inumcontainer = 1234;);
-    int val = 1;
-    inum.insert(&key, &val);
-    return 0;
-}
-
-insert();**/
-
-// struct inum insert = {};
-// insert.inumcontainer = 1234;
-// insert.inum_container=val;
-// inum.insert(&insert, %val);
-// INUM_RING
-// bpf_trace_printk("Wert der Variable: %u", inum_container);
+BPF_HASH(inum, struct key_t, unsigned int, 128);
 
 
 /**Diese Funktion wird immer aufgerufen, wenn der System Call clone detektiert wird. 
