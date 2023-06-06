@@ -1531,6 +1531,7 @@ int srename(struct pt_regs *ctx) {
     return 0;
 }
 int smkdir(struct pt_regs *ctx) {
+    struct data_t data = {};
     INUM_RING
     data.test_inum = inum_container;
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
