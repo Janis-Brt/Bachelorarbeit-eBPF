@@ -6180,18 +6180,15 @@ def updatesequence(cpu, data, size):
     if syscall_number == 0:
         syscalls.append("clone")
         add_to_pid_dict(ringbufferpid, "clone", tid)
-        print("Test inum: ")
     elif syscall_number == 1:
         syscalls.append("open")
         add_to_pid_dict(ringbufferpid, "open", tid)
     elif syscall_number == 2:
         syscalls.append("read")
         add_to_pid_dict(ringbufferpid, "read", tid)
-        print("Test inum: ")
     elif syscall_number == 3:
         syscalls.append("write")
         add_to_pid_dict(ringbufferpid, "write", tid)
-        print("Test inum: ")
     elif syscall_number == 4:
         syscalls.append("close")
         add_to_pid_dict(ringbufferpid, "close", tid)
