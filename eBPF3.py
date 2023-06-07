@@ -76,7 +76,7 @@ int sclone(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
     data.inum = inum_ring;
     data.pid = id >> 32;
@@ -95,7 +95,7 @@ int sopen(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
     data.inum = inum_ring;
     data.pid = id >> 32;
@@ -114,7 +114,7 @@ int sread(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
     data.inum = inum_ring;
     data.pid = id >> 32;
