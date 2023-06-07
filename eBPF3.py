@@ -31,7 +31,7 @@ BPF_ARRAY(inums, unsigned int, 128);
 
 static int inums_init() {
     INUM_RING
-    inums.increment(*inum_container);
+    inums.increment(inum_container);
     bpf_trace_printk("Inums-Array init!\\n");
     return 0;
 }
@@ -62,7 +62,7 @@ und es wird nichts übergeben, andernfalls wird die PID des Prozesses übergeben
 in diesem Fall die 0.**/
 int sclone(struct pt_regs *ctx) {
     struct data_t data = {};
-    inum_init();
+    int inum_init();
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
@@ -104,10 +104,12 @@ int sread(struct pt_regs *ctx) {
     // hier auf return Value zugreifen
     struct data_t data = {};
     int inums_init();
+    bpf_trace_printk("Init done!\\n");
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int ret_value = inums_lookup(inum_container);
+    bpf_trace_printk("Lookup done!\\n");
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
