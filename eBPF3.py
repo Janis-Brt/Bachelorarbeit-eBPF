@@ -48,12 +48,12 @@ int inums_update(unsigned int inum) {
     return 0;
 }
 
-static unsigned int inums_lookup(unsigned int inum){
+static int inums_lookup(unsigned int inum){
     unsigned int *value = inums.lookup(&inum);
     if (value) {
         // Die inum existiert im Array inums
         bpf_trace_printk("Inum gefunden!\\n");
-        return value;
+        return *inums.lookup(&inum);
     } else {
         // Die inum existiert nicht im Array inums
         bpf_trace_printk("Inum nicht gefunden!\\n");
