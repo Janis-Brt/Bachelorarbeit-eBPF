@@ -27,9 +27,9 @@ BPF_PERF_OUTPUT(events);
 
 BPF_ARRAY(inums, unsigned int, 128);
 
-static int inums_init() {
+int inums_init() {
     INUM_RING
-    inums.increment(0, inum_container);
+    inums.increment(inum_container);
     return 0;
 }
 
@@ -39,7 +39,7 @@ int inums_update(unsigned int inum) {
     return 0;
 }
 
-static int inums_lookup(unsigned int inum){
+int inums_lookup(unsigned int inum){
     int inum_init();
     unsigned int *value = inums.lookup(&inum);
     if (value==NULL) {
