@@ -132,7 +132,7 @@ int swrite(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int ret_value = inums_lookup(inum_container);
     data.test_inum = ret_value;
-    if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     u64 id = bpf_get_current_pid_tgid();
