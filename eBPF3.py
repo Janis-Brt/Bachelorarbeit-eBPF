@@ -29,9 +29,17 @@ BPF_ARRAY(inums, unsigned int, 128);
 
 static int inums_init() {
     INUM_RING
-    inums.increment(inum_container);
-    bpf_trace_printk("Inums-Array init!\\n");
-    return 0;
+    // Check, ob es schon einen Eintrag gibt:
+    unsigned int *value = inums.lookup(&inum_container);
+    if (value) {
+        // Die init inum existiert im Array inums
+        bpf_trace_printk("Inum gefunden!\\n");
+        return 0;
+    } else {
+        inums.increment(inum_container);
+        bpf_trace_printk("Inums-Array init!\\n");
+        return 0;
+    }
 }
 
 int inums_update(unsigned int inum) {
@@ -100,7 +108,6 @@ int sopen(struct pt_regs *ctx) {
 int sread(struct pt_regs *ctx) {
     // hier auf return Value zugreifen
     struct data_t data = {};
-    bpf_trace_printk("Init done!\\n");
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
