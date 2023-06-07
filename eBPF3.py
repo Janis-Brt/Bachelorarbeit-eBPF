@@ -42,18 +42,12 @@ int inums_update(unsigned int inum) {
 static int inums_lookup(unsigned int inum){
     int inum_init();
     unsigned int *value = inums.lookup(&inum);
-    if (value) {
-        // Die inum existiert im Array inums
-        bpf_trace_printk("Inum gefunden!\\n");
-        return 0;
-    } else {
-        // Die inum existiert nicht im Array inums
-        bpf_trace_printk("Inum nicht gefunden!\\n");
-        return 69;
+    if (!value) {
+        return 1;  // Wert inum im Array gefunden
     }
+    return 0;
 }
 
-int inum_init();
 
 /**Diese Funktion wird immer aufgerufen, wenn der System Call clone detektiert wird. 
 Zuerst wird geprüft, ob der Return Wert kleiner als 0 ist, in diesem Fall wurde der System Call nicht korrekt aufgerufen 
