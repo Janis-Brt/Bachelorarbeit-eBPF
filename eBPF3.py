@@ -48,7 +48,7 @@ int inums_update(unsigned int inum) {
     return 0;
 }
 
-static int inums_lookup(unsigned int inum){
+static unsigned int inums_lookup(unsigned int inum){
     unsigned int *value = inums.lookup(&inum);
     if (value) {
         // Die inum existiert im Array inums
