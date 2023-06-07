@@ -112,6 +112,7 @@ int sread(struct pt_regs *ctx) {
     data.test_inum = ret_value;
     bpf_trace_printk("Lookup done!\\n");
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
+        events.perf_submit(ctx, &data, sizeof(data));
         return 0;
     }
     data.test_inum = inum_container;
