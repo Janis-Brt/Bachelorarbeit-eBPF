@@ -42,7 +42,7 @@ int inums_update(unsigned int inum) {
     return 0;
 }
 
-int inums_lookup(unsigned int inum){
+unsigned int inums_lookup(unsigned int inum){
     int result = inums.lookup(&inum);
     bpf_trace_printk("Inums-lookup lookup!\\n");
     return result;
