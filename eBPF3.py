@@ -29,9 +29,9 @@ BPF_PERF_OUTPUT(events);
 
 BPF_ARRAY(inums, unsigned int, 128);
 
-int inums_init() {
+static int inums_init() {
     INUM_RING
-    inums.increment(inum_container);
+    inums.increment(*inum_container);
     bpf_trace_printk("Inums-Array init!\\n");
     return 0;
 }
@@ -43,7 +43,7 @@ int inums_update(unsigned int inum) {
 }
 
 static int inums_lookup(unsigned int inum){
-    unsigned int value = inums.lookup(inum);
+    unsigned int *value = inums.lookup(*inum);
     if (value) {
         // Die inum existiert im Array inums
         bpf_trace_printk("Inum gefunden!\\n");
@@ -55,7 +55,6 @@ static int inums_lookup(unsigned int inum){
     }
 }
 
-int inums_init();
 
 /**Diese Funktion wird immer aufgerufen, wenn der System Call clone detektiert wird. 
 Zuerst wird geprüft, ob der Return Wert kleiner als 0 ist, in diesem Fall wurde der System Call nicht korrekt aufgerufen 
@@ -63,6 +62,7 @@ und es wird nichts übergeben, andernfalls wird die PID des Prozesses übergeben
 in diesem Fall die 0.**/
 int sclone(struct pt_regs *ctx) {
     struct data_t data = {};
+    inum_init();
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
