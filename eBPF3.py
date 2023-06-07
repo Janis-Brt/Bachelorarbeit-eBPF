@@ -1,7 +1,5 @@
 from bcc import BPF
 import os
-import time
-import signal
 import sys
 import json
 import time
@@ -43,7 +41,7 @@ int inums_update(unsigned int inum) {
 }
 
 static int inums_lookup(unsigned int inum){
-    unsigned int *value = inums.lookup(&inum);
+    u64 *value = inums.lookup(&inum);
     if (value) {
         // Die inum existiert im Array inums
         bpf_trace_printk("Inum gefunden!\\n");
@@ -67,7 +65,7 @@ int sclone(struct pt_regs *ctx) {
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int ret_value = inums_lookup(inum_container);
-    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring || ret_value != 0){
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     data.test_inum = inum_container;
@@ -112,7 +110,6 @@ int sread(struct pt_regs *ctx) {
     data.test_inum = ret_value;
     bpf_trace_printk("Lookup done!\\n");
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
-        events.perf_submit(ctx, &data, sizeof(data));
         return 0;
     }
     data.test_inum = inum_container;
