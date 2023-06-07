@@ -43,9 +43,9 @@ int inums_update(unsigned int inum) {
 }
 
 int inums_lookup(unsigned int inum){
-    inums.lookup(&inum);
+    int result = inums.lookup(&inum);
     bpf_trace_printk("Inums-lookup lookup!\\n");
-    return 0;
+    return result;
 }
 
 int inums_init();
@@ -57,7 +57,7 @@ in diesem Fall die 0.**/
 int sclone(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
-    int result = inums_lookup(inum_container);
+    int result = 0;
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring || result !=0 ){
