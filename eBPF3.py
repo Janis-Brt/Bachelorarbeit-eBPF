@@ -30,17 +30,8 @@ BPF_ARRAY(inums, unsigned int, 128);
 
 static int inums_init() {
     INUM_RING
-    // Check, ob es schon einen Eintrag gibt:
-    unsigned int *value = inums.lookup(&inum_container);
-    if (value) {
-        // Die init inum existiert im Array inums
-        bpf_trace_printk("Inum gefunden!\\n");
-        return 0;
-    } else {
-        inums.increment(inum_container);
-        bpf_trace_printk("Inums-Array init!\\n");
-        return 0;
-    }
+    inums.increment(inum_container);
+    return 0;
 }
 
 int inums_update(unsigned int inum) {
@@ -50,6 +41,7 @@ int inums_update(unsigned int inum) {
 }
 
 static int inums_lookup(unsigned int inum){
+    int inum_init();
     unsigned int *value = inums.lookup(&inum);
     if (value) {
         // Die inum existiert im Array inums
@@ -112,10 +104,10 @@ int sread(struct pt_regs *ctx) {
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    int i = 0;
     if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
-    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
     data.inum = inum_ring;
     data.pid = id >> 32;
@@ -129,12 +121,13 @@ int sread(struct pt_regs *ctx) {
 int swrite(struct pt_regs *ctx) {
     // hier auf return Value zugreifen
     struct data_t data = {};
+    int inum_init();
     INUM_RING
-    int ret_value = inums_lookup(inum_container);
-    data.test_inum = ret_value;
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
+    int ret_value = inums_lookup(inum_container);
+    data.test_inum = ret_value;
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     u64 id = bpf_get_current_pid_tgid();
@@ -6225,9 +6218,9 @@ def updatesequence(cpu, data, size):
     elif syscall_number == 2:
         syscalls.append("read")
         add_to_pid_dict(ringbufferpid, "read", tid)
-        print("Ret_value: " + str(ret))
     elif syscall_number == 3:
         syscalls.append("write")
+        print("Ret_value write: " + str(ret))
         add_to_pid_dict(ringbufferpid, "write", tid)
     elif syscall_number == 4:
         syscalls.append("close")
