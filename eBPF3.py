@@ -29,7 +29,7 @@ BPF_ARRAY(inums, unsigned int, 128);
 
 static int inums_init() {
     INUM_RING
-    inums.increment(inum_container);
+    inums.increment(inum_container, inum_container);
     return 0;
 }
 
@@ -41,7 +41,7 @@ int inums_update(unsigned int inum) {
 
 static int inums_lookup(unsigned int inum){
     int inum_init();
-    unsigned int value = inums.lookup(&inum);
+    unsigned int *value = inums.lookup(&inum);
     if (value==NULL) {
         return 1;  // Wert inum im Array gefunden
     }
