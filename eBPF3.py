@@ -49,7 +49,7 @@ static int inums_lookup(unsigned int inum){
     } else {
         // Die inum existiert nicht im Array inums
         bpf_trace_printk("Inum nicht gefunden!\\n");
-        return 1;
+        return 69;
     }
 }
 
