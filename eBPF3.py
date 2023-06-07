@@ -109,6 +109,7 @@ int sread(struct pt_regs *ctx) {
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int ret_value = inums_lookup(inum_container);
+    data.test_inum = ret_value;
     bpf_trace_printk("Lookup done!\\n");
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
@@ -6210,7 +6211,7 @@ def updatesequence(cpu, data, size):
     ringbufferpid = data.pid
     inum_ring = data.inum
     tid = data.tgid
-    test_inum = data.test_inum
+    ret = data.test_inum
     # if str(inum_ring) == str(inum_container):
         # if str(inum_ring) != str(host_ns):
         # if int(ringbufferpid) != 1:
@@ -6223,6 +6224,7 @@ def updatesequence(cpu, data, size):
     elif syscall_number == 2:
         syscalls.append("read")
         add_to_pid_dict(ringbufferpid, "read", tid)
+        print("Ret_value: " + str(ret))
     elif syscall_number == 3:
         syscalls.append("write")
         add_to_pid_dict(ringbufferpid, "write", tid)
