@@ -94,6 +94,7 @@ int sopen(struct pt_regs *ctx) {
 int sread(struct pt_regs *ctx) {
     // hier auf return Value zugreifen
     struct data_t data = {};
+    int inums_init();
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
@@ -113,6 +114,7 @@ int sread(struct pt_regs *ctx) {
 
 int swrite(struct pt_regs *ctx) {
     // hier auf return Value zugreifen
+    int inums_init();
     struct data_t data = {};INUM_RING
     data.test_inum = inum_container;
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
