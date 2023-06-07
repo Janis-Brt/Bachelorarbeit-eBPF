@@ -42,10 +42,16 @@ int inums_update(unsigned int inum) {
     return 0;
 }
 
-unsigned int inums_lookup(unsigned int inum){
-    unsigned int result = inums.lookup(inum);
-    bpf_trace_printk("Inums-lookup lookup!\\n");
-    return result;
+int inums_lookup(unsigned int inum){
+    unsigned int *value = inums.lookup(&inum);
+    if (value) {
+        // Die inum existiert im Array inums
+        bpf_trace_printk("Inum gefunden!\\n");
+    } else {
+        // Die inum existiert nicht im Array inums
+        bpf_trace_printk("Inum nicht gefunden!\\n");
+    }
+    return 0;
 }
 
 int inums_init();
