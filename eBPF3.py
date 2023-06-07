@@ -29,17 +29,8 @@ BPF_ARRAY(inums, unsigned int, 128);
 
 static int inums_init() {
     INUM_RING
-    // Check, ob es schon einen Eintrag gibt:
-    unsigned int *value = inums.lookup(&inum_container);
-    if (value) {
-        // Die init inum existiert im Array inums
-        bpf_trace_printk("Inum gefunden!\\n");
-        return 0;
-    } else {
-        inums.increment(inum_container);
-        bpf_trace_printk("Inums-Array init!\\n");
-        return 0;
-    }
+    inums.increment(inum_container);
+    return 0;
 }
 
 int inums_update(unsigned int inum) {
