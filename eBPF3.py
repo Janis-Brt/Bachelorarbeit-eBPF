@@ -13,6 +13,7 @@ prog = """
 struct data_t {
     int syscallnumber;
     u32 pid;
+    int i = 0;
     unsigned int inum; // könnte rausfallen, da inum jetzt schon hier gefiltert wird
     u32 tgid;
     unsigned int test_inum; // könnte rausfallen, da inum jetzt schon hier gefiltert wird
