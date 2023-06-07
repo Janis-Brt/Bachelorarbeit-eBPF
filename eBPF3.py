@@ -41,7 +41,7 @@ int inums_update(unsigned int inum) {
 }
 
 static int inums_lookup(unsigned int inum){
-    u64 *value = inums.lookup(&inum);
+    unsigned int *value = inums.lookup(&inum);
     if (value) {
         // Die inum existiert im Array inums
         bpf_trace_printk("Inum gefunden!\\n");
@@ -79,7 +79,6 @@ int sclone(struct pt_regs *ctx) {
     return 0;
 }
 int sopen(struct pt_regs *ctx) {
-    // hier auf return Value zugreifen
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
@@ -7322,7 +7321,7 @@ def createpatterns():
 print("Getting Container-INUM")
 inum_container = getinumcontainer()
 prog = prog.replace('INUM_RING', "unsigned int inum_container = %s;" %inum_container)
-b = BPF(text=prog)
+b = BPF(text=prog).trace_print()
 print(str(inum_container))
 print("attaching to kretprobes")
 attachkretprobe()
