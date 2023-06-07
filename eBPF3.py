@@ -27,22 +27,24 @@ BPF_PERF_OUTPUT(events);
 //bpf_map_update_elem(&counts, &index, &value, BPF_ANY);
 
 
-
 BPF_ARRAY(inums, unsigned int, 128);
 
 int inums_init() {
     INUM_RING
     inums.increment(inum_container);
+    bpf_trace_printk("Inums-Array init!\\n");
     return 0;
 }
 
 int inums_update(unsigned int inum) {
     inums.increment(inum);
+    bpf_trace_printk("Inums-Array update!\\n");
     return 0;
 }
 
 int inums_lookup(unsigned int inum){
     inums.lookup(&inum);
+    bpf_trace_printk("Inums-lookup init!\\n");
     return 0;
 }
 
