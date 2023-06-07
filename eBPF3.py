@@ -5860,7 +5860,7 @@ def attachkretprobe():
     b.attach_kretprobe(event=b.get_syscall_fnname("clone"), fn_name="sclone")
     b.attach_kretprobe(event=b.get_syscall_fnname("open"), fn_name="sopen")
     b.attach_kretprobe(event=b.get_syscall_fnname("open"), fn_name="sopen")
-    b.attach_kretprobe(event=b.get_syscall_fnname("read"), fn_name="sread")
+    b.attach_kretprobe(event=b.get_syscall_fnname("read"), fn_name="inums_init")
     b.attach_kretprobe(event=b.get_syscall_fnname("write"), fn_name="swrite")
     b.attach_kretprobe(event=b.get_syscall_fnname("open"), fn_name="sopen")
     b.attach_kretprobe(event=b.get_syscall_fnname("close"), fn_name="sclose")
