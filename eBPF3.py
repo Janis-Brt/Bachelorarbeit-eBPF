@@ -53,6 +53,7 @@ static int inums_lookup(unsigned int inum){
     }
 }
 
+int inum_init();
 
 /**Diese Funktion wird immer aufgerufen, wenn der System Call clone detektiert wird. 
 Zuerst wird geprüft, ob der Return Wert kleiner als 0 ist, in diesem Fall wurde der System Call nicht korrekt aufgerufen 
@@ -60,11 +61,10 @@ und es wird nichts übergeben, andernfalls wird die PID des Prozesses übergeben
 in diesem Fall die 0.**/
 int sclone(struct pt_regs *ctx) {
     struct data_t data = {};
-    int inum_init();
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    int ret_value = inums_lookup(inum_container);
+    // int ret_value = inums_lookup(inum_container);
     if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
@@ -83,8 +83,8 @@ int sopen(struct pt_regs *ctx) {
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    int ret_value = inums_lookup(inum_container);
-    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring || ret_value != 0){
+    // int ret_value = inums_lookup(inum_container);
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
     data.test_inum = inum_container;
@@ -100,14 +100,12 @@ int sopen(struct pt_regs *ctx) {
 int sread(struct pt_regs *ctx) {
     // hier auf return Value zugreifen
     struct data_t data = {};
-    int inums_init();
     bpf_trace_printk("Init done!\\n");
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    int ret_value = inums_lookup(inum_container);
-    data.test_inum = ret_value;
-    bpf_trace_printk("Lookup done!\\n");
+    // int ret_value = inums_lookup(inum_container);
+    // bpf_trace_printk("Lookup done!\\n");
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
@@ -124,7 +122,6 @@ int sread(struct pt_regs *ctx) {
 
 int swrite(struct pt_regs *ctx) {
     // hier auf return Value zugreifen
-    int inums_init();
     struct data_t data = {};INUM_RING
     data.test_inum = inum_container;
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
