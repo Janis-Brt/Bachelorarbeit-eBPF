@@ -107,6 +107,7 @@ int sopen(struct pt_regs *ctx) {
 }
 int sread(struct pt_regs *ctx) {
     // hier auf return Value zugreifen
+    int inum_init();
     struct data_t data = {};
     INUM_RING
     int ret_value = inums_lookup(inum_container);
@@ -129,6 +130,7 @@ int sread(struct pt_regs *ctx) {
 
 int swrite(struct pt_regs *ctx) {
     // hier auf return Value zugreifen
+    int inum_init();
     struct data_t data = {};
     INUM_RING
     int ret_value = inums_lookup(inum_container);
