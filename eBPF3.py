@@ -6226,9 +6226,10 @@ def updatesequence(cpu, data, size):
     elif syscall_number == 2:
         syscalls.append("read")
         add_to_pid_dict(ringbufferpid, "read", tid)
-        print("Ret_value: " + str(ret))
+        print("Ret_value read: " + str(ret))
     elif syscall_number == 3:
         syscalls.append("write")
+        print("Ret_value write: " + str(ret))
         add_to_pid_dict(ringbufferpid, "write", tid)
     elif syscall_number == 4:
         syscalls.append("close")
