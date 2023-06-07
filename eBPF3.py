@@ -47,11 +47,12 @@ static int inums_lookup(unsigned int inum){
     if (value) {
         // Die inum existiert im Array inums
         bpf_trace_printk("Inum gefunden!\\n");
+        return 0;
     } else {
         // Die inum existiert nicht im Array inums
         bpf_trace_printk("Inum nicht gefunden!\\n");
+        return 1;
     }
-    return 0;
 }
 
 int inums_init();
@@ -66,11 +67,7 @@ int sclone(struct pt_regs *ctx) {
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int ret_value = inums_lookup(inum_container);
-    if (ret_value != 0) {
-        // Der Rückgabewert ist ungleich 0, daher wird der Vorgang abgebrochen
-        return 0;
-    }
-    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring || ret_value != 0){
         return 0;
     }
     data.test_inum = inum_container;
