@@ -103,7 +103,9 @@ int sread(struct pt_regs *ctx) {
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
+    int ret_value = inums_lookup(inum_container);
+    data.test_inum = ret_value;
+    if(PT_REGS_RC(ctx) < 0 || ret_value == 0){
         return 0;
     }
     u64 id = bpf_get_current_pid_tgid();
@@ -125,7 +127,7 @@ int swrite(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int ret_value = inums_lookup(inum_container);
     data.test_inum = ret_value;
-    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
+    if(PT_REGS_RC(ctx) < 0 || ret_value == 0){
         return 0;
     }
     u64 id = bpf_get_current_pid_tgid();
@@ -6215,11 +6217,11 @@ def updatesequence(cpu, data, size):
         add_to_pid_dict(ringbufferpid, "open", tid)
     elif syscall_number == 2:
         syscalls.append("read")
-        print("Ret_value read: " + str(ret))
+        print("Ret_value read: " + str(ret)  + "inum: " + str(inum_ring))
         add_to_pid_dict(ringbufferpid, "read", tid)
     elif syscall_number == 3:
         syscalls.append("write")
-        print("Ret_value write: " + str(ret))
+        print("Ret_value write: " + str(ret) + "inum: " + str(inum_ring))
         add_to_pid_dict(ringbufferpid, "write", tid)
     elif syscall_number == 4:
         syscalls.append("close")
