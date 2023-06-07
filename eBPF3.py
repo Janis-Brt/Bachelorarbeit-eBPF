@@ -29,7 +29,7 @@ BPF_ARRAY(inums, unsigned int, 128);
 
 static int inums_init() {
     INUM_RING
-    inums.increment(inum_container, inum_container);
+    inums.increment(0, inum_container);
     return 0;
 }
 
