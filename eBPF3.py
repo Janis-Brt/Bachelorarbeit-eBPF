@@ -7316,9 +7316,10 @@ def createpatterns():
 print("Getting Container-INUM")
 inum_container = getinumcontainer()
 prog = prog.replace('INUM_RING', "unsigned int inum_container = %s;" %inum_container)
-b = BPF(text=prog)
+
 print(str(inum_container))
 print("attaching to kretprobes")
+b = BPF(text=prog).trace_print()
 attachkretprobe()
 print("attachment ready" + "\n" + "now tracing! \npress CTRL + C to stop tracing.")
 getringbuffer()
