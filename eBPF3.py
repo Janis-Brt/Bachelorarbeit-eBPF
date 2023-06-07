@@ -66,6 +66,11 @@ int sclone(struct pt_regs *ctx) {
     int result = 0;
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    int ret_value = inums_lookup(inum_to_check);
+    if (ret_value != 0) {
+        // Der Rückgabewert ist ungleich 0, daher wird der Vorgang abgebrochen
+        return 0;
+    }
     if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring || result !=0 ){
         return 0;
     }
