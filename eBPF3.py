@@ -44,7 +44,7 @@ int inums_update(unsigned int inum) {
 
 int inums_lookup(unsigned int inum){
     inums.lookup(&inum);
-    bpf_trace_printk("Inums-lookup init!\\n");
+    bpf_trace_printk("Inums-lookup lookup!\\n");
     return 0;
 }
 
@@ -59,7 +59,7 @@ int sclone(struct pt_regs *ctx) {
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
+    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring || inums_lookup(inum_container)!=0 ){
         return 0;
     }
     data.test_inum = inum_container;
@@ -5860,7 +5860,7 @@ def attachkretprobe():
     b.attach_kretprobe(event=b.get_syscall_fnname("clone"), fn_name="sclone")
     b.attach_kretprobe(event=b.get_syscall_fnname("open"), fn_name="sopen")
     b.attach_kretprobe(event=b.get_syscall_fnname("open"), fn_name="sopen")
-    b.attach_kretprobe(event=b.get_syscall_fnname("read"), fn_name="inums_init")
+    b.attach_kretprobe(event=b.get_syscall_fnname("read"), fn_name="sread")
     b.attach_kretprobe(event=b.get_syscall_fnname("write"), fn_name="swrite")
     b.attach_kretprobe(event=b.get_syscall_fnname("open"), fn_name="sopen")
     b.attach_kretprobe(event=b.get_syscall_fnname("close"), fn_name="sclose")
