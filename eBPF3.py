@@ -53,7 +53,7 @@ static int inums_lookup(unsigned int inum){
     if (value) {
         // Die inum existiert im Array inums
         bpf_trace_printk("Inum gefunden!\\n");
-        return *inums.lookup(&inum);
+        return 0;
     } else {
         // Die inum existiert nicht im Array inums
         bpf_trace_printk("Inum nicht gefunden!\\n");
@@ -133,7 +133,7 @@ int swrite(struct pt_regs *ctx) {
     data.test_inum = ret_value;
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    if(PT_REGS_RC(ctx) < 0 || ret_value != inum_ring){
+    if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
     u64 id = bpf_get_current_pid_tgid();
