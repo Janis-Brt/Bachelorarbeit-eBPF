@@ -111,7 +111,6 @@ int sread(struct pt_regs *ctx) {
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    // bpf_trace_printk("Lookup done!\\n");
     if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
@@ -128,8 +127,10 @@ int sread(struct pt_regs *ctx) {
 
 int swrite(struct pt_regs *ctx) {
     // hier auf return Value zugreifen
-    struct data_t data = {};INUM_RING
-    data.test_inum = inum_container;
+    struct data_t data = {};
+    INUM_RING
+    int ret_value = inums_lookup(inum_container);
+    data.test_inum = ret_value;
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
