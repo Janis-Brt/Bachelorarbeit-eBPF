@@ -97,7 +97,6 @@ int sread(struct pt_regs *ctx) {
     // hier auf return Value zugreifen
     struct data_t data = {};
     INUM_RING
-    inum_init();
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int ret_init = inums_init();
