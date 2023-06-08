@@ -7316,6 +7316,7 @@ def createpatterns():
 # print(host_ns)
 print("Getting Container-INUM")
 inum_container = int(getinumcontainer())
+i = 0
 prog = prog.replace('INUM_RING', "unsigned long long inum_container = %ld;" %inum_container)
 b = BPF(text=prog)
 print(str(inum_container))
