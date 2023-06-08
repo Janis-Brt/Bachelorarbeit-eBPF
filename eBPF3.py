@@ -16,22 +16,21 @@ struct data_t {
     unsigned int inum; // könnte rausfallen, da inum jetzt schon hier gefiltert wird
     u32 tgid;
     unsigned int test_inum; // könnte rausfallen, da inum jetzt schon hier gefiltert wird
-    u64 init_return; // Debug Value, um zu testen, ob init klappt.
 };
 
 // Initialisierung des BPF Ring Buffers. Mit diesem kann man Daten an den Userspace übergeben
 BPF_PERF_OUTPUT(events);
-// BPF_ARRAY(counts, u64, 32);
+// BPF_ARRAY(counts, unsigned int, 32);
 // unsigned int value = 1234;
 //bpf_map_update_elem(&counts, &index, &value, BPF_ANY);
 
 
-BPF_ARRAY(inums, u64, 128);
+BPF_ARRAY(inums, unsigned int, 128);
 
-static u64 inums_init() {
+static int inums_init() {
     INUM_RING
     inums.increment(inum_container);
-    return inum_container;
+    return 0;
 }
 
 int inums_update(unsigned int inum) {
@@ -40,10 +39,10 @@ int inums_update(unsigned int inum) {
     return 0;
 }
 
-static int inums_lookup(u64 inum){
+static int inums_lookup(unsigned int inum){
     int inum_init();
     unsigned int *value = inums.lookup(&inum);
-    if (!value) {
+    if (value==NULL) {
         return 1;  // Wert inum im Array gefunden
     }
     return 0;
@@ -59,6 +58,7 @@ int sclone(struct pt_regs *ctx) {
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    int ret_value = inums_lookup(inum_container);
     if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
@@ -77,6 +77,7 @@ int sopen(struct pt_regs *ctx) {
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    // int ret_value = inums_lookup(inum_container);
     if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
@@ -96,10 +97,8 @@ int sread(struct pt_regs *ctx) {
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    u64 ret_init = inums_init();
     int ret_value = inums_lookup(inum_container);
     data.test_inum = ret_value;
-    data.init_return = ret_init;
     if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
@@ -116,6 +115,7 @@ int sread(struct pt_regs *ctx) {
 int swrite(struct pt_regs *ctx) {
     // hier auf return Value zugreifen
     struct data_t data = {};
+    int inum_init();
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
@@ -6200,7 +6200,6 @@ def updatesequence(cpu, data, size):
     inum_ring = data.inum
     tid = data.tgid
     ret = data.test_inum
-    i_ret = data.init_return
     # if str(inum_ring) == str(inum_container):
         # if str(inum_ring) != str(host_ns):
         # if int(ringbufferpid) != 1:
@@ -6212,12 +6211,11 @@ def updatesequence(cpu, data, size):
         add_to_pid_dict(ringbufferpid, "open", tid)
     elif syscall_number == 2:
         syscalls.append("read")
-        print("Ret_value read: " + str(ret)  + " inum: " + str(inum_ring))
-        print("Hat Init geklappt?: " + str(i_ret))
+        print("Ret_value read: " + str(ret)  + "inum: " + str(inum_ring))
         add_to_pid_dict(ringbufferpid, "read", tid)
     elif syscall_number == 3:
         syscalls.append("write")
-        print("Ret_value write: " + str(ret) + " inum: " + str(inum_ring))
+        print("Ret_value write: " + str(ret) + "inum: " + str(inum_ring))
         add_to_pid_dict(ringbufferpid, "write", tid)
     elif syscall_number == 4:
         syscalls.append("close")
@@ -7313,9 +7311,8 @@ def createpatterns():
 # host_ns = getinum()
 # print(host_ns)
 print("Getting Container-INUM")
-inum_container = int(getinumcontainer())
-print(type(inum_container))
-prog = prog.replace('INUM_RING', "u64 inum_container = %ld;" %inum_container)
+inum_container = getinumcontainer()
+prog = prog.replace('INUM_RING', "unsigned int inum_container = %s;" %inum_container)
 b = BPF(text=prog)
 print(str(inum_container))
 print("attaching to kretprobes")
