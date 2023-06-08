@@ -21,7 +21,7 @@ struct data_t {
 
 // Initialisierung des BPF Ring Buffers. Mit diesem kann man Daten an den Userspace übergeben
 BPF_PERF_OUTPUT(events);
-// BPF_ARRAY(counts, unsigned int, 32);
+// BPF_ARRAY(counts, u64, 32);
 // unsigned int value = 1234;
 //bpf_map_update_elem(&counts, &index, &value, BPF_ANY);
 
@@ -30,11 +30,12 @@ BPF_ARRAY(inums, long, 128);
 
 static u64 inums_init() {
     INUM_RING
-    u64 success = inums.atomic_increment(inum_container);
-    if(success){
-        return 0;
+    inums.atomic_increment(inum_container);
+    unsigned int *value = inums.lookup(inum_container);
+    if (value==NULL) {
+        return 1;  // Wert inum im Array gefunden
     }
-    return 1;
+    return 0;
 }
 
 int inums_update(unsigned int inum) {
@@ -45,7 +46,7 @@ int inums_update(unsigned int inum) {
 
 static int inums_lookup(unsigned int inum){
     int inum_init();
-    u64 *value = inums.lookup(&inum);
+    unsigned int *value = inums.lookup(&inum);
     if (value==NULL) {
         return 1;  // Wert inum im Array gefunden
     }
