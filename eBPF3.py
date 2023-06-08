@@ -40,7 +40,7 @@ int inums_update(unsigned int inum) {
     return 0;
 }
 
-static int inums_lookup(unsigned int inum){
+static int inums_lookup(u64 inum){
     // int inum_init();
     u64 *value = inums.lookup(&inum);
     if (value==NULL) {
