@@ -32,7 +32,7 @@ static int inums_init() {
     struct data_t data = {};
     INUM_RING
     inums.increment(inum_container);
-    return 0;
+    return inum_container;
 }
 
 int inums_update(unsigned int inum) {
