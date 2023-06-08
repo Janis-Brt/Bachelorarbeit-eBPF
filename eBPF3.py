@@ -40,10 +40,10 @@ int inums_update(unsigned int inum) {
     return 0;
 }
 
-static u64 inums_lookup(){
+static int inums_lookup(){
     int inum_init();
     INUM_RING
-    u64 *value = inums.lookup(&inum_container);
+    int *value = inums.lookup(&inum_container);
     if (!value) {
         return 1;  // Wert inum im Array gefunden
     }
