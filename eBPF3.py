@@ -30,7 +30,7 @@ BPF_ARRAY(inums, unsigned int, 128);
 
 static u64 inums_init() {
     INUM_RING
-    inums.increment(inum_container);
+    inums.atomic_increment(inum_container);
     return inum_container;
 }
 
@@ -6220,7 +6220,6 @@ def updatesequence(cpu, data, size):
         add_to_pid_dict(ringbufferpid, "read", tid)
     elif syscall_number == 3:
         syscalls.append("write")
-        print("Ret_value write: " + str(ret) + "inum: " + str(inum_ring))
         add_to_pid_dict(ringbufferpid, "write", tid)
     elif syscall_number == 4:
         syscalls.append("close")
