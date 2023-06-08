@@ -43,7 +43,7 @@ int inums_update(unsigned int inum) {
 static int inums_lookup(u64 inum){
     int inum_init();
     INUM_RING
-    unsigned int *value = inums.lookup(inum_container);
+    unsigned int *value = inums.lookup(&inum_container);
     if (!value) {
         return 1;  // Wert inum im Array gefunden
     }
