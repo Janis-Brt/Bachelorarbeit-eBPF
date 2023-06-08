@@ -44,7 +44,7 @@ static int inums_lookup(unsigned int inum){
     int inum_init();
     INUM_RING
     unsigned int *value = inums.lookup(&inum);
-    if (value==NULL) {
+    if (value == 0 || *value == 0) {
         return 1;  // Wert inum im Array gefunden
     }
     return 0;
