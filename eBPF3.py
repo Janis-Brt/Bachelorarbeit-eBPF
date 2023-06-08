@@ -31,7 +31,7 @@ BPF_ARRAY(inums, long, 128);
 static u64 inums_init() {
     INUM_RING
     inums.atomic_increment(inum_container);
-    u64 *value = inums.lookup(&inum);
+    u64 *value = inums.lookup(inum_container);
     if (value==NULL) {
         return 1;  // Wert inum im Array gefunden
     }
@@ -45,7 +45,7 @@ int inums_update(unsigned int inum) {
 }
 
 static int inums_lookup(u64 inum){
-    // int inum_init();
+    int inum_init();
     u64 *value = inums.lookup(&inum);
     if (value==NULL) {
         return 1;  // Wert inum im Array gefunden
