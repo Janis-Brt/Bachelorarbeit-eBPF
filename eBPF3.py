@@ -29,8 +29,7 @@ BPF_PERF_OUTPUT(events);
 BPF_ARRAY(inums, long, 128);
 
 static long inums_init() {
-    // INUM_RING
-    unsigned int inum_container = 4026532306;
+    INUM_RING
     inums.increment(inum_container);
     return inum_container;
 }
@@ -7317,7 +7316,7 @@ def createpatterns():
 # print(host_ns)
 print("Getting Container-INUM")
 inum_container = int(getinumcontainer())
-prog = prog.replace('INUM_RING', "long inum_container = %ld;" %inum_container)
+prog = prog.replace('INUM_RING', "u64 inum_container = %llu;" %inum_container)
 b = BPF(text=prog)
 print(str(inum_container))
 print("attaching to kretprobes")
