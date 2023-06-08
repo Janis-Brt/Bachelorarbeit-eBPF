@@ -121,7 +121,6 @@ int swrite(struct pt_regs *ctx) {
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int ret_value = inums_lookup(inum_container);
-    inum_container
     data.test_inum = ret_value;
     if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
