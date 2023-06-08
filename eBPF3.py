@@ -44,9 +44,9 @@ static int inums_lookup(unsigned int inum){
     int inum_init();
     unsigned int *value = inums.lookup(&inum);
     if (value==NULL) {
-        return 1;  // Wert inum im Array gefunden
+        return value;  // Wert inum im Array gefunden
     }
-    return 0;
+    return value;
 }
 
 
@@ -6214,8 +6214,8 @@ def updatesequence(cpu, data, size):
         add_to_pid_dict(ringbufferpid, "open", tid)
     elif syscall_number == 2:
         syscalls.append("read")
-        print("Ret_value read: " + str(ret)  + "inum: " + str(inum_ring))
-        print("Hat Init geklappt?: " + str(i_ret))
+        print("Ergebnis des Lookups für read: " + str(ret)  + "inum: " + str(inum_ring))
+        print("Hat Init geklappt? " + str(i_ret))
         add_to_pid_dict(ringbufferpid, "read", tid)
     elif syscall_number == 3:
         syscalls.append("write")
