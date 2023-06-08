@@ -30,7 +30,7 @@ BPF_ARRAY(inums, u64, 128);
 
 static u64 inums_init() {
     INUM_RING
-    inums.atomic_increment(inum_container);
+    inums.increment(inum_container);
     return inum_container;
 }
 
