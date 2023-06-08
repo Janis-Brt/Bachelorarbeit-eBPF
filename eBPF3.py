@@ -28,7 +28,7 @@ BPF_PERF_OUTPUT(events);
 
 BPF_ARRAY(inums, unsigned int, 128);
 
-static long inums_init() {
+static u64 inums_init() {
     INUM_RING
     inums.increment(inum_container);
     return inum_container;
