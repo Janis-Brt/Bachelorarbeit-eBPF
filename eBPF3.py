@@ -29,8 +29,7 @@ BPF_PERF_OUTPUT(events);
 BPF_ARRAY(inums, unsigned int, 128);
 
 static u64 inums_init() {
-    //INUM_RING
-    u64 inum_container = 4026532306;
+    INUM_RING
     inums.increment(inum_container);
     return inum_container;
 }
@@ -99,7 +98,7 @@ int sread(struct pt_regs *ctx) {
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    int ret_init = inums_init();
+    u64 ret_init = inums_init();
     int ret_value = inums_lookup(inum_container);
     data.test_inum = ret_value;
     data.init_return = ret_init;
