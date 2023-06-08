@@ -28,7 +28,7 @@ BPF_PERF_OUTPUT(events);
 
 BPF_ARRAY(inums, u64, 128);
 
-static u64 inums_init() {
+static u64 inums_init(struct pt_regs *ctx) {
     INUM_RING
     inums.atomic_increment(inum_container);
     return inum_container;
