@@ -16,7 +16,7 @@ struct data_t {
     unsigned int inum; // könnte rausfallen, da inum jetzt schon hier gefiltert wird
     u32 tgid;
     unsigned int test_inum; // könnte rausfallen, da inum jetzt schon hier gefiltert wird
-    int init_return; // Debug Value, um zu testen, ob init klappt.
+    u64 init_return; // Debug Value, um zu testen, ob init klappt.
 };
 
 // Initialisierung des BPF Ring Buffers. Mit diesem kann man Daten an den Userspace übergeben
