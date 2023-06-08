@@ -30,7 +30,7 @@ BPF_ARRAY(inums, unsigned int, 128);
 
 static int inums_init() {
     INUM_RING
-    inums.increment(inum_container);
+    inums.atomic_increment(inum_container);
     return inum_container;
 }
 
@@ -97,6 +97,7 @@ int sread(struct pt_regs *ctx) {
     // hier auf return Value zugreifen
     struct data_t data = {};
     INUM_RING
+    inum_init();
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int ret_init = inums_init();
@@ -6218,7 +6219,7 @@ def updatesequence(cpu, data, size):
         add_to_pid_dict(ringbufferpid, "read", tid)
     elif syscall_number == 3:
         syscalls.append("write")
-        print("Ret_value write: " + str(ret) + "inum: " + str(inum_ring) + " init geklappt?" + str(init_ret))
+        print("Ret_value write: " + str(ret) + "inum: " + str(inum_ring))
         add_to_pid_dict(ringbufferpid, "write", tid)
     elif syscall_number == 4:
         syscalls.append("close")
