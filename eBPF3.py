@@ -16,7 +16,6 @@ struct data_t {
     unsigned int inum; // könnte rausfallen, da inum jetzt schon hier gefiltert wird
     u32 tgid;
     unsigned int test_inum; // könnte rausfallen, da inum jetzt schon hier gefiltert wird
-    u64 init_ret;
 };
 
 // Initialisierung des BPF Ring Buffers. Mit diesem kann man Daten an den Userspace übergeben
@@ -26,12 +25,12 @@ BPF_PERF_OUTPUT(events);
 //bpf_map_update_elem(&counts, &index, &value, BPF_ANY);
 
 
-BPF_ARRAY(inums, u64, 128);
+BPF_ARRAY(inums, unsigned int, 128);
 
 static int inums_init() {
     INUM_RING
-    inums.atomic_increment(inum_container);
-    return inum_container;
+    inums.increment(inum_container);
+    return 0;
 }
 
 int inums_update(unsigned int inum) {
@@ -42,7 +41,6 @@ int inums_update(unsigned int inum) {
 
 static int inums_lookup(unsigned int inum){
     int inum_init();
-    int i = 0;
     unsigned int *value = inums.lookup(&inum);
     if (value==NULL) {
         return 1;  // Wert inum im Array gefunden
@@ -60,7 +58,7 @@ int sclone(struct pt_regs *ctx) {
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    // int ret_value = inums_lookup(inum_container);
+    int ret_value = inums_lookup(inum_container);
     if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
@@ -99,10 +97,8 @@ int sread(struct pt_regs *ctx) {
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    int ret_init = inums_init();
     int ret_value = inums_lookup(inum_container);
     data.test_inum = ret_value;
-    data.init_ret = ret_init;
     if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
@@ -5855,7 +5851,9 @@ int sbpf(struct pt_regs *ctx) {
 """
 
 
+
 # Initialisierung des BPF Objekts, welches den C-Code übergeben bekommt
+
 
 
 # attachkretprobe ruft die Kernel Space Funktion für jeden Syscall auf, und heftet sich an den entsprechenden
@@ -6202,10 +6200,9 @@ def updatesequence(cpu, data, size):
     inum_ring = data.inum
     tid = data.tgid
     ret = data.test_inum
-    init_ret = data.init_ret
     # if str(inum_ring) == str(inum_container):
-    # if str(inum_ring) != str(host_ns):
-    # if int(ringbufferpid) != 1:
+        # if str(inum_ring) != str(host_ns):
+        # if int(ringbufferpid) != 1:
     if syscall_number == 0:
         syscalls.append("clone")
         add_to_pid_dict(ringbufferpid, "clone", tid)
@@ -6214,7 +6211,7 @@ def updatesequence(cpu, data, size):
         add_to_pid_dict(ringbufferpid, "open", tid)
     elif syscall_number == 2:
         syscalls.append("read")
-        print("Ret_value read: " + str(ret) + "inum: " + str(inum_ring) + " init geklappt?" + str(init_ret))
+        print("Ret_value read: " + str(ret)  + "inum: " + str(inum_ring))
         add_to_pid_dict(ringbufferpid, "read", tid)
     elif syscall_number == 3:
         syscalls.append("write")
@@ -7187,8 +7184,8 @@ def getringbuffer():
             for pid, pattern in sequencesswithtpid.items():
                 print("\nPID: %-*s Pattern: %s" % (5, str(pid), str(pattern)))
 
-            # print("\n++++++++++++++++++++++++++++")
-            # for pid, pattern in sequencesswithttid.items():
+            #print("\n++++++++++++++++++++++++++++")
+            #for pid, pattern in sequencesswithttid.items():
             #    print("\nTID: %-*s Pattern: %s" % (5, str(pid), str(pattern)))
             folder_path = "data"
             # Überprüfe, ob der Ordner existiert, andernfalls lege ihn an
@@ -7198,10 +7195,10 @@ def getringbuffer():
                 json_file = "data/sequencesswithtpid_" + str(timestamp) + ".json"
                 json_file2 = "data/sequencesswithttid_" + str(timestamp) + ".json"
                 with open(json_file, 'w') as f:
-                    # Schreibe das JSON in die Datei
+                # Schreibe das JSON in die Datei
                     json.dump(sequencesswithtpid, f)
                 with open(json_file2, 'w') as f:
-                    # Schreibe das JSON in die Datei
+                # Schreibe das JSON in die Datei
                     json.dump(sequencesswithttid, f)
             createpatterns()
             return
@@ -7271,7 +7268,6 @@ def getinumcontainer():
         # else:
         #     print("not found")
 
-
 def createpatterns():
     patterns = {}
     # Schleife von 0 bis Länge der Liste minus 2
@@ -7280,11 +7276,11 @@ def createpatterns():
         for i in range(len(value) - 2):
             # Extrahiere die Elemente mit den entsprechenden Indizes
             # enthält noch bugs. Das muss ich noch fixen
-            if i + 1 < len(value) and value[i] == value[i + 1]:
-                # print("Doppelte Vorkomniss  erkannt!" + value[i] + value[i+1] )
+            if i+1 < len(value) and value[i] == value[i + 1]:
+                #print("Doppelte Vorkomniss  erkannt!" + value[i] + value[i+1] )
                 value[i] = value[i] + "*"
-                # print("Update " + value[i])
-                del value[i + 1]
+                #print("Update " + value[i])
+                del value[i+1]
             elif i + 2 < len(value) and value[i] == value[i + 1] and value[i] == value[i + 2]:
                 value[i] = value[i] + "*"
                 # print("Update " + value[i])
@@ -7306,6 +7302,8 @@ def createpatterns():
     print("++++++++++++++++++++++++++++++++++++++++++++++++++")
 
 
+
+
 # Eingabe des zu tracenden Binaries.
 # ibinary = input("Input Binary: ")
 # localpids = getpids(ibinary)
@@ -7314,8 +7312,7 @@ def createpatterns():
 # print(host_ns)
 print("Getting Container-INUM")
 inum_container = getinumcontainer()
-inum_container = int(inum_container)
-prog = prog.replace('INUM_RING', "u64 inum_container = %ld;" %inum_container)
+prog = prog.replace('INUM_RING', "unsigned int inum_container = %s;" %inum_container)
 b = BPF(text=prog)
 print(str(inum_container))
 print("attaching to kretprobes")
