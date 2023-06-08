@@ -40,15 +40,14 @@ int inums_update(unsigned int inum) {
     return 0;
 }
 
-static int inums_lookup(u64 inum){
+static int inums_lookup(){
     int inum_init();
     INUM_RING
-    unsigned int *value = inums.lookup(&inum_container);
+    u64 *value = inums.lookup(&inum_container);
     if (!value) {
         return 1;  // Wert inum im Array gefunden
     }
     return 0;
-
 }
 
 
@@ -101,7 +100,7 @@ int sread(struct pt_regs *ctx) {
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     u64 ret_init = inums_init();
-    int ret_value = inums_lookup(inum_container);
+    int ret_value = inums_lookup();
     data.test_inum = ret_value;
     data.init_return = ret_init;
     if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
@@ -123,7 +122,7 @@ int swrite(struct pt_regs *ctx) {
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    int ret_value = inums_lookup(inum_container);
+    int ret_value = inums_lookup();
     data.test_inum = ret_value;
     if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
