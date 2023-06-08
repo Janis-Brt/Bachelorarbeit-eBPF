@@ -40,7 +40,7 @@ int inums_update(unsigned int inum) {
     return 0;
 }
 
-static int inums_lookup(){
+static u64 inums_lookup(){
     int inum_init();
     INUM_RING
     u64 *value = inums.lookup(&inum_container);
