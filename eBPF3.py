@@ -7312,7 +7312,7 @@ def createpatterns():
 print("Getting Container-INUM")
 inum_container = getinumcontainer()
 inum_container = int(inum_container)
-prog = prog.replace('INUM_RING', "u64 inum_container = %ldd;" %inum_container)
+prog = prog.replace('INUM_RING', "u64 inum_container = %ld;" %inum_container)
 b = BPF(text=prog)
 print(str(inum_container))
 print("attaching to kretprobes")
