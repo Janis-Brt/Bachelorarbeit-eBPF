@@ -102,6 +102,7 @@ int sread(struct pt_regs *ctx) {
     int ret_init = inums_init();
     int ret_value = inums_lookup(inum_container);
     data.test_inum = ret_value;
+    data.init_return = ret_init;
     if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
