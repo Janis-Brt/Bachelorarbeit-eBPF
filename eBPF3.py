@@ -16,7 +16,7 @@ struct data_t {
     unsigned int inum; // könnte rausfallen, da inum jetzt schon hier gefiltert wird
     u32 tgid;
     unsigned int test_inum; // könnte rausfallen, da inum jetzt schon hier gefiltert wird
-    int init_return; // Debug Value, um zu testen, ob init klappt.
+    u64 init_return; // Debug Value, um zu testen, ob init klappt.
 };
 
 // Initialisierung des BPF Ring Buffers. Mit diesem kann man Daten an den Userspace übergeben
@@ -28,7 +28,7 @@ BPF_PERF_OUTPUT(events);
 
 BPF_ARRAY(inums, long, 128);
 
-static long inums_init() {
+static u64 inums_init() {
     INUM_RING
     inums.increment(inum_container);
     return inum_container;
@@ -98,7 +98,7 @@ int sread(struct pt_regs *ctx) {
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    int ret_init = inums_init();
+    u64 ret_init = inums_init();
     int ret_value = inums_lookup(inum_container);
     data.test_inum = ret_value;
     data.init_return = ret_init;
@@ -7316,6 +7316,7 @@ def createpatterns():
 # print(host_ns)
 print("Getting Container-INUM")
 inum_container = int(getinumcontainer())
+print(type(inum_container))
 prog = prog.replace('INUM_RING', "u64 inum_container = %ld;" %inum_container)
 b = BPF(text=prog)
 print(str(inum_container))
