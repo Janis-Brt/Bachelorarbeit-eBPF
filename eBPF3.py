@@ -26,7 +26,7 @@ BPF_PERF_OUTPUT(events);
 //bpf_map_update_elem(&counts, &index, &value, BPF_ANY);
 
 
-BPF_ARRAY(inums, long, 128);
+BPF_ARRAY(inums, unsigned int, 128);
 
 static u64 inums_init() {
     INUM_RING
@@ -98,7 +98,7 @@ int sread(struct pt_regs *ctx) {
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    u64 ret_init = inums_init();
+    int ret_init = inums_init();
     int ret_value = inums_lookup(inum_container);
     data.test_inum = ret_value;
     data.init_return = ret_init;
@@ -7316,7 +7316,7 @@ def createpatterns():
 # print(host_ns)
 print("Getting Container-INUM")
 inum_container = int(getinumcontainer())
-prog = prog.replace('INUM_RING', "u64 inum_container = %ld;" %inum_container)
+prog = prog.replace('INUM_RING', "unsigned long long inum_container = %ld;" %inum_container)
 b = BPF(text=prog)
 print(str(inum_container))
 print("attaching to kretprobes")
