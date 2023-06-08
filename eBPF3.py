@@ -26,11 +26,11 @@ BPF_PERF_OUTPUT(events);
 //bpf_map_update_elem(&counts, &index, &value, BPF_ANY);
 
 
-BPF_ARRAY(inums, unsigned int, 128);
+BPF_ARRAY(inums, long, 128);
 
 static long inums_init() {
-    struct data_t data = {};
-    INUM_RING
+    // INUM_RING
+    unsigned int inum_container = 4026532306;
     inums.increment(inum_container);
     return inum_container;
 }
