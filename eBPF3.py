@@ -45,9 +45,9 @@ static int inums_lookup(unsigned int inum){
     INUM
     unsigned int *value = inums.lookup(inum_container);
     if (value==NULL) {
-        return value;  // Wert inum im Array gefunden
+        return 1;  // Wert inum im Array gefunden
     }
-    return value;
+    return 0;
 }
 
 
