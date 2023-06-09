@@ -45,6 +45,7 @@ int inums_update(unsigned int inum) {
 }
 
 static int inums_lookup(unsigned int inum){
+    
     unsigned int *value = inums.lookup(&inum);
     /**if (value == 0 || *value == 0) {
         return 1;  // Wert inum im Array gefunden
@@ -105,7 +106,7 @@ int sread(struct pt_regs *ctx) {
     int inum_init();
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    u64 inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     u64 ret_init = inums_init();
     int ret_value = inums_lookup(inum_ring);
     if(ret_value == 0){
@@ -6197,6 +6198,7 @@ def attachkretprobe():
     b.attach_kretprobe(event=b.get_syscall_fnname("memfd_create"), fn_name="smemfd_create")
     b.attach_kretprobe(event=b.get_syscall_fnname("kexec_file_load"), fn_name="skexec_file_load")
     b.attach_kretprobe(event=b.get_syscall_fnname("bpf"), fn_name="sbpf")
+    print("Attachment done")
 
 
 syscalls = []
