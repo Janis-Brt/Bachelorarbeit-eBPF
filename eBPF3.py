@@ -45,11 +45,12 @@ int inums_update(unsigned int inum) {
 }
 
 static int inums_lookup(unsigned int inum){
-    //unsigned int *value = inums.lookup(&inum);
+    unsigned int *value = inums.lookup(&inum);
     /**if (value == 0 || *value == 0) {
         return 1;  // Wert inum im Array gefunden
     }**/
-    if(!inums.lookup(&inum)){
+    bpf_trace_printk("Value in der Funktion lookup: %u" ,&value);
+    if(!value){
         return 1;
     }
     return 0;
