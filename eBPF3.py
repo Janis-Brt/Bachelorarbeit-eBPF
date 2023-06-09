@@ -109,7 +109,6 @@ int sread(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     u64 ret_init = inums_init();
     /**int ret_value = inums_lookup(inum_ring);
-    
     if(ret_value == 0){
         bpf_trace_printk("Lookup Return-Value ist 0 %d\\n", ret_value);
     }**/
@@ -121,7 +120,7 @@ int sread(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
-    // bpf_trace_printk("Inum aus der Task Struct %u\\n Inum aus dem User Space %u\\n", inum_ring, inum_container);
+    bpf_trace_printk("Inum aus der Task Struct %u\\n Inum aus dem User Space %u\\n", inum_ring, inum_container);
     u64 id = bpf_get_current_pid_tgid();
     data.inum = inum_ring;
     data.pid = id >> 32;
