@@ -54,7 +54,7 @@ static int inums_lookup(unsigned int inum){
     if(!value){
         return 1;
     }
-    // bpf_trace_printk("Value in der Funktion lookup: %u" ,&value);
+    //bpf_trace_printk("Value in der Funktion lookup: %u" ,&value);
     return 0;
 }
 
