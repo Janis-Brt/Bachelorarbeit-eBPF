@@ -30,12 +30,12 @@ BPF_ARRAY(inums, unsigned int, 128);
 
 static u64 inums_init() {
     INUM_RING
-    unsigned int *value = inums.lookup(inum_container);
+    unsigned int *value = inums.lookup(&inum_container);
     if (value != 0 || *value != 0) {
         bpf_trace_printk("Inum im Array enthalten\\n");
         return 1;  // Wert inum im Array gefunden
     }
-    inums.increment(inum_container);
+    inums.increment(&inum_container);
     bpf_trace_printk("Inum ins Array eingetragen\\n");
     return inum_container;
 }
