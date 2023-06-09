@@ -113,7 +113,7 @@ int sread(struct pt_regs *ctx) {
     if(ret_value == 0){
         bpf_trace_printk("Lookup Return-Value ist 0 %d\\n", ret_value);
     }**/
-    if(inums.lookup(inum_ring)){
+    if(inums.lookup(&inum_ring)){
         bpf_trace_printk("Inum aus der Task Struct gefunden");
     }
     // data.test_inum = ret_value;
