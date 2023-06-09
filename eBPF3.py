@@ -32,17 +32,14 @@ static u64 inums_init() {
     INUM_RING
     u64 *value = inums.lookup(&inum_container);
     if (value != 0 || *value != 0) {
-        bpf_trace_printk("Inum im Array enthalten\\n");
         return 1;  // Wert inum im Array gefunden
     }
     inums.increment(&inum_container);
-    bpf_trace_printk("Inum ins Array eingetragen\\n");
     return inum_container;
 }
 
 int inums_update(unsigned int inum) {
     inums.increment(inum);
-    bpf_trace_printk("Inums-Array update!\\n");
     return 0;
 }
 
@@ -106,6 +103,7 @@ int sread(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     u64 ret_init = inums_init();
     int ret_value = inums_lookup(inum_ring);
+    bpf_trace_printk("Lookup Return-Value %d\\n", ret_value);
     data.test_inum = ret_value;
     data.init_return = ret_init;
     if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
