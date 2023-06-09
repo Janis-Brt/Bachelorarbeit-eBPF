@@ -68,7 +68,6 @@ int sclone(struct pt_regs *ctx) {
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    int ret_value = inums_lookup(inum_container);
     if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
@@ -87,7 +86,6 @@ int sopen(struct pt_regs *ctx) {
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    // int ret_value = inums_lookup(inum_container);
     if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
@@ -110,12 +108,9 @@ int sread(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     u64 ret_init = inums_init();
     int ret_value = inums_lookup(inum_ring);
-    if(ret_value == 0){
-        bpf_trace_printk("Lookup Return-Value ist 0 %d\\n", ret_value);
-    }
     // data.test_inum = ret_value;
     data.init_return = ret_init;
-    if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
+    if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
     bpf_trace_printk("Inum aus der Task Struct %u\\n Inum aus dem User Space %u\\n", inum_ring, inum_container);
