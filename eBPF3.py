@@ -106,10 +106,10 @@ int sread(struct pt_regs *ctx) {
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    u64 ret_init = inums_init();
-    int ret_value = inums_lookup(inum_ring);
+    // u64 ret_init = inums_init();
     // data.test_inum = ret_value;
     data.init_return = ret_init;
+    int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
