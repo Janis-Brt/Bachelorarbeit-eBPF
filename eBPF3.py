@@ -50,9 +50,9 @@ static int inums_lookup(unsigned int inum){
         return 1;  // Wert inum im Array gefunden
     }**/
     if(!value){
-        bpf_trace_printk("Value in der Funktion lookup: %u" ,&value);
         return 1;
     }
+    bpf_trace_printk("Value in der Funktion lookup: %u" ,&value);
     return 0;
 }
 
