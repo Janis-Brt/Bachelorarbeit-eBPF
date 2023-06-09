@@ -26,11 +26,11 @@ BPF_PERF_OUTPUT(events);
 //bpf_map_update_elem(&counts, &index, &value, BPF_ANY);
 
 
-BPF_ARRAY(inums, unsigned int, 128);
+BPF_ARRAY(inums, u64, 128);
 
 static u64 inums_init() {
     INUM_RING
-    unsigned int *value = inums.lookup(&inum_container);
+    u64 *value = inums.lookup(&inum_container);
     if (value != 0 || *value != 0) {
         bpf_trace_printk("Inum im Array enthalten\\n");
         return 1;  // Wert inum im Array gefunden
@@ -7319,7 +7319,7 @@ def createpatterns():
 # print(host_ns)
 print("Getting Container-INUM")
 inum_container = int(getinumcontainer())
-prog = prog.replace('INUM_RING', "u64 inum_container = %lu;" %inum_container)
+prog = prog.replace('INUM_RING', "u64 inum_container = %ld;" %inum_container)
 b = BPF(text=prog)
 print(str(inum_container))
 print("attaching to kretprobes")
