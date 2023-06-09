@@ -6227,8 +6227,8 @@ def updatesequence(cpu, data, size):
         add_to_pid_dict(ringbufferpid, "open", tgid)
     elif syscall_number == 2:
         syscalls.append("read")
-        print("Ergebnis des Lookups für read: " + str(ret)  + "inum: " + str(inum_ring))
-        print("Hat Init geklappt? " + str(i_ret))
+        #print("Ergebnis des Lookups für read: " + str(ret)  + "inum: " + str(inum_ring))
+        #print("Hat Init geklappt? " + str(i_ret))
         add_to_pid_dict(ringbufferpid, "read", tgid)
     elif syscall_number == 3:
         syscalls.append("write")
