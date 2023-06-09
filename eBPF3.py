@@ -117,6 +117,7 @@ int sread(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
     }
+    bpf_trace_printk("Inum aus der Task Struct %d\\n Inum aus dem User Space %d\\n", inum_ring, inum_container);
     u64 id = bpf_get_current_pid_tgid();
     data.inum = inum_ring;
     data.pid = id >> 32;
