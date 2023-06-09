@@ -32,7 +32,6 @@ static int inums_init() {
     INUM_RING
     int value = 0;
     inums.lookup_or_try_init(&inum_container, &value);
-    bpf_trace_printk("Insert war erfolgreich mit dem Key: %u", inum_container);
     /** bpf_trace_printk("Value von inum_container als unsigned int: %u", inum_container);
     unsigned int *value = inums.lookup(&inum_container);
     if (value != 0 || *value != 0) {
@@ -55,7 +54,7 @@ static int inums_lookup(unsigned int inum){
     if(!value){
         return 1;
     }
-    bpf_trace_printk("Value in der Funktion lookup: %u" ,&value);
+    // bpf_trace_printk("Value in der Funktion lookup: %u" ,&value);
     return 0;
 }
 
@@ -110,7 +109,7 @@ int sread(struct pt_regs *ctx) {
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     u64 ret_init = inums_init();
-    int ret_value = inums_lookup(inum_ring);
+    int ret_value = inums_lookup(&inum_ring);
     if(ret_value == 0){
         bpf_trace_printk("Lookup Return-Value ist 0 %d\\n", ret_value);
     }
