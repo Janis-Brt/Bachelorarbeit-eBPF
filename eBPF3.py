@@ -41,9 +41,8 @@ int inums_update(unsigned int inum) {
 }
 
 static int inums_lookup(unsigned int inum){
-    int inum_init();
-    INUM_RING
     unsigned int *value = inums.lookup(&inum);
+    bpf_trace_printk("lookup Test\\n");
     if (value == 0 || *value == 0) {
         return 1;  // Wert inum im Array gefunden
     }
@@ -97,11 +96,10 @@ int sread(struct pt_regs *ctx) {
     // hier auf return Value zugreifen
     struct data_t data = {};
     int inum_init();
-    INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     u64 ret_init = inums_init();
-    int ret_value = inums_lookup(inum_container);
+    int ret_value = inums_lookup(inum_ring);
     data.test_inum = ret_value;
     data.init_return = ret_init;
     if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
@@ -6202,7 +6200,7 @@ def updatesequence(cpu, data, size):
     syscall_number = data.syscallnumber
     ringbufferpid = data.pid
     inum_ring = data.inum
-    tid = data.tgid
+    tgid = data.tgid
     ret = data.test_inum
     i_ret = data.init_return
     # if str(inum_ring) == str(inum_container):
@@ -6210,969 +6208,969 @@ def updatesequence(cpu, data, size):
         # if int(ringbufferpid) != 1:
     if syscall_number == 0:
         syscalls.append("clone")
-        add_to_pid_dict(ringbufferpid, "clone", tid)
+        add_to_pid_dict(ringbufferpid, "clone", tgid)
     elif syscall_number == 1:
         syscalls.append("open")
-        add_to_pid_dict(ringbufferpid, "open", tid)
+        add_to_pid_dict(ringbufferpid, "open", tgid)
     elif syscall_number == 2:
         syscalls.append("read")
         print("Ergebnis des Lookups für read: " + str(ret)  + "inum: " + str(inum_ring))
         print("Hat Init geklappt? " + str(i_ret))
-        add_to_pid_dict(ringbufferpid, "read", tid)
+        add_to_pid_dict(ringbufferpid, "read", tgid)
     elif syscall_number == 3:
         syscalls.append("write")
-        add_to_pid_dict(ringbufferpid, "write", tid)
+        add_to_pid_dict(ringbufferpid, "write", tgid)
     elif syscall_number == 4:
         syscalls.append("close")
-        add_to_pid_dict(ringbufferpid, "close", tid)
+        add_to_pid_dict(ringbufferpid, "close", tgid)
     elif syscall_number == 5:
         syscalls.append("stat")
-        add_to_pid_dict(ringbufferpid, "stat", tid)
+        add_to_pid_dict(ringbufferpid, "stat", tgid)
     elif syscall_number == 6:
         syscalls.append("fstat")
-        add_to_pid_dict(ringbufferpid, "fstat", tid)
+        add_to_pid_dict(ringbufferpid, "fstat", tgid)
     elif syscall_number == 7:
         syscalls.append("lstat")
-        add_to_pid_dict(ringbufferpid, "lstat", tid)
+        add_to_pid_dict(ringbufferpid, "lstat", tgid)
     elif syscall_number == 8:
         syscalls.append("poll")
-        add_to_pid_dict(ringbufferpid, "poll", tid)
+        add_to_pid_dict(ringbufferpid, "poll", tgid)
     elif syscall_number == 9:
         syscalls.append("lseek")
-        add_to_pid_dict(ringbufferpid, "lseek", tid)
+        add_to_pid_dict(ringbufferpid, "lseek", tgid)
     elif syscall_number == 10:
         syscalls.append("mmap")
-        add_to_pid_dict(ringbufferpid, "mmap", tid)
+        add_to_pid_dict(ringbufferpid, "mmap", tgid)
     elif syscall_number == 11:
         syscalls.append("mprotect")
-        add_to_pid_dict(ringbufferpid, "mprotect", tid)
+        add_to_pid_dict(ringbufferpid, "mprotect", tgid)
     elif syscall_number == 12:
         syscalls.append("munmap")
-        add_to_pid_dict(ringbufferpid, "munmap", tid)
+        add_to_pid_dict(ringbufferpid, "munmap", tgid)
     elif syscall_number == 13:
         syscalls.append("brk")
-        add_to_pid_dict(ringbufferpid, "brk", tid)
+        add_to_pid_dict(ringbufferpid, "brk", tgid)
     elif syscall_number == 14:
         syscalls.append("rt_sigaction")
-        add_to_pid_dict(ringbufferpid, "rt_sigaction", tid)
+        add_to_pid_dict(ringbufferpid, "rt_sigaction", tgid)
     elif syscall_number == 15:
         syscalls.append("rt_sigprocmask")
-        add_to_pid_dict(ringbufferpid, "rt_sigprocmask", tid)
+        add_to_pid_dict(ringbufferpid, "rt_sigprocmask", tgid)
     elif syscall_number == 16:
         syscalls.append("rt_sigreturn")
-        add_to_pid_dict(ringbufferpid, "rt_sigreturn", tid)
+        add_to_pid_dict(ringbufferpid, "rt_sigreturn", tgid)
     elif syscall_number == 17:
         syscalls.append("ioctl")
-        add_to_pid_dict(ringbufferpid, "ioctl", tid)
+        add_to_pid_dict(ringbufferpid, "ioctl", tgid)
     elif syscall_number == 18:
         syscalls.append("pread64")
-        add_to_pid_dict(ringbufferpid, "pread64", tid)
+        add_to_pid_dict(ringbufferpid, "pread64", tgid)
     elif syscall_number == 19:
         syscalls.append("pwrite64")
-        add_to_pid_dict(ringbufferpid, "pwrite64", tid)
+        add_to_pid_dict(ringbufferpid, "pwrite64", tgid)
     elif syscall_number == 20:
         syscalls.append("readv")
-        add_to_pid_dict(ringbufferpid, "readv", tid)
+        add_to_pid_dict(ringbufferpid, "readv", tgid)
     elif syscall_number == 21:
         syscalls.append("writev")
-        add_to_pid_dict(ringbufferpid, "writev", tid)
+        add_to_pid_dict(ringbufferpid, "writev", tgid)
     elif syscall_number == 22:
         syscalls.append("access")
-        add_to_pid_dict(ringbufferpid, "access", tid)
+        add_to_pid_dict(ringbufferpid, "access", tgid)
     elif syscall_number == 23:
         syscalls.append("pipe")
-        add_to_pid_dict(ringbufferpid, "pipe", tid)
+        add_to_pid_dict(ringbufferpid, "pipe", tgid)
     elif syscall_number == 24:
         syscalls.append("select")
-        add_to_pid_dict(ringbufferpid, "select", tid)
+        add_to_pid_dict(ringbufferpid, "select", tgid)
     elif syscall_number == 25:
         syscalls.append("mremap")
-        add_to_pid_dict(ringbufferpid, "mremap", tid)
+        add_to_pid_dict(ringbufferpid, "mremap", tgid)
     elif syscall_number == 26:
         syscalls.append("sched_yield")
-        add_to_pid_dict(ringbufferpid, "sched_yield", tid)
+        add_to_pid_dict(ringbufferpid, "sched_yield", tgid)
     elif syscall_number == 27:
         syscalls.append("msync")
-        add_to_pid_dict(ringbufferpid, "msync", tid)
+        add_to_pid_dict(ringbufferpid, "msync", tgid)
     elif syscall_number == 28:
         syscalls.append("mincore")
-        add_to_pid_dict(ringbufferpid, "mincore", tid)
+        add_to_pid_dict(ringbufferpid, "mincore", tgid)
     elif syscall_number == 29:
         syscalls.append("madvise")
-        add_to_pid_dict(ringbufferpid, "madvise", tid)
+        add_to_pid_dict(ringbufferpid, "madvise", tgid)
     elif syscall_number == 30:
         syscalls.append("shmget")
-        add_to_pid_dict(ringbufferpid, "shmget", tid)
+        add_to_pid_dict(ringbufferpid, "shmget", tgid)
     elif syscall_number == 31:
         syscalls.append("shmat")
-        add_to_pid_dict(ringbufferpid, "shmat", tid)
+        add_to_pid_dict(ringbufferpid, "shmat", tgid)
     elif syscall_number == 32:
         syscalls.append("shmctl")
-        add_to_pid_dict(ringbufferpid, "shmctl", tid)
+        add_to_pid_dict(ringbufferpid, "shmctl", tgid)
     elif syscall_number == 33:
         syscalls.append("dup")
-        add_to_pid_dict(ringbufferpid, "dup", tid)
+        add_to_pid_dict(ringbufferpid, "dup", tgid)
     elif syscall_number == 34:
         syscalls.append("dup2")
-        add_to_pid_dict(ringbufferpid, "dup2", tid)
+        add_to_pid_dict(ringbufferpid, "dup2", tgid)
     elif syscall_number == 35:
         syscalls.append("pause")
-        add_to_pid_dict(ringbufferpid, "pause", tid)
+        add_to_pid_dict(ringbufferpid, "pause", tgid)
     elif syscall_number == 36:
         syscalls.append("nanosleep")
-        add_to_pid_dict(ringbufferpid, "nanosleep", tid)
+        add_to_pid_dict(ringbufferpid, "nanosleep", tgid)
     elif syscall_number == 37:
         syscalls.append("getitimer")
-        add_to_pid_dict(ringbufferpid, "getitimer", tid)
+        add_to_pid_dict(ringbufferpid, "getitimer", tgid)
     elif syscall_number == 38:
         syscalls.append("alarm")
-        add_to_pid_dict(ringbufferpid, "alarm", tid)
+        add_to_pid_dict(ringbufferpid, "alarm", tgid)
     elif syscall_number == 39:
         syscalls.append("setitimer")
-        add_to_pid_dict(ringbufferpid, "setitimer", tid)
+        add_to_pid_dict(ringbufferpid, "setitimer", tgid)
     elif syscall_number == 40:
         syscalls.append("getpid")
-        add_to_pid_dict(ringbufferpid, "getpid", tid)
+        add_to_pid_dict(ringbufferpid, "getpid", tgid)
     elif syscall_number == 41:
         syscalls.append("sendfile")
-        add_to_pid_dict(ringbufferpid, "sendfile", tid)
+        add_to_pid_dict(ringbufferpid, "sendfile", tgid)
     elif syscall_number == 42:
         syscalls.append("socket")
-        add_to_pid_dict(ringbufferpid, "socket", tid)
+        add_to_pid_dict(ringbufferpid, "socket", tgid)
     elif syscall_number == 43:
         syscalls.append("connect")
-        add_to_pid_dict(ringbufferpid, "connect", tid)
+        add_to_pid_dict(ringbufferpid, "connect", tgid)
     elif syscall_number == 44:
         syscalls.append("accept")
-        add_to_pid_dict(ringbufferpid, "accept", tid)
+        add_to_pid_dict(ringbufferpid, "accept", tgid)
     elif syscall_number == 45:
         syscalls.append("sendto")
-        add_to_pid_dict(ringbufferpid, "sendto", tid)
+        add_to_pid_dict(ringbufferpid, "sendto", tgid)
     elif syscall_number == 46:
         syscalls.append("recvfrom")
-        add_to_pid_dict(ringbufferpid, "recvfrom", tid)
+        add_to_pid_dict(ringbufferpid, "recvfrom", tgid)
     elif syscall_number == 47:
         syscalls.append("sendmsg")
-        add_to_pid_dict(ringbufferpid, "sendmsg", tid)
+        add_to_pid_dict(ringbufferpid, "sendmsg", tgid)
     elif syscall_number == 48:
         syscalls.append("recvmsg")
-        add_to_pid_dict(ringbufferpid, "recvmsg", tid)
+        add_to_pid_dict(ringbufferpid, "recvmsg", tgid)
     elif syscall_number == 49:
         syscalls.append("shutdown")
-        add_to_pid_dict(ringbufferpid, "shutdown", tid)
+        add_to_pid_dict(ringbufferpid, "shutdown", tgid)
     elif syscall_number == 50:
         syscalls.append("bind")
-        add_to_pid_dict(ringbufferpid, "bind", tid)
+        add_to_pid_dict(ringbufferpid, "bind", tgid)
     elif syscall_number == 51:
         syscalls.append("listen")
-        add_to_pid_dict(ringbufferpid, "listen", tid)
+        add_to_pid_dict(ringbufferpid, "listen", tgid)
     elif syscall_number == 52:
         syscalls.append("getsockname")
-        add_to_pid_dict(ringbufferpid, "getsockname", tid)
+        add_to_pid_dict(ringbufferpid, "getsockname", tgid)
     elif syscall_number == 53:
         syscalls.append("getpeername")
-        add_to_pid_dict(ringbufferpid, "getpeername", tid)
+        add_to_pid_dict(ringbufferpid, "getpeername", tgid)
     elif syscall_number == 54:
         syscalls.append("socketpair")
-        add_to_pid_dict(ringbufferpid, "socketpair", tid)
+        add_to_pid_dict(ringbufferpid, "socketpair", tgid)
     elif syscall_number == 55:
         syscalls.append("setsockopt")
-        add_to_pid_dict(ringbufferpid, "setsockopt", tid)
+        add_to_pid_dict(ringbufferpid, "setsockopt", tgid)
     elif syscall_number == 56:
         syscalls.append("getsockopt")
-        add_to_pid_dict(ringbufferpid, "getsockopt", tid)
+        add_to_pid_dict(ringbufferpid, "getsockopt", tgid)
     elif syscall_number == 57:
         syscalls.append("fork")
-        add_to_pid_dict(ringbufferpid, "fork", tid)
+        add_to_pid_dict(ringbufferpid, "fork", tgid)
     elif syscall_number == 58:
         syscalls.append("vfork")
-        add_to_pid_dict(ringbufferpid, "vfork", tid)
+        add_to_pid_dict(ringbufferpid, "vfork", tgid)
     elif syscall_number == 59:
         syscalls.append("execve")
-        add_to_pid_dict(ringbufferpid, "execve", tid)
+        add_to_pid_dict(ringbufferpid, "execve", tgid)
     elif syscall_number == 60:
         syscalls.append("exit")
-        add_to_pid_dict(ringbufferpid, "exit", tid)
+        add_to_pid_dict(ringbufferpid, "exit", tgid)
     elif syscall_number == 61:
         syscalls.append("wait4")
-        add_to_pid_dict(ringbufferpid, "wait4", tid)
+        add_to_pid_dict(ringbufferpid, "wait4", tgid)
     elif syscall_number == 62:
         syscalls.append("kill")
-        add_to_pid_dict(ringbufferpid, "kill", tid)
+        add_to_pid_dict(ringbufferpid, "kill", tgid)
     elif syscall_number == 63:
         syscalls.append("uname")
-        add_to_pid_dict(ringbufferpid, "uname", tid)
+        add_to_pid_dict(ringbufferpid, "uname", tgid)
     elif syscall_number == 64:
         syscalls.append("semget")
-        add_to_pid_dict(ringbufferpid, "semget", tid)
+        add_to_pid_dict(ringbufferpid, "semget", tgid)
     elif syscall_number == 65:
         syscalls.append("semop")
-        add_to_pid_dict(ringbufferpid, "semop", tid)
+        add_to_pid_dict(ringbufferpid, "semop", tgid)
     elif syscall_number == 66:
         syscalls.append("semctl")
-        add_to_pid_dict(ringbufferpid, "semctl", tid)
+        add_to_pid_dict(ringbufferpid, "semctl", tgid)
     elif syscall_number == 67:
         syscalls.append("shmdt")
-        add_to_pid_dict(ringbufferpid, "shmdt", tid)
+        add_to_pid_dict(ringbufferpid, "shmdt", tgid)
     elif syscall_number == 68:
         syscalls.append("msgget")
-        add_to_pid_dict(ringbufferpid, "msgget", tid)
+        add_to_pid_dict(ringbufferpid, "msgget", tgid)
     elif syscall_number == 69:
         syscalls.append("msgsnd")
-        add_to_pid_dict(ringbufferpid, "msgsnd", tid)
+        add_to_pid_dict(ringbufferpid, "msgsnd", tgid)
     elif syscall_number == 70:
         syscalls.append("msgrcv")
-        add_to_pid_dict(ringbufferpid, "msgrcv", tid)
+        add_to_pid_dict(ringbufferpid, "msgrcv", tgid)
     elif syscall_number == 71:
         syscalls.append("msgctl")
-        add_to_pid_dict(ringbufferpid, "msgctl", tid)
+        add_to_pid_dict(ringbufferpid, "msgctl", tgid)
     elif syscall_number == 72:
         syscalls.append("fcntl")
-        add_to_pid_dict(ringbufferpid, "fcntl", tid)
+        add_to_pid_dict(ringbufferpid, "fcntl", tgid)
     elif syscall_number == 73:
         syscalls.append("flock")
-        add_to_pid_dict(ringbufferpid, "flock", tid)
+        add_to_pid_dict(ringbufferpid, "flock", tgid)
     elif syscall_number == 74:
         syscalls.append("fsync")
-        add_to_pid_dict(ringbufferpid, "fsync", tid)
+        add_to_pid_dict(ringbufferpid, "fsync", tgid)
     elif syscall_number == 75:
         syscalls.append("fdatasync")
-        add_to_pid_dict(ringbufferpid, "fdatasync", tid)
+        add_to_pid_dict(ringbufferpid, "fdatasync", tgid)
     elif syscall_number == 76:
         syscalls.append("truncate")
-        add_to_pid_dict(ringbufferpid, "truncate", tid)
+        add_to_pid_dict(ringbufferpid, "truncate", tgid)
     elif syscall_number == 77:
         syscalls.append("ftruncate")
-        add_to_pid_dict(ringbufferpid, "ftruncate", tid)
+        add_to_pid_dict(ringbufferpid, "ftruncate", tgid)
     elif syscall_number == 78:
         syscalls.append("getdents")
-        add_to_pid_dict(ringbufferpid, "getdents", tid)
+        add_to_pid_dict(ringbufferpid, "getdents", tgid)
     elif syscall_number == 79:
         syscalls.append("getcwd")
-        add_to_pid_dict(ringbufferpid, "getcwd", tid)
+        add_to_pid_dict(ringbufferpid, "getcwd", tgid)
     elif syscall_number == 80:
         syscalls.append("chdir")
-        add_to_pid_dict(ringbufferpid, "chdir", tid)
+        add_to_pid_dict(ringbufferpid, "chdir", tgid)
     elif syscall_number == 81:
         syscalls.append("fchdir")
-        add_to_pid_dict(ringbufferpid, "fchdir", tid)
+        add_to_pid_dict(ringbufferpid, "fchdir", tgid)
     elif syscall_number == 82:
         syscalls.append("rename")
-        add_to_pid_dict(ringbufferpid, "rename", tid)
+        add_to_pid_dict(ringbufferpid, "rename", tgid)
     elif syscall_number == 83:
         syscalls.append("mkdir")
-        add_to_pid_dict(ringbufferpid, "mkdir", tid)
+        add_to_pid_dict(ringbufferpid, "mkdir", tgid)
     elif syscall_number == 84:
         syscalls.append("rmdir")
-        add_to_pid_dict(ringbufferpid, "rmdir", tid)
+        add_to_pid_dict(ringbufferpid, "rmdir", tgid)
     elif syscall_number == 85:
         syscalls.append("creat")
-        add_to_pid_dict(ringbufferpid, "creat", tid)
+        add_to_pid_dict(ringbufferpid, "creat", tgid)
     elif syscall_number == 86:
         syscalls.append("link")
-        add_to_pid_dict(ringbufferpid, "link", tid)
+        add_to_pid_dict(ringbufferpid, "link", tgid)
     elif syscall_number == 87:
         syscalls.append("unlink")
-        add_to_pid_dict(ringbufferpid, "unlink", tid)
+        add_to_pid_dict(ringbufferpid, "unlink", tgid)
     elif syscall_number == 88:
         syscalls.append("symlink")
-        add_to_pid_dict(ringbufferpid, "symlink", tid)
+        add_to_pid_dict(ringbufferpid, "symlink", tgid)
     elif syscall_number == 89:
         syscalls.append("readlink")
-        add_to_pid_dict(ringbufferpid, "readlink", tid)
+        add_to_pid_dict(ringbufferpid, "readlink", tgid)
     elif syscall_number == 90:
         syscalls.append("chmod")
-        add_to_pid_dict(ringbufferpid, "chmod", tid)
+        add_to_pid_dict(ringbufferpid, "chmod", tgid)
     elif syscall_number == 91:
         syscalls.append("fchmod")
-        add_to_pid_dict(ringbufferpid, "fchmod", tid)
+        add_to_pid_dict(ringbufferpid, "fchmod", tgid)
     elif syscall_number == 92:
         syscalls.append("chown")
-        add_to_pid_dict(ringbufferpid, "chown", tid)
+        add_to_pid_dict(ringbufferpid, "chown", tgid)
     elif syscall_number == 93:
         syscalls.append("fchown")
-        add_to_pid_dict(ringbufferpid, "fchown", tid)
+        add_to_pid_dict(ringbufferpid, "fchown", tgid)
     elif syscall_number == 94:
         syscalls.append("lchown")
-        add_to_pid_dict(ringbufferpid, "lchown", tid)
+        add_to_pid_dict(ringbufferpid, "lchown", tgid)
     elif syscall_number == 95:
         syscalls.append("umask")
-        add_to_pid_dict(ringbufferpid, "umask", tid)
+        add_to_pid_dict(ringbufferpid, "umask", tgid)
     elif syscall_number == 96:
         syscalls.append("gettimeofday")
-        add_to_pid_dict(ringbufferpid, "gettimeofday", tid)
+        add_to_pid_dict(ringbufferpid, "gettimeofday", tgid)
     elif syscall_number == 97:
         syscalls.append("getrlimit")
-        add_to_pid_dict(ringbufferpid, "getrlimit", tid)
+        add_to_pid_dict(ringbufferpid, "getrlimit", tgid)
     elif syscall_number == 98:
         syscalls.append("getrusage")
-        add_to_pid_dict(ringbufferpid, "getrusage", tid)
+        add_to_pid_dict(ringbufferpid, "getrusage", tgid)
     elif syscall_number == 99:
         syscalls.append("sysinfo")
-        add_to_pid_dict(ringbufferpid, "sysinfo", tid)
+        add_to_pid_dict(ringbufferpid, "sysinfo", tgid)
     elif syscall_number == 100:
         syscalls.append("times")
-        add_to_pid_dict(ringbufferpid, "times", tid)
+        add_to_pid_dict(ringbufferpid, "times", tgid)
     elif syscall_number == 102:
         syscalls.append("ptrace")
-        add_to_pid_dict(ringbufferpid, "ptrace", tid)
+        add_to_pid_dict(ringbufferpid, "ptrace", tgid)
     elif syscall_number == 103:
         syscalls.append("getuid")
-        add_to_pid_dict(ringbufferpid, "getuid", tid)
+        add_to_pid_dict(ringbufferpid, "getuid", tgid)
     elif syscall_number == 104:
         syscalls.append("syslog")
-        add_to_pid_dict(ringbufferpid, "syslog", tid)
+        add_to_pid_dict(ringbufferpid, "syslog", tgid)
     elif syscall_number == 105:
         syscalls.append("getgid")
-        add_to_pid_dict(ringbufferpid, "getgid", tid)
+        add_to_pid_dict(ringbufferpid, "getgid", tgid)
     elif syscall_number == 106:
         syscalls.append("setuid")
-        add_to_pid_dict(ringbufferpid, "setuid", tid)
+        add_to_pid_dict(ringbufferpid, "setuid", tgid)
     elif syscall_number == 107:
         syscalls.append("setgid")
-        add_to_pid_dict(ringbufferpid, "setgid", tid)
+        add_to_pid_dict(ringbufferpid, "setgid", tgid)
     elif syscall_number == 108:
         syscalls.append("geteuid")
-        add_to_pid_dict(ringbufferpid, "geteuid", tid)
+        add_to_pid_dict(ringbufferpid, "geteuid", tgid)
     elif syscall_number == 109:
         syscalls.append("getegid")
-        add_to_pid_dict(ringbufferpid, "getegid", tid)
+        add_to_pid_dict(ringbufferpid, "getegid", tgid)
     elif syscall_number == 110:
         syscalls.append("setpgid")
-        add_to_pid_dict(ringbufferpid, "setpgid", tid)
+        add_to_pid_dict(ringbufferpid, "setpgid", tgid)
     elif syscall_number == 111:
         syscalls.append("getppid")
-        add_to_pid_dict(ringbufferpid, "getppid", tid)
+        add_to_pid_dict(ringbufferpid, "getppid", tgid)
     elif syscall_number == 112:
         syscalls.append("getpgrp")
-        add_to_pid_dict(ringbufferpid, "getpgrp", tid)
+        add_to_pid_dict(ringbufferpid, "getpgrp", tgid)
     elif syscall_number == 113:
         syscalls.append("setsid")
-        add_to_pid_dict(ringbufferpid, "setsid", tid)
+        add_to_pid_dict(ringbufferpid, "setsid", tgid)
     elif syscall_number == 114:
         syscalls.append("setreuid")
-        add_to_pid_dict(ringbufferpid, "setreuid", tid)
+        add_to_pid_dict(ringbufferpid, "setreuid", tgid)
     elif syscall_number == 115:
         syscalls.append("setregid")
-        add_to_pid_dict(ringbufferpid, "setregid", tid)
+        add_to_pid_dict(ringbufferpid, "setregid", tgid)
     elif syscall_number == 116:
         syscalls.append("getgroups")
-        add_to_pid_dict(ringbufferpid, "getgroups", tid)
+        add_to_pid_dict(ringbufferpid, "getgroups", tgid)
     elif syscall_number == 117:
         syscalls.append("setgroups")
-        add_to_pid_dict(ringbufferpid, "setgroups", tid)
+        add_to_pid_dict(ringbufferpid, "setgroups", tgid)
     elif syscall_number == 118:
         syscalls.append("setresuid")
-        add_to_pid_dict(ringbufferpid, "setresuid", tid)
+        add_to_pid_dict(ringbufferpid, "setresuid", tgid)
     elif syscall_number == 119:
         syscalls.append("getresuid")
-        add_to_pid_dict(ringbufferpid, "getresuid", tid)
+        add_to_pid_dict(ringbufferpid, "getresuid", tgid)
     elif syscall_number == 120:
         syscalls.append("setresgid")
-        add_to_pid_dict(ringbufferpid, "setresgid", tid)
+        add_to_pid_dict(ringbufferpid, "setresgid", tgid)
     elif syscall_number == 121:
         syscalls.append("getresgid")
-        add_to_pid_dict(ringbufferpid, "getresgid", tid)
+        add_to_pid_dict(ringbufferpid, "getresgid", tgid)
     elif syscall_number == 122:
         syscalls.append("getpgid")
-        add_to_pid_dict(ringbufferpid, "getpgid", tid)
+        add_to_pid_dict(ringbufferpid, "getpgid", tgid)
     elif syscall_number == 123:
         syscalls.append("setfsuid")
-        add_to_pid_dict(ringbufferpid, "setfsuid", tid)
+        add_to_pid_dict(ringbufferpid, "setfsuid", tgid)
     elif syscall_number == 124:
         syscalls.append("setfsgid")
-        add_to_pid_dict(ringbufferpid, "setfsgid", tid)
+        add_to_pid_dict(ringbufferpid, "setfsgid", tgid)
     elif syscall_number == 125:
         syscalls.append("getsid")
-        add_to_pid_dict(ringbufferpid, "getsid", tid)
+        add_to_pid_dict(ringbufferpid, "getsid", tgid)
     elif syscall_number == 126:
         syscalls.append("capget")
-        add_to_pid_dict(ringbufferpid, "capget", tid)
+        add_to_pid_dict(ringbufferpid, "capget", tgid)
     elif syscall_number == 127:
         syscalls.append("capset")
-        add_to_pid_dict(ringbufferpid, "capset", tid)
+        add_to_pid_dict(ringbufferpid, "capset", tgid)
     elif syscall_number == 128:
         syscalls.append("rt_sigpending")
-        add_to_pid_dict(ringbufferpid, "rt_sigpending", tid)
+        add_to_pid_dict(ringbufferpid, "rt_sigpending", tgid)
     elif syscall_number == 129:
         syscalls.append("rt_sigtimedwait")
-        add_to_pid_dict(ringbufferpid, "rt_sigtimedwait", tid)
+        add_to_pid_dict(ringbufferpid, "rt_sigtimedwait", tgid)
     elif syscall_number == 130:
         syscalls.append("rt_sigqueueinfo")
-        add_to_pid_dict(ringbufferpid, "rt_sigqueueinfo", tid)
+        add_to_pid_dict(ringbufferpid, "rt_sigqueueinfo", tgid)
     elif syscall_number == 131:
         syscalls.append("rt_sigsuspend")
-        add_to_pid_dict(ringbufferpid, "rt_sigsuspend", tid)
+        add_to_pid_dict(ringbufferpid, "rt_sigsuspend", tgid)
     elif syscall_number == 132:
         syscalls.append("sigaltstack")
-        add_to_pid_dict(ringbufferpid, "sigaltstack", tid)
+        add_to_pid_dict(ringbufferpid, "sigaltstack", tgid)
     elif syscall_number == 133:
         syscalls.append("utime")
-        add_to_pid_dict(ringbufferpid, "utime", tid)
+        add_to_pid_dict(ringbufferpid, "utime", tgid)
     elif syscall_number == 134:
         syscalls.append("mknod")
-        add_to_pid_dict(ringbufferpid, "mknod", tid)
+        add_to_pid_dict(ringbufferpid, "mknod", tgid)
     elif syscall_number == 135:
         syscalls.append("uselib")
-        add_to_pid_dict(ringbufferpid, "uselib", tid)
+        add_to_pid_dict(ringbufferpid, "uselib", tgid)
     elif syscall_number == 136:
         syscalls.append("personality")
-        add_to_pid_dict(ringbufferpid, "personality", tid)
+        add_to_pid_dict(ringbufferpid, "personality", tgid)
     elif syscall_number == 137:
         syscalls.append("ustat")
-        add_to_pid_dict(ringbufferpid, "ustat", tid)
+        add_to_pid_dict(ringbufferpid, "ustat", tgid)
     elif syscall_number == 138:
         syscalls.append("statfs")
-        add_to_pid_dict(ringbufferpid, "statfs", tid)
+        add_to_pid_dict(ringbufferpid, "statfs", tgid)
     elif syscall_number == 139:
         syscalls.append("fstatfs")
-        add_to_pid_dict(ringbufferpid, "fstatfs", tid)
+        add_to_pid_dict(ringbufferpid, "fstatfs", tgid)
     elif syscall_number == 140:
         syscalls.append("sysfs")
-        add_to_pid_dict(ringbufferpid, "sysfs", tid)
+        add_to_pid_dict(ringbufferpid, "sysfs", tgid)
     elif syscall_number == 141:
         syscalls.append("getpriority")
-        add_to_pid_dict(ringbufferpid, "getpriority", tid)
+        add_to_pid_dict(ringbufferpid, "getpriority", tgid)
     elif syscall_number == 142:
         syscalls.append("setpriority")
-        add_to_pid_dict(ringbufferpid, "setpriority", tid)
+        add_to_pid_dict(ringbufferpid, "setpriority", tgid)
     elif syscall_number == 143:
         syscalls.append("sched_setparam")
-        add_to_pid_dict(ringbufferpid, "sched_setparam", tid)
+        add_to_pid_dict(ringbufferpid, "sched_setparam", tgid)
     elif syscall_number == 144:
         syscalls.append("sched_getparam")
-        add_to_pid_dict(ringbufferpid, "sched_getparam", tid)
+        add_to_pid_dict(ringbufferpid, "sched_getparam", tgid)
     elif syscall_number == 145:
         syscalls.append("sched_setscheduler")
-        add_to_pid_dict(ringbufferpid, "sched_setscheduler", tid)
+        add_to_pid_dict(ringbufferpid, "sched_setscheduler", tgid)
     elif syscall_number == 146:
         syscalls.append("sched_getscheduler")
-        add_to_pid_dict(ringbufferpid, "sched_getscheduler", tid)
+        add_to_pid_dict(ringbufferpid, "sched_getscheduler", tgid)
     elif syscall_number == 147:
         syscalls.append("sched_get_priority_max")
-        add_to_pid_dict(ringbufferpid, "sched_get_priority_max", tid)
+        add_to_pid_dict(ringbufferpid, "sched_get_priority_max", tgid)
     elif syscall_number == 148:
         syscalls.append("sched_get_priority_min")
-        add_to_pid_dict(ringbufferpid, "sched_get_priority_min", tid)
+        add_to_pid_dict(ringbufferpid, "sched_get_priority_min", tgid)
     elif syscall_number == 149:
         syscalls.append("sched_rr_get_interval")
-        add_to_pid_dict(ringbufferpid, "sched_rr_get_interval", tid)
+        add_to_pid_dict(ringbufferpid, "sched_rr_get_interval", tgid)
     elif syscall_number == 150:
         syscalls.append("mlock")
-        add_to_pid_dict(ringbufferpid, "mlock", tid)
+        add_to_pid_dict(ringbufferpid, "mlock", tgid)
     elif syscall_number == 151:
         syscalls.append("munlock")
-        add_to_pid_dict(ringbufferpid, "munlock", tid)
+        add_to_pid_dict(ringbufferpid, "munlock", tgid)
     elif syscall_number == 152:
         syscalls.append("mlockall")
-        add_to_pid_dict(ringbufferpid, "mlockall", tid)
+        add_to_pid_dict(ringbufferpid, "mlockall", tgid)
     elif syscall_number == 153:
         syscalls.append("munlockall")
-        add_to_pid_dict(ringbufferpid, "munlockall", tid)
+        add_to_pid_dict(ringbufferpid, "munlockall", tgid)
     elif syscall_number == 154:
         syscalls.append("vhangup")
-        add_to_pid_dict(ringbufferpid, "vhangup", tid)
+        add_to_pid_dict(ringbufferpid, "vhangup", tgid)
     elif syscall_number == 155:
         syscalls.append("modify_ldt")
-        add_to_pid_dict(ringbufferpid, "modify_ldt", tid)
+        add_to_pid_dict(ringbufferpid, "modify_ldt", tgid)
     elif syscall_number == 156:
         syscalls.append("pivot_root")
-        add_to_pid_dict(ringbufferpid, "pivot_root", tid)
+        add_to_pid_dict(ringbufferpid, "pivot_root", tgid)
     elif syscall_number == 157:
         syscalls.append("sysctl")
-        add_to_pid_dict(ringbufferpid, "sysctl", tid)
+        add_to_pid_dict(ringbufferpid, "sysctl", tgid)
     elif syscall_number == 158:
         syscalls.append("prctl")
-        add_to_pid_dict(ringbufferpid, "prctl", tid)
+        add_to_pid_dict(ringbufferpid, "prctl", tgid)
     elif syscall_number == 159:
         syscalls.append("arch_prctl")
-        add_to_pid_dict(ringbufferpid, "arch_prctl", tid)
+        add_to_pid_dict(ringbufferpid, "arch_prctl", tgid)
     elif syscall_number == 160:
         syscalls.append("adjtimex")
-        add_to_pid_dict(ringbufferpid, "adjtimex", tid)
+        add_to_pid_dict(ringbufferpid, "adjtimex", tgid)
     elif syscall_number == 161:
         syscalls.append("setrlimit")
-        add_to_pid_dict(ringbufferpid, "setrlimit", tid)
+        add_to_pid_dict(ringbufferpid, "setrlimit", tgid)
     elif syscall_number == 162:
         syscalls.append("chroot")
-        add_to_pid_dict(ringbufferpid, "chroot", tid)
+        add_to_pid_dict(ringbufferpid, "chroot", tgid)
     elif syscall_number == 163:
         syscalls.append("sync")
-        add_to_pid_dict(ringbufferpid, "sync", tid)
+        add_to_pid_dict(ringbufferpid, "sync", tgid)
     elif syscall_number == 164:
         syscalls.append("acct")
-        add_to_pid_dict(ringbufferpid, "acct", tid)
+        add_to_pid_dict(ringbufferpid, "acct", tgid)
     elif syscall_number == 165:
         syscalls.append("settimeofday")
-        add_to_pid_dict(ringbufferpid, "settimeofday", tid)
+        add_to_pid_dict(ringbufferpid, "settimeofday", tgid)
     elif syscall_number == 166:
         syscalls.append("mount")
-        add_to_pid_dict(ringbufferpid, "mount", tid)
+        add_to_pid_dict(ringbufferpid, "mount", tgid)
     elif syscall_number == 167:
         syscalls.append("umount2")
-        add_to_pid_dict(ringbufferpid, "umount2", tid)
+        add_to_pid_dict(ringbufferpid, "umount2", tgid)
     elif syscall_number == 168:
         syscalls.append("swapon")
-        add_to_pid_dict(ringbufferpid, "swapon", tid)
+        add_to_pid_dict(ringbufferpid, "swapon", tgid)
     elif syscall_number == 169:
         syscalls.append("swapoff")
-        add_to_pid_dict(ringbufferpid, "swapoff", tid)
+        add_to_pid_dict(ringbufferpid, "swapoff", tgid)
     elif syscall_number == 170:
         syscalls.append("reboot")
-        add_to_pid_dict(ringbufferpid, "reboot", tid)
+        add_to_pid_dict(ringbufferpid, "reboot", tgid)
     elif syscall_number == 171:
         syscalls.append("sethostname")
-        add_to_pid_dict(ringbufferpid, "sethostname", tid)
+        add_to_pid_dict(ringbufferpid, "sethostname", tgid)
     elif syscall_number == 172:
         syscalls.append("setdomainname")
-        add_to_pid_dict(ringbufferpid, "setdomainname", tid)
+        add_to_pid_dict(ringbufferpid, "setdomainname", tgid)
     elif syscall_number == 173:
         syscalls.append("iopl")
-        add_to_pid_dict(ringbufferpid, "iopl", tid)
+        add_to_pid_dict(ringbufferpid, "iopl", tgid)
     elif syscall_number == 174:
         syscalls.append("ioperm")
-        add_to_pid_dict(ringbufferpid, "ioperm", tid)
+        add_to_pid_dict(ringbufferpid, "ioperm", tgid)
     elif syscall_number == 175:
         syscalls.append("create_module")
-        add_to_pid_dict(ringbufferpid, "create_module", tid)
+        add_to_pid_dict(ringbufferpid, "create_module", tgid)
     elif syscall_number == 176:
         syscalls.append("init_module")
-        add_to_pid_dict(ringbufferpid, "init_module", tid)
+        add_to_pid_dict(ringbufferpid, "init_module", tgid)
     elif syscall_number == 177:
         syscalls.append("delete_module")
-        add_to_pid_dict(ringbufferpid, "delete_module", tid)
+        add_to_pid_dict(ringbufferpid, "delete_module", tgid)
     elif syscall_number == 178:
         syscalls.append("get_kernel_syms")
-        add_to_pid_dict(ringbufferpid, "get_kernel_syms", tid)
+        add_to_pid_dict(ringbufferpid, "get_kernel_syms", tgid)
     elif syscall_number == 179:
         syscalls.append("query_module")
-        add_to_pid_dict(ringbufferpid, "query_module", tid)
+        add_to_pid_dict(ringbufferpid, "query_module", tgid)
     elif syscall_number == 180:
         syscalls.append("quotactl")
-        add_to_pid_dict(ringbufferpid, "quotactl", tid)
+        add_to_pid_dict(ringbufferpid, "quotactl", tgid)
     elif syscall_number == 181:
         syscalls.append("nfsservctl")
-        add_to_pid_dict(ringbufferpid, "nfsservctl", tid)
+        add_to_pid_dict(ringbufferpid, "nfsservctl", tgid)
     elif syscall_number == 182:
         syscalls.append("getpmsg")
-        add_to_pid_dict(ringbufferpid, "getpmsg", tid)
+        add_to_pid_dict(ringbufferpid, "getpmsg", tgid)
     elif syscall_number == 183:
         syscalls.append("putpmsg")
-        add_to_pid_dict(ringbufferpid, "putpmsg", tid)
+        add_to_pid_dict(ringbufferpid, "putpmsg", tgid)
     elif syscall_number == 184:
         syscalls.append("afs_syscall")
-        add_to_pid_dict(ringbufferpid, "afs_syscall", tid)
+        add_to_pid_dict(ringbufferpid, "afs_syscall", tgid)
     elif syscall_number == 185:
         syscalls.append("tuxcall")
-        add_to_pid_dict(ringbufferpid, "tuxcall", tid)
+        add_to_pid_dict(ringbufferpid, "tuxcall", tgid)
     elif syscall_number == 186:
         syscalls.append("security")
-        add_to_pid_dict(ringbufferpid, "security", tid)
+        add_to_pid_dict(ringbufferpid, "security", tgid)
     elif syscall_number == 187:
         syscalls.append("gettid")
-        add_to_pid_dict(ringbufferpid, "gettid", tid)
+        add_to_pid_dict(ringbufferpid, "gettid", tgid)
     elif syscall_number == 188:
         syscalls.append("readahead")
-        add_to_pid_dict(ringbufferpid, "readahead", tid)
+        add_to_pid_dict(ringbufferpid, "readahead", tgid)
     elif syscall_number == 189:
         syscalls.append("setxattr")
-        add_to_pid_dict(ringbufferpid, "setxattr", tid)
+        add_to_pid_dict(ringbufferpid, "setxattr", tgid)
     elif syscall_number == 190:
         syscalls.append("lsetxattr")
-        add_to_pid_dict(ringbufferpid, "lsetxattr", tid)
+        add_to_pid_dict(ringbufferpid, "lsetxattr", tgid)
     elif syscall_number == 191:
         syscalls.append("fsetxattr")
-        add_to_pid_dict(ringbufferpid, "fsetxattr", tid)
+        add_to_pid_dict(ringbufferpid, "fsetxattr", tgid)
     elif syscall_number == 192:
         syscalls.append("getxattr")
-        add_to_pid_dict(ringbufferpid, "getxattr", tid)
+        add_to_pid_dict(ringbufferpid, "getxattr", tgid)
     elif syscall_number == 193:
         syscalls.append("fgetxattr")
-        add_to_pid_dict(ringbufferpid, "fgetxattr", tid)
+        add_to_pid_dict(ringbufferpid, "fgetxattr", tgid)
     elif syscall_number == 194:
         syscalls.append("listxattr")
-        add_to_pid_dict(ringbufferpid, "listxattr", tid)
+        add_to_pid_dict(ringbufferpid, "listxattr", tgid)
     elif syscall_number == 195:
         syscalls.append("llistxattr")
-        add_to_pid_dict(ringbufferpid, "llistxattr", tid)
+        add_to_pid_dict(ringbufferpid, "llistxattr", tgid)
     elif syscall_number == 196:
         syscalls.append("flistxattr")
-        add_to_pid_dict(ringbufferpid, "llistxattr", tid)
+        add_to_pid_dict(ringbufferpid, "llistxattr", tgid)
     elif syscall_number == 197:
         syscalls.append("removexattr")
-        add_to_pid_dict(ringbufferpid, "removexattr", tid)
+        add_to_pid_dict(ringbufferpid, "removexattr", tgid)
     elif syscall_number == 198:
         syscalls.append("lremovexattr")
-        add_to_pid_dict(ringbufferpid, "lremovexattr", tid)
+        add_to_pid_dict(ringbufferpid, "lremovexattr", tgid)
     elif syscall_number == 199:
         syscalls.append("fremovexattr")
-        add_to_pid_dict(ringbufferpid, "fremovexattr", tid)
+        add_to_pid_dict(ringbufferpid, "fremovexattr", tgid)
     elif syscall_number == 200:
         syscalls.append("tkill")
-        add_to_pid_dict(ringbufferpid, "tkill", tid)
+        add_to_pid_dict(ringbufferpid, "tkill", tgid)
     elif syscall_number == 201:
         syscalls.append("time")
-        add_to_pid_dict(ringbufferpid, "time", tid)
+        add_to_pid_dict(ringbufferpid, "time", tgid)
     elif syscall_number == 202:
         syscalls.append("futex")
-        add_to_pid_dict(ringbufferpid, "futex", tid)
+        add_to_pid_dict(ringbufferpid, "futex", tgid)
     elif syscall_number == 203:
         syscalls.append("sched_setaffinity")
-        add_to_pid_dict(ringbufferpid, "sched_setaffinity", tid)
+        add_to_pid_dict(ringbufferpid, "sched_setaffinity", tgid)
     elif syscall_number == 204:
         syscalls.append("sched_getaffinity")
-        add_to_pid_dict(ringbufferpid, "sched_getaffinity", tid)
+        add_to_pid_dict(ringbufferpid, "sched_getaffinity", tgid)
     elif syscall_number == 205:
         syscalls.append("set_thread_area")
-        add_to_pid_dict(ringbufferpid, "set_thread_area", tid)
+        add_to_pid_dict(ringbufferpid, "set_thread_area", tgid)
     elif syscall_number == 206:
         syscalls.append("io_setup")
-        add_to_pid_dict(ringbufferpid, "io_setup", tid)
+        add_to_pid_dict(ringbufferpid, "io_setup", tgid)
     elif syscall_number == 207:
         syscalls.append("io_destroy")
-        add_to_pid_dict(ringbufferpid, "io_destroy", tid)
+        add_to_pid_dict(ringbufferpid, "io_destroy", tgid)
     elif syscall_number == 208:
         syscalls.append("io_getevents")
-        add_to_pid_dict(ringbufferpid, "io_getevents", tid)
+        add_to_pid_dict(ringbufferpid, "io_getevents", tgid)
     elif syscall_number == 209:
         syscalls.append("io_submit")
-        add_to_pid_dict(ringbufferpid, "io_submit", tid)
+        add_to_pid_dict(ringbufferpid, "io_submit", tgid)
     elif syscall_number == 210:
         syscalls.append("io_cancel")
-        add_to_pid_dict(ringbufferpid, "io_cancel", tid)
+        add_to_pid_dict(ringbufferpid, "io_cancel", tgid)
     elif syscall_number == 211:
         syscalls.append("get_thread_area")
-        add_to_pid_dict(ringbufferpid, "get_thread_area", tid)
+        add_to_pid_dict(ringbufferpid, "get_thread_area", tgid)
     elif syscall_number == 212:
         syscalls.append("lookup_dcookie")
-        add_to_pid_dict(ringbufferpid, "lookup_dcookie", tid)
+        add_to_pid_dict(ringbufferpid, "lookup_dcookie", tgid)
     elif syscall_number == 213:
         syscalls.append("epoll_create")
-        add_to_pid_dict(ringbufferpid, "epoll_create", tid)
+        add_to_pid_dict(ringbufferpid, "epoll_create", tgid)
     elif syscall_number == 214:
         syscalls.append("epoll_ctl_old")
-        add_to_pid_dict(ringbufferpid, "epoll_ctl_old", tid)
+        add_to_pid_dict(ringbufferpid, "epoll_ctl_old", tgid)
     elif syscall_number == 215:
         syscalls.append("epoll_wait_old")
-        add_to_pid_dict(ringbufferpid, "epoll_wait_old", tid)
+        add_to_pid_dict(ringbufferpid, "epoll_wait_old", tgid)
     elif syscall_number == 216:
         syscalls.append("remap_file_pages")
-        add_to_pid_dict(ringbufferpid, "remap_file_pages", tid)
+        add_to_pid_dict(ringbufferpid, "remap_file_pages", tgid)
     elif syscall_number == 217:
         syscalls.append("getdents64")
-        add_to_pid_dict(ringbufferpid, "getdents64", tid)
+        add_to_pid_dict(ringbufferpid, "getdents64", tgid)
     elif syscall_number == 218:
         syscalls.append("set_tid_address")
-        add_to_pid_dict(ringbufferpid, "set_tid_address", tid)
+        add_to_pid_dict(ringbufferpid, "set_tid_address", tgid)
     elif syscall_number == 219:
         syscalls.append("restart_syscall")
-        add_to_pid_dict(ringbufferpid, "restart_syscall", tid)
+        add_to_pid_dict(ringbufferpid, "restart_syscall", tgid)
     elif syscall_number == 220:
         syscalls.append("semtimedop")
-        add_to_pid_dict(ringbufferpid, "semtimedop", tid)
+        add_to_pid_dict(ringbufferpid, "semtimedop", tgid)
     elif syscall_number == 221:
         syscalls.append("fadvise64")
-        add_to_pid_dict(ringbufferpid, "fadvise64", tid)
+        add_to_pid_dict(ringbufferpid, "fadvise64", tgid)
     elif syscall_number == 222:
         syscalls.append("timer_create")
-        add_to_pid_dict(ringbufferpid, "fadvise64", tid)
+        add_to_pid_dict(ringbufferpid, "fadvise64", tgid)
     elif syscall_number == 223:
         syscalls.append("timer_settime")
-        add_to_pid_dict(ringbufferpid, "timer_settime", tid)
+        add_to_pid_dict(ringbufferpid, "timer_settime", tgid)
     elif syscall_number == 224:
         syscalls.append("timer_gettime")
-        add_to_pid_dict(ringbufferpid, "timer_gettime", tid)
+        add_to_pid_dict(ringbufferpid, "timer_gettime", tgid)
     elif syscall_number == 225:
         syscalls.append("timer_getoverrun")
-        add_to_pid_dict(ringbufferpid, "timer_getoverrun", tid)
+        add_to_pid_dict(ringbufferpid, "timer_getoverrun", tgid)
     elif syscall_number == 226:
         syscalls.append("timer_delete")
-        add_to_pid_dict(ringbufferpid, "timer_delete", tid)
+        add_to_pid_dict(ringbufferpid, "timer_delete", tgid)
     elif syscall_number == 227:
         syscalls.append("clock_settime")
-        add_to_pid_dict(ringbufferpid, "clock_settime", tid)
+        add_to_pid_dict(ringbufferpid, "clock_settime", tgid)
     elif syscall_number == 228:
         syscalls.append("clock_gettime")
-        add_to_pid_dict(ringbufferpid, "clock_gettime", tid)
+        add_to_pid_dict(ringbufferpid, "clock_gettime", tgid)
     elif syscall_number == 229:
         syscalls.append("clock_getres")
-        add_to_pid_dict(ringbufferpid, "clock_getres", tid)
+        add_to_pid_dict(ringbufferpid, "clock_getres", tgid)
     elif syscall_number == 230:
         syscalls.append("clock_nanosleep")
-        add_to_pid_dict(ringbufferpid, "clock_nanosleep", tid)
+        add_to_pid_dict(ringbufferpid, "clock_nanosleep", tgid)
     elif syscall_number == 231:
         syscalls.append("exit_group")
-        add_to_pid_dict(ringbufferpid, "exit_group", tid)
+        add_to_pid_dict(ringbufferpid, "exit_group", tgid)
     elif syscall_number == 232:
         syscalls.append("epoll_wait")
-        add_to_pid_dict(ringbufferpid, "epoll_wait", tid)
+        add_to_pid_dict(ringbufferpid, "epoll_wait", tgid)
     elif syscall_number == 233:
         syscalls.append("epoll_ctl")
-        add_to_pid_dict(ringbufferpid, "epoll_ctl", tid)
+        add_to_pid_dict(ringbufferpid, "epoll_ctl", tgid)
     elif syscall_number == 234:
         syscalls.append("tgkill")
-        add_to_pid_dict(ringbufferpid, "tgkill", tid)
+        add_to_pid_dict(ringbufferpid, "tgkill", tgid)
     elif syscall_number == 235:
         syscalls.append("utimes")
-        add_to_pid_dict(ringbufferpid, "utimes", tid)
+        add_to_pid_dict(ringbufferpid, "utimes", tgid)
     elif syscall_number == 236:
         syscalls.append("vserver")
-        add_to_pid_dict(ringbufferpid, "vserver", tid)
+        add_to_pid_dict(ringbufferpid, "vserver", tgid)
     elif syscall_number == 237:
         syscalls.append("mbind")
-        add_to_pid_dict(ringbufferpid, "mbind", tid)
+        add_to_pid_dict(ringbufferpid, "mbind", tgid)
     elif syscall_number == 238:
         syscalls.append("set_mempolicy")
-        add_to_pid_dict(ringbufferpid, "set_mempolicy", tid)
+        add_to_pid_dict(ringbufferpid, "set_mempolicy", tgid)
     elif syscall_number == 239:
         syscalls.append("get_mempolicy")
-        add_to_pid_dict(ringbufferpid, "get_mempolicy", tid)
+        add_to_pid_dict(ringbufferpid, "get_mempolicy", tgid)
     elif syscall_number == 240:
         syscalls.append("mq_open")
-        add_to_pid_dict(ringbufferpid, "mq_open", tid)
+        add_to_pid_dict(ringbufferpid, "mq_open", tgid)
     elif syscall_number == 241:
         syscalls.append("mq_unlink")
-        add_to_pid_dict(ringbufferpid, "mq_unlink", tid)
+        add_to_pid_dict(ringbufferpid, "mq_unlink", tgid)
     elif syscall_number == 242:
         syscalls.append("mq_timedsend")
-        add_to_pid_dict(ringbufferpid, "mq_timedsend", tid)
+        add_to_pid_dict(ringbufferpid, "mq_timedsend", tgid)
     elif syscall_number == 243:
         syscalls.append("mq_timedreceive")
-        add_to_pid_dict(ringbufferpid, "mq_timedreceive", tid)
+        add_to_pid_dict(ringbufferpid, "mq_timedreceive", tgid)
     elif syscall_number == 244:
         syscalls.append("mq_notify")
-        add_to_pid_dict(ringbufferpid, "mq_notify", tid)
+        add_to_pid_dict(ringbufferpid, "mq_notify", tgid)
     elif syscall_number == 245:
         syscalls.append("mq_getsetattr")
-        add_to_pid_dict(ringbufferpid, "mq_getsetattr", tid)
+        add_to_pid_dict(ringbufferpid, "mq_getsetattr", tgid)
     elif syscall_number == 246:
         syscalls.append("kexec_load")
-        add_to_pid_dict(ringbufferpid, "kexec_load", tid)
+        add_to_pid_dict(ringbufferpid, "kexec_load", tgid)
     elif syscall_number == 247:
         syscalls.append("waitid")
-        add_to_pid_dict(ringbufferpid, "waitid", tid)
+        add_to_pid_dict(ringbufferpid, "waitid", tgid)
     elif syscall_number == 248:
         syscalls.append("add_key")
-        add_to_pid_dict(ringbufferpid, "add_key", tid)
+        add_to_pid_dict(ringbufferpid, "add_key", tgid)
     elif syscall_number == 249:
         syscalls.append("request_key")
-        add_to_pid_dict(ringbufferpid, "request_key", tid)
+        add_to_pid_dict(ringbufferpid, "request_key", tgid)
     elif syscall_number == 250:
         syscalls.append("keyctl")
-        add_to_pid_dict(ringbufferpid, "keyctl", tid)
+        add_to_pid_dict(ringbufferpid, "keyctl", tgid)
     elif syscall_number == 251:
         syscalls.append("ioprio_set")
-        add_to_pid_dict(ringbufferpid, "ioprio_set", tid)
+        add_to_pid_dict(ringbufferpid, "ioprio_set", tgid)
     elif syscall_number == 252:
         syscalls.append("ioprio_get")
-        add_to_pid_dict(ringbufferpid, "ioprio_get", tid)
+        add_to_pid_dict(ringbufferpid, "ioprio_get", tgid)
     elif syscall_number == 253:
         syscalls.append("inotify_init")
-        add_to_pid_dict(ringbufferpid, "inotify_init", tid)
+        add_to_pid_dict(ringbufferpid, "inotify_init", tgid)
     elif syscall_number == 254:
         syscalls.append("inotify_add_watch")
-        add_to_pid_dict(ringbufferpid, "inotify_add_watch", tid)
+        add_to_pid_dict(ringbufferpid, "inotify_add_watch", tgid)
     elif syscall_number == 255:
         syscalls.append("inotify_rm_watch")
-        add_to_pid_dict(ringbufferpid, "inotify_rm_watch", tid)
+        add_to_pid_dict(ringbufferpid, "inotify_rm_watch", tgid)
     elif syscall_number == 256:
         syscalls.append("migrate_pages")
-        add_to_pid_dict(ringbufferpid, "migrate_pages", tid)
+        add_to_pid_dict(ringbufferpid, "migrate_pages", tgid)
     elif syscall_number == 257:
         syscalls.append("openat")
-        add_to_pid_dict(ringbufferpid, "openat", tid)
+        add_to_pid_dict(ringbufferpid, "openat", tgid)
     elif syscall_number == 258:
         syscalls.append("mkdirat")
-        add_to_pid_dict(ringbufferpid, "mkdirat", tid)
+        add_to_pid_dict(ringbufferpid, "mkdirat", tgid)
     elif syscall_number == 259:
         syscalls.append("mknodat")
-        add_to_pid_dict(ringbufferpid, "mknodat", tid)
+        add_to_pid_dict(ringbufferpid, "mknodat", tgid)
     elif syscall_number == 260:
         syscalls.append("fchownat")
-        add_to_pid_dict(ringbufferpid, "fchownat", tid)
+        add_to_pid_dict(ringbufferpid, "fchownat", tgid)
     elif syscall_number == 261:
         syscalls.append("futimesat")
-        add_to_pid_dict(ringbufferpid, "futimesat", tid)
+        add_to_pid_dict(ringbufferpid, "futimesat", tgid)
     elif syscall_number == 262:
         syscalls.append("newfstatat")
-        add_to_pid_dict(ringbufferpid, "newfstatat", tid)
+        add_to_pid_dict(ringbufferpid, "newfstatat", tgid)
     elif syscall_number == 263:
         syscalls.append("unlinkat")
-        add_to_pid_dict(ringbufferpid, "unlinkat", tid)
+        add_to_pid_dict(ringbufferpid, "unlinkat", tgid)
     elif syscall_number == 264:
         syscalls.append("renameat")
-        add_to_pid_dict(ringbufferpid, "renameat", tid)
+        add_to_pid_dict(ringbufferpid, "renameat", tgid)
     elif syscall_number == 265:
         syscalls.append("linkat")
-        add_to_pid_dict(ringbufferpid, "linkat", tid)
+        add_to_pid_dict(ringbufferpid, "linkat", tgid)
     elif syscall_number == 266:
         syscalls.append("symlinkat")
-        add_to_pid_dict(ringbufferpid, "symlinkat", tid)
+        add_to_pid_dict(ringbufferpid, "symlinkat", tgid)
     elif syscall_number == 267:
         syscalls.append("readlinkat")
-        add_to_pid_dict(ringbufferpid, "readlinkat", tid)
+        add_to_pid_dict(ringbufferpid, "readlinkat", tgid)
     elif syscall_number == 268:
         syscalls.append("fchmodat")
-        add_to_pid_dict(ringbufferpid, "fchmodat", tid)
+        add_to_pid_dict(ringbufferpid, "fchmodat", tgid)
     elif syscall_number == 269:
         syscalls.append("faccessat")
-        add_to_pid_dict(ringbufferpid, "faccessat", tid)
+        add_to_pid_dict(ringbufferpid, "faccessat", tgid)
     elif syscall_number == 270:
         syscalls.append("pselect6")
-        add_to_pid_dict(ringbufferpid, "pselect6", tid)
+        add_to_pid_dict(ringbufferpid, "pselect6", tgid)
     elif syscall_number == 271:
         syscalls.append("ppoll")
-        add_to_pid_dict(ringbufferpid, "ppoll", tid)
+        add_to_pid_dict(ringbufferpid, "ppoll", tgid)
     elif syscall_number == 272:
         syscalls.append("unshare")
-        add_to_pid_dict(ringbufferpid, "unshare", tid)
+        add_to_pid_dict(ringbufferpid, "unshare", tgid)
     elif syscall_number == 273:
         syscalls.append("set_robust_list")
-        add_to_pid_dict(ringbufferpid, "set_robust_list", tid)
+        add_to_pid_dict(ringbufferpid, "set_robust_list", tgid)
     elif syscall_number == 274:
         syscalls.append("get_robust_list")
-        add_to_pid_dict(ringbufferpid, "get_robust_list", tid)
+        add_to_pid_dict(ringbufferpid, "get_robust_list", tgid)
     elif syscall_number == 275:
         syscalls.append("splice")
-        add_to_pid_dict(ringbufferpid, "splice", tid)
+        add_to_pid_dict(ringbufferpid, "splice", tgid)
     elif syscall_number == 276:
         syscalls.append("tee")
-        add_to_pid_dict(ringbufferpid, "tee", tid)
+        add_to_pid_dict(ringbufferpid, "tee", tgid)
     elif syscall_number == 277:
         syscalls.append("sync_file_range")
-        add_to_pid_dict(ringbufferpid, "sync_file_range", tid)
+        add_to_pid_dict(ringbufferpid, "sync_file_range", tgid)
     elif syscall_number == 278:
         syscalls.append("vmsplice")
-        add_to_pid_dict(ringbufferpid, "vmsplice", tid)
+        add_to_pid_dict(ringbufferpid, "vmsplice", tgid)
     elif syscall_number == 279:
         syscalls.append("move_pages")
-        add_to_pid_dict(ringbufferpid, "move_pages", tid)
+        add_to_pid_dict(ringbufferpid, "move_pages", tgid)
     elif syscall_number == 280:
         syscalls.append("utimensat")
-        add_to_pid_dict(ringbufferpid, "utimensat", tid)
+        add_to_pid_dict(ringbufferpid, "utimensat", tgid)
     elif syscall_number == 281:
         syscalls.append("epoll_pwait")
-        add_to_pid_dict(ringbufferpid, "epoll_pwait", tid)
+        add_to_pid_dict(ringbufferpid, "epoll_pwait", tgid)
     elif syscall_number == 282:
         syscalls.append("signalfd")
-        add_to_pid_dict(ringbufferpid, "signalfd", tid)
+        add_to_pid_dict(ringbufferpid, "signalfd", tgid)
     elif syscall_number == 283:
         syscalls.append("timerfd_create")
-        add_to_pid_dict(ringbufferpid, "timerfd_create", tid)
+        add_to_pid_dict(ringbufferpid, "timerfd_create", tgid)
     elif syscall_number == 284:
         syscalls.append("eventfd")
-        add_to_pid_dict(ringbufferpid, "eventfd", tid)
+        add_to_pid_dict(ringbufferpid, "eventfd", tgid)
     elif syscall_number == 285:
         syscalls.append("fallocate")
-        add_to_pid_dict(ringbufferpid, "fallocate", tid)
+        add_to_pid_dict(ringbufferpid, "fallocate", tgid)
     elif syscall_number == 286:
         syscalls.append("timerfd_settime")
-        add_to_pid_dict(ringbufferpid, "timerfd_settime", tid)
+        add_to_pid_dict(ringbufferpid, "timerfd_settime", tgid)
     elif syscall_number == 287:
         syscalls.append("timerfd_gettime")
-        add_to_pid_dict(ringbufferpid, "timerfd_gettime", tid)
+        add_to_pid_dict(ringbufferpid, "timerfd_gettime", tgid)
     elif syscall_number == 288:
         syscalls.append("accept4")
-        add_to_pid_dict(ringbufferpid, "accept4", tid)
+        add_to_pid_dict(ringbufferpid, "accept4", tgid)
     elif syscall_number == 289:
         syscalls.append("signalfd4")
-        add_to_pid_dict(ringbufferpid, "signalfd4", tid)
+        add_to_pid_dict(ringbufferpid, "signalfd4", tgid)
     elif syscall_number == 290:
         syscalls.append("eventfd2")
-        add_to_pid_dict(ringbufferpid, "eventfd2", tid)
+        add_to_pid_dict(ringbufferpid, "eventfd2", tgid)
     elif syscall_number == 291:
         syscalls.append("epoll_create1")
-        add_to_pid_dict(ringbufferpid, "epoll_create1", tid)
+        add_to_pid_dict(ringbufferpid, "epoll_create1", tgid)
     elif syscall_number == 292:
         syscalls.append("dup3")
-        add_to_pid_dict(ringbufferpid, "dup3", tid)
+        add_to_pid_dict(ringbufferpid, "dup3", tgid)
     elif syscall_number == 293:
         syscalls.append("pipe2")
-        add_to_pid_dict(ringbufferpid, "pipe2", tid)
+        add_to_pid_dict(ringbufferpid, "pipe2", tgid)
     elif syscall_number == 294:
         syscalls.append("inotify_init1")
-        add_to_pid_dict(ringbufferpid, "inotify_init1", tid)
+        add_to_pid_dict(ringbufferpid, "inotify_init1", tgid)
     elif syscall_number == 295:
         syscalls.append("preadv")
-        add_to_pid_dict(ringbufferpid, "preadv", tid)
+        add_to_pid_dict(ringbufferpid, "preadv", tgid)
     elif syscall_number == 296:
         syscalls.append("pwritev")
-        add_to_pid_dict(ringbufferpid, "pwritev", tid)
+        add_to_pid_dict(ringbufferpid, "pwritev", tgid)
     elif syscall_number == 297:
         syscalls.append("rt_tgsigqueueinfo")
-        add_to_pid_dict(ringbufferpid, "rt_tgsigqueueinfo", tid)
+        add_to_pid_dict(ringbufferpid, "rt_tgsigqueueinfo", tgid)
     elif syscall_number == 298:
         syscalls.append("perf_event_open")
-        add_to_pid_dict(ringbufferpid, "perf_event_open", tid)
+        add_to_pid_dict(ringbufferpid, "perf_event_open", tgid)
     elif syscall_number == 299:
         syscalls.append("recvmmsg")
-        add_to_pid_dict(ringbufferpid, "recvmmsg", tid)
+        add_to_pid_dict(ringbufferpid, "recvmmsg", tgid)
     elif syscall_number == 300:
         syscalls.append("fanotify_init")
-        add_to_pid_dict(ringbufferpid, "fanotify_init", tid)
+        add_to_pid_dict(ringbufferpid, "fanotify_init", tgid)
     elif syscall_number == 301:
         syscalls.append("fanotify_mark")
-        add_to_pid_dict(ringbufferpid, "fanotify_mark", tid)
+        add_to_pid_dict(ringbufferpid, "fanotify_mark", tgid)
     elif syscall_number == 302:
         syscalls.append("prlimit64")
-        add_to_pid_dict(ringbufferpid, "prlimit64", tid)
+        add_to_pid_dict(ringbufferpid, "prlimit64", tgid)
     elif syscall_number == 303:
         syscalls.append("name_to_handle_at")
-        add_to_pid_dict(ringbufferpid, "name_to_handle_at", tid)
+        add_to_pid_dict(ringbufferpid, "name_to_handle_at", tgid)
     elif syscall_number == 304:
         syscalls.append("open_by_handle_at")
-        add_to_pid_dict(ringbufferpid, "open_by_handle_at", tid)
+        add_to_pid_dict(ringbufferpid, "open_by_handle_at", tgid)
     elif syscall_number == 305:
         syscalls.append("clock_adjtime")
-        add_to_pid_dict(ringbufferpid, "clock_adjtime", tid)
+        add_to_pid_dict(ringbufferpid, "clock_adjtime", tgid)
     elif syscall_number == 306:
         syscalls.append("syncfs")
-        add_to_pid_dict(ringbufferpid, "syncfs", tid)
+        add_to_pid_dict(ringbufferpid, "syncfs", tgid)
     elif syscall_number == 307:
         syscalls.append("sendmmsg")
-        add_to_pid_dict(ringbufferpid, "sendmmsg", tid)
+        add_to_pid_dict(ringbufferpid, "sendmmsg", tgid)
     elif syscall_number == 308:
         syscalls.append("setns")
-        add_to_pid_dict(ringbufferpid, "setns", tid)
+        add_to_pid_dict(ringbufferpid, "setns", tgid)
     elif syscall_number == 309:
         syscalls.append("getcpu")
-        add_to_pid_dict(ringbufferpid, "getcpu", tid)
+        add_to_pid_dict(ringbufferpid, "getcpu", tgid)
     elif syscall_number == 310:
         syscalls.append("process_vm_readv")
-        add_to_pid_dict(ringbufferpid, "process_vm_readv", tid)
+        add_to_pid_dict(ringbufferpid, "process_vm_readv", tgid)
     elif syscall_number == 311:
         syscalls.append("process_vm_writev")
-        add_to_pid_dict(ringbufferpid, "process_vm_writev", tid)
+        add_to_pid_dict(ringbufferpid, "process_vm_writev", tgid)
     elif syscall_number == 312:
         syscalls.append("kcmp")
-        add_to_pid_dict(ringbufferpid, "kcmp", tid)
+        add_to_pid_dict(ringbufferpid, "kcmp", tgid)
     elif syscall_number == 313:
         syscalls.append("finit_module")
-        add_to_pid_dict(ringbufferpid, "finit_module", tid)
+        add_to_pid_dict(ringbufferpid, "finit_module", tgid)
     elif syscall_number == 314:
         syscalls.append("sched_setattr")
-        add_to_pid_dict(ringbufferpid, "sched_setattr", tid)
+        add_to_pid_dict(ringbufferpid, "sched_setattr", tgid)
     elif syscall_number == 315:
         syscalls.append("sched_getattr")
-        add_to_pid_dict(ringbufferpid, "sched_getattr", tid)
+        add_to_pid_dict(ringbufferpid, "sched_getattr", tgid)
     elif syscall_number == 316:
         syscalls.append("renameat2")
-        add_to_pid_dict(ringbufferpid, "renameat2", tid)
+        add_to_pid_dict(ringbufferpid, "renameat2", tgid)
     elif syscall_number == 317:
         syscalls.append("seccomp")
-        add_to_pid_dict(ringbufferpid, "seccomp", tid)
+        add_to_pid_dict(ringbufferpid, "seccomp", tgid)
     elif syscall_number == 318:
         syscalls.append("getrandom")
-        add_to_pid_dict(ringbufferpid, "getrandom", tid)
+        add_to_pid_dict(ringbufferpid, "getrandom", tgid)
     elif syscall_number == 319:
         syscalls.append("memfd_create")
-        add_to_pid_dict(ringbufferpid, "memfd_create", tid)
+        add_to_pid_dict(ringbufferpid, "memfd_create", tgid)
     elif syscall_number == 320:
         syscalls.append("kexec_file_load")
-        add_to_pid_dict(ringbufferpid, "kexec_file_load", tid)
+        add_to_pid_dict(ringbufferpid, "kexec_file_load", tgid)
     elif syscall_number == 321:
         syscalls.append("bpf")
-        add_to_pid_dict(ringbufferpid, "bpf", tid)
+        add_to_pid_dict(ringbufferpid, "bpf", tgid)
 
 
 # Funktion zum Auslesen der events im Kernel Ring Buffer. Dabei wird für jeden neuen Eintrag im Ring Buffer die
@@ -7217,8 +7215,6 @@ def signal_handler(sig, frame):
 sequencesswithtpid = {}
 sequencesswithttid = {}
 
-
-# todo
 def add_to_pid_dict(key, value, tid):
     if key in sequencesswithtpid:
         sequencesswithtpid[key].append(value)
@@ -7256,7 +7252,7 @@ def getinumcontainer():
         if line.startswith('PID:'):
             pid = int(line.split(':')[1].strip())
             result = os.popen("ls -la /proc/" + str(pid) + "/ns").read()
-
+            # kann die int konvertierung weg?
             # Splitten der Ausgabe an den Leerzeichen
             parts = result.split(" ")
 
@@ -7318,7 +7314,7 @@ def createpatterns():
 print("Getting Container-INUM")
 inum_container = int(getinumcontainer())
 prog = prog.replace('INUM_RING', "u64 inum_container = %ld;" %inum_container)
-b = BPF(text=prog)
+b = BPF(text=prog).trace_print()
 print(str(inum_container))
 print("attaching to kretprobes")
 attachkretprobe()
