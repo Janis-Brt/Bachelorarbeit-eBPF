@@ -30,7 +30,7 @@ BPF_ARRAY(inums, unsigned int, 128);
 
 static int inums_init() {
     INUM_RING
-    bpf_trace_printk("Value von inum_container als unsigned int: %u", inum_container);
+    // bpf_trace_printk("Value von inum_container als unsigned int: %u", inum_container);
     unsigned int *value = inums.lookup(&inum_container);
     if (value != 0 || *value != 0) {
         return 1;  // Wert inum im Array gefunden
