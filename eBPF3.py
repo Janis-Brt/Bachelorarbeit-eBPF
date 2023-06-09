@@ -26,16 +26,16 @@ BPF_PERF_OUTPUT(events);
 //bpf_map_update_elem(&counts, &index, &value, BPF_ANY);
 
 
-BPF_ARRAY(inums, u64, 128);
+BPF_ARRAY(inums, unsigned int, 128);
 
-static u64 inums_init() {
+static int inums_init() {
     INUM_RING
     u64 *value = inums.lookup(&inum_container);
     if (value != 0 || *value != 0) {
         return 1;  // Wert inum im Array gefunden
     }
     inums.increment(&inum_container);
-    return inum_container;
+    return 0;
 }
 
 int inums_update(unsigned int inum) {
