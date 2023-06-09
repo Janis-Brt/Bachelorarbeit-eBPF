@@ -36,6 +36,7 @@ static int inums_init() {
         return 1;  // Wert inum im Array gefunden
     }
     inums.insert(inum_container, 0);
+    bpf_trace_printk("Insert war erfolgreich mit dem Key: %u", inum_container);
     return 0;
 }
 
@@ -45,7 +46,6 @@ int inums_update(unsigned int inum) {
 }
 
 static int inums_lookup(unsigned int inum){
-    
     unsigned int *value = inums.lookup(&inum);
     /**if (value == 0 || *value == 0) {
         return 1;  // Wert inum im Array gefunden
@@ -111,9 +111,6 @@ int sread(struct pt_regs *ctx) {
     int ret_value = inums_lookup(inum_ring);
     if(ret_value == 0){
         bpf_trace_printk("Lookup Return-Value ist 0 %d\\n", ret_value);
-    }
-    if(inums.lookup(&inum_ring)){
-        bpf_trace_printk("Inum aus der Task Struct gefunden");
     }
     // data.test_inum = ret_value;
     data.init_return = ret_init;
