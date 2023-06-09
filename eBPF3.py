@@ -30,7 +30,8 @@ BPF_HASH(inums, unsigned int, int, 128);
 
 static int inums_init() {
     INUM_RING
-    inums.lookup_or_try_init(&inum_container, &0);
+    int value = 0;
+    inums.lookup_or_try_init(&inum_container, &value);
     bpf_trace_printk("Insert war erfolgreich mit dem Key: %u", inum_container);
     /** bpf_trace_printk("Value von inum_container als unsigned int: %u", inum_container);
     unsigned int *value = inums.lookup(&inum_container);
