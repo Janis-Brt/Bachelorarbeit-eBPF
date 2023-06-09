@@ -26,7 +26,7 @@ BPF_PERF_OUTPUT(events);
 //bpf_map_update_elem(&counts, &index, &value, BPF_ANY);
 
 
-BPF_ARRAY(inums, unsigned int, 128);
+BPF_HASH(inums, unsigned int, char, 128);
 
 static int inums_init() {
     INUM_RING
