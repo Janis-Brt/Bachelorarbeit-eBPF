@@ -7331,6 +7331,7 @@ b = BPF(text=prog)
 print(str(inum_container))
 print("attaching to kretprobes")
 attachkretprobe()
+i = 0
 # b.trace_print()
 # print("attachment ready" + "\n" + "now tracing! \npress CTRL + C to stop tracing.")
 getringbuffer()
