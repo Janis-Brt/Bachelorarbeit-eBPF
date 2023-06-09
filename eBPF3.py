@@ -34,7 +34,7 @@ static int inums_init() {
     if (value != 0 || *value != 0) {
         return 1;  // Wert inum im Array gefunden
     }
-    inums.increment(&inum_container);
+    inums.increment(inum_container);
     return 0;
 }
 
