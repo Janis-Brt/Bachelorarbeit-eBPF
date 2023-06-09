@@ -35,12 +35,12 @@ static int inums_init() {
     if (value != 0 || *value != 0) {
         return 1;  // Wert inum im Array gefunden
     }
-    inums.increment(inum_container);
+    inums.insert(inum_container, 0);
     return 0;
 }
 
 int inums_update(unsigned int inum) {
-    inums.increment(inum);
+    inums.increment(inum); // tbd
     return 0;
 }
 
