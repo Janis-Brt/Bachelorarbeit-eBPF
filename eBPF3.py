@@ -116,7 +116,7 @@ int sread(struct pt_regs *ctx) {
     if(inums.lookup(inum_ring)){
         bpf_trace_printk("Inum aus der Task Struct gefunden");
     }
-    data.test_inum = ret_value;
+    // data.test_inum = ret_value;
     data.init_return = ret_init;
     if(PT_REGS_RC(ctx) < 0 || inum_container != inum_ring){
         return 0;
