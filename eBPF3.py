@@ -110,7 +110,9 @@ int sread(struct pt_regs *ctx) {
     // data.test_inum = ret_value;
     // data.init_return = ret_init;
     int ret_value = inums_lookup(inum_ring);
-    bpf_trace_printk("Ret Value read: %d" , ret_value);
+    if(ret_value == 0){
+        bpf_trace_printk("Ret Value read: %d" , ret_value);
+    }
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
