@@ -7925,7 +7925,7 @@ def createpatterns():
     # Schleife von 0 bis Länge der Liste minus 2
     for key, value in sequencesswithtpid.items():
         # Überprüfe, ob die Liste im Wert mindestens 3 Elemente enthält
-        # for i in range(len(value) - 2):
+        for i in range(len(value) - 2):
         #     # Extrahiere die Elemente mit den entsprechenden Indizes
         #     # enthält noch bugs. Das muss ich noch fixen
         #     if i + 2 < len(value) and value[i] == value[i + 1] and value[i] == value[i + 2]:
@@ -7935,7 +7935,7 @@ def createpatterns():
         #     elif i + 1 < len(value) and value[i] == value[i + 1]:
         #         value[i] = value[i] + "*"
         #         del value[i + 1]
-        while i < len(value) - 2:
+        #while i < len(value) - 2:
             # Extrahiere die Elemente mit den entsprechenden Indizes
             if value[i] == value[i + 1] == value[i + 2]:
                 value[i] += "*"
@@ -7954,6 +7954,7 @@ def createpatterns():
                 patterns[teil_liste][0] += 1
             else:
                 patterns[teil_liste] = key_list
+
     for pattern, count_key in patterns.items():
         count, key = count_key
         print(f"Häufigkeit: {pattern}, Count: {count}, PID: {key}")
