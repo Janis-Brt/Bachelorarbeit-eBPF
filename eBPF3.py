@@ -7939,10 +7939,13 @@ def createpatterns():
             # Extrahiere die Elemente mit den entsprechenden Indizes
             if i + 2 < len(value) and value[i] == value[i + 1] == value[i + 2]:
                 value[i] += "*"
+                value[i+1] += "*"
+                value[i + 2] += "*"
                 # del value[i + 1]
                 # del value[i + 1]
             elif i + 1 < len(value) and value[i] == value[i + 1]:
                 value[i] += "*"
+                value[i + 1] += "*"
             if i + 1 < len(value) and value[i] + "*" == value[i + 1]:
                 value[i + 1] += "*"
                 # del value[i + 1]
