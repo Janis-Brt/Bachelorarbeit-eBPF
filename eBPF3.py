@@ -7954,7 +7954,17 @@ def createpatterns():
             # elif i + 2 < len(value) and value[i+1] == value[i + 2]:
             #     value[i+1] += "*"
             #     del value[i + 2]
+
         print("Markierungen: ")
+        for i in range(len(value) - 2):
+            print(value[i])
+
+        print("Entferne doppelte Vorkommnisse: ")
+        for i in range(len(value) - 2):
+            if i + 1 < len(value) and value[i] == value[i + 1]:
+                del value[i + 1]
+
+        print("Markierungen nach dem Entfernen: ")
         for i in range(len(value) - 2):
             print(value[i])
 
