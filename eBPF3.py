@@ -7937,11 +7937,11 @@ def createpatterns():
         #         del value[i + 1]
         #while i < len(value) - 2:
             # Extrahiere die Elemente mit den entsprechenden Indizes
-            if value[i] == value[i + 1] == value[i + 2]:
+            if i + 2 < len(value) and value[i] == value[i + 1] == value[i + 2]:
                 value[i] += "*"
                 del value[i + 1]
                 del value[i + 1]
-            elif value[i] == value[i + 1]:
+            elif i + 1 < len(value) and value[i] == value[i + 1]:
                 value[i] += "*"
                 del value[i + 1]
 
