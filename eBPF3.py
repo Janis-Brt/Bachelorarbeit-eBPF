@@ -7943,11 +7943,13 @@ def createpatterns():
                 # del value[i + 1]
             elif i + 1 < len(value) and value[i] == value[i + 1]:
                 value[i] += "*"
+            elif i + 1 < len(value) and value[i]+"*" == value[i + 1]:
+                value[i+1 ] += "*"
                 # del value[i + 1]
             # elif i + 2 < len(value) and value[i+1] == value[i + 2]:
             #     value[i+1] += "*"
             #     del value[i + 2]
-        print("Markierungen")
+        print("Markierungen: ")
         for i in range(len(value) - 2):
             print(value[i])
 
