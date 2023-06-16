@@ -7947,6 +7947,9 @@ def createpatterns():
             # elif i + 2 < len(value) and value[i+1] == value[i + 2]:
             #     value[i+1] += "*"
             #     del value[i + 2]
+        print("Markierungen")
+        for i in range(len(value) - 2):
+            print(value[i])
 
             teil_liste = tuple(value[i:i + 3])
             # Zähle die Anzahl der eindeutigen Einträge
