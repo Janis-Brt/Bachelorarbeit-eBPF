@@ -6503,9 +6503,7 @@ int sbpf(struct pt_regs *ctx) {
 """
 
 
-
 # Initialisierung des BPF Objekts, welches den C-Code übergeben bekommt
-
 
 
 # attachkretprobe ruft die Kernel Space Funktion für jeden Syscall auf, und heftet sich an den entsprechenden
@@ -6855,8 +6853,8 @@ def updatesequence(cpu, data, size):
     ret = data.test_inum
     i_ret = data.init_return
     # if str(inum_ring) == str(inum_container):
-        # if str(inum_ring) != str(host_ns):
-        # if int(ringbufferpid) != 1:
+    # if str(inum_ring) != str(host_ns):
+    # if int(ringbufferpid) != 1:
     if syscall_number == 0:
         syscalls.append("clone")
         add_to_pid_dict(ringbufferpid, "clone", tgid)
@@ -6865,8 +6863,8 @@ def updatesequence(cpu, data, size):
         add_to_pid_dict(ringbufferpid, "open", tgid)
     elif syscall_number == 2:
         syscalls.append("read")
-        #print("Ergebnis des Lookups für read: " + str(ret)  + "inum: " + str(inum_ring))
-        #print("Hat Init geklappt? " + str(i_ret))
+        # print("Ergebnis des Lookups für read: " + str(ret)  + "inum: " + str(inum_ring))
+        # print("Hat Init geklappt? " + str(i_ret))
         add_to_pid_dict(ringbufferpid, "read", tgid)
     elif syscall_number == 3:
         syscalls.append("write")
@@ -7838,8 +7836,8 @@ def getringbuffer():
             for pid, pattern in sequencesswithtpid.items():
                 print("\nPID: %-*s Pattern: %s" % (5, str(pid), str(pattern)))
 
-            #print("\n++++++++++++++++++++++++++++")
-            #for pid, pattern in sequencesswithttid.items():
+            # print("\n++++++++++++++++++++++++++++")
+            # for pid, pattern in sequencesswithttid.items():
             #    print("\nTID: %-*s Pattern: %s" % (5, str(pid), str(pattern)))
             folder_path = "data"
             # Überprüfe, ob der Ordner existiert, andernfalls lege ihn an
@@ -7849,10 +7847,10 @@ def getringbuffer():
                 json_file = "data/sequencesswithtpid_" + str(timestamp) + ".json"
                 json_file2 = "data/sequencesswithttid_" + str(timestamp) + ".json"
                 with open(json_file, 'w') as f:
-                # Schreibe das JSON in die Datei
+                    # Schreibe das JSON in die Datei
                     json.dump(sequencesswithtpid, f)
                 with open(json_file2, 'w') as f:
-                # Schreibe das JSON in die Datei
+                    # Schreibe das JSON in die Datei
                     json.dump(sequencesswithttid, f)
             createpatterns()
             return
@@ -7865,6 +7863,7 @@ def signal_handler(sig, frame):
 
 sequencesswithtpid = {}
 sequencesswithttid = {}
+
 
 def add_to_pid_dict(key, value, tid):
     if key in sequencesswithtpid:
@@ -7920,22 +7919,23 @@ def getinumcontainer():
         # else:
         #     print("not found")
 
+
 def createpatterns():
     patterns = {}
     # Schleife von 0 bis Länge der Liste minus 2
     for key, value in sequencesswithtpid.items():
         # Überprüfe, ob die Liste im Wert mindestens 3 Elemente enthält
         for i in range(len(value) - 2):
-        #     # Extrahiere die Elemente mit den entsprechenden Indizes
-        #     # enthält noch bugs. Das muss ich noch fixen
-        #     if i + 2 < len(value) and value[i] == value[i + 1] and value[i] == value[i + 2]:
-        #         value[i] = value[i] + "*"
-        #         del value[i+1]
-        #         del value[i+2]
-        #     elif i + 1 < len(value) and value[i] == value[i + 1]:
-        #         value[i] = value[i] + "*"
-        #         del value[i + 1]
-        #while i < len(value) - 2:
+            #     # Extrahiere die Elemente mit den entsprechenden Indizes
+            #     # enthält noch bugs. Das muss ich noch fixen
+            #     if i + 2 < len(value) and value[i] == value[i + 1] and value[i] == value[i + 2]:
+            #         value[i] = value[i] + "*"
+            #         del value[i+1]
+            #         del value[i+2]
+            #     elif i + 1 < len(value) and value[i] == value[i + 1]:
+            #         value[i] = value[i] + "*"
+            #         del value[i + 1]
+            # while i < len(value) - 2:
             # Extrahiere die Elemente mit den entsprechenden Indizes
             if i + 2 < len(value) and value[i] == value[i + 1] == value[i + 2]:
                 value[i] += "*"
@@ -7943,8 +7943,8 @@ def createpatterns():
                 # del value[i + 1]
             elif i + 1 < len(value) and value[i] == value[i + 1]:
                 value[i] += "*"
-            elif i + 1 < len(value) and value[i]+"*" == value[i + 1]:
-                value[i+1 ] += "*"
+            if i + 1 < len(value) and value[i] + "*" == value[i + 1]:
+                value[i + 1] += "*"
                 # del value[i + 1]
             # elif i + 2 < len(value) and value[i+1] == value[i + 2]:
             #     value[i+1] += "*"
@@ -7969,8 +7969,6 @@ def createpatterns():
     print("++++++++++++++++++++++++++++++++++++++++++++++++++")
 
 
-
-
 # Eingabe des zu tracenden Binaries.
 # ibinary = input("Input Binary: ")
 # localpids = getpids(ibinary)
@@ -7979,7 +7977,7 @@ def createpatterns():
 # print(host_ns)
 print("Getting Container-INUM")
 inum_container = int(getinumcontainer())
-prog = prog.replace('INUM_RING', "unsigned int inum_container = %d;" %inum_container)
+prog = prog.replace('INUM_RING', "unsigned int inum_container = %d;" % inum_container)
 b = BPF(text=prog)
 print(str(inum_container))
 print("attaching to kretprobes")
