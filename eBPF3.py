@@ -7967,12 +7967,10 @@ def createpatterns():
                 print("Vergleiche: " + str(value[i]) + " mit: " + str(value[i + 1]))
                 print("Lösche: " + str(value[i + 1]))
                 del value[i + 1]
-                i -= 1
                 if i + 1 < len(value) and str(value[i]) == str(value[i + 1]):
                     print("Vergleiche: " + str(value[i]) + " mit: " + str(value[i + 1]))
                     print("Lösche: " + str(value[i + 1]))
                     del value[i + 1]
-                    i -= 1
         print("++++++++++++++++++++++++++++++++++++++++++++")
         print("Markierungen nach dem Entfernen: ")
         for i in range(len(value) - 2):
