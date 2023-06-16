@@ -7946,12 +7946,10 @@ def createpatterns():
             if i + 1 < len(value) and value[i] == value[i + 1]:
                 value[i] += "*"
                 value[i + 1] += "*"
-                del value[i + 1]
                 # print("Vergleiche: " + str(value[i] + "*") + " mit: " + str(value[i + 1]))
             if i + 1 < len(value) and str(value[i]) == str(value[i + 1] + "*"):
                 # print("Vergleiche: " + str(value[i]) + " mit: " + str(value[i + 1] + "*"))
                 value[i + 1] += "*"
-                del value[i + 1]
                 # del value[i + 1]
             # elif i + 2 < len(value) and value[i+1] == value[i + 2]:
             #     value[i+1] += "*"
