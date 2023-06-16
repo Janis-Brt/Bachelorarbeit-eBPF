@@ -7925,15 +7925,24 @@ def createpatterns():
     # Schleife von 0 bis Länge der Liste minus 2
     for key, value in sequencesswithtpid.items():
         # Überprüfe, ob die Liste im Wert mindestens 3 Elemente enthält
-        for i in range(len(value) - 2):
+        # for i in range(len(value) - 2):
+        #     # Extrahiere die Elemente mit den entsprechenden Indizes
+        #     # enthält noch bugs. Das muss ich noch fixen
+        #     if i + 2 < len(value) and value[i] == value[i + 1] and value[i] == value[i + 2]:
+        #         value[i] = value[i] + "*"
+        #         del value[i+1]
+        #         del value[i+2]
+        #     elif i + 1 < len(value) and value[i] == value[i + 1]:
+        #         value[i] = value[i] + "*"
+        #         del value[i + 1]
+        while i < len(value) - 2:
             # Extrahiere die Elemente mit den entsprechenden Indizes
-            # enthält noch bugs. Das muss ich noch fixen
-            if i + 2 < len(value) and value[i] == value[i + 1] and value[i] == value[i + 2]:
-                value[i] = value[i] + "*"
-                del value[i+1]
-                del value[i+2]
-            elif i + 1 < len(value) and value[i] == value[i + 1]:
-                value[i] = value[i] + "*"
+            if value[i] == value[i + 1] == value[i + 2]:
+                value[i] += "*"
+                del value[i + 1]
+                del value[i + 1]
+            elif value[i] == value[i + 1]:
+                value[i] += "*"
                 del value[i + 1]
 
             teil_liste = tuple(value[i:i + 3])
