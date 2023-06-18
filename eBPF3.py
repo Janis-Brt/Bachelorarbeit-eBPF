@@ -7876,25 +7876,6 @@ def add_to_pid_dict(key, value, tid):
         sequencesswithttid[tid] = [value]
 
 
-# Die Funktion gibt die PID-Namespace Nummer des Host Systems zurück
-# def getinum():
-#     # Führe den Befehl aus und lese die Ausgabe
-#     result = os.popen("ls -la /proc/self/ns").read()
-#
-#     # Splitten der Ausgabe an den Leerzeichen
-#     # Beispiel-Ausgabe: "total 0\nlrwxrwxrwx 1 user user 0 Apr 20 10:00 pid -> 'pid:[4026531836]'\n"
-#     parts = result.split(" ")
-#
-#     # Suche nach der Zeichenkette "'pid:[...]'"
-#     pid_ns_id = None
-#     for part in parts:
-#         if part.__contains__("pid:["):  # and part.endswith("]'\n"):
-#             # Extrahiere die ID aus der Zeichenkette
-#             pid_ns_id = part[5:-12]
-#             break
-#     # print("PID-Namespace ID des Host Systems: " + str(pid_ns_id))
-#     return pid_ns_id
-
 def getinumcontainer():
     result = os.popen("sudo lxc-info -n ubuntu-ct").read()
     lines = result.split('\n')
@@ -7922,47 +7903,21 @@ def getinumcontainer():
 
 def createpatterns():
     patterns = {}
-    # Schleife von 0 bis Länge der Liste minus 2
+    # Entfernung der doppelten System Calls im Dictionary sequencesswithtpid
     for key, value in sequencesswithtpid.items():
         # Überprüfe, ob die Liste im Wert mindestens 3 Elemente enthält
         for i in range(len(value) - 2):
-            #     # Extrahiere die Elemente mit den entsprechenden Indizes
-            #     # enthält noch bugs. Das muss ich noch fixen
-            #     if i + 2 < len(value) and value[i] == value[i + 1] and value[i] == value[i + 2]:
-            #         value[i] = value[i] + "*"
-            #         del value[i+1]
-            #         del value[i+2]
-            #     elif i + 1 < len(value) and value[i] == value[i + 1]:
-            #         value[i] = value[i] + "*"
-            #         del value[i + 1]
-            # while i < len(value) - 2:
-            # Extrahiere die Elemente mit den entsprechenden Indizes
-            # if i + 2 < len(value) and value[i] == value[i + 1] == value[i + 2]:
-            #     value[i] += "*"
-            #     value[i+1] += "*"
-            #     value[i + 2] += "*"
-            #     # del value[i + 1]
-            #     # del value[i + 1]
             if i + 1 < len(value) and value[i] == value[i + 1]:
                 value[i] += "*"
                 value[i + 1] += "*"
-                # print("Vergleiche: " + str(value[i] + "*") + " mit: " + str(value[i + 1]))
             if i + 1 < len(value) and str(value[i]) == str(value[i + 1] + "*"):
-                # print("Vergleiche: " + str(value[i]) + " mit: " + str(value[i + 1] + "*"))
                 value[i + 1] += "*"
-                # del value[i + 1]
-            # elif i + 2 < len(value) and value[i+1] == value[i + 2]:
-            #     value[i+1] += "*"
-            #     del value[i + 2]
 
         print("Markierungen: ")
         for i in range(len(value) - 2):
             print(value[i])
-
         print("++++++++++++++++++++++++++++++++++++++++++++")
-
         print("Entferne doppelte Vorkommnisse: ")
-
         i = 0
         while i < len(value):
             if i + 1 < len(value) and str(value[i]) == str(value[i + 1]):
@@ -7970,23 +7925,36 @@ def createpatterns():
                 print("Lösche: " + str(value[i + 1]))
                 del value[i + 1]
             else:
-                i += 1
-
-        # for i in range(len(value) - 2):
-        #     if i + 1 < len(value) and str(value[i]) == str(value[i + 1]):
-        #         print("Vergleiche: " + str(value[i]) + " mit: " + str(value[i + 1]))
-        #         print("Lösche: " + str(value[i + 1]))
-        #         del value[i + 1]
-                # i = i -1
-                # if i + 1 < len(value) and str(value[i]) == str(value[i + 1]):
-                #     print("Vergleiche: " + str(value[i]) + " mit: " + str(value[i + 1]))
-                #     print("Lösche: " + str(value[i + 1]))
-                #     del value[i + 1]
-        #     i = i +1
-
+                i += i
         print("++++++++++++++++++++++++++++++++++++++++++++")
-
         print("Markierungen nach dem Entfernen: ")
+        # Entfernung der doppelten System Calls im Dictionary sequencesswithttid
+        # for key, value in sequencesswithttid.items():
+        #     # Überprüfe, ob die Liste im Wert mindestens 3 Elemente enthält
+        #     for i in range(len(value) - 2):
+        #         if i + 1 < len(value) and value[i] == value[i + 1]:
+        #             value[i] += "*"
+        #             value[i + 1] += "*"
+        #         if i + 1 < len(value) and str(value[i]) == str(value[i + 1] + "*"):
+        #             value[i + 1] += "*"
+        #
+        #     print("Markierungen: ")
+        #     for i in range(len(value) - 2):
+        #         print(value[i])
+        #     print("++++++++++++++++++++++++++++++++++++++++++++")
+        #     print("Entferne doppelte Vorkommnisse: ")
+        #     i = 0
+        #     while i < len(value):
+        #         if i + 1 < len(value) and str(value[i]) == str(value[i + 1]):
+        #             print("Vergleiche: " + str(value[i]) + " mit: " + str(value[i + 1]))
+        #             print("Lösche: " + str(value[i + 1]))
+        #             del value[i + 1]
+        #         else:
+        #             i += i
+        #     print("++++++++++++++++++++++++++++++++++++++++++++")
+        #     print("Markierungen nach dem Entfernen: ")
+
+        # Schleife von 0 bis Länge der Liste minus 2
         for i in range(len(value) - 2):
             print(value[i])
 
@@ -8006,12 +7974,7 @@ def createpatterns():
     print("++++++++++++++++++++++++++++++++++++++++++++++++++")
 
 
-# Eingabe des zu tracenden Binaries.
-# ibinary = input("Input Binary: ")
-# localpids = getpids(ibinary)
-# print("Getting Host-PID-NS")
-# host_ns = getinum()
-# print(host_ns)
+
 print("Getting Container-INUM")
 inum_container = int(getinumcontainer())
 prog = prog.replace('INUM_RING', "unsigned int inum_container = %d;" % inum_container)
@@ -8019,7 +7982,6 @@ b = BPF(text=prog)
 print(str(inum_container))
 print("attaching to kretprobes")
 attachkretprobe()
-i = 0
 # b.trace_print()
 # print("attachment ready" + "\n" + "now tracing! \npress CTRL + C to stop tracing.")
 getringbuffer()
