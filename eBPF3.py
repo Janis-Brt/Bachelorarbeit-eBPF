@@ -7924,15 +7924,15 @@ def createpatternspid():
         print("Entferne doppelte Vorkommnisse: ")
         i = 0
         while i < len(value):
+            print("Debug")
             if i + 1 < len(value) and str(value[i]) == str(value[i + 1]):
                 print("Vergleiche: " + str(value[i]) + " mit: " + str(value[i + 1]))
                 print("Lösche: " + str(value[i + 1]))
                 del value[i + 1]
+                i = i - 1
             else:
-                i += i
+                i += 1
         print("++++++++++++++++++++++++++++++++++++++++++++")
-        # print("Markierungen nach dem Entfernen: ")
-        #
         # # Schleife von 0 bis Länge der Liste minus 2
         for i in range(len(value) - 2):
         #     print(value[i])
