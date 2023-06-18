@@ -7951,6 +7951,7 @@ def createpatternspid():
     print("++++++++++++++++++++++++++++++++++++++++++++++++++")
     print("Abschluss PID -> Jetzt TGID Patterns")
     print("++++++++++++++++++++++++++++++++++++++++++++++++++")
+    # tbd: Hier das Ergebnis als JSON speichern
 
 
 def createpatternstgid():
@@ -8000,6 +8001,7 @@ def createpatternstgid():
         count, key = count_key
         print(f"Häufigkeit: {pattern}, Count: {count}, TGID: {key}")
     print("++++++++++++++++++++++++++++++++++++++++++++++++++")
+    # tbd: Hier das Ergebnis als JSON speichern
 
 
 print("Getting Container-INUM")
