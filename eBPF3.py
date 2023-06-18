@@ -7949,54 +7949,56 @@ def createpatternspid():
         count, key = count_key
         print(f"Häufigkeit: {pattern}, Count: {count}, PID: {key}")
     print("++++++++++++++++++++++++++++++++++++++++++++++++++")
+    print("Abschluss PID -> Jetzt TGID Patterns")
+    print("++++++++++++++++++++++++++++++++++++++++++++++++++")
 
 
-# def createpatternstgid():
-#     patterns = {}
-#     # Entfernung der doppelten System Calls im Dictionary sequencesswithtpid
-#     for key, value in sequencesswithttid.items():
-#         # Überprüfe, ob die Liste im Wert mindestens 3 Elemente enthält
-#         for i in range(len(value) - 2):
-#             if i + 1 < len(value) and value[i] == value[i + 1]:
-#                 value[i] += "*"
-#                 value[i + 1] += "*"
-#             if i + 1 < len(value) and str(value[i]) == str(value[i + 1] + "*"):
-#                 value[i + 1] += "*"
-#
-#         print("Markierungen: ")
-#         for i in range(len(value) - 2):
-#             print(value[i])
-#         print("++++++++++++++++++++++++++++++++++++++++++++")
-#         print("Entferne doppelte Vorkommnisse: ")
-#         i = 0
-#         while i < len(value):
-#             if i + 1 < len(value) and str(value[i]) == str(value[i + 1]):
-#                 print("Vergleiche: " + str(value[i]) + " mit: " + str(value[i + 1]))
-#                 print("Lösche: " + str(value[i + 1]))
-#                 del value[i + 1]
-#             else:
-#                 i += i
-#         print("++++++++++++++++++++++++++++++++++++++++++++")
-#         print("Markierungen nach dem Entfernen: ")
-#
-#         # Schleife von 0 bis Länge der Liste minus 2
-#         for i in range(len(value) - 2):
-#             print(value[i])
-#
-#             teil_liste = tuple(value[i:i + 3])
-#             # Zähle die Anzahl der eindeutigen Einträge
-#             key_list = [1 if teil_liste not in patterns else patterns[teil_liste][0] + 1, key]
-#
-#             # Zähle die Anzahl der eindeutigen Einträge unter Verwendung des neuen Schlüssels
-#             if teil_liste in patterns:
-#                 patterns[teil_liste][0] += 1
-#             else:
-#                 patterns[teil_liste] = key_list
-#
-#     for pattern, count_key in patterns.items():
-#         count, key = count_key
-#         print(f"Häufigkeit: {pattern}, Count: {count}, PID: {key}")
-#     print("++++++++++++++++++++++++++++++++++++++++++++++++++")
+def createpatternstgid():
+    patterns = {}
+    # Entfernung der doppelten System Calls im Dictionary sequencesswithtpid
+    for key, value in sequencesswithttid.items():
+        # Überprüfe, ob die Liste im Wert mindestens 3 Elemente enthält
+        for i in range(len(value) - 2):
+            if i + 1 < len(value) and value[i] == value[i + 1]:
+                value[i] += "*"
+                value[i + 1] += "*"
+            if i + 1 < len(value) and str(value[i]) == str(value[i + 1] + "*"):
+                value[i + 1] += "*"
+
+        # print("Markierungen: ")
+        # for i in range(len(value) - 2):
+        #     print(value[i])
+        print("++++++++++++++++++++++++++++++++++++++++++++")
+        print("Entferne doppelte Vorkommnisse: ")
+        i = 0
+        while i < len(value):
+            if i + 1 < len(value) and str(value[i]) == str(value[i + 1]):
+                print("Vergleiche: " + str(value[i]) + " mit: " + str(value[i + 1]))
+                print("Lösche: " + str(value[i + 1]))
+                del value[i + 1]
+            else:
+                i += i
+        print("++++++++++++++++++++++++++++++++++++++++++++")
+        print("Markierungen nach dem Entfernen: ")
+
+        # Schleife von 0 bis Länge der Liste minus 2
+        for i in range(len(value) - 2):
+            # print(value[i])
+
+            teil_liste = tuple(value[i:i + 3])
+            # Zähle die Anzahl der eindeutigen Einträge
+            key_list = [1 if teil_liste not in patterns else patterns[teil_liste][0] + 1, key]
+
+            # Zähle die Anzahl der eindeutigen Einträge unter Verwendung des neuen Schlüssels
+            if teil_liste in patterns:
+                patterns[teil_liste][0] += 1
+            else:
+                patterns[teil_liste] = key_list
+
+    for pattern, count_key in patterns.items():
+        count, key = count_key
+        print(f"Häufigkeit: {pattern}, Count: {count}, PID: {key}")
+    print("++++++++++++++++++++++++++++++++++++++++++++++++++")
 
 
 print("Getting Container-INUM")
