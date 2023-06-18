@@ -7856,7 +7856,7 @@ def getringbuffer():
                     # Schreibe das JSON in die Datei
                     json.dump(sequencesswithttid, f)
             createpatternspid()
-            # createpatternstgid()
+            createpatternstgid()
             return
 
 
