@@ -7917,9 +7917,9 @@ def createpatternspid():
             if i + 1 < len(value) and str(value[i]) == str(value[i + 1] + "*"):
                 value[i + 1] += "*"
 
-        print("Markierungen: ")
-        for i in range(len(value) - 2):
-            print(value[i])
+        # print("Markierungen: ")
+        # for i in range(len(value) - 2):
+        #     print(value[i])
         print("++++++++++++++++++++++++++++++++++++++++++++")
         print("Entferne doppelte Vorkommnisse: ")
         i = 0
@@ -7931,12 +7931,11 @@ def createpatternspid():
             else:
                 i += i
         print("++++++++++++++++++++++++++++++++++++++++++++")
-        print("Markierungen nach dem Entfernen: ")
-
-        # Schleife von 0 bis Länge der Liste minus 2
+        # print("Markierungen nach dem Entfernen: ")
+        #
+        # # Schleife von 0 bis Länge der Liste minus 2
         for i in range(len(value) - 2):
-            print(value[i])
-
+        #     print(value[i])
             teil_liste = tuple(value[i:i + 3])
             # Zähle die Anzahl der eindeutigen Einträge
             key_list = [1 if teil_liste not in patterns else patterns[teil_liste][0] + 1, key]
