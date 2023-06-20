@@ -68,13 +68,21 @@ int sclone(struct pt_regs *ctx) {
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
+    unsigned int flag = PT_REGS_PARM3(ctx); // get CLONE_NEWPID flag
+    // Prüfe, ob flag == CLONE_NEWPIDS
+    // Untersuche Rückgabewert von clone
+    // Prüfe, ob INUM der PID, des Rückgabewertes bereits in der BPF_HASH_MAP steht, andernfalls füge ihn hinzu
+    u64 id = bpf_get_current_pid_tgid();
+    u32 pid = id >> 32;
+    struct task_struct_ns *t = (struct task_struct *)bpf_get_current_task(pid);
+    unsigned int inum_ring_new_ns = t->nsproxy->pid_ns_for_children->ns.inum;
+    
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
     // data.test_inum = inum_container;
-    u64 id = bpf_get_current_pid_tgid();
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
