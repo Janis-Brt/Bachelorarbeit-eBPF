@@ -67,10 +67,15 @@ in diesem Fall die 0.**/
 int sclone(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
+    
+    // Erhalte den PID-Namespace von clone
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    // Untersuche Rückgabewert von clone
-    // Prüfe, ob INUM der PID, des Rückgabewertes bereits in der BPF_HASH_MAP steht, andernfalls füge ihn hinzu
+    
+    // Erhalte den PID-Namespace des erzeugten Kind Prozesses
+    struct pid_namespace *pid_ns = t->nsproxy->pid_ns_for_children;
+    unsigned int inum_ring_child = pid_ns->ns.inum;
+    
     u64 id = bpf_get_current_pid_tgid();
     u32 pid = id >> 32;
     int inum_init();
@@ -85,7 +90,7 @@ int sclone(struct pt_regs *ctx) {
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
     data.syscallnumber = 0;
-    data.clone_test = ret;
+    data.clone_test = inum_ring_child;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
