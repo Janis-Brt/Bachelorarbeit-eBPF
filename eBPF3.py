@@ -69,14 +69,13 @@ int sclone(struct pt_regs *ctx) {
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    unsigned int flag = PT_REGS_PARM3(ctx); // get CLONE_NEWPID flag
     // Untersuche Rückgabewert von clone
     // Prüfe, ob INUM der PID, des Rückgabewertes bereits in der BPF_HASH_MAP steht, andernfalls füge ihn hinzu
     u64 id = bpf_get_current_pid_tgid();
     u32 pid = id >> 32;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
-    unsigned int ret = PT_REGS_RC(ctx);
+    unsigned int ret = PT_REGS_RC(ctx); // prüfe, ob INUM dieser PID bereits in der HASH_MAP ist
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
@@ -6860,6 +6859,16 @@ def updatesequence(cpu, data, size):
     ret = data.test_inum
     i_ret = data.init_return
     clone_ret = data.clone_test
+    result = os.popen("ls -la /proc/" + str(clone_ret) + "/ns").read()
+    parts = result.split(" ")
+    for part in parts:
+        if part.__contains__("pid:["):
+            # Extrahiere die ID aus der Zeichenkette
+            pid_ns_new = part[5:-12]
+            print("clone PID NS: " + str(pid_ns_new))
+            break
+            # print(pid_ns_id)
+
 
     # if str(inum_ring) == str(inum_container):
     # if str(inum_ring) != str(host_ns):
@@ -6867,6 +6876,7 @@ def updatesequence(cpu, data, size):
     if syscall_number == 0:
         syscalls.append("clone")
         print("Found Clone() with the return value: " + str(clone_ret))
+
         add_to_pid_dict(ringbufferpid, "clone", tgid)
     elif syscall_number == 1:
         syscalls.append("open")
