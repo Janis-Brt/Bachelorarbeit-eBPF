@@ -69,7 +69,6 @@ int sclone(struct pt_regs *ctx) {
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     unsigned int flag = PT_REGS_PARM3(ctx); // get CLONE_NEWPID flag
-    // Prüfe, ob flag == CLONE_NEWPIDS
     // Untersuche Rückgabewert von clone
     // Prüfe, ob INUM der PID, des Rückgabewertes bereits in der BPF_HASH_MAP steht, andernfalls füge ihn hinzu
     u64 id = bpf_get_current_pid_tgid();
