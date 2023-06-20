@@ -6867,6 +6867,7 @@ def updatesequence(cpu, data, size):
         syscalls.append("clone")
         print("Found Clone() with the return value: " + str(clone_ret))
         if os.popen("ls -la /proc/" + str(clone_ret) + "/ns").read():
+            print("Test")
             result = os.popen("ls -la /proc/" + str(clone_ret) + "/ns").read()
             parts = result.split(" ")
             for part in parts:
