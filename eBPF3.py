@@ -6859,7 +6859,7 @@ def updatesequence(cpu, data, size):
     tgid = data.tgid
     ret = data.test_inum
     i_ret = data.init_return
-    clone_ret = data.clone_ret
+    clone_ret = data.clone_test
 
     # if str(inum_ring) == str(inum_container):
     # if str(inum_ring) != str(host_ns):
