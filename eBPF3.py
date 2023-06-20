@@ -17,6 +17,7 @@ struct data_t {
     u32 tgid;
     unsigned int test_inum; // könnte rausfallen, da inum jetzt schon hier gefiltert wird
     u64 init_return; // Debug Value, um zu testen, ob init klappt.
+    unsigned int clone_test;
 };
 
 // Initialisierung des BPF Ring Buffers. Mit diesem kann man Daten an den Userspace übergeben
@@ -73,11 +74,9 @@ int sclone(struct pt_regs *ctx) {
     // Prüfe, ob INUM der PID, des Rückgabewertes bereits in der BPF_HASH_MAP steht, andernfalls füge ihn hinzu
     u64 id = bpf_get_current_pid_tgid();
     u32 pid = id >> 32;
-    struct task_struct_ns *t = (struct task_struct *)bpf_get_current_task(pid);
-    unsigned int inum_ring_new_ns = t->nsproxy->pid_ns_for_children->ns.inum;
-    
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
+    unsigned int return = PT_REGS_RC(ctx);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
@@ -87,6 +86,7 @@ int sclone(struct pt_regs *ctx) {
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
     data.syscallnumber = 0;
+    data.clone_test = return;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
@@ -6859,11 +6859,14 @@ def updatesequence(cpu, data, size):
     tgid = data.tgid
     ret = data.test_inum
     i_ret = data.init_return
+    clone_ret = data.clone_ret
+
     # if str(inum_ring) == str(inum_container):
     # if str(inum_ring) != str(host_ns):
     # if int(ringbufferpid) != 1:
     if syscall_number == 0:
         syscalls.append("clone")
+        print("Found Clone() with the return value: " + str(clone_ret))
         add_to_pid_dict(ringbufferpid, "clone", tgid)
     elif syscall_number == 1:
         syscalls.append("open")
