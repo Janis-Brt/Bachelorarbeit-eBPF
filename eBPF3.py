@@ -6866,15 +6866,18 @@ def updatesequence(cpu, data, size):
     if syscall_number == 0:
         syscalls.append("clone")
         print("Found Clone() with the return value: " + str(clone_ret))
-        result = os.popen("ls -la /proc/" + str(clone_ret) + "/ns").read()
-        parts = result.split(" ")
-        for part in parts:
-            if part.__contains__("pid:["):
-                # Extrahiere die ID aus der Zeichenkette
-                pid_ns_new = part[5:-12]
-                print("clone PID NS: " + str(pid_ns_new))
-                break
-                # print(pid_ns_id)
+        if os.popen("ls -la /proc/" + str(clone_ret) + "/ns").read():
+            result = os.popen("ls -la /proc/" + str(clone_ret) + "/ns").read()
+            parts = result.split(" ")
+            for part in parts:
+                if part.__contains__("pid:["):
+                    # Extrahiere die ID aus der Zeichenkette
+                    pid_ns_new = part[5:-12]
+                    print("clone PID NS: " + str(pid_ns_new))
+                    break
+                    # print(pid_ns_id)
+        else:
+            print("No valid new PID-NS")
 
         add_to_pid_dict(ringbufferpid, "clone", tgid)
     elif syscall_number == 1:
