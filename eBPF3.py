@@ -76,7 +76,7 @@ int sclone(struct pt_regs *ctx) {
     u32 pid = id >> 32;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
-    unsigned int return = PT_REGS_RC(ctx);
+    unsigned int ret = PT_REGS_RC(ctx);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
@@ -86,7 +86,7 @@ int sclone(struct pt_regs *ctx) {
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
     data.syscallnumber = 0;
-    data.clone_test = return;
+    data.clone_test = ret;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
