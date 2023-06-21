@@ -7970,7 +7970,8 @@ def createpatternspid():
     sorted_patterns = sorted(patterns.items(), key=lambda x: x[1][0], reverse=True)
     for pattern, count_key in sorted_patterns:
         count, key = count_key
-        print(f"Häufigkeit: {pattern}, Count: {count}, TGID: {key}")
+        # print(f"Häufigkeit: {pattern}, Count: {count}, TGID: {key}")
+        print("Häufigkeit: %-*s Count: %-*s TGID: %-*s" % (15, pattern, 10, count, 10, key))
     # print("++++++++++++++++++++++++++++++++++++++++++++++++++")
     # print("++++++++++++++++++++++++++++++++++++++++++++++++++")
     # print("Abschluss PID -> Jetzt TGID Patterns")
@@ -8017,7 +8018,7 @@ def createpatternstgid():
                 patterns[teil_liste] = key_list
 
     sorted_patterns = sorted(patterns.items(), key=lambda x: x[1][0], reverse=True)
-    for pattern, count_key in patterns.items():
+    for pattern, count_key in sorted_patterns:
         count, key = count_key
         print(f"Häufigkeit: {pattern}, Count: {count}, TGID: {key}")
     print("++++++++++++++++++++++++++++++++++++++++++++++++++")
