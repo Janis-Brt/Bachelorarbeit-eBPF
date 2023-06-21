@@ -8021,7 +8021,7 @@ def createpatternstgid():
     for pattern, count_key in sorted_patterns:
         count, key = count_key
         # print(f"Häufigkeit: {pattern}, Count: {count}, TGID: {key}")
-        print("Häufigkeit: %-*s Count: %-*s TGID: %-*s" % (15, pattern, 35, count, 15, key))
+        print("Häufigkeit: %-*s Count: %-*s TGID: %-*s" % (35, pattern, 35, count, 35, key))
     print("++++++++++++++++++++++++++++++++++++++++++++++++++")
     # tbd: Hier das Ergebnis als JSON speichern
 
@@ -8034,5 +8034,4 @@ print(str(inum_container))
 print("attaching to kretprobes")
 attachkretprobe()
 # b.trace_print()
-# print("attachment ready" + "\n" + "now tracing! \npress CTRL + C to stop tracing.")
 getringbuffer()
