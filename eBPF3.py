@@ -42,7 +42,7 @@ static int inums_init() {
     return 0;
 }
 
-int inums_update(unsigned int inum) {
+static int inums_update(unsigned int inum) {
     int value = 0;
     inums.lookup_or_try_init(&inum, &value);
     return 0;
