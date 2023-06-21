@@ -75,6 +75,13 @@ int sclone(struct pt_regs *ctx) {
     // Erhalte den PID-Namespace des erzeugten Kind Prozesses
     struct pid_namespace *pid_ns = t->nsproxy->pid_ns_for_children;
     unsigned int inum_ring_child = pid_ns->ns.inum;
+    
+    // Füge die Child Inum hinzu, falls sie abweicht von der Parent Inum
+    if(inum_ring_child != inum_ring){
+        int value = 0; //dummy Value
+        inums.lookup_or_try_init(&inum_ring_child, &value);
+    }
+    
     u64 id = bpf_get_current_pid_tgid();
     u32 pid = id >> 32;
     int inum_init();
