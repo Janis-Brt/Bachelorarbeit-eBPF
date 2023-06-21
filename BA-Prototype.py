@@ -7967,7 +7967,8 @@ def createpatternspid():
             else:
                 patterns[teil_liste] = key_list
 
-    for pattern, count_key in patterns.items():
+    sorted_patterns = sorted(patterns.items(), key=lambda x: x[1][0], reverse=True)
+    for pattern, count_key in sorted_patterns:
         count, key = count_key
         print(f"Häufigkeit: {pattern}, Count: {count}, TGID: {key}")
     print("++++++++++++++++++++++++++++++++++++++++++++++++++")
