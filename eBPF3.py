@@ -7953,7 +7953,7 @@ def createpatternspid():
                 i = i - 1
             else:
                 i += 1
-        print("++++++++++++++++++++++++++++++++++++++++++++")
+        # print("++++++++++++++++++++++++++++++++++++++++++++")
         # # Schleife von 0 bis Länge der Liste minus 2
         for i in range(len(value) - 2):
         #     print(value[i])
@@ -7970,7 +7970,9 @@ def createpatternspid():
     sorted_patterns = sorted(patterns.items(), key=lambda x: x[1][0], reverse=True)
     for pattern, count_key in sorted_patterns:
         count, key = count_key
-        print("Pattern: %-*s Anzahl: %-*s PID: %-*s" % (55, pattern, 20, count, 20, key))
+        print("Pattern: %-*s Anzahl: %-*s PID: %-*s" % (55, pattern, 12, count, 12, key))
+
+    print("++++++++++++++++++++++++++++++++++++++++++++")
         # print(f"Häufigkeit: {pattern}, Count: {count}, PID: {key}")
     # print("++++++++++++++++++++++++++++++++++++++++++++++++++")
     # print("Abschluss PID -> Jetzt TGID Patterns")
@@ -8004,7 +8006,7 @@ def createpatternstgid():
                 i = i - 1
             else:
                 i += 1
-        print("++++++++++++++++++++++++++++++++++++++++++++")
+        # print("++++++++++++++++++++++++++++++++++++++++++++")
         # print("Markierungen nach dem Entfernen: ")
 
         # Schleife von 0 bis Länge der Liste minus 2
@@ -8024,7 +8026,7 @@ def createpatternstgid():
     sorted_patterns = sorted(patterns.items(), key=lambda x: x[1][0], reverse=True)
     for pattern, count_key in sorted_patterns:
         count, key = count_key
-        print("Pattern: %-*s Anzahl: %-*s PID: %-*s" % (55, pattern, 20, count, 20, key))
+        print("Pattern: %-*s Anzahl: %-*s PID: %-*s" % (55, pattern, 12, count, 12, key))
         #print(f"Häufigkeit: {pattern}, Count: {count}, TGID: {key}")
     print("++++++++++++++++++++++++++++++++++++++++++++++++++")
     # tbd: Hier das Ergebnis als JSON speichern
