@@ -7971,7 +7971,7 @@ def createpatternspid():
     for pattern, count_key in sorted_patterns:
         count, key = count_key
         # print(f"Häufigkeit: {pattern}, Count: {count}, TGID: {key}")
-        print("Häufigkeit: %-*s Count: %-*s PID: %-*s" % (15, pattern, 35, count, 15, key))
+        print("Häufigkeit: %-*s Count: %-*s PID: %-*s" % (25, pattern, 35, count, 15, key))
     # print("++++++++++++++++++++++++++++++++++++++++++++++++++")
     # print("++++++++++++++++++++++++++++++++++++++++++++++++++")
     # print("Abschluss PID -> Jetzt TGID Patterns")

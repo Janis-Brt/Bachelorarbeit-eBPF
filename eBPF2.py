@@ -6971,8 +6971,8 @@ def add_to_pid_dict(key, value, tid):
         sequencesswithtpid[key] = [value]
     if tid in sequencesswithttid:
         sequencesswithttid[tid].append(value)
-    else:
-        sequencesswithttid[tid] = [value]
+    # else:
+    #     sequencesswithttid[tid] = [value]
 
 
 
