@@ -8021,7 +8021,7 @@ def createpatternstgid():
     for pattern, count_key in sorted_patterns:
         count, key = count_key
         # print(f"Häufigkeit: {pattern}, Count: {count}, TGID: {key}")
-        print("Häufigkeit: %-*s Count: %-*s TGID: %-*s" % (35, pattern, 35, count, 35, key))
+        print("Häufigkeit: %-*s Count: %-*s TGID: %-*s" % (35, pattern, 55, count, 35, key))
     print("++++++++++++++++++++++++++++++++++++++++++++++++++")
     # tbd: Hier das Ergebnis als JSON speichern
 
