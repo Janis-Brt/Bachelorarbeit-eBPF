@@ -7942,7 +7942,7 @@ def createpatternspid():
         # print("Markierungen: ")
         # for i in range(len(value) - 2):
         #     print(value[i])
-        print("++++++++++++++++++++++++++++++++++++++++++++")
+        # print("++++++++++++++++++++++++++++++++++++++++++++")
         # print("Entferne doppelte Vorkommnisse in PID List: ")
         i = 0
         while i < len(value):
@@ -7953,7 +7953,7 @@ def createpatternspid():
                 i = i - 1
             else:
                 i += 1
-        print("++++++++++++++++++++++++++++++++++++++++++++")
+        # print("++++++++++++++++++++++++++++++++++++++++++++")
         # # Schleife von 0 bis Länge der Liste minus 2
         for i in range(len(value) - 2):
             #     print(value[i])
@@ -7991,7 +7991,7 @@ def createpatternstgid():
         # print("Markierungen: ")
         # for i in range(len(value) - 2):
         #     print(value[i])
-        print("++++++++++++++++++++++++++++++++++++++++++++")
+        # print("++++++++++++++++++++++++++++++++++++++++++++")
         # print("Entferne doppelte Vorkommnisse in PID List: ")
         i = 0
         while i < len(value):
@@ -8002,7 +8002,7 @@ def createpatternstgid():
                 i = i - 1
             else:
                 i += 1
-        print("++++++++++++++++++++++++++++++++++++++++++++")
+        # print("++++++++++++++++++++++++++++++++++++++++++++")
         # print("Markierungen nach dem Entfernen: ")
 
         # Schleife von 0 bis Länge der Liste minus 2
