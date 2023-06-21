@@ -43,7 +43,8 @@ static int inums_init() {
 }
 
 int inums_update(unsigned int inum) {
-    inums.increment(inum); // tbd
+    int value = 0;
+    inums.lookup_or_try_init(&inum, &value);
     return 0;
 }
 
@@ -65,38 +66,40 @@ Zuerst wird geprüft, ob der Return Wert kleiner als 0 ist, in diesem Fall wurde
 und es wird nichts übergeben, andernfalls wird die PID des Prozesses übergeben und die eindeutige System Call Nummer, 
 in diesem Fall die 0.**/
 int sclone(struct pt_regs *ctx) {
+    // Erstelle ein data_t Objekt und speichere die INUM des Containers
     struct data_t data = {};
     INUM_RING
     
-    // Erhalte den PID-Namespace von clone
+    // Erhalte den PID-Namespace von clone()
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     
-    // Erhalte den PID-Namespace des erzeugten Kind Prozesses
+    // Erhalte den PID-Namespace des erzeugten Kind Prozesses von clone()
     struct pid_namespace *pid_ns = t->nsproxy->pid_ns_for_children;
     unsigned int inum_ring_child = pid_ns->ns.inum;
     
     // Füge die Child Inum hinzu, falls sie abweicht von der Parent Inum
     if(inum_ring_child != inum_ring){
-        int value = 0; //dummy Value
-        inums.lookup_or_try_init(&inum_ring_child, &value);
+        inums_update(inum_ring_child);
     }
     
+    // Erhalte die PID und die TGID des System Calls
     u64 id = bpf_get_current_pid_tgid();
     u32 pid = id >> 32;
+    
+    // Initialisiere die BPF_HASH_MAP
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
-    unsigned int ret = PT_REGS_RC(ctx); // prüfe, ob INUM dieser PID bereits in der HASH_MAP ist
+    // unsigned int ret = PT_REGS_RC(ctx); // prüfe, ob INUM dieser PID bereits in der HASH_MAP ist -- könnte raus fallen
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    // data.test_inum = inum_container;
     data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
     data.syscallnumber = 0;
-    data.clone_test = inum_ring_child;
+    // data.clone_test = inum_ring_child; -- könnte raus fallen
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
