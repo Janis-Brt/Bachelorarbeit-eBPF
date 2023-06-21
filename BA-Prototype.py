@@ -7990,11 +7990,6 @@ def createpatternstgid():
             if i + 1 < len(value) and str(value[i]) == str(value[i + 1] + "*"):
                 value[i + 1] += "*"
 
-        # print("Markierungen: ")
-        # for i in range(len(value) - 2):
-        #     print(value[i])
-        # print("++++++++++++++++++++++++++++++++++++++++++++")
-        # print("Entferne doppelte Vorkommnisse in PID List: ")
         i = 0
         while i < len(value):
             if i + 1 < len(value) and str(value[i]) == str(value[i + 1]):
@@ -8021,6 +8016,7 @@ def createpatternstgid():
             else:
                 patterns[teil_liste] = key_list
 
+    sorted_patterns = sorted(patterns.items(), key=lambda x: x[1][0], reverse=True)
     for pattern, count_key in patterns.items():
         count, key = count_key
         print(f"Häufigkeit: {pattern}, Count: {count}, TGID: {key}")
