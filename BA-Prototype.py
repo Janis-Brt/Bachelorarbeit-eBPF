@@ -7970,12 +7970,13 @@ def createpatternspid():
     sorted_patterns = sorted(patterns.items(), key=lambda x: x[1][0], reverse=True)
     for pattern, count_key in sorted_patterns:
         count, key = count_key
-        # print(f"Häufigkeit: {pattern}, Count: {count}, TGID: {key}")
-        print("Häufigkeit: %-*s Count: %-*s PID: %-*s" % (25, pattern, 35, count, 15, key))
-    # print("++++++++++++++++++++++++++++++++++++++++++++++++++")
+        print("Pattern: %-*s Anzahl: %-*s PID: %-*s" % (55, pattern, 12, count, 12, key))
+
+    print("++++++++++++++++++++++++++++++++++++++++++++")
+    # print(f"Häufigkeit: {pattern}, Count: {count}, PID: {key}")
     # print("++++++++++++++++++++++++++++++++++++++++++++++++++")
     # print("Abschluss PID -> Jetzt TGID Patterns")
-    print("++++++++++++++++++++++++++++++++++++++++++++++++++")
+    # print("++++++++++++++++++++++++++++++++++++++++++++++++++")
     # tbd: Hier das Ergebnis als JSON speichern
 
 
@@ -7991,8 +7992,13 @@ def createpatternstgid():
             if i + 1 < len(value) and str(value[i]) == str(value[i + 1] + "*"):
                 value[i + 1] += "*"
 
+        # print("Markierungen: ")
+        # for i in range(len(value) - 2):
+        #     print(value[i])
+        # print("++++++++++++++++++++++++++++++++++++++++++++")
+        # print("Entferne doppelte Vorkommnisse in PID List: ")
         i = 0
-        while i < len(value) -1:
+        while i < len(value):
             if i + 1 < len(value) and str(value[i]) == str(value[i + 1]):
                 # print("Vergleiche: " + str(value[i]) + " mit: " + str(value[i + 1]))
                 # print("Lösche: " + str(value[i + 1]))
@@ -8020,8 +8026,8 @@ def createpatternstgid():
     sorted_patterns = sorted(patterns.items(), key=lambda x: x[1][0], reverse=True)
     for pattern, count_key in sorted_patterns:
         count, key = count_key
+        print("Pattern: %-*s Anzahl: %-*s PID: %-*s" % (55, pattern, 12, count, 12, key))
         # print(f"Häufigkeit: {pattern}, Count: {count}, TGID: {key}")
-        print("Häufigkeit: %-*s Count: %-*s TGID: %-*s" % (35, pattern, 55, count, 35, key))
     print("++++++++++++++++++++++++++++++++++++++++++++++++++")
     # tbd: Hier das Ergebnis als JSON speichern
 
@@ -8034,4 +8040,5 @@ print(str(inum_container))
 print("attaching to kretprobes")
 attachkretprobe()
 # b.trace_print()
+# print("attachment ready" + "\n" + "now tracing! \npress CTRL + C to stop tracing.")
 getringbuffer()
