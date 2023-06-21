@@ -7945,7 +7945,7 @@ def createpatternspid():
         # print("++++++++++++++++++++++++++++++++++++++++++++")
         # print("Entferne doppelte Vorkommnisse in PID List: ")
         i = 0
-        while i < len(value) -1:
+        while i < len(value):
             if i + 1 < len(value) and str(value[i]) == str(value[i + 1]):
                 # print("Vergleiche: " + str(value[i]) + " mit: " + str(value[i + 1]))
                 # print("Lösche: " + str(value[i + 1]))
