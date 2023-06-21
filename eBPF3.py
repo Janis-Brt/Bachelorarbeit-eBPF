@@ -7967,9 +7967,11 @@ def createpatternspid():
             else:
                 patterns[teil_liste] = key_list
 
-    for pattern, count_key in patterns.items():
+    sorted_patterns = sorted(patterns.items(), key=lambda x: x[1][0], reverse=True)
+    for pattern, count_key in sorted_patterns:
         count, key = count_key
-        print(f"Häufigkeit: {pattern}, Count: {count}, PID: {key}")
+        print("Häufigkeit: %-*s Count: %-*s PID: %-*s" % (25, pattern, 35, count, 15, key))
+        # print(f"Häufigkeit: {pattern}, Count: {count}, PID: {key}")
     print("++++++++++++++++++++++++++++++++++++++++++++++++++")
     print("Abschluss PID -> Jetzt TGID Patterns")
     print("++++++++++++++++++++++++++++++++++++++++++++++++++")
@@ -8019,9 +8021,11 @@ def createpatternstgid():
             else:
                 patterns[teil_liste] = key_list
 
-    for pattern, count_key in patterns.items():
+    sorted_patterns = sorted(patterns.items(), key=lambda x: x[1][0], reverse=True)
+    for pattern, count_key in sorted_patterns:
         count, key = count_key
-        print(f"Häufigkeit: {pattern}, Count: {count}, TGID: {key}")
+        print("Häufigkeit: %-*s Count: %-*s PID: %-*s" % (25, pattern, 35, count, 15, key))
+        #print(f"Häufigkeit: {pattern}, Count: {count}, TGID: {key}")
     print("++++++++++++++++++++++++++++++++++++++++++++++++++")
     # tbd: Hier das Ergebnis als JSON speichern
 
