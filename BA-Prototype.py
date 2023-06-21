@@ -69,24 +69,24 @@ int sclone(struct pt_regs *ctx) {
     // Erstelle ein data_t Objekt und speichere die INUM des Containers
     struct data_t data = {};
     INUM_RING
-    
+
     // Erhalte den PID-Namespace von clone()
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    
+
     // Erhalte den PID-Namespace des erzeugten Kind Prozesses von clone()
     struct pid_namespace *pid_ns = t->nsproxy->pid_ns_for_children;
     unsigned int inum_ring_child = pid_ns->ns.inum;
-    
+
     // Füge die Child Inum hinzu, falls sie abweicht von der Parent Inum
     if(inum_ring_child != inum_ring){
         inums_update(inum_ring_child);
     }
-    
+
     // Erhalte die PID und die TGID des System Calls
     u64 id = bpf_get_current_pid_tgid();
     u32 pid = id >> 32;
-    
+
     // Initialisiere die BPF_HASH_MAP
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
@@ -7943,7 +7943,7 @@ def createpatternspid():
         # for i in range(len(value) - 2):
         #     print(value[i])
         print("++++++++++++++++++++++++++++++++++++++++++++")
-        print("Entferne doppelte Vorkommnisse in PID List: ")
+        # print("Entferne doppelte Vorkommnisse in PID List: ")
         i = 0
         while i < len(value):
             if i + 1 < len(value) and str(value[i]) == str(value[i + 1]):
@@ -7956,7 +7956,7 @@ def createpatternspid():
         print("++++++++++++++++++++++++++++++++++++++++++++")
         # # Schleife von 0 bis Länge der Liste minus 2
         for i in range(len(value) - 2):
-        #     print(value[i])
+            #     print(value[i])
             teil_liste = tuple(value[i:i + 3])
             # Zähle die Anzahl der eindeutigen Einträge
             key_list = [1 if teil_liste not in patterns else patterns[teil_liste][0] + 1, key]
@@ -7970,8 +7970,8 @@ def createpatternspid():
     for pattern, count_key in patterns.items():
         count, key = count_key
         print(f"Häufigkeit: {pattern}, Count: {count}, PID: {key}")
-    print("++++++++++++++++++++++++++++++++++++++++++++++++++")
-    print("Abschluss PID -> Jetzt TGID Patterns")
+    # print("++++++++++++++++++++++++++++++++++++++++++++++++++")
+    # print("Abschluss PID -> Jetzt TGID Patterns")
     print("++++++++++++++++++++++++++++++++++++++++++++++++++")
     # tbd: Hier das Ergebnis als JSON speichern
 
@@ -7992,7 +7992,7 @@ def createpatternstgid():
         # for i in range(len(value) - 2):
         #     print(value[i])
         print("++++++++++++++++++++++++++++++++++++++++++++")
-        print("Entferne doppelte Vorkommnisse in PID List: ")
+        # print("Entferne doppelte Vorkommnisse in PID List: ")
         i = 0
         while i < len(value):
             if i + 1 < len(value) and str(value[i]) == str(value[i + 1]):
