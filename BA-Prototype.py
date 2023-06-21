@@ -7967,9 +7967,15 @@ def createpatternspid():
             else:
                 patterns[teil_liste] = key_list
 
-    for pattern, count_key in patterns.items():
-        count, key = count_key
-        print(f"Häufigkeit: {pattern}, Count: {count}, PID: {key}")
+    res = {key: val for key, val in sorted(sequencesswithtpid.items(), key=lambda ele: ele[0])}
+    res2 = {key: val for key, val in sorted(res.items(), key=lambda ele: ele[1], reverse=True)}
+    # https: // www.geeksforgeeks.org / python - sort - a - dictionary /
+    for PID, pattern in res2.items():
+        print("syscall: %-*s Häufigkeit: %s" % (25, str(PID), str(pattern)))
+    # for pattern, count_key in patterns.items():
+    #     count, key = count_key
+    #     print()
+    #     print(f"Häufigkeit: {pattern}, Count: {count}, PID: {key}")
     # print("++++++++++++++++++++++++++++++++++++++++++++++++++")
     # print("Abschluss PID -> Jetzt TGID Patterns")
     print("++++++++++++++++++++++++++++++++++++++++++++++++++")
