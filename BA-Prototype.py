@@ -7977,7 +7977,7 @@ def createpatternspid():
         # Schreibe die Patterns in eine Datei
         for pattern, count_key in sorted_patterns:
             count, key = count_key
-            line = "Pattern: %-*s Anzahl: %-*s PID: %-*s" % (55, pattern, 12, count, 12, key)
+            line = "Pattern: %-*s Anzahl: %-*s PID: %-*s" % (55, pattern, 12, count, 13, key)
             file.write(line)
 
     print("++++++++++++++++++++++++++++++++++++++++++++")
