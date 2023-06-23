@@ -7909,8 +7909,6 @@ def getinumcontainer():
         if line.startswith('PID:'):
             pid = int(line.split(':')[1].strip())
             result = os.popen("ls -la /proc/" + str(pid) + "/ns").read()
-            # kann die int konvertierung weg?
-            # Splitten der Ausgabe an den Leerzeichen
             parts = result.split(" ")
 
             # Suche nach der Zeichenkette "'pid:[...]'"
@@ -7922,9 +7920,6 @@ def getinumcontainer():
                     break
             # print(pid_ns_id)
             return pid_ns_id
-
-        # else:
-        #     print("not found")
 
 
 def createpatternspid():
@@ -7972,13 +7967,20 @@ def createpatternspid():
         count, key = count_key
         print("Pattern: %-*s Anzahl: %-*s PID: %-*s" % (55, pattern, 12, count, 12, key))
 
-    print("++++++++++++++++++++++++++++++++++++++++++++")
-    # print(f"Häufigkeit: {pattern}, Count: {count}, PID: {key}")
-    # print("++++++++++++++++++++++++++++++++++++++++++++++++++")
-    # print("Abschluss PID -> Jetzt TGID Patterns")
-    # print("++++++++++++++++++++++++++++++++++++++++++++++++++")
-    # tbd: Hier das Ergebnis als JSON speichern
+    folder_path = "data/patternspid"
+    # Überprüfe, ob der Ordner existiert, andernfalls lege ihn anls
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+    timestamp = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime())
+    output_file = "data/sequencesswithtpid_" + str(timestamp) + ".txt"
+    with open(output_file, 'w') as file:
+        # Schreibe die Patterns in eine Datei
+        for pattern, count_key in sorted_patterns:
+            count, key = count_key
+            line = "Pattern: %-*s Anzahl: %-*s PID: %-*s" % (55, pattern, 12, count, 12, key)
+            file.write(line)
 
+    print("++++++++++++++++++++++++++++++++++++++++++++")
 
 def createpatternstgid():
     patterns = {}
@@ -7992,22 +7994,13 @@ def createpatternstgid():
             if i + 1 < len(value) and str(value[i]) == str(value[i + 1] + "*"):
                 value[i + 1] += "*"
 
-        # print("Markierungen: ")
-        # for i in range(len(value) - 2):
-        #     print(value[i])
-        # print("++++++++++++++++++++++++++++++++++++++++++++")
-        # print("Entferne doppelte Vorkommnisse in PID List: ")
         i = 0
         while i < len(value):
             if i + 1 < len(value) and str(value[i]) == str(value[i + 1]):
-                # print("Vergleiche: " + str(value[i]) + " mit: " + str(value[i + 1]))
-                # print("Lösche: " + str(value[i + 1]))
                 del value[i + 1]
                 i = i - 1
             else:
                 i += 1
-        # print("++++++++++++++++++++++++++++++++++++++++++++")
-        # print("Markierungen nach dem Entfernen: ")
 
         # Schleife von 0 bis Länge der Liste minus 2
         for i in range(len(value) - 2):
@@ -8026,8 +8019,20 @@ def createpatternstgid():
     sorted_patterns = sorted(patterns.items(), key=lambda x: x[1][0], reverse=True)
     for pattern, count_key in sorted_patterns:
         count, key = count_key
-        print("Pattern: %-*s Anzahl: %-*s PID: %-*s" % (55, pattern, 12, count, 12, key))
+        print("Pattern: %-*s Anzahl: %-*s TGID: %-*s" % (55, pattern, 12, count, 12, key))
         # print(f"Häufigkeit: {pattern}, Count: {count}, TGID: {key}")
+    folder_path = "data/patternstgid"
+    # Überprüfe, ob der Ordner existiert, andernfalls lege ihn anls
+    if not os.path.exists(folder_path):
+        os.makedirs(folder_path)
+    timestamp = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime())
+    output_file = "data/sequencesswithttgid_" + str(timestamp) + ".txt"
+    with open(output_file, 'w') as file:
+        # Schreibe die Patterns in eine Datei
+        for pattern, count_key in sorted_patterns:
+            count, key = count_key
+            line = "Pattern: %-*s Anzahl: %-*s TGID: %-*s" % (55, pattern, 12, count, 12, key)
+            file.write(line)
     print("++++++++++++++++++++++++++++++++++++++++++++++++++")
     # tbd: Hier das Ergebnis als JSON speichern
 
