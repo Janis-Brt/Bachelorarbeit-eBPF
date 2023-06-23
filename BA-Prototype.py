@@ -7861,7 +7861,8 @@ def getringbuffer():
             return
 
 
-# Hilfsfunktion um KeyBoard Interruptions abzufangen. Das Programm soll beim Drücken von STRG + C terminieren.
+# Hilfsfunktion um KeyBoard Interruptions abzufangen.
+# Das Programm soll beim Drücken von STRG + C terminieren.
 def signal_handler(sig, frame):
     print('Exited with Keyboard Interrupt')
     sys.exit(0)
@@ -8023,7 +8024,6 @@ def createpatternstgid():
             line = "Pattern: %-*s Anzahl: %-*s TGID: %-*s" % (55, pattern, 12, count, 12, key)
             file.write(line)
     print("++++++++++++++++++++++++++++++++++++++++++++++++++")
-    # tbd: Hier das Ergebnis als JSON speichern
 
 
 # Dies ist der Hauptteil des Programms. Es wird sowohl die Liste syscalls, welche die sequentielle System Call Abfolge
