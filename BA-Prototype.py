@@ -58,11 +58,11 @@ int sclone(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
 
-    // Erhalte den PID-Namespace von clone()
+    // Erhalte die PID-Namespace Inum von clone()
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
 
-    // Erhalte den PID-Namespace des erzeugten Kind Prozesses von clone()
+    // Erhalte die PID-Namespace Inum des erzeugten Kind Prozesses von clone()
     struct pid_namespace *pid_ns = t->nsproxy->pid_ns_for_children;
     unsigned int inum_ring_child = pid_ns->ns.inum;
 
@@ -7935,7 +7935,7 @@ def createpatternspid():
             else:
                 i += 1
         # print("++++++++++++++++++++++++++++++++++++++++++++")
-        # # Schleife von 0 bis Länge der Liste minus 2
+        # Schleife von 0 bis Länge der Liste minus 2
         for i in range(len(value) - 2):
             #     print(value[i])
             teil_liste = tuple(value[i:i + 3])
@@ -8023,7 +8023,7 @@ def createpatternstgid():
             count, key = count_key
             line = "Pattern: %-*s Anzahl: %-*s TGID: %-*s" % (55, pattern, 12, count, 12, key)
             file.write(line)
-    print("++++++++++++++++++++++++++++++++++++++++++++++++++")
+    # print("++++++++++++++++++++++++++++++++++++++++++++++++++")
 
 
 # Dies ist der Hauptteil des Programms. Es wird sowohl die Liste syscalls, welche die sequentielle System Call Abfolge
