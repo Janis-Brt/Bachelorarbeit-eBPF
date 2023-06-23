@@ -8031,7 +8031,7 @@ def createpatternstgid():
         # Schreibe die Patterns in eine Datei
         for pattern, count_key in sorted_patterns:
             count, key = count_key
-            line = "Pattern: %-*s Anzahl: %-*s TGID: %-*s" % (55, pattern, 12, count, 12, key)
+            line = "Pattern: %-*s Anzahl: %-*s TGID: %-*s" % (1, pattern, 1, count, 1, key)
             file.write(line)
     print("++++++++++++++++++++++++++++++++++++++++++++++++++")
     # tbd: Hier das Ergebnis als JSON speichern
