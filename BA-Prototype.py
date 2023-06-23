@@ -4,7 +4,8 @@ import sys
 import json
 import time
 
-# Die Lokale Variable speichert den eBPF C-Code.
+# Die Lokale Variable prog speichert den eBPF C-Code, welcher beim Aufrufen des BPF-Objektes in den Kernel geladen
+# wird.
 prog = """
 #include <uapi/linux/ptrace.h>
 #include <linux/pid_namespace.h>
@@ -17,28 +18,19 @@ struct data_t {
     u32 tgid;
     unsigned int test_inum; // könnte rausfallen, da inum jetzt schon hier gefiltert wird
     u64 init_return; // Debug Value, um zu testen, ob init klappt.
-    unsigned int clone_test;
 };
 
 // Initialisierung des BPF Ring Buffers. Mit diesem kann man Daten an den Userspace übergeben
 BPF_PERF_OUTPUT(events);
-// BPF_ARRAY(counts, unsigned int, 32);
-// unsigned int value = 1234;
-//bpf_map_update_elem(&counts, &index, &value, BPF_ANY);
 
-
+/**Die BPF_HASH Map speichert die validen Inums. Sie wird mit der Inum des LXC-Containers initialisert. Wird darin ein
+neuer PID-Namespace erzeugt, bekommt die Map diesen noch als Inhalt.**/
 BPF_HASH(inums, unsigned int, int, 128);
 
 static int inums_init() {
     INUM_RING
     int value = 0;
     inums.lookup_or_try_init(&inum_container, &value);
-    /** bpf_trace_printk("Value von inum_container als unsigned int: %u", inum_container);
-    unsigned int *value = inums.lookup(&inum_container);
-    if (value != 0 || *value != 0) {
-        return 1;  // Wert inum im Array gefunden
-    }
-    inums.insert(inum_container, 0);**/
     return 0;
 }
 
@@ -50,13 +42,9 @@ static int inums_update(unsigned int inum) {
 
 static int inums_lookup(unsigned int inum){
     unsigned int *value = inums.lookup(&inum);
-    /**if (value == 0 || *value == 0) {
-        return 1;  // Wert inum im Array gefunden
-    }**/
     if(!value){
         return 1;
     }
-    //bpf_trace_printk("Value in der Funktion lookup: %u" ,&value);
     return 0;
 }
 
@@ -99,7 +87,6 @@ int sclone(struct pt_regs *ctx) {
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
     data.syscallnumber = 0;
-    // data.clone_test = inum_ring_child; -- könnte raus fallen
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
@@ -131,9 +118,6 @@ int sread(struct pt_regs *ctx) {
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     u64 ret_init = inums_init();
     data.init_return = ret_init;
-    /**if(ret_value == 0){
-        bpf_trace_printk("Successfully lookup");
-    }**/
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -156,7 +140,6 @@ int swrite(struct pt_regs *ctx) {
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
-    // data.test_inum = ret_value;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -6523,11 +6506,10 @@ int sbpf(struct pt_regs *ctx) {
 """
 
 
-# Initialisierung des BPF Objekts, welches den C-Code übergeben bekommt
-
-
-# attachkretprobe ruft die Kernel Space Funktion für jeden Syscall auf, und heftet sich an den entsprechenden
-# Kernel Hook Point an. Einige System Calls sind jedoch nicht tracebar.
+# attachkretprobe heftet sich an den entsprechenden
+# Kernel Hook Point des jeweiligen System Calls an und
+# ruft die Kernel Space Funktion für jeden Syscall auf, und  an. Einige System Calls sind jedoch nicht tracebar,
+# weil sie zum Beispiel nicht mehr existieren.
 def attachkretprobe():
     b.attach_kretprobe(event=b.get_syscall_fnname("clone"), fn_name="sclone")
     b.attach_kretprobe(event=b.get_syscall_fnname("open"), fn_name="sopen")
@@ -6857,13 +6839,10 @@ def attachkretprobe():
     print("Attachment done")
 
 
-syscalls = []
-
-
 # Callback Funktion des Ring Buffers. Erhält die aus dem Kernelspace übergebene PID und Syscall-Nummer
 # Danach wird geprüft, ob die PID im Array steht, welches alle PID's des zu tracenden Binaries enthält.
 # Nun wird mittels der eindeutigen System Call Nummer überprüft, welcher System Call aufgerufen wurde,
-# die Häufigkeit dieses System Calls wird nun im Dictionary, welches die Häufigkeiten speichert, erhöht
+# die Häufigkeit dieses System Calls wird nun im Dictionary, welches die Häufigkeiten speichert erhöht.
 def updatesequence(cpu, data, size):
     data = b["events"].event(data)
     syscall_number = data.syscallnumber
@@ -7847,7 +7826,7 @@ def updatesequence(cpu, data, size):
 # Funktion zum Auslesen der events im Kernel Ring Buffer. Dabei wird für jeden neuen Eintrag im Ring Buffer die
 # Callback Funktion aufgerufen. Wird das Programm vom Benutzer mit STRG + C beendet, gibt das Programm das sortierte
 # Dictionary mit den Häufigkeiten aus. Anschließend wird noch die Häufigkeit prozentual ausgegeben, bevor das Programm
-# terminiert
+# terminiert.
 def getringbuffer():
     b["events"].open_perf_buffer(updatesequence, page_cnt=256)
     while True:
@@ -7882,26 +7861,29 @@ def getringbuffer():
             return
 
 
+# Hilfsfunktion um KeyBoard Interruptions abzufangen. Das Programm soll beim Drücken von STRG + C terminieren.
 def signal_handler(sig, frame):
     print('Exited with Keyboard Interrupt')
     sys.exit(0)
 
 
-sequencesswithtpid = {}
-sequencesswithttid = {}
-
-
-def add_to_pid_dict(key, value, tid):
-    if key in sequencesswithtpid:
-        sequencesswithtpid[key].append(value)
+# Die Funktion fügt die pid, beziehungsweise tgid des System Calls als key in das Dictionary. Der Value des Dictionaries
+# ist eine Liste von System Calls. Diese stellt die Sequenzen dar.
+# An diese Liste wird der aktuelle System Call angehängt.
+def add_to_pid_dict(pid, syscall, tid):
+    if pid in sequencesswithtpid:
+        sequencesswithtpid[pid].append(syscall)
     else:
-        sequencesswithtpid[key] = [value]
+        sequencesswithtpid[pid] = [syscall]
     if tid in sequencesswithttid:
-        sequencesswithttid[tid].append(value)
+        sequencesswithttid[tid].append(syscall)
     else:
-        sequencesswithttid[tid] = [value]
+        sequencesswithttid[tid] = [syscall]
 
 
+# Die Funktion extrahiert und speichert die INUM des Containers mit dem Namen ubuntu-ct. Dafür wird die init PID
+# des Containers mit "sudo lxc-info -n ubuntu-ct" gespeichert. Im Verzeichnis /proc/[pid]/ns findet man die Inum des
+# PID-Namespaces des Containers.
 def getinumcontainer():
     result = os.popen("sudo lxc-info -n ubuntu-ct").read()
     lines = result.split('\n')
@@ -7922,6 +7904,9 @@ def getinumcontainer():
             return pid_ns_id
 
 
+# Diese Funktion erzeugt die Triplets, die für die Auswertung aus der sequentiellen PID-Liste erstellt werden sollen.
+# Davor wird ein Pre-processing Schritt durchgeführt. Dabei werden n aufeinanderfolgende System Calls zu einem Eintrag
+# zusammengefasst. {write, write, write} wird zu {write*}.
 def createpatternspid():
     patterns = {}
     # Entfernung der doppelten System Calls im Dictionary sequencesswithtpid
@@ -7982,6 +7967,10 @@ def createpatternspid():
 
     print("++++++++++++++++++++++++++++++++++++++++++++")
 
+
+# Diese Funktion erzeugt die Triplets, die für die Auswertung aus der sequentiellen TGID-Liste erstellt werden sollen.
+# Davor wird ein Pre-processing Schritt durchgeführt. Dabei werden n aufeinanderfolgende System Calls zu einem Eintrag
+# zusammengefasst. {write, write, write} wird zu {write*}.
 def createpatternstgid():
     patterns = {}
     # Entfernung der doppelten System Calls im Dictionary sequencesswithtpid
@@ -8037,13 +8026,21 @@ def createpatternstgid():
     # tbd: Hier das Ergebnis als JSON speichern
 
 
+# Dies ist der Hauptteil des Programms. Es wird sowohl die Liste syscalls, welche die sequentielle System Call Abfolge
+# speichert, als auch die Listen sequencesswithtpid und sequencesswithttid, welche die sequenzen gruppiert abspeichern,
+# erstellt. Danach wird die INUM des Containers geholt und in den Kernel Space transferiert. Anschließend wird ein
+# BPF Modul erzeugt. Dieses erhält als Übergabeparameter den eBPF-C-Code. Dieser wird dann in den Kernel geladen.
+# Zum Schluss heftet sich das Programm an die erstellten kretprobes an und wartet danach in der Funktion
+# getringbuffer() auf Rückmeldungen von System Call Aufrufen aus dem Kernelprogramm.
+syscalls = []
+sequencesswithtpid = {}
+sequencesswithttid = {}
 print("Getting Container-INUM")
 inum_container = int(getinumcontainer())
 prog = prog.replace('INUM_RING', "unsigned int inum_container = %d;" % inum_container)
+# Initialisierung des BPF Objekts, welches den C-Code übergeben bekommt
 b = BPF(text=prog)
 print(str(inum_container))
 print("attaching to kretprobes")
 attachkretprobe()
-# b.trace_print()
-# print("attachment ready" + "\n" + "now tracing! \npress CTRL + C to stop tracing.")
 getringbuffer()
