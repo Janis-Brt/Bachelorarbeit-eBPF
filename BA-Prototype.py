@@ -14,10 +14,9 @@ prog = """
 struct data_t {
     int syscallnumber;
     u32 pid;
-    unsigned int inum; // könnte rausfallen, da inum jetzt schon hier gefiltert wird
+    // unsigned int inum;
     u32 tgid;
-    unsigned int test_inum; // könnte rausfallen, da inum jetzt schon hier gefiltert wird
-    u64 init_return; // Debug Value, um zu testen, ob init klappt.
+    // unsigned int test_inum; // könnte rausfallen, da inum jetzt schon hier gefiltert wird
 };
 
 // Initialisierung des BPF Ring Buffers. Mit diesem kann man Daten an den Userspace übergeben
@@ -82,7 +81,7 @@ int sclone(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -100,9 +99,9 @@ int sopen(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    // data.test_inum = inum_container;
+    // // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -117,7 +116,6 @@ int sread(struct pt_regs *ctx) {
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     u64 ret_init = inums_init();
-    data.init_return = ret_init;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -125,7 +123,7 @@ int sread(struct pt_regs *ctx) {
     }
     // bpf_trace_printk("Inum aus der Task Struct %u\\n Inum aus dem User Space %u\\n", inum_ring, inum_container);
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -146,7 +144,7 @@ int swrite(struct pt_regs *ctx) {
         return 0;
     }
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -164,9 +162,9 @@ int sclose(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -184,9 +182,9 @@ int sstat(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -204,9 +202,9 @@ int sfstat(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -224,9 +222,9 @@ int slstat(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -244,9 +242,9 @@ int spoll(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -264,9 +262,9 @@ int slseek(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -284,9 +282,9 @@ int smmap(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -304,9 +302,9 @@ int smprotect(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -324,9 +322,9 @@ int smunmap(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -344,9 +342,9 @@ int sbrk(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -364,9 +362,9 @@ int srt_sigaction(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -384,9 +382,9 @@ int srt_sigprocmask(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -404,9 +402,9 @@ int srt_sigreturn(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -424,9 +422,9 @@ int sioctl(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -444,9 +442,9 @@ int spread64(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -464,9 +462,9 @@ int spwrite64(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -484,9 +482,9 @@ int sreadv(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -504,9 +502,9 @@ int swritev(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -524,9 +522,9 @@ int saccess(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -544,9 +542,9 @@ int spipe(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -564,9 +562,9 @@ int sselect(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -584,9 +582,9 @@ int smremap(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -604,9 +602,9 @@ int ssched_yield(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -624,9 +622,9 @@ int smsync(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -644,9 +642,9 @@ int smincore(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -664,9 +662,9 @@ int smadvise(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -684,9 +682,9 @@ int sshmget(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -704,9 +702,9 @@ int sshmat(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -724,9 +722,9 @@ int sshmctl(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -744,9 +742,9 @@ int sdup(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -764,9 +762,9 @@ int sdup2(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -784,9 +782,9 @@ int spause(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -804,9 +802,9 @@ int snanosleep(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -824,9 +822,9 @@ int sgetitimer(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -844,9 +842,9 @@ int salarm(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -864,9 +862,9 @@ int ssetitimer(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -884,9 +882,9 @@ int sgetpid(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -904,9 +902,9 @@ int ssendfile(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -924,9 +922,9 @@ int ssocket(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -944,9 +942,9 @@ int sconnect(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -964,9 +962,9 @@ int saccept(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -984,9 +982,9 @@ int ssendto(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1004,9 +1002,9 @@ int srecvfrom(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1025,9 +1023,9 @@ int ssendmsg(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1045,9 +1043,9 @@ int srecvmsg(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1065,9 +1063,9 @@ int sshutdown(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1085,9 +1083,9 @@ int sbind(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1105,9 +1103,9 @@ int slisten(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1125,9 +1123,9 @@ int sgetsockname(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1145,9 +1143,9 @@ int sgetpeername(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1165,9 +1163,9 @@ int ssocketpair(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1185,9 +1183,9 @@ int ssetsockopt(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1205,9 +1203,9 @@ int sgetsockopt(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1225,9 +1223,9 @@ int sfork(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1245,9 +1243,9 @@ int svfork(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1265,9 +1263,9 @@ int sexecve(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1285,9 +1283,9 @@ int sexit(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1305,9 +1303,9 @@ int swait4(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1325,9 +1323,9 @@ int skill(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1345,9 +1343,9 @@ int suname(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1365,9 +1363,9 @@ int ssemget(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1385,9 +1383,9 @@ int ssemop(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1405,9 +1403,9 @@ int ssemctl(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1425,9 +1423,9 @@ int sshmdt(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1446,9 +1444,9 @@ int smsgget(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1466,9 +1464,9 @@ int smsgsnd(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1486,9 +1484,9 @@ int smsgrcv(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1506,9 +1504,9 @@ int smsgctl(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1526,9 +1524,9 @@ int sfcntl(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1546,9 +1544,9 @@ int sflock(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1566,9 +1564,9 @@ int sfsync(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1586,9 +1584,9 @@ int sfdatasync(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1606,9 +1604,9 @@ int struncate(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1626,9 +1624,9 @@ int sftruncate(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1646,9 +1644,9 @@ int sgetdents(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1666,9 +1664,9 @@ int sgetcwd(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1686,9 +1684,9 @@ int schdir(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1706,9 +1704,9 @@ int sfchdir(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1726,9 +1724,9 @@ int srename(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1739,7 +1737,7 @@ int srename(struct pt_regs *ctx) {
 int smkdir(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
@@ -1748,7 +1746,7 @@ int smkdir(struct pt_regs *ctx) {
         return 0;
     }
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1766,9 +1764,9 @@ int srmdir(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1786,9 +1784,9 @@ int screat(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1806,9 +1804,9 @@ int slink(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1826,9 +1824,9 @@ int sunlink(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1846,9 +1844,9 @@ int ssymlink(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1866,9 +1864,9 @@ int sreadlink(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1886,9 +1884,9 @@ int schmod(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1907,9 +1905,9 @@ int sfchmod(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1927,9 +1925,9 @@ int schown(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1947,9 +1945,9 @@ int sfchown(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1967,9 +1965,9 @@ int slchown(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -1987,9 +1985,9 @@ int sumask(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2007,9 +2005,9 @@ int sgettimeofday(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2027,9 +2025,9 @@ int sgetrlimit(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2048,9 +2046,9 @@ int sgetrusage(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2069,9 +2067,9 @@ int ssysinfo(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2089,9 +2087,9 @@ int stimes(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2109,9 +2107,9 @@ int sptrace(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2129,9 +2127,9 @@ int sgetuid(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2149,9 +2147,9 @@ int ssyslog(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2169,9 +2167,9 @@ int sgetgid(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2189,9 +2187,9 @@ int ssetuid(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2209,9 +2207,9 @@ int ssetgid(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2229,9 +2227,9 @@ int sgeteuid(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2249,9 +2247,9 @@ int sgetegid(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2269,9 +2267,9 @@ int ssetpgid(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2289,9 +2287,9 @@ int sgetppid(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2309,9 +2307,9 @@ int sgetpgrp(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2329,9 +2327,9 @@ int ssetsid(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2349,9 +2347,9 @@ int ssetreuid(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2369,9 +2367,9 @@ int ssetregid(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2389,9 +2387,9 @@ int sgetgroups(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2409,9 +2407,9 @@ int ssetgroups(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2429,9 +2427,9 @@ int ssetresuid(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2449,9 +2447,9 @@ int sgetresuid(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2469,9 +2467,9 @@ int ssetresgid(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2489,9 +2487,9 @@ int sgetresgid(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2509,9 +2507,9 @@ int sgetpgid(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2529,9 +2527,9 @@ int ssetfsuid(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2549,9 +2547,9 @@ int ssetfsgid(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2569,9 +2567,9 @@ int sgetsid(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2589,9 +2587,9 @@ int scapget(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2609,9 +2607,9 @@ int scapset(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2629,9 +2627,9 @@ int srt_sigpending(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2649,9 +2647,9 @@ int srt_sigtimedwait(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2669,9 +2667,9 @@ int srt_sigqueueinfo(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2689,9 +2687,9 @@ int srt_sigsuspend(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2709,9 +2707,9 @@ int ssigaltstack(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2730,9 +2728,9 @@ int sutime(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2750,9 +2748,9 @@ int smknod(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2770,9 +2768,9 @@ int suselib(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2790,9 +2788,9 @@ int spersonality(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2810,9 +2808,9 @@ int sustat(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2830,9 +2828,9 @@ int sstatfs(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2850,9 +2848,9 @@ int sfstatfs(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2870,9 +2868,9 @@ int ssysfs(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2890,9 +2888,9 @@ int sgetpriority(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2910,9 +2908,9 @@ int ssetpriority(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2930,9 +2928,9 @@ int ssched_setparam(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2950,9 +2948,9 @@ int ssched_getparam(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2970,9 +2968,9 @@ int ssched_setscheduler(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -2990,9 +2988,9 @@ int ssched_getscheduler(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3010,9 +3008,9 @@ int ssched_get_priority_max(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3030,9 +3028,9 @@ int ssched_get_priority_min(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3050,9 +3048,9 @@ int ssched_rr_get_interval(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3070,9 +3068,9 @@ int smlock(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3090,9 +3088,9 @@ int smunlock(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3110,9 +3108,9 @@ int smlockall(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3130,9 +3128,9 @@ int smunlockall(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3150,9 +3148,9 @@ int svhangup(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3170,9 +3168,9 @@ int smodify_ldt(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3190,9 +3188,9 @@ int spivot_root(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3210,9 +3208,9 @@ int ssysctl(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3230,9 +3228,9 @@ int sprctl(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3250,9 +3248,9 @@ int sarch_prctl(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3270,9 +3268,9 @@ int sadjtimex(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3290,9 +3288,9 @@ int ssetrlimit(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3310,9 +3308,9 @@ int schroot(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3330,9 +3328,9 @@ int ssync(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3350,9 +3348,9 @@ int sacct(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3370,9 +3368,9 @@ int ssettimeofday(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3390,9 +3388,9 @@ int smount(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3410,9 +3408,9 @@ int sumount2(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3430,9 +3428,9 @@ int sswapon(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3450,9 +3448,9 @@ int sswapoff(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3470,9 +3468,9 @@ int sreboot(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3490,9 +3488,9 @@ int ssethostname(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3510,9 +3508,9 @@ int ssetdomainname(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3530,9 +3528,9 @@ int siopl(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3550,9 +3548,9 @@ int sioperm(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3570,9 +3568,9 @@ int screate_module(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3590,9 +3588,9 @@ int sinit_module(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3610,9 +3608,9 @@ int sdelete_module(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3630,9 +3628,9 @@ int sget_kernel_syms(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3650,9 +3648,9 @@ int squery_module(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3670,9 +3668,9 @@ int squotactl(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3690,9 +3688,9 @@ int snfsservctl(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3710,9 +3708,9 @@ int sgetpmsg(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3730,9 +3728,9 @@ int sputpmsg(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3750,9 +3748,9 @@ int safs_syscall(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3770,9 +3768,9 @@ int stuxcall(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3790,9 +3788,9 @@ int ssecurity(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3810,9 +3808,9 @@ int sgettid(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3830,9 +3828,9 @@ int sreadahead(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3850,9 +3848,9 @@ int ssetxattr(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3870,9 +3868,9 @@ int slsetxattr(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3890,9 +3888,9 @@ int sfsetxattr(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3910,9 +3908,9 @@ int sgetxattr(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3930,9 +3928,9 @@ int sfgetxattr(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3950,9 +3948,9 @@ int slistxattr(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3970,9 +3968,9 @@ int sllistxattr(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -3990,9 +3988,9 @@ int sflistxattr(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4010,9 +4008,9 @@ int sremovexattr(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4030,9 +4028,9 @@ int slremovexattr(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4050,9 +4048,9 @@ int sfremovexattr(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4070,9 +4068,9 @@ int stkill(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4090,9 +4088,9 @@ int stime(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4110,9 +4108,9 @@ int sfutex(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4130,9 +4128,9 @@ int ssched_setaffinity(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4150,9 +4148,9 @@ int ssched_getaffinity(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4170,9 +4168,9 @@ int sset_thread_area(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4190,9 +4188,9 @@ int sio_setup(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4210,9 +4208,9 @@ int sio_destroy(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4230,9 +4228,9 @@ int sio_getevents(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4250,9 +4248,9 @@ int sio_submit(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4270,9 +4268,9 @@ int sio_cancel(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4290,9 +4288,9 @@ int sget_thread_area(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4310,9 +4308,9 @@ int slookup_dcookie(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4330,9 +4328,9 @@ int sepoll_create(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4350,9 +4348,9 @@ int sepoll_ctl_old(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4370,9 +4368,9 @@ int sepoll_wait_old(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4390,9 +4388,9 @@ int sremap_file_pages(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4410,9 +4408,9 @@ int sgetdents64(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4430,9 +4428,9 @@ int sset_tid_address(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4450,9 +4448,9 @@ int srestart_syscall(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4470,9 +4468,9 @@ int ssemtimedop(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4490,9 +4488,9 @@ int sfadvise64(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4510,9 +4508,9 @@ int stimer_create(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4530,9 +4528,9 @@ int stimer_settime(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4550,9 +4548,9 @@ int stimer_gettime(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4570,9 +4568,9 @@ int stimer_getoverrun(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4590,9 +4588,9 @@ int stimer_delete(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4610,9 +4608,9 @@ int sclock_settime(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4630,9 +4628,9 @@ int sclock_gettime(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4650,9 +4648,9 @@ int sclock_getres(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4670,9 +4668,9 @@ int sclock_nanosleep(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4690,9 +4688,9 @@ int sexit_group(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4710,9 +4708,9 @@ int sepoll_wait(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4730,9 +4728,9 @@ int sepoll_ctl(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4750,9 +4748,9 @@ int stgkill(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4770,9 +4768,9 @@ int sutimes(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4790,9 +4788,9 @@ int svserver(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4810,9 +4808,9 @@ int smbind(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4830,9 +4828,9 @@ int sset_mempolicy(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4850,9 +4848,9 @@ int sget_mempolicy(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4870,9 +4868,9 @@ int smq_open(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4890,9 +4888,9 @@ int smq_unlink(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4910,9 +4908,9 @@ int smq_timedsend(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4930,9 +4928,9 @@ int smq_timedreceive(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4950,9 +4948,9 @@ int smq_notify(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4970,9 +4968,9 @@ int smq_getsetattr(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -4990,9 +4988,9 @@ int skexec_load(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5010,9 +5008,9 @@ int swaitid(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5030,9 +5028,9 @@ int sadd_key(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5050,9 +5048,9 @@ int srequest_key(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5070,9 +5068,9 @@ int skeyctl(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5090,9 +5088,9 @@ int sioprio_set(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5110,9 +5108,9 @@ int sioprio_get(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5130,9 +5128,9 @@ int sinotify_init(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5150,9 +5148,9 @@ int sinotify_add_watch(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5170,9 +5168,9 @@ int sinotify_rm_watch(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5190,9 +5188,9 @@ int smigrate_pages(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5210,9 +5208,9 @@ int sopenat(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5223,7 +5221,7 @@ int sopenat(struct pt_regs *ctx) {
 int smkdirat(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
@@ -5232,7 +5230,7 @@ int smkdirat(struct pt_regs *ctx) {
         return 0;
     }
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5250,9 +5248,9 @@ int smknodat(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5270,9 +5268,9 @@ int sfchownat(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5290,9 +5288,9 @@ int sfutimesat(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5310,9 +5308,9 @@ int snewfstatat(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5330,9 +5328,9 @@ int sunlinkat(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5350,9 +5348,9 @@ int srenameat(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5370,9 +5368,9 @@ int slinkat(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5390,9 +5388,9 @@ int ssymlinkat(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5410,9 +5408,9 @@ int sreadlinkat(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5430,9 +5428,9 @@ int sfchmodat(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5450,9 +5448,9 @@ int sfaccessat(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5470,9 +5468,9 @@ int spselect6(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5490,9 +5488,9 @@ int sppoll(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5510,9 +5508,9 @@ int sunshare(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5530,9 +5528,9 @@ int sset_robust_list(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5550,9 +5548,9 @@ int sget_robust_list(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5570,9 +5568,9 @@ int ssplice(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5590,9 +5588,9 @@ int stee(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5610,9 +5608,9 @@ int ssync_file_range(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5630,9 +5628,9 @@ int svmsplice(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5650,9 +5648,9 @@ int smove_pages(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5670,9 +5668,9 @@ int sutimensat(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5690,9 +5688,9 @@ int sepoll_pwait(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5710,9 +5708,9 @@ int ssignalfd(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5730,9 +5728,9 @@ int stimerfd_create(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5750,9 +5748,9 @@ int seventfd(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5770,9 +5768,9 @@ int sfallocate(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5790,9 +5788,9 @@ int stimerfd_settime(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5810,9 +5808,9 @@ int stimerfd_gettime(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5830,9 +5828,9 @@ int saccept4(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5850,9 +5848,9 @@ int ssignalfd4(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5870,9 +5868,9 @@ int seventfd2(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5890,9 +5888,9 @@ int epoll_create1(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5910,9 +5908,9 @@ int sdup3(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5930,9 +5928,9 @@ int spipe2(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5950,9 +5948,9 @@ int sinotify_init1(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5970,9 +5968,9 @@ int spreadv(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -5990,9 +5988,9 @@ int spwritev(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -6010,9 +6008,9 @@ int srt_tgsigqueueinfo(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -6030,9 +6028,9 @@ int sperf_event_open(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -6051,9 +6049,9 @@ int srecvmmsg(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -6071,9 +6069,9 @@ int sfanotify_init(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -6091,9 +6089,9 @@ int sfanotify_mark(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -6111,9 +6109,9 @@ int sprlimit64(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -6131,9 +6129,9 @@ int sname_to_handle_at(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -6151,9 +6149,9 @@ int sopen_by_handle_at(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -6171,9 +6169,9 @@ int sclock_adjtime(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -6191,9 +6189,9 @@ int ssyncfs(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -6211,9 +6209,9 @@ int ssendmmsg(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -6231,9 +6229,9 @@ int ssetns(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -6251,9 +6249,9 @@ int sgetcpu(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -6271,9 +6269,9 @@ int sprocess_vm_readv(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -6291,9 +6289,9 @@ int sprocess_vm_writev(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -6311,9 +6309,9 @@ int skcmp(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -6331,9 +6329,9 @@ int sfinit_module(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -6351,9 +6349,9 @@ int ssched_setattr(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -6372,9 +6370,9 @@ int ssched_getattr(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -6392,9 +6390,9 @@ int srenameat2(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -6413,9 +6411,9 @@ int sseccomp(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -6433,9 +6431,9 @@ int sgetrandom(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -6453,9 +6451,9 @@ int smemfd_create(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -6473,9 +6471,9 @@ int skexec_file_load(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -6493,9 +6491,9 @@ int sbpf(struct pt_regs *ctx) {
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
         return 0;
     }
-    data.test_inum = inum_container;
+    // data.test_inum = inum_container;
     u64 id = bpf_get_current_pid_tgid();
-    data.inum = inum_ring;
+    // data.inum = inum_ring;
     data.pid = id >> 32;
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
@@ -6847,15 +6845,7 @@ def updatesequence(cpu, data, size):
     data = b["events"].event(data)
     syscall_number = data.syscallnumber
     ringbufferpid = data.pid
-    # inum_ring = data.inum
     tgid = data.tgid
-    # ret = data.test_inum
-    # i_ret = data.init_return
-    # clone_ret = data.clone_test
-
-    # if str(inum_ring) == str(inum_container):
-    # if str(inum_ring) != str(host_ns):
-    # if int(ringbufferpid) != 1:
     if syscall_number == 0:
         syscalls.append("clone")
         add_to_pid_dict(ringbufferpid, "clone", tgid)
@@ -6864,8 +6854,6 @@ def updatesequence(cpu, data, size):
         add_to_pid_dict(ringbufferpid, "open", tgid)
     elif syscall_number == 2:
         syscalls.append("read")
-        # print("Ergebnis des Lookups für read: " + str(ret)  + "inum: " + str(inum_ring))
-        # print("Hat Init geklappt? " + str(i_ret))
         add_to_pid_dict(ringbufferpid, "read", tgid)
     elif syscall_number == 3:
         syscalls.append("write")
