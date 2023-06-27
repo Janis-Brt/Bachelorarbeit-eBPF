@@ -6983,7 +6983,7 @@ def updatesequence(cpu, data, size):
     elif syscall_number == 40:
         syscalls.append("getpid")
         print("Found getpid with inum: " + str(inum))
-        add_to_pid_dict(ringbufferpid, "getpid", tgid)
+        add_to_pid_dict(ringbufferpid, "getpid" + str(inum), tgid)
     elif syscall_number == 41:
         syscalls.append("sendfile")
         add_to_pid_dict(ringbufferpid, "sendfile", tgid)
