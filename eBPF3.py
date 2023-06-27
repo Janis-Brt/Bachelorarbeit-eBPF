@@ -72,7 +72,9 @@ int sclone(struct pt_regs *ctx) {
     
     // Erhalte den PID-Namespace von clone()
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    struct task_struct *parent = t->real_parent;
+    unsigned int inum_ring = parent->nsproxy->pid_ns_for_children->ns.inum;
+
     
     // Erhalte den PID-Namespace des erzeugten Kind Prozesses von clone()
     struct pid_namespace *pid_ns = t->nsproxy->pid;
