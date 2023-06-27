@@ -7913,15 +7913,17 @@ def createpatternspid():
         #     print(value[i])
         # print("++++++++++++++++++++++++++++++++++++++++++++")
         # print("Entferne doppelte Vorkommnisse in PID List: ")
-        i = 0
-        while i < len(value):
-            if i + 1 < len(value) and str(value[i]) == str(value[i + 1]):
-                # print("Vergleiche: " + str(value[i]) + " mit: " + str(value[i + 1]))
-                # print("Lösche: " + str(value[i + 1]))
-                del value[i + 1]
-                i = i - 1
-            else:
-                i += 1
+        try:
+            i = 0
+            while i < len(value):
+                if i + 1 < len(value) and str(value[i]) == str(value[i + 1]):
+                    # print("Vergleiche: " + str(value[i]) + " mit: " + str(value[i + 1]))
+                    # print("Lösche: " + str(value[i + 1]))
+                    del value[i + 1]
+                    i = i - 1
+                else:
+                    i += 1
+        except: IndexError
         # print("++++++++++++++++++++++++++++++++++++++++++++")
         # Schleife von 0 bis Länge der Liste minus 2
         for i in range(len(value) - 2):
