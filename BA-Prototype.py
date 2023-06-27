@@ -14,7 +14,7 @@ prog = """
 struct data_t {
     int syscallnumber;
     u32 pid;
-    // unsigned int inum;
+    //unsigned int inum;
     u32 tgid;
     // unsigned int test_inum; // könnte rausfallen, da inum jetzt schon hier gefiltert wird
 };
@@ -66,6 +66,7 @@ int sclone(struct pt_regs *ctx) {
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     struct task_struct *parent = t->real_parent;
     unsigned int inum_ring = parent->nsproxy->pid_ns_for_children->ns.inum;
+    
 
     // Erhalte den PID-Namespace des erzeugten Kind Prozesses von clone()
     unsigned int inum_ring_child = t->nsproxy->pid_ns_for_children->ns.inum;
