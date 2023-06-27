@@ -7995,15 +7995,11 @@ def createpatternstgid():
         #     print(value[i])
         # print("++++++++++++++++++++++++++++++++++++++++++++")
         # print("Entferne doppelte Vorkommnisse in PID List: ")
-        i = 0
-        while i < len(value):
-            if i + 1 < len(value) and str(value[i]) == str(value[i + 1]):
-                # print("Vergleiche: " + str(value[i]) + " mit: " + str(value[i + 1]))
-                # print("Lösche: " + str(value[i + 1]))
-                del value[i + 1]
-                i = i - 1
-            else:
-                i += 1
+        i = len(value) - 1
+        while i > 0:
+            if str(value[i]) == str(value[i - 1]):
+                del value[i]
+            i -= 1
         # print("++++++++++++++++++++++++++++++++++++++++++++")
         # print("Markierungen nach dem Entfernen: ")
 
