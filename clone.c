@@ -1,37 +1,44 @@
 #define _GNU_SOURCE
-#include<sched.h>
-#include<stdio.h>
-#include<stdlib.h>
-#include<sys/wait.h>
-#include<unistd.h>
-#include<errno.h>
-#include<string.h>
+#include <sched.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
 
-static char child_stack[2048];
+#define STACK_SIZE 65536
 
-int x = 10;
+// Funktion, die im Kindprozess ausgeführt wird
+int child_function(void *arg) {
+    printf("Kindprozess: PID = %d\n", getpid());
+    printf("Kindprozess: Parent PID = %d\n", getppid());
 
-static int child_fn() {
-    printf("Pid: %ld\n", (long) getpid());
     return 0;
 }
 
 int main() {
-    printf("before= %d\n", x);
-    errno = 0;
-    pid_t child_pid = clone(&child_fn, (void *) child_stack+1024, CLONE_NEWPID | SIGCHLD, NULL);
-    if(child_pid == -1) {
-        printf("%s\n", strerror(errno));
-        return 0;
-    } else {
-        printf("clone()= %ld\n", (long) child_pid);
-        printf("after= %d\n", x);
+    printf("Elternprozess: PID = %d\n", getpid());
 
-        while(waitpid(-1, NULL, 0) < 0 && errno == EINTR) {
-            printf("waiting\n");
-            continue;
-        }
-
-        return 0;
+    // Erzeugen eines Stacks für den Kindprozess
+    char *stack = malloc(STACK_SIZE);
+    if (stack == NULL) {
+        perror("Fehler beim Allozieren des Stacks");
+        exit(EXIT_FAILURE);
     }
+
+    // Aufruf von clone(), um den Kindprozess zu erzeugen und die child_function darin auszuführen
+    pid_t pid = clone(child_function, stack + STACK_SIZE, CLONE_NEWPID | SIGCHLD, NULL);
+    if (pid == -1) {
+        perror("Fehler beim Erzeugen des Kindprozesses");
+        exit(EXIT_FAILURE);
+    }
+
+    // Warten auf den Abschluss des Kindprozesses
+    if (waitpid(pid, NULL, 0) == -1) {
+        perror("Fehler beim Warten auf den Kindprozess");
+        exit(EXIT_FAILURE);
+    }
+
+    free(stack);
+    return 0;
 }
