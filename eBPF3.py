@@ -109,7 +109,7 @@ int sopen(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -130,7 +130,7 @@ int sread(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     u64 ret_init = inums_init();
     data.init_return = ret_init;
     /**if(ret_value == 0){
@@ -157,7 +157,7 @@ int swrite(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     // data.test_inum = ret_value;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
@@ -177,7 +177,7 @@ int sclose(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -197,7 +197,7 @@ int sstat(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -217,7 +217,7 @@ int sfstat(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -237,7 +237,7 @@ int slstat(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -257,7 +257,7 @@ int spoll(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -277,7 +277,7 @@ int slseek(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -297,7 +297,7 @@ int smmap(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -317,7 +317,7 @@ int smprotect(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -337,7 +337,7 @@ int smunmap(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -357,7 +357,7 @@ int sbrk(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -377,7 +377,7 @@ int srt_sigaction(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -397,7 +397,7 @@ int srt_sigprocmask(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -417,7 +417,7 @@ int srt_sigreturn(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -437,7 +437,7 @@ int sioctl(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -457,7 +457,7 @@ int spread64(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -477,7 +477,7 @@ int spwrite64(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -497,7 +497,7 @@ int sreadv(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -517,7 +517,7 @@ int swritev(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -537,7 +537,7 @@ int saccess(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -557,7 +557,7 @@ int spipe(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -577,7 +577,7 @@ int sselect(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -597,7 +597,7 @@ int smremap(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -617,7 +617,7 @@ int ssched_yield(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -637,7 +637,7 @@ int smsync(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -657,7 +657,7 @@ int smincore(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -677,7 +677,7 @@ int smadvise(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -697,7 +697,7 @@ int sshmget(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -717,7 +717,7 @@ int sshmat(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -737,7 +737,7 @@ int sshmctl(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -757,7 +757,7 @@ int sdup(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -777,7 +777,7 @@ int sdup2(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -797,7 +797,7 @@ int spause(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -817,7 +817,7 @@ int snanosleep(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -837,7 +837,7 @@ int sgetitimer(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -857,7 +857,7 @@ int salarm(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -877,7 +877,7 @@ int ssetitimer(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -897,7 +897,7 @@ int sgetpid(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -917,7 +917,7 @@ int ssendfile(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -937,7 +937,7 @@ int ssocket(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -957,7 +957,7 @@ int sconnect(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -977,7 +977,7 @@ int saccept(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -997,7 +997,7 @@ int ssendto(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1017,7 +1017,7 @@ int srecvfrom(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1038,7 +1038,7 @@ int ssendmsg(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1058,7 +1058,7 @@ int srecvmsg(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1078,7 +1078,7 @@ int sshutdown(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1098,7 +1098,7 @@ int sbind(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1118,7 +1118,7 @@ int slisten(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1138,7 +1138,7 @@ int sgetsockname(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1158,7 +1158,7 @@ int sgetpeername(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1178,7 +1178,7 @@ int ssocketpair(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1198,7 +1198,7 @@ int ssetsockopt(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1218,7 +1218,7 @@ int sgetsockopt(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1238,7 +1238,7 @@ int sfork(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1258,7 +1258,7 @@ int svfork(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1278,7 +1278,7 @@ int sexecve(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1298,7 +1298,7 @@ int sexit(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1318,7 +1318,7 @@ int swait4(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1338,7 +1338,7 @@ int skill(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1358,7 +1358,7 @@ int suname(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1378,7 +1378,7 @@ int ssemget(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1398,7 +1398,7 @@ int ssemop(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1418,7 +1418,7 @@ int ssemctl(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1438,7 +1438,7 @@ int sshmdt(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1459,7 +1459,7 @@ int smsgget(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1479,7 +1479,7 @@ int smsgsnd(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1499,7 +1499,7 @@ int smsgrcv(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1519,7 +1519,7 @@ int smsgctl(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1539,7 +1539,7 @@ int sfcntl(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1559,7 +1559,7 @@ int sflock(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1579,7 +1579,7 @@ int sfsync(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1599,7 +1599,7 @@ int sfdatasync(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1619,7 +1619,7 @@ int struncate(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1639,7 +1639,7 @@ int sftruncate(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1659,7 +1659,7 @@ int sgetdents(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1679,7 +1679,7 @@ int sgetcwd(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1699,7 +1699,7 @@ int schdir(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1719,7 +1719,7 @@ int sfchdir(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1739,7 +1739,7 @@ int srename(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1760,7 +1760,7 @@ int smkdir(struct pt_regs *ctx) {
     INUM_RING
     data.test_inum = inum_container;
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1779,7 +1779,7 @@ int srmdir(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1799,7 +1799,7 @@ int screat(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1819,7 +1819,7 @@ int slink(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1839,7 +1839,7 @@ int sunlink(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1859,7 +1859,7 @@ int ssymlink(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1879,7 +1879,7 @@ int sreadlink(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1899,7 +1899,7 @@ int schmod(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1920,7 +1920,7 @@ int sfchmod(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1940,7 +1940,7 @@ int schown(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1960,7 +1960,7 @@ int sfchown(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -1980,7 +1980,7 @@ int slchown(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2000,7 +2000,7 @@ int sumask(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2020,7 +2020,7 @@ int sgettimeofday(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2040,7 +2040,7 @@ int sgetrlimit(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2061,7 +2061,7 @@ int sgetrusage(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2082,7 +2082,7 @@ int ssysinfo(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2102,7 +2102,7 @@ int stimes(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2122,7 +2122,7 @@ int sptrace(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2142,7 +2142,7 @@ int sgetuid(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2162,7 +2162,7 @@ int ssyslog(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2182,7 +2182,7 @@ int sgetgid(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2202,7 +2202,7 @@ int ssetuid(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2222,7 +2222,7 @@ int ssetgid(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2242,7 +2242,7 @@ int sgeteuid(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2262,7 +2262,7 @@ int sgetegid(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2282,7 +2282,7 @@ int ssetpgid(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2302,7 +2302,7 @@ int sgetppid(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2322,7 +2322,7 @@ int sgetpgrp(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2342,7 +2342,7 @@ int ssetsid(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2362,7 +2362,7 @@ int ssetreuid(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2382,7 +2382,7 @@ int ssetregid(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2402,7 +2402,7 @@ int sgetgroups(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2422,7 +2422,7 @@ int ssetgroups(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2442,7 +2442,7 @@ int ssetresuid(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2462,7 +2462,7 @@ int sgetresuid(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2482,7 +2482,7 @@ int ssetresgid(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2502,7 +2502,7 @@ int sgetresgid(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2522,7 +2522,7 @@ int sgetpgid(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2542,7 +2542,7 @@ int ssetfsuid(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2562,7 +2562,7 @@ int ssetfsgid(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2582,7 +2582,7 @@ int sgetsid(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2602,7 +2602,7 @@ int scapget(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2622,7 +2622,7 @@ int scapset(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2642,7 +2642,7 @@ int srt_sigpending(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2662,7 +2662,7 @@ int srt_sigtimedwait(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2682,7 +2682,7 @@ int srt_sigqueueinfo(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2702,7 +2702,7 @@ int srt_sigsuspend(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2722,7 +2722,7 @@ int ssigaltstack(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2743,7 +2743,7 @@ int sutime(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2763,7 +2763,7 @@ int smknod(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2783,7 +2783,7 @@ int suselib(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2803,7 +2803,7 @@ int spersonality(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2823,7 +2823,7 @@ int sustat(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2843,7 +2843,7 @@ int sstatfs(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2863,7 +2863,7 @@ int sfstatfs(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2883,7 +2883,7 @@ int ssysfs(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2903,7 +2903,7 @@ int sgetpriority(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2923,7 +2923,7 @@ int ssetpriority(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2943,7 +2943,7 @@ int ssched_setparam(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2963,7 +2963,7 @@ int ssched_getparam(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -2983,7 +2983,7 @@ int ssched_setscheduler(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3003,7 +3003,7 @@ int ssched_getscheduler(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3023,7 +3023,7 @@ int ssched_get_priority_max(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3043,7 +3043,7 @@ int ssched_get_priority_min(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3063,7 +3063,7 @@ int ssched_rr_get_interval(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3083,7 +3083,7 @@ int smlock(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3103,7 +3103,7 @@ int smunlock(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3123,7 +3123,7 @@ int smlockall(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3143,7 +3143,7 @@ int smunlockall(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3163,7 +3163,7 @@ int svhangup(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3183,7 +3183,7 @@ int smodify_ldt(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3203,7 +3203,7 @@ int spivot_root(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3223,7 +3223,7 @@ int ssysctl(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3243,7 +3243,7 @@ int sprctl(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3263,7 +3263,7 @@ int sarch_prctl(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3283,7 +3283,7 @@ int sadjtimex(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3303,7 +3303,7 @@ int ssetrlimit(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3323,7 +3323,7 @@ int schroot(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3343,7 +3343,7 @@ int ssync(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3363,7 +3363,7 @@ int sacct(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3383,7 +3383,7 @@ int ssettimeofday(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3403,7 +3403,7 @@ int smount(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3423,7 +3423,7 @@ int sumount2(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3443,7 +3443,7 @@ int sswapon(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3463,7 +3463,7 @@ int sswapoff(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3483,7 +3483,7 @@ int sreboot(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3503,7 +3503,7 @@ int ssethostname(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3523,7 +3523,7 @@ int ssetdomainname(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3543,7 +3543,7 @@ int siopl(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3563,7 +3563,7 @@ int sioperm(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3583,7 +3583,7 @@ int screate_module(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3603,7 +3603,7 @@ int sinit_module(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3623,7 +3623,7 @@ int sdelete_module(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3643,7 +3643,7 @@ int sget_kernel_syms(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3663,7 +3663,7 @@ int squery_module(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3683,7 +3683,7 @@ int squotactl(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3703,7 +3703,7 @@ int snfsservctl(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3723,7 +3723,7 @@ int sgetpmsg(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3743,7 +3743,7 @@ int sputpmsg(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3763,7 +3763,7 @@ int safs_syscall(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3783,7 +3783,7 @@ int stuxcall(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3803,7 +3803,7 @@ int ssecurity(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3823,7 +3823,7 @@ int sgettid(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3843,7 +3843,7 @@ int sreadahead(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3863,7 +3863,7 @@ int ssetxattr(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3883,7 +3883,7 @@ int slsetxattr(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3903,7 +3903,7 @@ int sfsetxattr(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3923,7 +3923,7 @@ int sgetxattr(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3943,7 +3943,7 @@ int sfgetxattr(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3963,7 +3963,7 @@ int slistxattr(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -3983,7 +3983,7 @@ int sllistxattr(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4003,7 +4003,7 @@ int sflistxattr(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4023,7 +4023,7 @@ int sremovexattr(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4043,7 +4043,7 @@ int slremovexattr(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4063,7 +4063,7 @@ int sfremovexattr(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4083,7 +4083,7 @@ int stkill(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4103,7 +4103,7 @@ int stime(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4123,7 +4123,7 @@ int sfutex(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4143,7 +4143,7 @@ int ssched_setaffinity(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4163,7 +4163,7 @@ int ssched_getaffinity(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4183,7 +4183,7 @@ int sset_thread_area(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4203,7 +4203,7 @@ int sio_setup(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4223,7 +4223,7 @@ int sio_destroy(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4243,7 +4243,7 @@ int sio_getevents(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4263,7 +4263,7 @@ int sio_submit(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4283,7 +4283,7 @@ int sio_cancel(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4303,7 +4303,7 @@ int sget_thread_area(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4323,7 +4323,7 @@ int slookup_dcookie(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4343,7 +4343,7 @@ int sepoll_create(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4363,7 +4363,7 @@ int sepoll_ctl_old(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4383,7 +4383,7 @@ int sepoll_wait_old(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4403,7 +4403,7 @@ int sremap_file_pages(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4423,7 +4423,7 @@ int sgetdents64(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4443,7 +4443,7 @@ int sset_tid_address(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4463,7 +4463,7 @@ int srestart_syscall(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4483,7 +4483,7 @@ int ssemtimedop(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4503,7 +4503,7 @@ int sfadvise64(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4523,7 +4523,7 @@ int stimer_create(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4543,7 +4543,7 @@ int stimer_settime(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4563,7 +4563,7 @@ int stimer_gettime(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4583,7 +4583,7 @@ int stimer_getoverrun(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4603,7 +4603,7 @@ int stimer_delete(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4623,7 +4623,7 @@ int sclock_settime(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4643,7 +4643,7 @@ int sclock_gettime(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4663,7 +4663,7 @@ int sclock_getres(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4683,7 +4683,7 @@ int sclock_nanosleep(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4703,7 +4703,7 @@ int sexit_group(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4723,7 +4723,7 @@ int sepoll_wait(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4743,7 +4743,7 @@ int sepoll_ctl(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4763,7 +4763,7 @@ int stgkill(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4783,7 +4783,7 @@ int sutimes(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4803,7 +4803,7 @@ int svserver(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4823,7 +4823,7 @@ int smbind(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4843,7 +4843,7 @@ int sset_mempolicy(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4863,7 +4863,7 @@ int sget_mempolicy(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4883,7 +4883,7 @@ int smq_open(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4903,7 +4903,7 @@ int smq_unlink(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4923,7 +4923,7 @@ int smq_timedsend(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4943,7 +4943,7 @@ int smq_timedreceive(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4963,7 +4963,7 @@ int smq_notify(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -4983,7 +4983,7 @@ int smq_getsetattr(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5003,7 +5003,7 @@ int skexec_load(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5023,7 +5023,7 @@ int swaitid(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5043,7 +5043,7 @@ int sadd_key(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5063,7 +5063,7 @@ int srequest_key(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5083,7 +5083,7 @@ int skeyctl(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5103,7 +5103,7 @@ int sioprio_set(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5123,7 +5123,7 @@ int sioprio_get(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5143,7 +5143,7 @@ int sinotify_init(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5163,7 +5163,7 @@ int sinotify_add_watch(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5183,7 +5183,7 @@ int sinotify_rm_watch(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5203,7 +5203,7 @@ int smigrate_pages(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5223,7 +5223,7 @@ int sopenat(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5244,7 +5244,7 @@ int smkdirat(struct pt_regs *ctx) {
     INUM_RING
     data.test_inum = inum_container;
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5263,7 +5263,7 @@ int smknodat(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5283,7 +5283,7 @@ int sfchownat(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5303,7 +5303,7 @@ int sfutimesat(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5323,7 +5323,7 @@ int snewfstatat(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5343,7 +5343,7 @@ int sunlinkat(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5363,7 +5363,7 @@ int srenameat(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5383,7 +5383,7 @@ int slinkat(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5403,7 +5403,7 @@ int ssymlinkat(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5423,7 +5423,7 @@ int sreadlinkat(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5443,7 +5443,7 @@ int sfchmodat(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5463,7 +5463,7 @@ int sfaccessat(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5483,7 +5483,7 @@ int spselect6(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5503,7 +5503,7 @@ int sppoll(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5523,7 +5523,7 @@ int sunshare(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5543,7 +5543,7 @@ int sset_robust_list(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5563,7 +5563,7 @@ int sget_robust_list(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5583,7 +5583,7 @@ int ssplice(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5603,7 +5603,7 @@ int stee(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5623,7 +5623,7 @@ int ssync_file_range(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5643,7 +5643,7 @@ int svmsplice(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5663,7 +5663,7 @@ int smove_pages(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5683,7 +5683,7 @@ int sutimensat(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5703,7 +5703,7 @@ int sepoll_pwait(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5723,7 +5723,7 @@ int ssignalfd(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5743,7 +5743,7 @@ int stimerfd_create(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5763,7 +5763,7 @@ int seventfd(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5783,7 +5783,7 @@ int sfallocate(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5803,7 +5803,7 @@ int stimerfd_settime(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5823,7 +5823,7 @@ int stimerfd_gettime(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5843,7 +5843,7 @@ int saccept4(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5863,7 +5863,7 @@ int ssignalfd4(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5883,7 +5883,7 @@ int seventfd2(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5903,7 +5903,7 @@ int epoll_create1(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5923,7 +5923,7 @@ int sdup3(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5943,7 +5943,7 @@ int spipe2(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5963,7 +5963,7 @@ int sinotify_init1(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -5983,7 +5983,7 @@ int spreadv(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -6003,7 +6003,7 @@ int spwritev(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -6023,7 +6023,7 @@ int srt_tgsigqueueinfo(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -6043,7 +6043,7 @@ int sperf_event_open(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -6064,7 +6064,7 @@ int srecvmmsg(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -6084,7 +6084,7 @@ int sfanotify_init(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -6104,7 +6104,7 @@ int sfanotify_mark(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -6124,7 +6124,7 @@ int sprlimit64(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -6144,7 +6144,7 @@ int sname_to_handle_at(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -6164,7 +6164,7 @@ int sopen_by_handle_at(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -6184,7 +6184,7 @@ int sclock_adjtime(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -6204,7 +6204,7 @@ int ssyncfs(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -6224,7 +6224,7 @@ int ssendmmsg(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -6244,7 +6244,7 @@ int ssetns(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -6264,7 +6264,7 @@ int sgetcpu(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -6284,7 +6284,7 @@ int sprocess_vm_readv(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -6304,7 +6304,7 @@ int sprocess_vm_writev(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -6324,7 +6324,7 @@ int skcmp(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -6344,7 +6344,7 @@ int sfinit_module(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -6364,7 +6364,7 @@ int ssched_setattr(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -6385,7 +6385,7 @@ int ssched_getattr(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -6405,7 +6405,7 @@ int srenameat2(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -6426,7 +6426,7 @@ int sseccomp(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -6446,7 +6446,7 @@ int sgetrandom(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -6466,7 +6466,7 @@ int smemfd_create(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -6486,7 +6486,7 @@ int skexec_file_load(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
@@ -6506,7 +6506,7 @@ int sbpf(struct pt_regs *ctx) {
     struct data_t data = {};
     INUM_RING
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
-    unsigned int inum_ring = t->nsproxy->pid->ns.inum;
+    unsigned int inum_ring = t->nsproxy->pid_ns_for_children->ns.inum;
     int inum_init();
     int ret_value = inums_lookup(inum_ring);
     if(PT_REGS_RC(ctx) < 0 || ret_value != 0){
