@@ -899,6 +899,7 @@ int sgetpid(struct pt_regs *ctx) {
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
     data.syscallnumber = 40;
+    data.inum_ring = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
@@ -6981,6 +6982,7 @@ def updatesequence(cpu, data, size):
         add_to_pid_dict(ringbufferpid, "setitimer", tgid)
     elif syscall_number == 40:
         syscalls.append("getpid")
+        print("Found getpid with inum: " + str(inum))
         add_to_pid_dict(ringbufferpid, "getpid", tgid)
     elif syscall_number == 41:
         syscalls.append("sendfile")
