@@ -14,7 +14,8 @@ prog = """
 struct data_t {
     int syscallnumber;
     u32 pid;
-    //unsigned int inum;
+    unsigned int inum_ring;
+    unsigned int inum_ring_parent;
     u32 tgid;
     // unsigned int test_inum; // könnte rausfallen, da inum jetzt schon hier gefiltert wird
 };
@@ -66,10 +67,12 @@ int sclone(struct pt_regs *ctx) {
     struct task_struct *t = (struct task_struct *)bpf_get_current_task();
     struct task_struct *parent = t->real_parent;
     unsigned int inum_ring = parent->nsproxy->pid_ns_for_children->ns.inum;
+    data.inum_ring_parent = inum_ring
     
 
     // Erhalte den PID-Namespace des erzeugten Kind Prozesses von clone()
     unsigned int inum_ring_child = t->nsproxy->pid_ns_for_children->ns.inum;
+    data.inum_ring = inum_ring_child;
 
     // Füge die Child Inum hinzu, falls sie abweicht von der Parent Inum
     if(inum_ring_child != inum_ring){
@@ -134,6 +137,7 @@ int sread(struct pt_regs *ctx) {
     u32 tgid = bpf_get_current_pid_tgid();
     data.tgid = tgid;
     data.syscallnumber = 2;
+    data.inum_ring = inum_ring;
     events.perf_submit(ctx, &data, sizeof(data));
     return 0;
 }
@@ -6852,9 +6856,12 @@ def updatesequence(cpu, data, size):
     syscall_number = data.syscallnumber
     ringbufferpid = data.pid
     tgid = data.tgid
+    inum = data.inum_ring
+    inum_parent = data.inum_ring_parent
     if syscall_number == 0:
         syscalls.append("clone")
         add_to_pid_dict(ringbufferpid, "clone", tgid)
+        print("found clone with inum: " + str(inum) + " and parent inum: " + str(inum_parent))
     elif syscall_number == 1:
         syscalls.append("open")
         add_to_pid_dict(ringbufferpid, "open", tgid)
