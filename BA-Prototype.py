@@ -6860,7 +6860,7 @@ def updatesequence(cpu, data, size):
     inum_parent = data.inum_ring_parent
     if syscall_number == 0:
         syscalls.append("clone")
-        add_to_pid_dict(ringbufferpid, "clone", tgid)
+        add_to_pid_dict(ringbufferpid, "clone" + str(inum_parent) + " " + str(inum), tgid)
         print("found clone with inum: " + str(inum) + " and parent inum: " + str(inum_parent))
     elif syscall_number == 1:
         syscalls.append("open")
