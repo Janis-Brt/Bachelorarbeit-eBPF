@@ -7956,7 +7956,7 @@ def createpatternspid():
     if not os.path.exists(folder_path):
         os.makedirs(folder_path)
     timestamp = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime())
-    output_file = "data/patternspid/sequencesswithtpid_" + str(timestamp) + ".txt"
+    output_file = "data/patternspid/patternspid_" + str(timestamp) + ".txt"
     with open(output_file, 'w') as file:
         # Schreibe die Patterns in eine Datei
         for pattern, count_key in sorted_patterns:
@@ -8012,7 +8012,7 @@ def createpatternstgid():
     if not os.path.exists(folder_path):
         os.makedirs(folder_path)
     timestamp = time.strftime("%Y-%m-%d_%H-%M-%S", time.localtime())
-    output_file = "data/patternstgid/sequencesswithttgid_" + str(timestamp) + ".txt"
+    output_file = "data/patternstgid/patternstgid_" + str(timestamp) + ".txt"
     with open(output_file, 'w') as file:
         # Schreibe die Patterns in eine Datei
         for pattern, count_key in sorted_patterns:
