@@ -6861,8 +6861,8 @@ def updatesequence(cpu, data, size):
     inum_parent = data.inum_ring_parent
     if syscall_number == 0:
         syscalls.append("clone")
-        add_to_pid_dict(ringbufferpid, "clone" + str(inum_parent) + " " + str(inum), tgid)
-        print("found clone with inum: " + str(inum) + " and parent inum: " + str(inum_parent))
+        add_to_pid_dict(ringbufferpid, "clone", tgid)
+        # print("found clone with inum: " + str(inum) + " and parent inum: " + str(inum_parent))
     elif syscall_number == 1:
         syscalls.append("open")
         add_to_pid_dict(ringbufferpid, "open", tgid)
@@ -6982,8 +6982,7 @@ def updatesequence(cpu, data, size):
         add_to_pid_dict(ringbufferpid, "setitimer", tgid)
     elif syscall_number == 40:
         syscalls.append("getpid")
-        print("Found getpid with inum: " + str(inum))
-        add_to_pid_dict(ringbufferpid, "getpid" + str(inum), tgid)
+        add_to_pid_dict(ringbufferpid, "getpid", tgid)
     elif syscall_number == 41:
         syscalls.append("sendfile")
         add_to_pid_dict(ringbufferpid, "sendfile", tgid)
